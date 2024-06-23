@@ -1,0 +1,13 @@
+[build.base]
+  publish = "./client/.next"
+  command = "cd client && bun run build"
+
+[build]
+  command = "./server/scripts/build.sh"
+
+[functions]
+  dir = "./server/dist"
+
+[build.environment]
+  # disable NPM install
+  NPM_FLAGS = "--version"
