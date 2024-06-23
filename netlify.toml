@@ -1,6 +1,6 @@
-[build.base]
+[build]
   publish = "./client/.next"
-  command = "./server/scripts/build.sh && cd client && bun run build"
+  command = "./server/scripts/build.sh && cd client && bun install --production && bun run build"
 
 [functions]
   directory = "./server/dist"
