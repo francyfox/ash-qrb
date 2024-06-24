@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import type { Context } from "@netlify/functions"
 
-const app = new Elysia().get("/v3/api/", () => ";) Hello Elysia").listen(3000);
+const app = new Elysia().get("/v3/api/", () => ";) Hello Elysia");
 
 console.log(
   `;) Elysia is running at ${app.server?.hostname}:${app.server?.port}`
