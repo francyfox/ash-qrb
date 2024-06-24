@@ -1,8 +1,4 @@
 [build]
   base = "/"
-  command = "./packages/ash-qrb-server/scripts/build.sh"
+  command = "bun --filter './packages/ash-qrb-server' build"
   publish = "/packages/ash-qrb-server/dist"
-
-[build.environment]
-  # disable NPM install
-  NPM_FLAGS = "--version"
