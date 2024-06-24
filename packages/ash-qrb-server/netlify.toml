@@ -1,6 +1,6 @@
 [build]
   base = "/"
-  command = "/packages/ash-qrb-server/scripts/build.sh"
+  command = "./packages/ash-qrb-server/scripts/build.sh"
   publish = "/packages/ash-qrb-server/dist"
 
 [build.environment]
