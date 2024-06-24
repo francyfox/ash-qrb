@@ -12,10 +12,12 @@
     "build": "bun build --target=bun ./src/index.ts --outdir ./dist --entry-naming index.[ext]"
   },
   "dependencies": {
+    "@netlify/functions": "^2.8.0",
     "elysia": "latest",
-    "@netlify/functions": "^2.8.0"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.8.2",
     "bun-types": "latest"
   },
   "module": "src/index.js"

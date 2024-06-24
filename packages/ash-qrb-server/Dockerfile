@@ -1,0 +1,15 @@
+FROM oven/bun
+
+WORKDIR /app
+
+COPY package.json .
+
+RUN bun install
+
+COPY tsconfig.json .
+COPY public public
+
+ENV NODE_ENV production
+CMD ["bun", "server/index.ts"]
+
+EXPOSE 3000
