@@ -1,4 +1,5 @@
 [build]
+  base = "./packages/ash-qrb-server"
   functions = "netlify/functions"
   # custom build command that install bun and run build
   command = "./scripts/build.sh"

@@ -1,14 +1,19 @@
 {
   "name": "ash-qrb-server",
-  "private": false,
+  "license": "MIT",
+  "private": true,
   "version": "1.0.50",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
     "build": "bun build --target=bun ./src/index.ts --outdir ./dist --entry-naming index.[ext] --minify"
   },
   "dependencies": {
-    "elysia": "latest"
+    "elysia": "latest",
+    "@netlify/functions": "^2.8.0"
   },
   "devDependencies": {
     "bun-types": "latest"
