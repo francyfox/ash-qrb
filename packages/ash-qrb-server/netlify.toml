@@ -2,4 +2,7 @@
   base = "/"
   command = "bun --filter './packages/ash-qrb-server' build"
   publish = "/packages/ash-qrb-server/dist"
-  edge_functions = "/packages/ash-qrb-server/dist"
+  edge_functions = "/packages/ash-qrb-server/server"
+
+[[edge_functions]]
+  path = "/*"

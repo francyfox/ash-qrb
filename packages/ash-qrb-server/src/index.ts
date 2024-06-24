@@ -1,12 +1,16 @@
 import { Elysia } from "elysia";
-import type { Context } from "@netlify/functions"
+import type { Config } from "@netlify/functions"
 
-const app = new Elysia().get("/v3/api/", () => ";) Hello Elysia");
+const app = new Elysia().get("/", () => ";) Hello Elysia");
 
 console.log(
   `;) Elysia is running at ${app.server?.hostname}:${app.server?.port}`
 );
 
-export default async (req: Request, context: Context) => {
+export default async (req: Request) => {
   return app.handle(req)
 }
+
+export const config: Config = {
+  path: ["/"],
+};
