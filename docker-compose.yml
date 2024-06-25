@@ -2,10 +2,12 @@ version: "3.8"
 
 services:
   elysia-app:
-    build: ./packages/ash-qrb-server
+    build:
+      context: .
+      dockerfile: ./docker/elysia/Dockerfile
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.elysia-demo-app.rule=Host(`elysia-demo-app.local`)"
+      - "traefik.http.routers.elysia-demo-app.rule=Host(`localhost`)"
       - "traefik.http.services.elysia-demo-app.loadbalancer.server.port=3000"
     networks:
       - web

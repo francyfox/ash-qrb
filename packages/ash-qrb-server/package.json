@@ -13,12 +13,20 @@
   },
   "dependencies": {
     "@netlify/functions": "^2.8.0",
+    "@xata.io/client": "^0.29.5",
+    "drizzle-orm": "^0.31.2",
     "elysia": "latest",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.2",
-    "bun-types": "latest"
+    "@elysiajs/swagger": "^1.0.5",
+    "bun-types": "latest",
+    "drizzle-kit": "^0.22.7",
+    "elysia-ip": "^1.0.7",
+    "elysia-rate-limit": "^4.1.0",
+    "nanoid": "^5.0.7",
+    "pg": "^8.12.0"
   },
   "module": "src/index.js"
 }
