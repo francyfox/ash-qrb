@@ -7,7 +7,7 @@ services:
       dockerfile: ./docker/elysia/Dockerfile
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.elysia-demo-app.rule=Host(`localhost`)"
+      - "traefik.http.routers.elysia-demo-app.rule=Host(`api.ash-qrb.site`)"
       - "traefik.http.services.elysia-demo-app.loadbalancer.server.port=3000"
     networks:
       - web

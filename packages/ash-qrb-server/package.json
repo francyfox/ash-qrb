@@ -9,7 +9,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
-    "build": "bun build --target=bun ./src/index.ts --outdir ./dist --entry-naming index.[ext]"
+    "build": "bun build --target=bun ./src/index.ts --outdir ./dist --entry-naming index.[ext]",
+    "generate": "drizzle-kit generate",
+    "migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@netlify/functions": "^2.8.0",
@@ -22,6 +24,7 @@
     "@biomejs/biome": "^1.8.2",
     "@elysiajs/swagger": "^1.0.5",
     "bun-types": "latest",
+    "defu": "^6.1.4",
     "drizzle-kit": "^0.22.7",
     "elysia-ip": "^1.0.7",
     "elysia-rate-limit": "^4.1.0",

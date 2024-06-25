@@ -18,7 +18,7 @@ const DatabaseClient = buildClient()
 
 const defaultOptions = {
   databaseURL:
-    'https://Danil-Golota-s-workspace-oddvjb.eu-central-1.xata.sh/db/ashqrb',
+    'https://Danil-Golota-s-workspace-oddvjb.eu-west-1.xata.sh/db/ashqrb:main',
 }
 
 export class XataClient extends DatabaseClient<DatabaseSchema> {
