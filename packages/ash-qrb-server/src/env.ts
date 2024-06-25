@@ -10,6 +10,8 @@ const envVariables = z.object({
     .default('development'),
   RUNTIME: z.enum(['bun', 'edge']).default('bun'),
   NODE_DEBUG: z.string().default(''),
+  XATA_DB_HTTP_HOST: z.string(),
+  XATA_DB_PG_HOST: z.string(),
 })
 
 export const env = envVariables.parse(process.env)
