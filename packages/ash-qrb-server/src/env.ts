@@ -14,4 +14,6 @@ const envVariables = z.object({
   XATA_DB_PG_HOST: z.string(),
 })
 
+console.log(process.env)
+
 export const env = envVariables.parse(process.env)

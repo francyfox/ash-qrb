@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
-    "build": "bun build --target=bun ./src/index.ts --outdir ./dist --entry-naming index.[ext]",
+    "build": "tsup-node",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate"
   },
@@ -29,7 +29,8 @@
     "elysia-ip": "^1.0.7",
     "elysia-rate-limit": "^4.1.0",
     "nanoid": "^5.0.7",
-    "pg": "^8.12.0"
+    "pg": "^8.12.0",
+    "tsup": "^8.1.0"
   },
   "module": "src/index.js"
 }
