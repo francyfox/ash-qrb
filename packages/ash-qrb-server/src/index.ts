@@ -1,4 +1,3 @@
-import type { Config } from '@netlify/functions'
 import plugins from '@root/core/plugins'
 import { env } from '@root/env'
 import { Elysia } from 'elysia'
@@ -23,8 +22,4 @@ switch (env.RUNTIME) {
 
 export default async (req: Request) => {
   return app.handle(req)
-}
-
-export const config: Config = {
-  path: ['/'],
 }
