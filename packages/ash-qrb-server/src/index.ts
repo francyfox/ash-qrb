@@ -1,14 +1,14 @@
 import type { Config } from '@netlify/functions'
-// import plugins from '@root/core/plugins'
+import plugins from '@root/core/plugins'
 import { env } from '@root/env'
 import { Elysia } from 'elysia'
 
 const app = new Elysia().get('/', () => ';) Hello Elysia')
 
-// for (const plugin of plugins()) {
-//   // @ts-ignore
-//   app.use(plugin)
-// }
+for (const plugin of plugins()) {
+  // @ts-ignore
+  app.use(plugin)
+}
 
 switch (env.RUNTIME) {
   case 'bun':
