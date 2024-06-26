@@ -27,13 +27,11 @@ export default [
         title: 'ASH-QRB Documentation',
         version: '1.0.0',
       },
-      definitions: {
-        Todo: {
-          test: 'ss',
-        },
-      },
       tags: [
         { name: 'App', description: 'General endpoints' },
+        { name: 'users', description: 'Users endpoints' },
+        { name: 'payments', description: 'Payments endpoints' },
+        { name: 'companies', description: 'Companies endpoints' },
         { name: 'Auth', description: 'Authentication endpoints' },
       ],
       components: {},

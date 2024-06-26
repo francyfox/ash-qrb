@@ -20,7 +20,7 @@
     "@xata.io/client": "^0.29.5",
     "defu": "^6.1.4",
     "drizzle-orm": "^0.31.2",
-    "drizzle-zod": "^0.5.1",
+    "drizzle-typebox": "^0.1.1",
     "elysia": "latest",
     "elysia-ip": "^1.0.7",
     "elysia-rate-limit": "^4.1.0",
