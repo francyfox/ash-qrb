@@ -14,21 +14,25 @@
     "migrate": "drizzle-kit migrate"
   },
   "dependencies": {
+    "@bogeychan/elysia-logger": "^0.0.22",
+    "@elysiajs/swagger": "^1.0.5",
     "@netlify/functions": "^2.8.0",
     "@xata.io/client": "^0.29.5",
+    "defu": "^6.1.4",
     "drizzle-orm": "^0.31.2",
+    "drizzle-zod": "^0.5.1",
     "elysia": "latest",
+    "elysia-ip": "^1.0.7",
+    "elysia-rate-limit": "^4.1.0",
+    "nanoid": "^5.0.7",
+    "picocolors": "^1.0.1",
+    "pino-pretty": "^11.2.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.2",
-    "@elysiajs/swagger": "^1.0.5",
     "bun-types": "latest",
-    "defu": "^6.1.4",
     "drizzle-kit": "^0.22.7",
-    "elysia-ip": "^1.0.7",
-    "elysia-rate-limit": "^4.1.0",
-    "nanoid": "^5.0.7",
     "pg": "^8.12.0",
     "tsup": "^8.1.0"
   },
