@@ -1,8 +1,5 @@
-import { CrudApi } from '@root/core/module/crud/crud.generate'
 import plugins from '@root/core/plugins'
 import { env } from '@root/env'
-import { db } from '@root/module/db/db'
-import { usersSchema } from '@root/module/users/users.schema'
 import { Elysia } from 'elysia'
 const app = new Elysia()
 
@@ -11,11 +8,7 @@ for (const plugin of plugins) {
   app.use(plugin)
 }
 
-app
-  .get('/', () => {
-    return ';) Hello Elysia'
-  })
-  .get('/health', () => 'ok')
+app.get('/health', () => 'ok')
 
 switch (env.RUNTIME) {
   case 'bun':

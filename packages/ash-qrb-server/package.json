@@ -10,13 +10,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
     "build": "tsup-node",
+    "build:bun": "rm -R ./dist && bun build --target=bun ./src/index.ts --outdir ./dist --entry-naming index.[ext]",
     "generate": "drizzle-kit generate",
     "migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@bogeychan/elysia-logger": "^0.0.22",
+    "@elysiajs/jwt": "^1.0.2",
     "@elysiajs/swagger": "^1.0.5",
     "@netlify/functions": "^2.8.0",
+    "@types/qrcode": "^1.5.5",
     "@xata.io/client": "^0.29.5",
     "defu": "^6.1.4",
     "drizzle-orm": "^0.31.2",
@@ -27,6 +30,7 @@
     "nanoid": "^5.0.7",
     "picocolors": "^1.0.1",
     "pino-pretty": "^11.2.1",
+    "qrcode": "^1.5.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {

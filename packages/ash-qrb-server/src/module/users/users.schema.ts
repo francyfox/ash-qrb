@@ -1,7 +1,14 @@
 import { companiesSchema } from '@root/module/companies/companies.schema'
 import { generateId } from '@root/utils'
 import { relations, sql } from 'drizzle-orm'
-import { boolean, integer, pgTable, text, varchar } from 'drizzle-orm/pg-core'
+import {
+  boolean,
+  integer,
+  pgTable,
+  text,
+  timestamp,
+  varchar,
+} from 'drizzle-orm/pg-core'
 
 export const usersRoles = {
   admin: 400,
@@ -19,6 +26,7 @@ export const usersDefaultColumns = {
   id: text('id').default(generateId()).primaryKey(),
   role: integer('role').default(usersRoles.client),
   fullName: varchar('full_name', { length: 50 }).notNull(),
+  password: text('password'),
   phone: varchar('phone', { length: 18 }).notNull(),
   status: integer('status').default(usersStatus.validation),
   hasMessenger: text('has_messenger')
@@ -29,8 +37,8 @@ export const usersDefaultColumns = {
   hideContacts: boolean('hide_contacts').default(false),
   qr: text('qr'),
   companyId: text('company_id').references(() => companiesSchema.id),
-  createdAt: text('created_at').default(sql`now()`),
-  updatedAt: text('updated_at').default(sql`now()`),
+  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
 }
 
 export const usersSchema = pgTable('users', usersDefaultColumns)

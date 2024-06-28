@@ -1,3 +1,4 @@
+import { env as ENV } from 'bun'
 import { z } from 'zod'
 
 const toggle = z
@@ -12,6 +13,7 @@ const envVariables = z.object({
   NODE_DEBUG: z.string().default(''),
   XATA_DB_HTTP_HOST: z.string(),
   XATA_DB_PG_HOST: z.string(),
+  JWT_SECRET_KEY: z.string(),
+  CLIENT_URL: z.string().url(),
 })
-
-export const env = envVariables.parse(process.env)
+export const env = envVariables.parse(ENV)
