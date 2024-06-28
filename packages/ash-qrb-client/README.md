@@ -1,4 +1,4 @@
-# `Turborepo` Vite starter
+# Turborepo non-monorepo starter
 
 This is an official starter Turborepo.
 
@@ -7,27 +7,36 @@ This is an official starter Turborepo.
 Run the following command:
 
 ```sh
-npx create-turbo@latest -e with-vite
+npx create-turbo@latest -e non-monorepo
 ```
 
 ## What's inside?
 
-This Turborepo includes the following packages and apps:
+This Turborepo uses a single, non-monorepo project (in this case, a single Next.js application). Since [Turborepo 1.6](https://turbo.build/blog/turbo-1-6-0#any-codebase-can-use-turborepo), you can use Turborepo for non-monorepo projects as well as monorepos.
 
-### Apps and Packages
+### Build
 
-- `docs`: a vanilla [vite](https://vitejs.dev) ts app
-- `web`: another vanilla [vite](https://vitejs.dev) ts app
-- `@repo/ui`: a stub component & utility library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: shared `eslint` configurations
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+To build all apps and packages, run the following command:
 
-Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
+```
+pnpm turbo build
+```
 
-### Utilities
+### Develop
 
-This Turborepo has some additional tools already setup for you:
+To develop all apps and packages, run the following command:
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+```
+pnpm turbo dev
+```
+
+## Useful Links
+
+Learn more about the power of Turborepo:
+
+- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
+- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
+- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
+- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
+- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
+- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
