@@ -24,3 +24,5 @@ switch (env.RUNTIME) {
 export default async (req: Request) => {
   return app.handle(req)
 }
+
+export type App = typeof app

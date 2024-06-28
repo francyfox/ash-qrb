@@ -1,19 +1,33 @@
-# ASH-QRB
-### Next.js + Turbopack
+# `Turborepo` Vite starter
 
-Приложение для создания бэйджей с QR-кодом. Выполняется в рамках освоение react + next. В рамках
-выдуманного кейса, приложение делается для продавцов на крупных рынков, которым часто приходится
-расплачиваться через kaspi pay или halyq. Это middleware приложение для перенаправления на
-нужную систему оплаты, а также возможность получение дополнительной информации о продавце.
+This is an official starter Turborepo.
 
-## Development
+## Using this example
 
-```bash
-bunx run dev
+Run the following command:
+
+```sh
+npx create-turbo@latest -e with-vite
 ```
 
-## Deploy
+## What's inside?
 
-```bash
-...
-```
+This Turborepo includes the following packages and apps:
+
+### Apps and Packages
+
+- `docs`: a vanilla [vite](https://vitejs.dev) ts app
+- `web`: another vanilla [vite](https://vitejs.dev) ts app
+- `@repo/ui`: a stub component & utility library shared by both `web` and `docs` applications
+- `@repo/eslint-config`: shared `eslint` configurations
+- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+
+Each package and app is 100% [TypeScript](https://www.typescriptlang.org/).
+
+### Utilities
+
+This Turborepo has some additional tools already setup for you:
+
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
