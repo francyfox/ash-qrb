@@ -1,5 +1,5 @@
-export default function Home() {
+export default function Page() {
   return (
-    <h1 className='bg-amber'>Hello, Next.js!</h1>
-  )
+    <h1 className="bg-amber">FFFF</h1>
+  );
 }

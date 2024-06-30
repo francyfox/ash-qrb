@@ -1,2 +1,6 @@
 @import "@unocss/reset/tailwind.css";
 @unocss all;
+
+body {
+    background: #000;
+}
