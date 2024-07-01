@@ -1,16 +1,21 @@
 module.exports = async (phase, { defaultConfig }) => {
-  const withCSS = await import('next-pcss');
-
+  const UnoCSS = await import('@unocss/webpack');
   /** @type {import('next').NextConfig} */
   const nextConfig = {
     poweredByHeader: false,
     reactStrictMode: true,
+    webpack: (config) => {
+      config.plugins.push(
+        UnoCSS.default(),
+      );
+      return config;
+    },
     experimental: {
       // esmExternals: 'loose',
     },
     i18n: {
-      locales: ['en-US', 'ru-RU'],
-      defaultLocale: 'en-US',
+      locales: ['en', 'ru'],
+      defaultLocale: 'en',
       localeDetection: false,
     },
     publicRuntimeConfig: {

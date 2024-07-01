@@ -5,3 +5,11 @@ body {
     font-size: clamp(16px, 2.5vw, 1.5rem);
     line-height: 1.2;
 }
+
+html, body, #__next {
+    @apply h-full;
+}
+
+.icon {
+    @apply w-[32px] h-[32px];
+}

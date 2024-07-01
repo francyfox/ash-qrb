@@ -1,5 +1,9 @@
 export default function Page() {
   return (
-    <h1 className="bg-amber">FFFF</h1>
+    <section className="section">
+      <div className="container">
+        test
+      </div>
+    </section>
   );
 }
