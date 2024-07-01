@@ -4,13 +4,17 @@ import { TolgeeProvider, useTolgeeSSR } from '@tolgee/react';
 import { tolgee } from '@root/module/tolge/tolge.init';
 import { useRouter } from 'next/router';
 import Layout from '@root/components/layouts/Layout';
+import '@root/assets/postcss/globals.css';
+import { Exo } from '@next/font/google';
+
+const exo = Exo({ subsets: ['latin'], display: 'swap' });
 function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter();
 
   const ssrTolgee = useTolgeeSSR(tolgee, locale);
 
   return (
-    <>
+    <html className={exo.className}>
       <Head>
         <title>HOME | ASH-QRB</title>
         <meta
@@ -23,7 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </Layout>
       </TolgeeProvider>
-    </>
+    </html>
   );
 }
 

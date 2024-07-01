@@ -2,5 +2,6 @@
 @unocss all;
 
 body {
-    background: #000;
+    font-size: clamp(16px, 2.5vw, 1.5rem);
+    line-height: 1.2;
 }

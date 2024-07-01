@@ -1,6 +1,8 @@
 const QrbHeader = () => (
-  <header>
-    header
+  <header className="sticky top-0">
+    <div className="container">
+      header
+    </div>
   </header>
 );
 
