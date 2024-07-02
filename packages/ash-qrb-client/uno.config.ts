@@ -2,7 +2,8 @@ import { defineConfig, presetUno, transformerVariantGroup } from 'unocss';
 
 export default defineConfig({
   shortcuts: {
-    'button-primary': 'bg-lime-7 px-2 py-1 text-white hover:(bg-lime-5 text-dark scale-105) transition-all',
+    'button-primary': 'bg-gradient-to-t from-emerald-500 bg-lime-7 px-2 py-1 text-white hover:(bg-lime-5 text-dark scale-105) transition-all transition-duration-50 rd-sm overflow-hidden',
+    'button-secondary': 'bg-yellow-600 px-2 py-1 text-white hover:(bg-yellow-500 text-dark scale-105) transition-all transition-duration-50 rd-sm overflow-hidden',
   },
   content: {
     filesystem: [

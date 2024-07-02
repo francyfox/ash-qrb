@@ -5,6 +5,7 @@ import { tolgee } from '@root/module/tolge/tolge.init';
 import { useRouter } from 'next/router';
 import Layout from '@root/components/layouts/Layout';
 import '@root/assets/postcss/globals.css';
+import StoreProvider from '@root/module/redux/redux.provider';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { locale } = useRouter();
@@ -21,9 +22,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <TolgeeProvider tolgee={ssrTolgee}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <StoreProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </StoreProvider>
       </TolgeeProvider>
     </>
   );

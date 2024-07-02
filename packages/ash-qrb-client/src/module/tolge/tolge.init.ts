@@ -1,7 +1,6 @@
 import { DevTools, Tolgee, FormatSimple } from '@tolgee/react';
 import { ENV } from '@root/env';
 
-console.log(ENV.NEXT_PUBLIC_TOLGEE_API_KEY);
 export const tolgee = Tolgee()
   .use(DevTools())
   .use(FormatSimple())
