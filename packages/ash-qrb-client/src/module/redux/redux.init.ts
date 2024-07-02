@@ -4,7 +4,7 @@ const rootReducer = combineReducers({
 });
 export const makeStore = () => {
   return configureStore({
-    reducer: rootReducer,
+    reducer: {},
   });
 };
 

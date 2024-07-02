@@ -1,5 +1,7 @@
 import { DevTools, Tolgee, FormatSimple } from '@tolgee/react';
 import { ENV } from '@root/env';
+import en from '@root/module/tolge/i18n/en.json';
+import ru from '@root/module/tolge/i18n/ru.json';
 
 export const tolgee = Tolgee()
   .use(DevTools())
@@ -9,10 +11,8 @@ export const tolgee = Tolgee()
     apiKey: ENV.NEXT_PUBLIC_TOLGEE_API_KEY,
     apiUrl: ENV.NEXT_PUBLIC_TOLGEE_API_URL,
     staticData: {
-      // @ts-ignore
-      en: () => import('@root/module/tolge/i18n/en.json'),
-      // @ts-ignore
-      ru: () => import('@root/module/tolge/i18n/ru.json'),
+      en,
+      ru,
     },
     fallbackLanguage: {
       'en-US': 'en',

@@ -3,7 +3,7 @@ import { useTolgee } from '@tolgee/react';
 const QrbLanguage = () => {
   const tolgee = useTolgee(['language']);
   const btnClass = (current: 'en' | 'ru') => tolgee.getLanguage() === current
-    ? 'button-primary !bg-green-900 pointer-events-none'
+    ? 'button-primary !bg-green-900/40 pointer-events-none opacity-50'
     : 'button-primary';
 
   return (

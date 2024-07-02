@@ -9,7 +9,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={`${exo.className} h-[99%] flex flex-col justify-between bg-yellow-100`}>
+    <div className={`${exo.className} min-h-[100vh] flex flex-col bg-yellow-100`}>
       <QrbHeader />
       <div className="h-full">
         {children}

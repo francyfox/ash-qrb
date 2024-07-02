@@ -8,6 +8,11 @@ module.exports = async (phase, { defaultConfig }) => {
       config.plugins.push(
         UnoCSS.default(),
       );
+      config.module.rules.push({
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      });
+
       return config;
     },
     experimental: {
@@ -21,6 +26,14 @@ module.exports = async (phase, { defaultConfig }) => {
     publicRuntimeConfig: {
       NEXT_PUBLIC_TOLGEE_API_KEY: process.env.NEXT_PUBLIC_TOLGEE_API_KEY,
       NEXT_PUBLIC_TOLGEE_API_URL: process.env.NEXT_PUBLIC_TOLGEE_API_URL,
+    },
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'res.cloudinary.com',
+        },
+      ],
     },
   };
 
