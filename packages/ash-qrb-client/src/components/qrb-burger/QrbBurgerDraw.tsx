@@ -3,7 +3,7 @@ import Close from '@sicons/ionicons5/Close.svg';
 import Link from 'next/link';
 interface PropsQrbBurgerDraw {
   show: boolean;
-  onWrapClick: (e: Event) => void;
+  onWrapClick: (e: any) => void;
 }
 
 const nav = [

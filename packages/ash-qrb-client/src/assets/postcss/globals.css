@@ -4,6 +4,7 @@
 body {
     font-size: clamp(16px, 2.5vw, 1.5rem);
     line-height: 1.2;
+    font-family: 'Exo 2 Variable', sans-serif;
 }
 
 html, body, #__next {

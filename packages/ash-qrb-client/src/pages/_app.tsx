@@ -5,6 +5,8 @@ import { tolgee } from '@root/module/tolge/tolge.init';
 import { useRouter } from 'next/router';
 import Layout from '@root/components/layouts/Layout';
 import '@root/assets/postcss/globals.css';
+import '@root/assets/font/fontello/css/fontello.css';
+import '@fontsource-variable/exo-2';
 // import StoreProvider from '@root/module/redux/redux.provider';
 
 function MyApp({ Component, pageProps }: AppProps) {

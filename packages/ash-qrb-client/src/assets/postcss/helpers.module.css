@@ -22,6 +22,62 @@
     animation: 0.5s ease-in 1 grow-up;
 }
 
+.qrb-input {
+    @apply w-full flex flex-col gap-3;
+
+    &-wrap {
+        padding: 3px;
+        position: relative;
+        background: linear-gradient(90deg, rgba(54,193,176,1) 0%, rgba(54,193,96,1) 20%, rgba(193,54,48,1) 50%, rgba(193,54,80,1) 80%, rgba(0,212,255,1) 100%);
+        background-size: 520%;
+        transition: background 0.3s linear;
+
+        &:has(input:focus) {
+            background-position-x: 20%;
+        }
+
+        &:has(input:invalid) {
+            background-position-x: 60%;
+        }
+
+        &:has(input:valid) {
+            background-position-x: 130%;
+        }
+    }
+
+    input {
+        @apply w-full px-2 py-1 outline-none bg-yellow-100;
+
+        box-sizing: border-box;
+    }
+}
+
+.qrb-multi-select {
+    @apply w-full flex flex-col gap-3;
+
+    select {
+        background:none;
+        width:auto;
+        height:auto;
+        padding:0;
+        margin:0;
+        border-width: 0;
+        border-style: inset;
+        -moz-appearance: menulist;
+        -webkit-appearance: menulist;
+        appearance: menulist;
+        outline: none;
+
+        option {
+            @apply font-300;
+
+            &:checked {
+                @apply bg-teal-600 text-white font-500 font-italic ;
+            }
+        }
+    }
+}
+
 @keyframes grow-up {
     0% {
         opacity: 0;
