@@ -7,7 +7,7 @@ export default function SectionHomeHero() {
   const content = { __html: t('page.home.hero').replaceAll('\n', '<br>') };
 
   return (
-    <main className="py-10 bg-yellow-50 text-dark">
+    <main className="py-10 bg-yellow-50 dark:bg-gray-700 text-dark dark:text-gray-300">
       <div className="container">
         <div className="grid grid-cols-2 gap-5">
           <div className="flex">

@@ -23,7 +23,7 @@
 }
 
 .qrb-input {
-    @apply w-full flex flex-col gap-3;
+    @apply relative w-full flex flex-col gap-3;
 
     &-wrap {
         padding: 3px;
@@ -46,8 +46,6 @@
     }
 
     input {
-        @apply w-full px-2 py-1 outline-none bg-yellow-100;
-
         box-sizing: border-box;
     }
 }
