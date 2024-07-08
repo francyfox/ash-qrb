@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-
+import ArrowBack from '@sicons/ionicons5/ArrowBack.svg';
 import { typeboxResolver } from '@hookform/resolvers/typebox';
 import { Static, Type as t } from '@sinclair/typebox';
 import QrbInput from '@root/components/qrb-input/QrbInput';
@@ -8,6 +8,8 @@ import QrbMultiSelect, {
   QrbMultiSelectOption,
 } from '@root/components/qrb-multi-select/QrbMultiSelect';
 import { useHookFormMask } from 'use-mask-input';
+import { useState } from 'react';
+import Image from 'next/image';
 
 const schemaSignUp = t.Object({
   phone: t.String(),
@@ -30,8 +32,15 @@ const schemaSignUp = t.Object({
 
 export type TSchemaSignUp = Static<typeof schemaSignUp>;
 
-export default function QrbFormSignUp() {
+export default function QrbFormSignUp({ role, back }: { role: string; back: () => void }) {
   const { t: T } = useTranslate();
+
+  const excludedFieldsByRoles = new Map();
+  excludedFieldsByRoles.set('client', ['companyId', 'tags']);
+  excludedFieldsByRoles.set('manager', []);
+  excludedFieldsByRoles.set('costumer', []);
+
+  const isVisibleField = (field: string): boolean => role ? !excludedFieldsByRoles.get(role).includes(field) : false;
 
   const defaultValues = {
     role: '',
@@ -81,48 +90,81 @@ export default function QrbFormSignUp() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="qrb-form flex flex-col gap-4">
-      <p>{errors.fullName?.message}</p>
-      <QrbInput
-        inputProps={{
-          ...register('fullName'),
-          ...{ type: 'text', placeholder: 'John Doe', autoComplete: 'name', pattern: '^\\D+$', required: true },
-        }}
-        label={T('form.fullName')}
-        error={errors.fullName}
-      />
-      <QrbInput
-        inputProps={{
-          ...registerWithMask('phone', ['+ 7 (999) 999-99']),
-          ...{
-            type: 'text',
-            placeholder: '+ 7 (___) ___-__',
-            inputMode: 'numeric',
-            autoComplete: 'tel',
-            required: true,
-          },
-        }}
-        label={T('form.phone')}
-        error={errors.phone}
-      />
-      <QrbMultiSelect
-        control={control}
-        label={T('form.hasMessager')}
-        options={MessengerOptions}
-        attributes={{ ...register('hasMessenger') }}
-      />
-      <QrbInput
-        inputProps={{
-          ...register('password'),
-          ...{ type: 'password', placeholder: '******', autoComplete: 'new-password', minLength: 6, required: true },
-        }}
-        label={T('form.password')}
-        error={errors.password}
-      />
+    <div className="flex flex-col gap-5">
+      <div className="flex">
+        <button
+          type="button"
+          className="button-secondary opacity-40 flex gap-2"
+          onClick={back}
+        >
+          <ArrowBack className="icon" />
+          {T('form.back')}
+        </button>
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="qrb-form flex flex-col gap-4">
+        {isVisibleField('fullName')
+        && (
+          <QrbInput
+            inputProps={{
+              ...register('fullName'),
+              ...{ type: 'text', placeholder: 'John Doe', autoComplete: 'name', pattern: '^\\D+$', required: true },
+            }}
+            label={T('form.fullName')}
+            error={errors.fullName}
+          />
+        )}
 
-      <button type="submit" className="button-primary">
-        Submit
-      </button>
-    </form>
+        {isVisibleField('phone')
+        && (
+          <QrbInput
+            inputProps={{
+              ...registerWithMask('phone', ['+ 7 (999) 999-99']),
+              ...{
+                type: 'text',
+                placeholder: '+ 7 (___) ___-__',
+                inputMode: 'numeric',
+                autoComplete: 'tel',
+                required: true,
+              },
+            }}
+            label={T('form.phone')}
+            error={errors.phone}
+          />
+        )}
+
+        {isVisibleField('hasMessenger')
+        && (
+          <QrbMultiSelect
+            control={control}
+            label={T('form.hasMessager')}
+            options={MessengerOptions}
+            attributes={{ ...register('hasMessenger') }}
+            isMulti={true}
+          />
+        )}
+
+        {isVisibleField('hasMessenger')
+        && (
+          <QrbInput
+            inputProps={{
+              ...register('password'),
+              ...{
+                type: 'password',
+                placeholder: '******',
+                autoComplete: 'new-password',
+                minLength: 6,
+                required: true,
+              },
+            }}
+            label={T('form.password')}
+            error={errors.password}
+          />
+        )}
+
+        <button type="submit" className="button-primary">
+          Submit
+        </button>
+      </form>
+    </div>
   );
 }

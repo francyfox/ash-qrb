@@ -52,28 +52,6 @@
 
 .qrb-multi-select {
     @apply w-full flex flex-col gap-3;
-
-    select {
-        background:none;
-        width:auto;
-        height:auto;
-        padding:0;
-        margin:0;
-        border-width: 0;
-        border-style: inset;
-        -moz-appearance: menulist;
-        -webkit-appearance: menulist;
-        appearance: menulist;
-        outline: none;
-
-        option {
-            @apply font-300;
-
-            &:checked {
-                @apply bg-teal-600 text-white font-500 font-italic ;
-            }
-        }
-    }
 }
 
 @keyframes grow-up {

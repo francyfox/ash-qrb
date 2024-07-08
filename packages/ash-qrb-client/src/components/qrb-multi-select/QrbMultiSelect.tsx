@@ -15,9 +15,10 @@ interface QrbMultiSelectProps {
   options: OptionsOrGroups<any, any>;
   attributes?: SelectHTMLAttributes<object>;
   error?: FieldError;
+  isMulti?: boolean;
 }
 
-export default function QrbMultiSelect({ control, label, options, attributes = {}, error }: QrbMultiSelectProps) {
+export default function QrbMultiSelect({ control, label, options, attributes = {}, error, isMulti }: QrbMultiSelectProps) {
   const selectRef = useRef<HTMLSelectElement>(null);
   const { t } = useTranslate();
   const id = useId();
@@ -51,10 +52,13 @@ export default function QrbMultiSelect({ control, label, options, attributes = {
           field: { onChange, onBlur, value, name, ref },
         }) => (
           <Select
+            className="react-select-container"
+            classNamePrefix="react-select"
+            placeholder={t('qrb-multi-select-placeholder')}
             instanceId={id}
             options={options}
             isLoading={false}
-            isMulti={true}
+            isMulti={isMulti ?? false}
             onChange={onChange}
             onBlur={onBlur}
             value={value}

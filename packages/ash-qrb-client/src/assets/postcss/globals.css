@@ -20,3 +20,23 @@ html, body, #__next {
     border-style: solid;
     border-width: 2px;
 }
+
+.react-select-container {
+    .react-select {
+        &__control {
+            @apply bg-transparent rd-none;
+        }
+
+        &__single-value {
+            @apply text-white;
+        }
+
+        &__menu {
+            @apply bg-teal-700 dark:bg-gray-600 rd-none;
+        }
+
+        &__option--is-focused {
+            @apply text-dark;
+        }
+    }
+}
