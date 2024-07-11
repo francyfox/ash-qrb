@@ -4,26 +4,17 @@ import { relations, sql } from 'drizzle-orm'
 import {
   boolean,
   integer,
-  pgTable,
+  pgTable, serial,
   text,
   timestamp,
   varchar,
 } from 'drizzle-orm/pg-core'
+import { usersRoles, usersStatus } from "@root/module/users/users.enum";
 
-export const usersRoles = {
-  admin: 400,
-  manager: 300,
-  costumer: 200,
-  client: 100,
-}
 
-export const usersStatus = {
-  validation: 100,
-  active: 200,
-  blocked: 300,
-}
 export const usersDefaultColumns = {
-  id: text('id').default(generateId()).primaryKey(),
+  id: serial('id').primaryKey(),
+  publicId: text('publicId').default(generateId()).notNull(),
   role: integer('role').default(usersRoles.client),
   fullName: varchar('full_name', { length: 50 }).notNull(),
   password: text('password'),
@@ -36,7 +27,7 @@ export const usersDefaultColumns = {
   tags: text('tags').array().notNull().default(sql`ARRAY[]::text[]`),
   hideContacts: boolean('hide_contacts').default(false),
   qr: text('qr'),
-  companyId: text('company_id').references(() => companiesSchema.id),
+  companyId: integer('company_id').references(() => companiesSchema.id),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
 }

@@ -6,9 +6,9 @@ import { useState } from 'react';
 
 export default function SignUp() {
   const { t } = useTranslate();
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState<undefined | number>(undefined);
 
-  function roleChangeHandler(i: string) {
+  function roleChangeHandler(i: number) {
     setRole(i);
   }
   return (
@@ -22,7 +22,7 @@ export default function SignUp() {
           </div>
           <div className="w-full max-w-lg flex py-5">
             { role
-            && <QrbFormSignUp role={role} back={() => setRole('')} />}
+            && <QrbFormSignUp role={role} back={() => setRole(undefined)} />}
           </div>
         </div>
       </section>

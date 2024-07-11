@@ -15,9 +15,7 @@ module.exports = async (phase, { defaultConfig }) => {
 
       return config;
     },
-    experimental: {
-      // esmExternals: 'loose',
-    },
+    experimental: {},
     i18n: {
       locales: ['en', 'ru'],
       defaultLocale: 'en',
@@ -26,6 +24,7 @@ module.exports = async (phase, { defaultConfig }) => {
     publicRuntimeConfig: {
       NEXT_PUBLIC_TOLGEE_API_KEY: process.env.NEXT_PUBLIC_TOLGEE_API_KEY,
       NEXT_PUBLIC_TOLGEE_API_URL: process.env.NEXT_PUBLIC_TOLGEE_API_URL,
+      NEXT_API_URL: process.env.NEXT_API_URL,
     },
     images: {
       remotePatterns: [

@@ -8,8 +8,9 @@ import QrbMultiSelect, {
   QrbMultiSelectOption,
 } from '@root/components/qrb-multi-select/QrbMultiSelect';
 import { useHookFormMask } from 'use-mask-input';
+import { usersRoles } from 'ash-qrb-server/src/module/users/users.enum';
+import QrbModal from '@root/components/qrb-modal/QrbModal';
 import { useState } from 'react';
-import Image from 'next/image';
 
 const schemaSignUp = t.Object({
   phone: t.String(),
@@ -32,13 +33,16 @@ const schemaSignUp = t.Object({
 
 export type TSchemaSignUp = Static<typeof schemaSignUp>;
 
-export default function QrbFormSignUp({ role, back }: { role: string; back: () => void }) {
+export default function QrbFormSignUp({ role, back }: { role: number | undefined; back: () => void }) {
   const { t: T } = useTranslate();
 
+  const [showModal, setModal] = useState<boolean>(false);
+  const [formTitle, setFormTitle] = useState<string>('');
+
   const excludedFieldsByRoles = new Map();
-  excludedFieldsByRoles.set('client', ['companyId', 'tags']);
-  excludedFieldsByRoles.set('manager', []);
-  excludedFieldsByRoles.set('costumer', []);
+  excludedFieldsByRoles.set(usersRoles.client, ['companyId', 'tags']);
+  excludedFieldsByRoles.set(usersRoles.costumer, []);
+  excludedFieldsByRoles.set(usersRoles.manager, []);
 
   const isVisibleField = (field: string): boolean => role ? !excludedFieldsByRoles.get(role).includes(field) : false;
 
@@ -50,7 +54,7 @@ export default function QrbFormSignUp({ role, back }: { role: string; back: () =
     hasMessenger: [],
     tags: [],
     hideContacts: true,
-    companyId: '',
+    // companyId: '',
   };
   const {
     register,
@@ -78,15 +82,32 @@ export default function QrbFormSignUp({ role, back }: { role: string; back: () =
     },
   ] as QrbMultiSelectOption[];
 
-  const onSubmit = (data: TSchemaSignUp) => {
+  const onSubmit = async (data: TSchemaSignUp) => {
     const formData = {
       ...data,
       ...{
+        role,
         hasMessenger: data.hasMessenger.map(i => i.value),
       },
     };
 
-    console.log(formData);
+    try {
+      // @ts-ignore
+      // const response = await api('/auth/sign-up', {
+      //   headers: {
+      //   },
+      //   method: 'POST',
+      //   body: formData,
+      // });
+      console.log(EdenClient);
+
+      // redirect(`/s/users/${response.data?.publicId}`);
+    }
+    catch (error) {
+      console.log(error);
+      setFormTitle(T('form.error'));
+      setModal(true);
+    }
   };
 
   return (
@@ -165,6 +186,11 @@ export default function QrbFormSignUp({ role, back }: { role: string; back: () =
           Submit
         </button>
       </form>
+      <QrbModal
+        show={showModal}
+        title={formTitle}
+        onClose={() => setModal(false)}
+      />
     </div>
   );
 }

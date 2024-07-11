@@ -28,12 +28,8 @@ export const getUserByPhone = async ({ body, error }: PostParameters) => {
 export const createUser = async ({ body, error }: PostParameters) => {
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const bodyFields = body as any
-
   // @ts-ignore
-  bodyFields.password = await Bun.password.hash(bodyFields.password, {
-    memoryCost: 4,
-    timeCost: 3,
-  })
+  bodyFields.password = await Bun.password.hash(bodyFields.password.toString())
 
   try {
     // @ts-ignore
@@ -44,6 +40,8 @@ export const createUser = async ({ body, error }: PostParameters) => {
       .set({ qr })
       .where(eq(usersSchema.id, id))
       .returning()
+
+    return user
   } catch (e) {
     return error(400, `Cant create user. Error: ${(e as Error).message}`)
   }

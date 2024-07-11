@@ -28,9 +28,11 @@ export class CrudApi {
     this.schemaList = schemaList
   }
 
-  generate() {
-    const elysia = new Elysia()
-    elysia.decorate('plugin', 'crud')
+  generate(config?: { prefix: string }) {
+    const plugin = new Elysia({
+      name: 'qrb-crud',
+      seed: config
+    })
 
     for (const crudParams of this.schemaList) {
       const { schema, include, exclude } = crudParams
@@ -40,27 +42,27 @@ export class CrudApi {
         include?.includes(name) || !exclude?.includes(name)
 
       if (condition('getAll')) {
-        this.getAll(name, elysia, schema)
+        this.getAll(name, plugin, schema)
       }
 
       if (condition('getById')) {
-        this.getById(name, elysia, schema)
+        this.getById(name, plugin, schema)
       }
 
       if (condition('add')) {
-        this.add(name, elysia, schema)
+        this.add(name, plugin, schema)
       }
 
       if (condition('deleteById')) {
-        this.deleteById(name, elysia, schema)
+        this.deleteById(name, plugin, schema)
       }
 
       if (condition('patchById')) {
-        this.patchById(name, elysia, schema)
+        this.patchById(name, plugin, schema)
       }
     }
 
-    return elysia
+    return plugin
   }
 
   getAll(name: string, plugin: Elysia, schema: AnyPgTable) {

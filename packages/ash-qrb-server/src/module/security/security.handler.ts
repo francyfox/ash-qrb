@@ -29,6 +29,8 @@ export const handlerSignUp: ElysiaHandler = async ({
 }) => {
   const user = await createUser({ body, error })
 
+  console.log(user)
+
   auth.set({
     value: await jwt.sign(user),
     httpOnly: true,

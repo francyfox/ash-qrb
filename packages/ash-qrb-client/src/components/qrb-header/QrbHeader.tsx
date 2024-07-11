@@ -13,10 +13,10 @@ const QrbHeader = () => {
   }
 
   return (
-    <header className="sticky top-0">
+    <header className="sticky top-0 z-10">
       <div className="container">
         <div className="flex">
-          <div className="flex justify-start gap-2 p-2 bg-lime-100/50 shadow-lime-200 shadow-[0_0_20px]">
+          <div className="flex justify-start gap-2 p-2 bg-lime-100/50 shadow-lime-200 shadow-[0_0_20px] backdrop-blur-sm">
             <Link href="/" className="flex items-center gap-2 bg-teal-600 text-white text-align-center p-2 rd-sm">
 
               <QrCodeOutline
