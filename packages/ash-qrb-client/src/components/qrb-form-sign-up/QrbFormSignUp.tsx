@@ -11,6 +11,8 @@ import { useHookFormMask } from 'use-mask-input';
 import { usersRoles } from 'ash-qrb-server/src/module/users/users.enum';
 import QrbModal from '@root/components/qrb-modal/QrbModal';
 import { useState } from 'react';
+import ApiClient from '@root/module/repository/repository.client';
+import { redirect } from 'next/navigation';
 
 const schemaSignUp = t.Object({
   phone: t.String(),
@@ -82,28 +84,24 @@ export default function QrbFormSignUp({ role, back }: { role: number | undefined
     },
   ] as QrbMultiSelectOption[];
 
-  const onSubmit = async (data: TSchemaSignUp) => {
-    const formData = {
-      ...data,
+  const onSubmit = async (formData: TSchemaSignUp) => {
+    const formDataExtended = {
+      ...formData,
       ...{
         role,
-        hasMessenger: data.hasMessenger.map(i => i.value),
+        hasMessenger: formData.hasMessenger.map(i => i.value),
       },
     };
 
-    try {
-      // @ts-ignore
-      // const response = await api('/auth/sign-up', {
-      //   headers: {
-      //   },
-      //   method: 'POST',
-      //   body: formData,
-      // });
-      console.log(EdenClient);
+    const { data, error } = await ApiClient.POST('/api/auth/sign-up', {
+      body: formDataExtended,
+    });
 
-      // redirect(`/s/users/${response.data?.publicId}`);
+    if (!error) {
+      console.log(data);
+      // redirect(`/s/users/${data.publicId}`);
     }
-    catch (error) {
+    else {
       console.log(error);
       setFormTitle(T('form.error'));
       setModal(true);

@@ -38,7 +38,7 @@ export const handlerSignUp: ElysiaHandler = async ({
     path: '/profile',
   })
 
-  return user
+  return { item: user }
 }
 export const handlerSignOut: ElysiaHandler = async ({ cookie, set }) => {
   try {

@@ -11,13 +11,12 @@ export const openapiGenerate = async () => {
   let created = false
 
   if (!(await exists(dir))) await mkdir(dir)
-
-  const ast = await openapiTS(url)
-  const contents = astToString(ast)
-
   if (!(await exists(dtsFile))) created = true
 
   if (created) {
+    const ast = await openapiTS(url)
+    const contents = astToString(ast)
+
     await Bun.write(dtsFile, contents)
     log.info('OpenAPI dts generated successfully.')
   }

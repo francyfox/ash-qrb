@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "dev": "bun --filter './packages/**/*' dev"
+  },
   "workspaces": [
     "packages/*"
   ],
@@ -10,5 +13,5 @@
     "node": ">=18.0.0"
   },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": { "turbo": "^2.0.6" }
 }

@@ -33,15 +33,17 @@ export const createUser = async ({ body, error }: PostParameters) => {
 
   try {
     // @ts-ignore
-    const { id } = await db.insert(usersSchema).values(bodyFields).returning()
-    const qr = await QRCode.toDataURL(`${env.CLIENT_URL}/users/${id}/badge`)
-    const user = await db
+    const user = await db.insert(usersSchema).values(bodyFields).returning()
+    const qr = await QRCode.toDataURL(
+      `${env.CLIENT_URL}/users/${user[0].id}/badge`,
+    )
+    const updatedUser = await db
       .update(usersSchema)
       .set({ qr })
-      .where(eq(usersSchema.id, id))
+      .where(eq(usersSchema.id, user[0].id))
       .returning()
 
-    return user
+    return updatedUser[0]
   } catch (e) {
     return error(400, `Cant create user. Error: ${(e as Error).message}`)
   }
