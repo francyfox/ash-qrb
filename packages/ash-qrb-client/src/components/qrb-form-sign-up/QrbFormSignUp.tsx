@@ -98,8 +98,8 @@ export default function QrbFormSignUp({ role, back }: { role: number | undefined
     });
 
     if (!error) {
-      console.log(data);
-      // redirect(`/s/users/${data.publicId}`);
+      console.log(`/s/users/${data.item.publicId}`);
+      // redirect(`/s/users/${data.item.publicId}`);
     }
     else {
       console.log(error);

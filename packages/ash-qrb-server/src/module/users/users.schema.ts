@@ -1,16 +1,17 @@
 import { companiesSchema } from '@root/module/companies/companies.schema'
+import { usersRoles, usersStatus } from '@root/module/users/users.enum'
 import { generateId } from '@root/utils'
 import { relations, sql } from 'drizzle-orm'
 import {
   boolean,
   integer,
-  pgTable, serial,
+  pgTable,
+  serial,
   text,
   timestamp,
   varchar,
 } from 'drizzle-orm/pg-core'
-import { usersRoles, usersStatus } from "@root/module/users/users.enum";
-
+import { createInsertSchema, createSelectSchema } from 'drizzle-typebox'
 
 export const usersDefaultColumns = {
   id: serial('id').primaryKey(),
@@ -32,6 +33,7 @@ export const usersDefaultColumns = {
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
 }
 
+// export const usersSelectSchema = createSelectSchema(usersSchema)
 export const usersSchema = pgTable('users', usersDefaultColumns)
 export const usersRelations = relations(usersSchema, ({ one }) => ({
   company: one(companiesSchema, {
@@ -39,3 +41,7 @@ export const usersRelations = relations(usersSchema, ({ one }) => ({
     references: [companiesSchema.id],
   }),
 }))
+
+export const usersSelectSchema = createSelectSchema(usersSchema)
+export const usersInsertSchema = createInsertSchema(usersSchema)
+export type TUser = typeof usersSchema.$inferSelect

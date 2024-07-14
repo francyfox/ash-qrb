@@ -8,6 +8,7 @@ import { companiesSchema } from '@root/module/companies/companies.schema'
 import { db } from '@root/module/db/db'
 import { paymentsSchema } from '@root/module/payments/payments.schema'
 import { securityGroup } from '@root/module/security/security.group'
+import SwaggerConfig from '@root/module/swagger/swagger.config'
 import { usersSchema } from '@root/module/users/users.schema'
 import { Elysia } from 'elysia'
 
@@ -30,28 +31,18 @@ const securityRoutes = securityGroup({ prefix: API_PREFIX })
 
 const app = new Elysia({ prefix: '/api' })
   .use(AppPlugins)
-  .use(
-    swagger({
-      documentation: {
-        info: {
-          title: 'ASH-QRB Documentation',
-          version: '1.0.0',
-        },
-        tags: [
-          { name: 'App', description: 'General endpoints' },
-          { name: 'users', description: 'Users endpoints' },
-          { name: 'payments', description: 'Payments endpoints' },
-          { name: 'companies', description: 'Companies endpoints' },
-          { name: 'auth', description: 'Authentication endpoints' },
-        ],
-        components: {},
-      },
-      scalarConfig: {},
-    }),
-  )
+  .use(swagger(SwaggerConfig))
   .use(crudRoutes)
   .use(securityRoutes)
-  .get('/health', () => 'ok')
+  .get('/health', () => 'ok', {
+    detail: {
+      responses: {
+        '200': {
+          $ref: '#/components/schemas/Health',
+        },
+      },
+    },
+  })
 
 switch (env.RUNTIME) {
   case 'bun':

@@ -31,7 +31,7 @@ export class CrudApi {
   generate(config?: { prefix: string }) {
     const plugin = new Elysia({
       name: 'qrb-crud',
-      seed: config
+      seed: config,
     })
 
     for (const crudParams of this.schemaList) {
@@ -87,6 +87,7 @@ export class CrudApi {
           responses: {
             '200': {
               description: 'Successful response',
+              $ref: '#/components/schemas/Users',
             },
             '400': {
               description: 'Error response',
@@ -127,6 +128,7 @@ export class CrudApi {
           responses: {
             '200': {
               description: 'Successful response',
+              $ref: '#/components/schemas/User',
             },
             '400': {
               description: 'Error response',
