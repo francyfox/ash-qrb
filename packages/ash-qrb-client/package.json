@@ -1,7 +1,12 @@
 {
-  "name": "non-monorepo",
+  "name": "ash-qrb-client",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "browserslist": [">0.3%", "not dead", "not op_mini all"],
+  "packageManager": "bun@1.1.18",
   "scripts": {
     "dev": "next dev -p 4000",
     "build": "next build",
@@ -41,9 +46,5 @@
     "turbo": "^2.0.6",
     "typescript": "^5.5.3",
     "unocss": "^0.61.2"
-  },
-  "engines": {
-    "node": ">=18"
-  },
-  "browserslist": [">0.3%", "not dead", "not op_mini all"]
+  }
 }

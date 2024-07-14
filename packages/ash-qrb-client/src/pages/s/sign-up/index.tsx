@@ -1,4 +1,4 @@
-import SectionHomeTitle from '@root/components/sections/home/SectionHomeTitle';
+import SectionHomeTitle from '../../../components/sections/home/SectionHomeTitle';
 import { useTranslate } from '@tolgee/react';
 import QrbFormSignUp from '@root/components/qrb-form-sign-up/QrbFormSignUp';
 import QrbRoleChoose from '@root/components/qrb-role-choose/QrbRoleChoose';

@@ -1,15 +1,23 @@
 import { swagger } from '@elysiajs/swagger'
 import { CrudApi } from '@root/core/module/crud/crud.generate'
+import { openapiGenerate } from '@root/core/module/openapi/openapi.generate'
+import { log } from '@root/core/module/plugin/plugin.logger'
 import { AppPlugins } from '@root/core/plugins'
 import { env } from '@root/env'
 import { companiesSchema } from '@root/module/companies/companies.schema'
 import { db } from '@root/module/db/db'
-import { openapiGenerate } from '@root/module/openapi/openapi.generate'
 import { paymentsSchema } from '@root/module/payments/payments.schema'
 import { securityGroup } from '@root/module/security/security.group'
 import { usersSchema } from '@root/module/users/users.schema'
 import { Elysia } from 'elysia'
 
+declare global {
+  var count: number
+}
+
+globalThis.count ??= 0
+
+const startTime = Bun.nanoseconds()
 export const API_PREFIX = '/api'
 const crud = new CrudApi(db, [
   { schema: companiesSchema, security: true },
@@ -48,13 +56,20 @@ const app = new Elysia({ prefix: '/api' })
 switch (env.RUNTIME) {
   case 'bun':
     app.listen({ port: 3000 })
+
+    if (globalThis.count === 0) {
+      log.info(
+        `Swagger is active at: http://${app.server?.hostname}:${app.server?.port}/api/swagger`,
+      )
+      globalThis.count++
+    }
+    // await openapiGenerate()
     console.log(
-      `Swagger is active at: http://${app.server?.hostname}:${app.server?.port}/api/swagger`,
+      `Updated with time ${(Bun.nanoseconds() - startTime) * 0.000001}ms`,
     )
-    await openapiGenerate()
     break
   case 'edge':
-    console.log('Elysia is running at EDGE')
+    log.info('Elysia is running at EDGE')
 }
 
 export type App = typeof app
