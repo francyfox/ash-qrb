@@ -23,11 +23,11 @@ export default {
       responses: {
         NotFound: {
           description: 'The specified resource was not found',
-          $ref: '#/components/schemas/Error',
+          // $ref: '#/components/schemas/Error',
         },
         Unauthorized: {
           description: 'Unauthorized',
-          $ref: '#/components/schemas/Error',
+          // $ref: '#/components/schemas/Error',
         },
       },
       schemas: {
@@ -46,18 +46,19 @@ export default {
               type: 'string',
             },
           },
-          required: ['code', 'message'],
+          required: ['code', 'message', '$ref'],
           example: {
             code: 400,
             message: 'Error message',
           },
         },
-        User: {
+        usersOne: {
           ...usersSelectSchema,
           example: { item: createRandomUser() },
         },
-        Users: {
+        usersMany: {
           type: 'array',
+          required: false,
           items: {
             type: 'object',
             properties: {
@@ -71,6 +72,18 @@ export default {
             count: createRandomUsers.length,
             items: createRandomUsers,
           },
+        },
+        paymentsOne: {
+          type: 'object',
+        },
+        paymentsMany: {
+          type: 'object',
+        },
+        companiesOne: {
+          type: 'object',
+        },
+        companiesMany: {
+          type: 'object',
         },
       },
     },

@@ -1,30 +1,29 @@
-import { exists, mkdir } from 'node:fs/promises'
+import { existsSync, mkdir } from 'node:fs'
 import { join } from 'node:path'
-import { log } from '@root/core/module/plugin/plugin.logger'
-import { env } from '@root/env'
-import { $ } from 'bun'
+import openapiValidate from '@root/module/openapi/openapi-validate'
 import openapiTS, { astToString } from 'openapi-typescript'
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+
 ;(BigInt.prototype as any).toJSON = function () {
   return this.toString()
 }
-
+//
 interface IOpenapiGenerateParams {
   swaggerJsonUrl: URL
   dir: string
 }
-
-export const spawnOpenapiDtsUpdater = async () => {
-  const proc = Bun.spawn(
-    ['bun', 'run', './src/core/module/openapi/openapi.cli.ts'],
-    {
-      cwd: process.cwd(),
-    },
-  )
-  // process.on('SIGINT', () => proc.kill())
-}
-
+//
+// // export const spawnOpenapiDtsUpdater = async () => {
+// //   const proc = Bun.spawn(
+// //     ['bun', 'run', './src/core/module/openapi/openapi.cli.ts'],
+// //     {
+// //       cwd: process.cwd(),
+// //     },
+// //   )
+// //   // process.on('SIGINT', () => proc.kill())
+// // }
+//
 /**
  * Generate openapi from http json to dts file for typescript. Use function for auto-update types. Regenerate only if
  * checksum old openapi dts mismatches with current.
@@ -35,14 +34,19 @@ export const spawnOpenapiDtsUpdater = async () => {
  */
 export const openapiGenerate = async (
   { swaggerJsonUrl, dir }: IOpenapiGenerateParams = {
-    swaggerJsonUrl: new URL(`${env.CLIENT_URL}/api/swagger/json`),
+    swaggerJsonUrl: new URL('http://localhost:3000/api/swagger/json'),
     dir: join(process.cwd(), '/openapi'),
   },
 ): Promise<void> => {
   const outputDtsFile = join(dir, 'api.d.ts')
   const checksumFile = join(dir, 'checksum.txt')
 
-  if (!(await exists(dir))) await mkdir(dir)
+  await openapiValidate(swaggerJsonUrl.toString())
+
+  if (!existsSync(dir))
+    mkdir(dir, (error) => {
+      throw new Error(error?.stack)
+    })
 
   await writeDtsFile({
     swaggerJsonUrl,
@@ -59,10 +63,9 @@ const writeDtsFile = async ({
   outputDtsFile: string
   checksumFile: string
 }) => {
-  const checksumFileExists = await exists(checksumFile)
-  const created = (await exists(outputDtsFile)) || checksumFileExists
-  const ast = await openapiTS(swaggerJsonUrl)
-  const contents = astToString(ast)
+  const checksumFileExists = existsSync(checksumFile)
+  const created = existsSync(outputDtsFile) || checksumFileExists
+  const contents = await getContents(swaggerJsonUrl)
   const currentChecksum = getChecksum(contents)
   const isDiffChecksum =
     checksumFileExists &&
@@ -72,11 +75,21 @@ const writeDtsFile = async ({
 
   if (!created) {
     await Bun.write(outputDtsFile, contents)
-    log.info('OpenAPI dts generated successfully.')
+    console.log('OpenAPI dts generated successfully.')
   }
   if (!isDiffChecksum && created) {
     await Bun.write(outputDtsFile, contents)
-    log.info('OpenAPI dts updated.')
+    console.log('OpenAPI dts updated.')
+  }
+}
+
+const getContents = async (swaggerJsonUrl: URL) => {
+  try {
+    const ast = await openapiTS(swaggerJsonUrl)
+
+    return astToString(ast)
+  } catch (error) {
+    throw new Error(`Invalid OpenAPI schema: \n${(error as Error).message}`)
   }
 }
 

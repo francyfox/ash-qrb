@@ -1,11 +1,14 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  entry: ['./src/index.ts'],
+  entry: {
+    // index: './src/index.ts',
+    cliOpenApi: './src/core/module/openapi/openapi.cli.ts',
+  },
   outDir: './dist',
   format: ['esm'],
   target: 'node18',
   noExternal: [/(.*)/],
-  minify: true,
+  minify: false,
   clean: true,
 })

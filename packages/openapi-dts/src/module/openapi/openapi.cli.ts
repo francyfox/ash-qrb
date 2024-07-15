@@ -1,6 +1,6 @@
+#!/bin/env node
 import { parseArgs } from 'node:util'
-import { openapiGenerate } from '@root/core/module/openapi/openapi.generate'
-import { log } from '@root/core/module/plugin/plugin.logger'
+import { openapiGenerate } from '@root/module/openapi/openapi.generate'
 
 let running = true
 
@@ -31,7 +31,7 @@ const { values, positionals } = parseArgs({
 process.on('SIGTERM', killProcess)
 process.on('SIGINT', killProcess)
 process.on('uncaughtException', (error) => {
-  log.error('[uncaughtException] app will be terminated: ', error.stack)
+  console.log('[uncaughtException] app will be terminated: ', error.stack)
   killProcess()
 })
 
@@ -40,7 +40,7 @@ if (typeof values.dir === 'string' && typeof values.jsonUrl === 'string') {
     swaggerJsonUrl: new URL(values.jsonUrl),
     dir: values.dir,
   })
+} else {
+  await openapiGenerate()
 }
-
-console.log('test')
-run()
+// run()

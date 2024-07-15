@@ -1,0 +1,16 @@
+{
+  "name": "openapi-dts",
+  "module": "index.ts",
+  "type": "module",
+  "packageManager": "bun@1.1.18",
+  "scripts": {
+    "dev": "bun --hot ./src/module/openapi/openapi.cli.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "openapi-typescript": "^7.0.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

@@ -92,7 +92,7 @@ export class CrudApi {
           responses: {
             '200': {
               description: 'Successful response',
-              $ref: `#/components/schemas/${capitalized(name)}`,
+              $ref: `#/components/schemas/${name}Many`,
             },
             '400': {
               description: 'Error response',
@@ -136,7 +136,7 @@ export class CrudApi {
           responses: {
             '200': {
               description: 'Successful response',
-              $ref: `#/components/schemas/${singular(name)}`,
+              $ref: `#/components/schemas/${name}One`,
             },
             '400': {
               description: 'Error response',

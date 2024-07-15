@@ -15,7 +15,7 @@
     "build": "tsup-node",
     "build:bun": "bun build --target=bun ./src/index.ts --outdir ./dist --entry-naming index.[ext]",
     "generate": "drizzle-kit generate",
-    "generate:types": "bun src/core/module/openapi/openapi.generate-types.ts",
+    "generate:types": "bun ../openapi-dts/src/module/openapi/openapi.generate-types.ts",
     "migrate": "drizzle-kit migrate"
   },
   "dependencies": {
