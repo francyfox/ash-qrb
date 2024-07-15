@@ -16,3 +16,8 @@ export const defaultItemResponse = (item: unknown) => {
     item,
   }
 }
+
+export const capitalized = (word: string) =>
+  word.charAt(0).toUpperCase() + word.slice(1)
+
+export const singular = (word: string) => word.slice(0, -1)

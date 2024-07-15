@@ -1,4 +1,4 @@
-import { parseArgs } from 'util'
+import { parseArgs } from 'node:util'
 import { openapiGenerate } from '@root/core/module/openapi/openapi.generate'
 import { log } from '@root/core/module/plugin/plugin.logger'
 

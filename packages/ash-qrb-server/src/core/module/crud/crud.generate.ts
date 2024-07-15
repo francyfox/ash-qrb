@@ -1,4 +1,9 @@
-import { defaultItemResponse, defaultItemsResponse } from '@root/utils'
+import {
+  capitalized,
+  defaultItemResponse,
+  defaultItemsResponse,
+  singular,
+} from '@root/utils'
 import { eq } from 'drizzle-orm'
 import type { AnyPgTable } from 'drizzle-orm/pg-core'
 import type { XataHttpDatabase } from 'drizzle-orm/xata-http/driver'
@@ -87,10 +92,13 @@ export class CrudApi {
           responses: {
             '200': {
               description: 'Successful response',
-              $ref: '#/components/schemas/Users',
+              $ref: `#/components/schemas/${capitalized(name)}`,
             },
             '400': {
               description: 'Error response',
+            },
+            '401': {
+              $ref: '#/components/responses/Unauthorized',
             },
           },
         },
@@ -128,10 +136,16 @@ export class CrudApi {
           responses: {
             '200': {
               description: 'Successful response',
-              $ref: '#/components/schemas/User',
+              $ref: `#/components/schemas/${singular(name)}`,
             },
             '400': {
               description: 'Error response',
+            },
+            '401': {
+              $ref: '#/components/responses/Unauthorized',
+            },
+            '404': {
+              $ref: '#/components/responses/NotFound',
             },
           },
         },

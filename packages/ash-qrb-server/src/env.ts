@@ -1,19 +1,20 @@
-import { env as ENV } from 'bun'
-import { z } from 'zod'
+import { parseENV } from '@root/module/env/env.services'
+import type { Static } from '@sinclair/typebox'
+import { t } from 'elysia'
 
-const toggle = z
-  .enum(['true', 'false', '0', '1'])
-  .transform((v) => v === 'true' || v === '1')
-
-const envVariables = z.object({
-  NODE_ENV: z
-    .enum(['development', 'production', 'test'])
-    .default('development'),
-  RUNTIME: z.enum(['bun', 'edge']).default('bun'),
-  NODE_DEBUG: z.string().default(''),
-  XATA_DB_HTTP_HOST: z.string(),
-  XATA_DB_PG_HOST: z.string(),
-  JWT_SECRET_KEY: z.string(),
-  CLIENT_URL: z.string().url(),
+const envVariables = t.Object({
+  NODE_ENV: t.Union([
+    t.Literal('development'),
+    t.Literal('production'),
+    t.Literal('test'),
+  ]),
+  RUNTIME: t.Union([t.Literal('bun'), t.Literal('edge')], { default: 'bun' }),
+  NODE_DEBUG: t.String({ default: '' }),
+  XATA_DB_HTTP_HOST: t.String({ format: 'uri' }),
+  XATA_DB_PG_HOST: t.String(),
+  JWT_SECRET_KEY: t.String(),
+  CLIENT_URL: t.String({ format: 'uri' }),
 })
-export const env = envVariables.parse(ENV)
+//
+export type schemaEnv = Static<typeof envVariables>
+export const env = parseENV(envVariables) as schemaEnv

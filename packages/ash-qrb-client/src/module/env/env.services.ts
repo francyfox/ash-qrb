@@ -2,7 +2,7 @@ import { Value } from '@sinclair/typebox/value';
 import getConfig from 'next/config';
 import { TObject } from '@sinclair/typebox';
 
-export const showEnvErrors = () => {
+export const showEnvErrors = (envSchema: TObject<any>, parsed: unknown) => {
   // @ts-ignore
   const errors = [...Value.Errors(envSchema, parsed)];
   const computedErrorMessages: Record<string, string[]> = {};
@@ -31,7 +31,7 @@ export const parseENV = (envSchema: TObject<any>) => {
   const isValid = Value.Check(envSchema, parsed);
 
   if (!isValid) {
-    showEnvErrors();
+    showEnvErrors(envSchema, parsed);
   }
 
   return parsed;

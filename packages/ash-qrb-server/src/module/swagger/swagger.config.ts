@@ -1,10 +1,10 @@
+// @ts-nocheck
 import type { ElysiaSwaggerConfig } from '@elysiajs/swagger/dist/types'
 import {
   createRandomUser,
   createRandomUsers,
 } from '@root/module/users/users.fake'
-import { usersSchema } from '@root/module/users/users.schema'
-import { createSelectSchema } from 'drizzle-typebox'
+import { usersSelectSchema } from '@root/module/users/users.schema'
 
 export default {
   documentation: {
@@ -40,24 +40,36 @@ export default {
           type: 'object',
           properties: {
             code: {
-              type: 'string',
+              type: 'number',
             },
             message: {
               type: 'string',
             },
           },
           required: ['code', 'message'],
+          example: {
+            code: 400,
+            message: 'Error message',
+          },
         },
         User: {
-          type: 'object',
-          properties: createSelectSchema(usersSchema),
+          ...usersSelectSchema,
           example: { item: createRandomUser() },
         },
         Users: {
           type: 'array',
           items: {
             type: 'object',
-            properties: createSelectSchema(usersSchema),
+            properties: {
+              count: {
+                type: 'number',
+              },
+              items: usersSelectSchema,
+            },
+          },
+          example: {
+            count: createRandomUsers.length,
+            items: createRandomUsers,
           },
         },
       },

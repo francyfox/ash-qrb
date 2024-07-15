@@ -38,7 +38,7 @@ export const openapiGenerate = async (
     swaggerJsonUrl: new URL(`${env.CLIENT_URL}/api/swagger/json`),
     dir: join(process.cwd(), '/openapi'),
   },
-) => {
+): Promise<void> => {
   const outputDtsFile = join(dir, 'api.d.ts')
   const checksumFile = join(dir, 'checksum.txt')
 
