@@ -9,7 +9,7 @@ import { Type as t } from '@sinclair/typebox'
 import type { Static } from '@sinclair/typebox'
 import { useTranslate } from '@tolgee/react'
 import { usersRoles } from 'ash-qrb-server/src/module/users/users.enum'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useHookFormMask } from 'use-mask-input'
@@ -39,6 +39,7 @@ export default function QrbFormSignUp({
   role,
   back,
 }: { role: number | undefined; back: () => void }) {
+  const router = useRouter()
   const { t: T } = useTranslate()
 
   const [showModal, setModal] = useState<boolean>(false)
@@ -102,8 +103,17 @@ export default function QrbFormSignUp({
     })
 
     if (!error) {
-      console.log(`/s/users/${data.item.publicId}`)
-      // redirect(`/s/users/${data.item.publicId}`);
+      const { phone, password } = data.item
+      const authResponse = await ApiClient.POST('/api/auth/sign-in', {
+        body: {
+          phone,
+          // @ts-ignore
+          password,
+        },
+      })
+
+      if (!authResponse.error)
+        await router.push(`/s/users/${data.item.publicId}`)
     } else {
       console.log(error)
       setFormTitle(T('form.error'))

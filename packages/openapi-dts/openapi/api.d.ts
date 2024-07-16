@@ -118,6 +118,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /** @description Auth as user */
         post: operations["postApiAuthSign-in"];
         delete?: never;
         options?: never;
@@ -134,6 +135,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /** @description Create a new user */
         post: operations["postApiAuthSign-up"];
         delete?: never;
         options?: never;
@@ -208,178 +210,147 @@ export interface components {
         };
         /** @example {
          *       "item": {
-         *         "id": 886230264840192,
-         *         "publicId": "weCdSqtVKiksnUQBn-gqy",
-         *         "fullName": "X*m_x",
+         *         "id": 6621079200071680,
+         *         "publicId": "G3QD0vmQWCVWysrZ9yMD4",
+         *         "fullName": "SnqRY",
          *         "role": 100,
-         *         "password": "eMvS6j",
-         *         "phone": "7433671162",
+         *         "password": "nIK`oT",
+         *         "phone": "7200428649",
          *         "status": 100,
          *         "tags": [
-         *           "mouse",
-         *           "cat"
+         *           "mouse"
          *         ],
-         *         "qr": "0",
-         *         "createdAt": "2023-09-25T06:24:16.806Z",
-         *         "updatedAt": "2025-04-04T21:13:21.308Z",
+         *         "qr": "6",
+         *         "createdAt": "2025-03-18T22:27:13.118Z",
+         *         "updatedAt": "2024-10-09T11:45:03.322Z",
          *         "hasMessenger": [
          *           "telegram",
          *           "whatsapp"
          *         ],
          *         "hideContacts": false,
-         *         "companyId": 6871087520415744
+         *         "companyId": 3935379262537728
          *       }
          *     } */
-        usersOne: {
-            id: number;
-            publicId: string;
-            role: number | null;
-            fullName: string;
-            password: string | null;
-            phone: string;
-            status: number | null;
-            hasMessenger: string[];
-            tags: string[];
-            hideContacts: boolean | null;
-            qr: string | null;
-            companyId: number | null;
-            createdAt: Record<string, never> | null;
-            updatedAt: Record<string, never> | null;
-        };
+        usersOne: unknown;
         /** @example {
          *       "count": 5,
          *       "items": [
          *         {
-         *           "id": 2569823355666432,
-         *           "publicId": "M1cN_xp23i_K8_SlaY30e",
-         *           "fullName": "_^A(^",
+         *           "id": 3014526609915904,
+         *           "publicId": "b0mcmvT63kfTGt8F8Miu-",
+         *           "fullName": "]9y[p",
          *           "role": 100,
-         *           "password": "/a}mU/",
-         *           "phone": "7324651949",
+         *           "password": "@kImWK",
+         *           "phone": "7647285550",
+         *           "status": 100,
+         *           "tags": [
+         *             "cat",
+         *             "dog",
+         *             "mouse"
+         *           ],
+         *           "qr": "6",
+         *           "createdAt": "2023-07-31T21:49:09.539Z",
+         *           "updatedAt": "2024-12-02T18:39:23.914Z",
+         *           "hasMessenger": [
+         *             "telegram",
+         *             "whatsapp"
+         *           ],
+         *           "hideContacts": false,
+         *           "companyId": 19171096133632
+         *         },
+         *         {
+         *           "id": 8427945186033664,
+         *           "publicId": "OBhD7B2Fy04ltWJxKFzhs",
+         *           "fullName": "SmA0^",
+         *           "role": 100,
+         *           "password": "r$E`qH",
+         *           "phone": "7337260831",
          *           "status": 100,
          *           "tags": [
          *             "dog",
          *             "cat",
          *             "mouse"
          *           ],
-         *           "qr": "4",
-         *           "createdAt": "2025-04-22T21:38:07.201Z",
-         *           "updatedAt": "2024-10-26T06:00:54.482Z",
+         *           "qr": "1",
+         *           "createdAt": "2023-09-02T13:38:05.382Z",
+         *           "updatedAt": "2024-02-26T01:25:31.627Z",
          *           "hasMessenger": [
          *             "telegram",
          *             "whatsapp"
          *           ],
          *           "hideContacts": false,
-         *           "companyId": 1987682471247872
+         *           "companyId": 3483388702883840
          *         },
          *         {
-         *           "id": 2295515490287616,
-         *           "publicId": "w0sSu1HmzLZU6Au_Z4YiB",
-         *           "fullName": "\"JZ6M",
+         *           "id": 1262811340603392,
+         *           "publicId": "pecOtsF0BWPFrNB01z_j5",
+         *           "fullName": "%J-rp",
          *           "role": 100,
-         *           "password": "q\",XbP",
-         *           "phone": "7453087983",
+         *           "password": "/qWnn|",
+         *           "phone": "7750526474",
+         *           "status": 100,
+         *           "tags": [
+         *             "mouse",
+         *             "dog"
+         *           ],
+         *           "qr": "8",
+         *           "createdAt": "2023-09-16T08:44:28.132Z",
+         *           "updatedAt": "2024-08-16T03:08:42.009Z",
+         *           "hasMessenger": [
+         *             "telegram",
+         *             "whatsapp"
+         *           ],
+         *           "hideContacts": false,
+         *           "companyId": 541408668680192
+         *         },
+         *         {
+         *           "id": 6071186591055872,
+         *           "publicId": "VT1iFHK0gsvsttiYbK_jT",
+         *           "fullName": "J6C(t",
+         *           "role": 100,
+         *           "password": "p>wf7'",
+         *           "phone": "7887122264",
+         *           "status": 100,
+         *           "tags": [
+         *             "cat",
+         *             "dog"
+         *           ],
+         *           "qr": "9",
+         *           "createdAt": "2024-06-03T21:12:53.372Z",
+         *           "updatedAt": "2024-01-20T03:46:13.960Z",
+         *           "hasMessenger": [
+         *             "telegram",
+         *             "whatsapp"
+         *           ],
+         *           "hideContacts": false,
+         *           "companyId": 4843216966778880
+         *         },
+         *         {
+         *           "id": 4639649813233664,
+         *           "publicId": "gZuoSex6MaWKPg_g-KZJG",
+         *           "fullName": "/HO$A",
+         *           "role": 100,
+         *           "password": "IHzKyb",
+         *           "phone": "7224860144",
          *           "status": 100,
          *           "tags": [
          *             "mouse",
          *             "cat",
          *             "dog"
          *           ],
-         *           "qr": "8",
-         *           "createdAt": "2025-02-13T18:46:18.521Z",
-         *           "updatedAt": "2024-11-12T16:04:21.650Z",
+         *           "qr": "2",
+         *           "createdAt": "2024-06-14T12:47:38.105Z",
+         *           "updatedAt": "2023-09-09T20:07:55.729Z",
          *           "hasMessenger": [
          *             "telegram",
          *             "whatsapp"
          *           ],
          *           "hideContacts": false,
-         *           "companyId": 4407756771557376
-         *         },
-         *         {
-         *           "id": 7166092503941120,
-         *           "publicId": "Oa7TJWEPmakGcru9oC3tz",
-         *           "fullName": "v8J)H",
-         *           "role": 100,
-         *           "password": "-`f6}C",
-         *           "phone": "7442232208",
-         *           "status": 100,
-         *           "tags": [
-         *             "cat"
-         *           ],
-         *           "qr": "0",
-         *           "createdAt": "2024-06-03T17:17:51.491Z",
-         *           "updatedAt": "2025-03-30T19:21:15.641Z",
-         *           "hasMessenger": [
-         *             "telegram",
-         *             "whatsapp"
-         *           ],
-         *           "hideContacts": false,
-         *           "companyId": 2192215256334336
-         *         },
-         *         {
-         *           "id": 6531294584373248,
-         *           "publicId": "qnN3ujnBifAUbxfrHnRLb",
-         *           "fullName": "p@5q(",
-         *           "role": 100,
-         *           "password": "@1+8l-",
-         *           "phone": "7061884654",
-         *           "status": 100,
-         *           "tags": [
-         *             "cat",
-         *             "mouse"
-         *           ],
-         *           "qr": "4",
-         *           "createdAt": "2023-12-25T11:54:45.711Z",
-         *           "updatedAt": "2023-07-28T16:22:27.541Z",
-         *           "hasMessenger": [
-         *             "telegram",
-         *             "whatsapp"
-         *           ],
-         *           "hideContacts": false,
-         *           "companyId": 1038337565523968
-         *         },
-         *         {
-         *           "id": 8745714924388352,
-         *           "publicId": "OCz0gaoOjnG8FG6fh7Nbg",
-         *           "fullName": "v7]@m",
-         *           "role": 100,
-         *           "password": "ozd<+)",
-         *           "phone": "7399957962",
-         *           "status": 100,
-         *           "tags": [
-         *             "dog"
-         *           ],
-         *           "qr": "8",
-         *           "createdAt": "2023-10-17T19:50:10.379Z",
-         *           "updatedAt": "2024-07-10T03:04:45.975Z",
-         *           "hasMessenger": [
-         *             "telegram",
-         *             "whatsapp"
-         *           ],
-         *           "hideContacts": false,
-         *           "companyId": 2902619808858112
+         *           "companyId": 542460723855360
          *         }
          *       ]
          *     } */
-        usersMany: {
-            count?: number;
-            items?: {
-                id: number;
-                publicId: string;
-                role: number | null;
-                fullName: string;
-                password: string | null;
-                phone: string;
-                status: number | null;
-                hasMessenger: string[];
-                tags: string[];
-                hideContacts: boolean | null;
-                qr: string | null;
-                companyId: number | null;
-                createdAt: Record<string, never> | null;
-                updatedAt: Record<string, never> | null;
-            };
-        }[];
+        usersMany: unknown;
         paymentsOne: Record<string, never>;
         paymentsMany: Record<string, never>;
         companiesOne: Record<string, never>;
@@ -834,7 +805,11 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": Record<string, never>;
+                    "multipart/form-data": Record<string, never>;
+                    "text/plain": Record<string, never>;
+                };
             };
         };
     };
@@ -902,7 +877,62 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        item: {
+                            id: number;
+                            publicId: string;
+                            role: number | null;
+                            fullName: string;
+                            password: string | null;
+                            phone: string;
+                            status: number | null;
+                            hasMessenger: string[];
+                            tags: string[];
+                            hideContacts: boolean | null;
+                            qr: string | null;
+                            companyId: number | null;
+                            createdAt: Record<string, never> | null;
+                            updatedAt: Record<string, never> | null;
+                        };
+                    };
+                    "multipart/form-data": {
+                        item: {
+                            id: number;
+                            publicId: string;
+                            role: number | null;
+                            fullName: string;
+                            password: string | null;
+                            phone: string;
+                            status: number | null;
+                            hasMessenger: string[];
+                            tags: string[];
+                            hideContacts: boolean | null;
+                            qr: string | null;
+                            companyId: number | null;
+                            createdAt: Record<string, never> | null;
+                            updatedAt: Record<string, never> | null;
+                        };
+                    };
+                    "text/plain": {
+                        item: {
+                            id: number;
+                            publicId: string;
+                            role: number | null;
+                            fullName: string;
+                            password: string | null;
+                            phone: string;
+                            status: number | null;
+                            hasMessenger: string[];
+                            tags: string[];
+                            hideContacts: boolean | null;
+                            qr: string | null;
+                            companyId: number | null;
+                            createdAt: Record<string, never> | null;
+                            updatedAt: Record<string, never> | null;
+                        };
+                    };
+                };
             };
         };
     };
@@ -919,7 +949,62 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": {
+                        item: {
+                            id: number;
+                            publicId: string;
+                            role: number | null;
+                            fullName: string;
+                            password: string | null;
+                            phone: string;
+                            status: number | null;
+                            hasMessenger: string[];
+                            tags: string[];
+                            hideContacts: boolean | null;
+                            qr: string | null;
+                            companyId: number | null;
+                            createdAt: Record<string, never> | null;
+                            updatedAt: Record<string, never> | null;
+                        };
+                    };
+                    "multipart/form-data": {
+                        item: {
+                            id: number;
+                            publicId: string;
+                            role: number | null;
+                            fullName: string;
+                            password: string | null;
+                            phone: string;
+                            status: number | null;
+                            hasMessenger: string[];
+                            tags: string[];
+                            hideContacts: boolean | null;
+                            qr: string | null;
+                            companyId: number | null;
+                            createdAt: Record<string, never> | null;
+                            updatedAt: Record<string, never> | null;
+                        };
+                    };
+                    "text/plain": {
+                        item: {
+                            id: number;
+                            publicId: string;
+                            role: number | null;
+                            fullName: string;
+                            password: string | null;
+                            phone: string;
+                            status: number | null;
+                            hasMessenger: string[];
+                            tags: string[];
+                            hideContacts: boolean | null;
+                            qr: string | null;
+                            companyId: number | null;
+                            createdAt: Record<string, never> | null;
+                            updatedAt: Record<string, never> | null;
+                        };
+                    };
+                };
             };
         };
     };
@@ -932,6 +1017,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
+            /** @description Remove cookie */
             200: {
                 headers: {
                     [name: string]: unknown;

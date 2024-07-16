@@ -53,21 +53,21 @@ export default {
           },
         },
         usersOne: {
-          ...usersSelectSchema,
+          // ...usersSelectSchema,
           example: { item: createRandomUser() },
         },
         usersMany: {
-          type: 'array',
-          required: false,
-          items: {
-            type: 'object',
-            properties: {
-              count: {
-                type: 'number',
-              },
-              items: usersSelectSchema,
-            },
-          },
+          // type: 'array',
+          // required: false,
+          // items: {
+          //   type: 'object',
+          //   properties: {
+          //     count: {
+          //       type: 'number',
+          //     },
+          //     items: usersSelectSchema,
+          //   },
+          // },
           example: {
             count: createRandomUsers.length,
             items: createRandomUsers,

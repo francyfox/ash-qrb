@@ -25,7 +25,7 @@ export const usersDefaultColumns = {
     .array()
     .notNull()
     .default(sql`ARRAY[]::text[]`),
-  tags: text('tags').array().notNull().default(sql`ARRAY[]::text[]`),
+  tags: text('tags').array().default(sql`ARRAY[]::text[]`),
   hideContacts: boolean('hide_contacts').default(false),
   qr: text('qr'),
   companyId: integer('company_id').references(() => companiesSchema.id),

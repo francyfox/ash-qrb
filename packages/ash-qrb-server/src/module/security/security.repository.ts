@@ -31,6 +31,7 @@ export const createUser = async ({ body, error }: PostParameters) => {
   // @ts-ignore
   bodyFields.password = await Bun.password.hash(bodyFields.password.toString())
 
+  console.log(bodyFields)
   try {
     // @ts-ignore
     const user = await db.insert(usersSchema).values(bodyFields).returning()

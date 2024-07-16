@@ -6,7 +6,12 @@ import {
   handlerSignOut,
   handlerSignUp,
 } from '@root/module/security/security.handler'
-import { usersSchema } from '@root/module/users/users.schema'
+import { createRandomUser } from '@root/module/users/users.fake'
+import {
+  usersInsertSchema,
+  usersSchema,
+  usersSelectSchema,
+} from '@root/module/users/users.schema'
 import { createInsertSchema } from 'drizzle-typebox'
 import { Elysia, t } from 'elysia'
 
@@ -31,16 +36,27 @@ export const securityGroup = (config?: { prefix: string }) => {
         },
         (app) =>
           app
+            // @ts-ignore
             .post('/sign-in', handlerSignIn, {
+              body: t.Object({
+                phone: t.String(),
+                password: t.String(),
+              }),
+              response: t.Object({}),
               detail: {
                 tags: ['auth'],
+                description: 'Auth as user',
               },
             })
+            // @ts-ignore
             .post('/sign-up', handlerSignUp, {
-              // @ts-ignore
-              body: createInsertSchema(usersSchema),
+              body: usersInsertSchema,
+              response: t.Object({
+                item: usersSelectSchema,
+              }),
               detail: {
                 tags: ['auth'],
+                description: 'Create a new user',
               },
             }),
       ),
@@ -50,6 +66,9 @@ export const securityGroup = (config?: { prefix: string }) => {
       // @ts-ignore
       handlerProfile,
       {
+        response: t.Object({
+          item: usersSelectSchema,
+        }),
         detail: {
           tags: ['auth'],
         },
@@ -58,6 +77,11 @@ export const securityGroup = (config?: { prefix: string }) => {
     .get('/auth/sign-out', handlerSignOut, {
       detail: {
         tags: ['auth'],
+        responses: {
+          '200': {
+            description: 'Remove cookie',
+          },
+        },
       },
     })
 }
