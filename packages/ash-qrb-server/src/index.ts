@@ -56,7 +56,7 @@ switch (env.RUNTIME) {
       globalThis.count++
     }
 
-    await $`bun ../openapi-dts/src/module/openapi/openapi.cli.ts`
+    // await $`bun ../openapi-dts/src/module/openapi/openapi.cli.ts`
 
     console.log(
       `Updated with time ${(Bun.nanoseconds() - startTime) * 0.000001}ms`,
