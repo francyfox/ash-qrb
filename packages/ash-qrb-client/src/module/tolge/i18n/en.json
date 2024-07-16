@@ -1,0 +1,10 @@
+{
+  "burger": {
+    "button": "menu"
+  },
+  "page": {
+    "home": {
+      "h1": "Scan\nSelect\nPay"
+    }
+  }
+}

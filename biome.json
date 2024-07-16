@@ -29,5 +29,10 @@
     "formatter": {
       "trailingCommas": "none"
     }
-  }
+  },
+  "overrides": [
+    {
+      "include": ["packages/**"]
+    }
+  ]
 }

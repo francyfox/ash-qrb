@@ -3,34 +3,52 @@
   "license": "MIT",
   "private": true,
   "version": "1.0.50",
+  "module": "src/index.js",
+  "type": "module",
+  "packageManager": "bun@1.1.18",
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts",
+    "dev": "bun run --hot src/index.ts",
     "build": "tsup-node",
+    "build:bun": "bun build --target=bun ./src/index.ts --outdir ./dist --entry-naming index.[ext]",
     "generate": "drizzle-kit generate",
+    "generate:types": "bun ../openapi-dts/src/module/openapi/openapi.generate-types.ts",
     "migrate": "drizzle-kit migrate"
   },
   "dependencies": {
-    "@netlify/functions": "^2.8.0",
-    "@xata.io/client": "^0.29.5",
-    "drizzle-orm": "^0.31.2",
-    "elysia": "latest",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.8.2",
+    "@bogeychan/elysia-logger": "^0.0.22",
+    "@elysiajs/cors": "^1.0.2",
+    "@elysiajs/jwt": "^1.0.2",
     "@elysiajs/swagger": "^1.0.5",
-    "bun-types": "latest",
+    "@elysiajs/websocket": "^0.2.8",
+    "@netlify/functions": "^2.8.0",
+    "@types/qrcode": "^1.5.5",
+    "@xata.io/client": "^0.29.5",
     "defu": "^6.1.4",
-    "drizzle-kit": "^0.22.7",
+    "drizzle-orm": "^0.31.2",
+    "drizzle-typebox": "^0.1.1",
+    "elysia": "latest",
     "elysia-ip": "^1.0.7",
     "elysia-rate-limit": "^4.1.0",
     "nanoid": "^5.0.7",
+    "openapi-fetch": "^0.10.2",
+    "openapi-typescript": "^7.0.2",
+    "picocolors": "^1.0.1",
+    "pino-pretty": "^11.2.1",
+    "qrcode": "^1.5.3",
+    "swagger-typescript-api": "^13.0.12"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.2",
+    "bun-types": "latest",
+    "drizzle-kit": "^0.22.7",
     "pg": "^8.12.0",
     "tsup": "^8.1.0"
   },
-  "module": "src/index.js"
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
 }

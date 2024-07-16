@@ -1,38 +1,39 @@
 import { companiesSchema } from '@root/module/companies/companies.schema'
+import { usersRoles, usersStatus } from '@root/module/users/users.enum'
 import { generateId } from '@root/utils'
 import { relations, sql } from 'drizzle-orm'
-import { boolean, integer, pgTable, text, varchar } from 'drizzle-orm/pg-core'
+import {
+  boolean,
+  integer,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+  varchar,
+} from 'drizzle-orm/pg-core'
+import { createInsertSchema, createSelectSchema } from 'drizzle-typebox'
 
-export const usersRoles = {
-  admin: 400,
-  manager: 300,
-  costumer: 200,
-  client: 100,
-}
-
-export const usersStatus = {
-  validation: 100,
-  active: 200,
-  blocked: 300,
-}
 export const usersDefaultColumns = {
-  id: text('id').default(generateId()).primaryKey(),
+  id: serial('id').primaryKey(),
+  publicId: text('publicId').default(generateId()).notNull(),
   role: integer('role').default(usersRoles.client),
   fullName: varchar('full_name', { length: 50 }).notNull(),
+  password: text('password'),
   phone: varchar('phone', { length: 18 }).notNull(),
   status: integer('status').default(usersStatus.validation),
   hasMessenger: text('has_messenger')
     .array()
     .notNull()
     .default(sql`ARRAY[]::text[]`),
-  tags: text('tags').array().notNull().default(sql`ARRAY[]::text[]`),
+  tags: text('tags').array().default(sql`ARRAY[]::text[]`),
   hideContacts: boolean('hide_contacts').default(false),
   qr: text('qr'),
-  companyId: text('company_id').references(() => companiesSchema.id),
-  createdAt: text('created_at').default(sql`now()`),
-  updatedAt: text('updated_at').default(sql`now()`),
+  companyId: integer('company_id').references(() => companiesSchema.id),
+  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
 }
 
+// export const usersSelectSchema = createSelectSchema(usersSchema)
 export const usersSchema = pgTable('users', usersDefaultColumns)
 export const usersRelations = relations(usersSchema, ({ one }) => ({
   company: one(companiesSchema, {
@@ -40,3 +41,7 @@ export const usersRelations = relations(usersSchema, ({ one }) => ({
     references: [companiesSchema.id],
   }),
 }))
+
+export const usersSelectSchema = createSelectSchema(usersSchema)
+export const usersInsertSchema = createInsertSchema(usersSchema)
+export type TUser = typeof usersSchema.$inferSelect

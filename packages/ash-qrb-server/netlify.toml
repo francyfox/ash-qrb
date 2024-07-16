@@ -1,5 +1,5 @@
 [build]
   base = "/"
-  command = "bun --filter './packages/ash-qrb-server' build"
+  command = "bun --filter './packages/ash-qrb-server' build:bun"
   publish = "/packages/ash-qrb-server/dist"
   edge_functions = "/packages/ash-qrb-server/dist"

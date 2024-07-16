@@ -1,19 +1,3 @@
-# ASH-QRB
-### Next.js + Turbopack
+# Next.js Turborepo (Bun)
 
-Приложение для создания бэйджей с QR-кодом. Выполняется в рамках освоение react + next. В рамках
-выдуманного кейса, приложение делается для продавцов на крупных рынков, которым часто приходится
-расплачиваться через kaspi pay или halyq. Это middleware приложение для перенаправления на
-нужную систему оплаты, а также возможность получение дополнительной информации о продавце.
-
-## Development
-
-```bash
-bunx run dev
-```
-
-## Deploy
-
-```bash
-...
-```
+Next not supported pcss import, use jetbrains dialect for css files.
