@@ -1,18 +1,32 @@
-import Head from 'next/head';
-import type { AppProps } from 'next/app';
-import { TolgeeProvider, useTolgeeSSR } from '@tolgee/react';
-import { tolgee } from '@root/module/tolge/tolge.init';
-import { useRouter } from 'next/router';
-import Layout from '@root/components/layouts/Layout';
-import '@root/assets/postcss/globals.css';
-import '@root/assets/font/fontello/css/fontello.css';
-import '@fontsource-variable/exo-2';
-// import StoreProvider from '@root/module/redux/redux.provider';
+import Layout from '@root/components/layouts/Layout'
+import { tolgee } from '@root/module/tolge/tolge.init'
+import { TolgeeProvider, useTolgeeSSR } from '@tolgee/react'
+import type { AppProps } from 'next/app'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import '@root/assets/postcss/globals.css'
+import '@root/assets/font/fontello/css/fontello.css'
+import '@fontsource-variable/exo-2'
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
+import { useState } from 'react'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const { locale } = useRouter();
-
-  const ssrTolgee = useTolgeeSSR(tolgee, locale);
+  const { locale } = useRouter()
+  const ssrTolgee = useTolgeeSSR(tolgee, locale)
+  const [reactQueryClient] = useState(
+    new QueryClient({
+      defaultOptions: {
+        queries: {
+          networkMode: 'offlineFirst', // keep caches as long as possible
+          refetchOnWindowFocus: false, // don’t refetch on window focus
+        },
+      },
+    }),
+  )
 
   return (
     <>
@@ -23,16 +37,15 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
         />
       </Head>
-      <TolgeeProvider tolgee={ssrTolgee}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-        {/* <StoreProvider> */}
-
-        {/* </StoreProvider> */}
-      </TolgeeProvider>
+      <QueryClientProvider client={reactQueryClient}>
+        <TolgeeProvider tolgee={ssrTolgee}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </TolgeeProvider>
+      </QueryClientProvider>
     </>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp
