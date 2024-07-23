@@ -44,6 +44,7 @@ export default function QrbFormSignUp({
 
   const [showModal, setModal] = useState<boolean>(false)
   const [formTitle, setFormTitle] = useState<string>('')
+  const [formMessage, setFormMessage] = useState<string>('')
 
   const excludedFieldsByRoles = new Map()
   excludedFieldsByRoles.set(usersRoles.client, ['companyId', 'tags'])
@@ -117,6 +118,7 @@ export default function QrbFormSignUp({
     } else {
       console.log(error)
       setFormTitle(T('form.error'))
+      setFormMessage(error?.message)
       setModal(true)
     }
   }
@@ -157,10 +159,10 @@ export default function QrbFormSignUp({
         {isVisibleField('phone') && (
           <QrbInput
             inputProps={{
-              ...registerWithMask('phone', ['+ 7 (999) 999-99']),
+              ...registerWithMask('phone', ['+ 7 (999) 999-99-99']),
               ...{
                 type: 'text',
-                placeholder: '+ 7 (___) ___-__',
+                placeholder: '+ 7 (___) ___-__-__',
                 inputMode: 'numeric',
                 autoComplete: 'tel',
                 required: true,
@@ -206,7 +208,9 @@ export default function QrbFormSignUp({
         show={showModal}
         title={formTitle}
         onClose={() => setModal(false)}
-      />
+      >
+        {formMessage}
+      </QrbModal>
     </div>
   )
 }
