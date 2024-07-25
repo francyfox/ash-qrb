@@ -15,8 +15,6 @@ if (!(await exists(logPath))) {
   await mkdir(logPath)
 }
 
-console.log(logPath)
-
 export const AppPlugins = new Elysia()
   .use(
     cors({
@@ -25,9 +23,9 @@ export const AppPlugins = new Elysia()
       allowedHeaders: ['Content-Type', 'Authorization'],
     }),
   )
-    // TODO: Check after next bun update. Logger crash app (Segmentation fault at address 0x38)
-  // .use(logger({ stream }))
-  // .use(fileLogger({ file: `${logPath}/app.log` }))
+  // TODO: Check after next bun update. Logger crash app (Segmentation fault at address 0x38)
+  .use(logger({ stream }))
+  .use(fileLogger({ file: `${logPath}/app.log` }))
   .use(ip({ checkHeaders: ['X-Forwarded-For', 'X-Real-IP'] }))
   .use(rateLimit())
   .use(pluginTrace(log))

@@ -9,7 +9,7 @@ import { paymentsSchema } from '@root/module/payments/payments.schema'
 import { securityGroup } from '@root/module/security/security.group'
 import SwaggerConfig from '@root/module/swagger/swagger.config'
 import { usersSchema } from '@root/module/users/users.schema'
-import { $ } from 'bun'
+// import { $ } from 'bun'
 import { Elysia } from 'elysia'
 
 declare global {

@@ -19,7 +19,7 @@ export const usersDefaultColumns = {
   role: integer('role').default(usersRoles.client),
   fullName: varchar('full_name', { length: 50 }).notNull(),
   password: text('password'),
-  phone: varchar('phone', { length: 18 }).notNull(),
+  phone: varchar('phone', { length: 20 }).notNull(),
   status: integer('status').default(usersStatus.validation),
   hasMessenger: text('has_messenger')
     .array()

@@ -6,6 +6,7 @@ import {
 } from '@root/utils'
 import { eq } from 'drizzle-orm'
 import type { AnyPgTable } from 'drizzle-orm/pg-core'
+import type { PgliteDatabase } from 'drizzle-orm/pglite'
 import type { XataHttpDatabase } from 'drizzle-orm/xata-http/driver'
 import { createInsertSchema, createSelectSchema } from 'drizzle-typebox'
 import { Elysia, t } from 'elysia'
@@ -23,10 +24,10 @@ export interface CrudParameters {
   security?: boolean
 }
 export class CrudApi {
-  readonly db: XataHttpDatabase<Record<string, unknown>>
+  readonly db: PgliteDatabase<Record<string, unknown>>
   readonly schemaList: CrudParameters[]
   constructor(
-    db: XataHttpDatabase<Record<string, unknown>>,
+    db: PgliteDatabase<Record<string, unknown>>,
     schemaList: CrudParameters[],
   ) {
     this.db = db

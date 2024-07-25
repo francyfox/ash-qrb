@@ -1,5 +1,7 @@
-import { getXataClient } from '@root/xata'
-import { drizzle } from 'drizzle-orm/xata-http'
+import { env } from '@root/env'
+import { drizzle } from 'drizzle-orm/postgres-js'
+import postgres from 'postgres'
 
-const xata = getXataClient()
-export const db = drizzle(xata)
+// for query purposes
+const client = postgres(env.XATA_DB_PG_HOST, { max: 1 })
+export const db = drizzle(client)
