@@ -128,7 +128,7 @@ export default function QrbFormSignUp({
       <div className="flex">
         <button
           type="button"
-          className="button-secondary opacity-40 flex gap-2"
+          className="button-primary opacity-40 flex gap-2"
           onClick={back}
         >
           <ArrowBack className="icon" />
@@ -200,7 +200,7 @@ export default function QrbFormSignUp({
           />
         )}
 
-        <button type="submit" className="button-primary">
+        <button type="submit" className="button-secondary">
           Submit
         </button>
       </form>

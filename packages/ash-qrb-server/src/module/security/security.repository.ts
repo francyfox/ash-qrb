@@ -1,6 +1,6 @@
 import { env } from '@root/env'
 import { db } from '@root/module/db/db'
-import { usersSchema } from '@root/module/users/users.schema'
+import { TUser, usersSchema } from '@root/module/users/users.schema'
 import { eq } from 'drizzle-orm'
 import QRCode from 'qrcode'
 
@@ -8,15 +8,19 @@ interface PostParameters {
   body: { phone: string }
   error: (status: number, message: string) => void
 }
-export const getUserByPhone = async ({ body, error }: PostParameters) => {
+export const getUserByPhone = async ({
+  body,
+  error,
+  // biome-ignore lint/suspicious/noConfusingVoidType: <explanation>
+}: PostParameters): Promise<TUser | void> => {
   const { phone } = body
 
   try {
-    const user = await db
+    const users = await db
       .select()
       .from(usersSchema)
       .where(eq(usersSchema.phone, phone))
-    return user
+    return users[0]
   } catch (e) {
     return error(
       400,
@@ -31,7 +35,6 @@ export const createUser = async ({ body, error }: PostParameters) => {
   // @ts-ignore
   bodyFields.password = await Bun.password.hash(bodyFields.password.toString())
 
-  console.log(bodyFields)
   try {
     // @ts-ignore
     const user = await db.insert(usersSchema).values(bodyFields).returning()

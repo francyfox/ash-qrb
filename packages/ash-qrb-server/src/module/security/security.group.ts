@@ -20,12 +20,6 @@ export const securityGroup = (config?: { prefix: string }) => {
     name: 'qrb-security',
     seed: config,
   })
-    .use(
-      jwt({
-        name: 'jwt',
-        secret: env.JWT_SECRET_KEY,
-      }),
-    )
     .group('/auth', (app) =>
       app.guard(
         {

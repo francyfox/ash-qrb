@@ -2,8 +2,10 @@ import { exists, mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { fileLogger, logger } from '@bogeychan/elysia-logger'
 import { cors } from '@elysiajs/cors'
+import { jwt } from '@elysiajs/jwt'
 import { stream, log } from '@root/core/module/plugin/plugin.logger'
 import { pluginTrace } from '@root/core/module/plugin/plugin.trace'
+import { env } from '@root/env'
 import { Elysia } from 'elysia'
 // @ts-ignore
 import { ip } from 'elysia-ip'
@@ -23,7 +25,12 @@ export const AppPlugins = new Elysia()
       allowedHeaders: ['Content-Type', 'Authorization'],
     }),
   )
-  // TODO: Check after next bun update. Logger crash app (Segmentation fault at address 0x38)
+  .use(
+    jwt({
+      name: 'jwt',
+      secret: env.JWT_SECRET_KEY,
+    }),
+  )
   .use(logger({ stream }))
   .use(fileLogger({ file: `${logPath}/app.log` }))
   .use(ip({ checkHeaders: ['X-Forwarded-For', 'X-Real-IP'] }))

@@ -1,18 +1,22 @@
 import { typeboxResolver } from '@hookform/resolvers/typebox'
 import QrbInput from '@root/components/ui/qrb-input/QrbInput'
-import { Type as t } from '@sinclair/typebox'
+import ApiClient from '@root/module/repository/repository.client'
+import { type Static, Type as t } from '@sinclair/typebox'
 import { useTranslate } from '@tolgee/react'
 import { useForm } from 'react-hook-form'
 import { useHookFormMask } from 'use-mask-input'
 
+const schemaSignIn = t.Object({
+  phone: t.String(),
+  password: t.String({
+    minLength: 6,
+  }),
+})
+
+export type TSchemaSignIn = Static<typeof schemaSignIn>
+
 export default function QrbFormSignIn() {
   const { t: T } = useTranslate()
-  const formSchema = t.Object({
-    phone: t.String(),
-    password: t.String({
-      minLength: 6,
-    }),
-  })
 
   const defaultValues = {
     phone: '',
@@ -27,14 +31,22 @@ export default function QrbFormSignIn() {
     formState: { errors },
   } = useForm({
     defaultValues,
-    resolver: typeboxResolver(formSchema),
+    resolver: typeboxResolver(schemaSignIn),
   })
 
   const registerWithMask = useHookFormMask(register)
 
+  const onSubmit = async (formData: TSchemaSignIn) => {
+    const { data, error } = await ApiClient.POST('/api/auth/sign-in', {
+      body: formData,
+    })
+
+    console.log(data)
+  }
+
   return (
     <>
-      <form className="text-dark darkl">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <QrbInput
           inputProps={{
             ...registerWithMask('phone', ['+ 7 (999) 999-99-99']),
@@ -63,9 +75,14 @@ export default function QrbFormSignIn() {
           label={T('form.password')}
           error={errors.password}
         />
-        <button type="submit" className="button-primary">
-          Submit
-        </button>
+        <div className="w-full grid grid-cols-2 gap-2 mt-5">
+          <button type="button" className="button-primary">
+            {T('form.forgot')}
+          </button>
+          <button type="submit" className="button-secondary">
+            {T('form.send')}
+          </button>
+        </div>
       </form>
     </>
   )

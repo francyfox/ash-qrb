@@ -9,7 +9,15 @@ export const handlerSignIn: ElysiaHandler = async ({
   body,
   error,
 }) => {
+  const { password } = body
   const user = await getUserByPhone({ body, error })
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const valid = await Bun.password.verify(password, (user as any).password)
+
+  if (!valid) {
+    return error(400, 'Bad auth. Wrong password')
+  }
+
   auth.set({
     value: await jwt.sign(user),
     httpOnly: true,
@@ -17,8 +25,7 @@ export const handlerSignIn: ElysiaHandler = async ({
     path: '/profile',
   })
 
-  // @ts-ignore
-  return auth.jar.auth
+  return { message: 'Authorized' }
 }
 
 export const handlerSignUp: ElysiaHandler = async ({
@@ -28,8 +35,6 @@ export const handlerSignUp: ElysiaHandler = async ({
   cookie: { auth },
 }) => {
   const user = await createUser({ body, error })
-
-  console.log(user)
 
   auth.set({
     value: await jwt.sign(user),

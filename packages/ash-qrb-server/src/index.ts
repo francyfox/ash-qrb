@@ -9,7 +9,6 @@ import { paymentsSchema } from '@root/module/payments/payments.schema'
 import { securityGroup } from '@root/module/security/security.group'
 import SwaggerConfig from '@root/module/swagger/swagger.config'
 import { usersSchema } from '@root/module/users/users.schema'
-// import { $ } from 'bun'
 import { Elysia } from 'elysia'
 
 declare global {
@@ -55,8 +54,6 @@ switch (env.RUNTIME) {
       )
       globalThis.count++
     }
-
-    // await $`bun ../openapi-dts/src/module/openapi/openapi.cli.ts`
 
     console.log(
       `Updated with time ${(Bun.nanoseconds() - startTime) * 0.000001}ms`,

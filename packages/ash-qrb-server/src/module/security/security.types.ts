@@ -17,7 +17,7 @@ interface ElysiaHandlerParameters {
   }
   set: { status: number }
   params: unknown | undefined
-  body: { phone: string }
+  body: { phone: string; password: string }
   error: (status: number, message: string) => void
   response: unknown | undefined
 }
