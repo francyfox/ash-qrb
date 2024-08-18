@@ -1,14 +1,13 @@
 import Close from '@sicons/ionicons5/Close.svg'
 import { useRef } from 'react'
-import type { JSX } from 'react'
 import { createPortal } from 'react-dom'
 import { useClickAway } from 'react-use'
 
 export interface QrbModalProps {
   show: boolean
   title: string
-  children?: JSX.Element
-  footer?: JSX.Element
+  children?: React.ReactNode
+  footer?: React.ReactNode
   onClose: () => void
 }
 

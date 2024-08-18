@@ -7,7 +7,7 @@ import ApiClient from '@root/module/repository/repository.client'
 import ArrowBack from '@sicons/ionicons5/ArrowBack.svg'
 import { Type as t } from '@sinclair/typebox'
 import type { Static } from '@sinclair/typebox'
-import { useTranslate } from '@tolgee/react'
+import { useTranslation } from 'next-i18next'
 import { usersRoles } from 'ash-qrb-server/src/module/users/users.enum'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -40,7 +40,7 @@ export default function QrbFormSignUp({
   back,
 }: { role: number | undefined; back: () => void }) {
   const router = useRouter()
-  const { t: T } = useTranslate()
+  const { t: T } = useTranslation()
 
   const [showModal, setModal] = useState<boolean>(false)
   const [formTitle, setFormTitle] = useState<string>('')
@@ -118,7 +118,8 @@ export default function QrbFormSignUp({
     } else {
       console.log(error)
       setFormTitle(T('form.error'))
-      setFormMessage(error?.message)
+      // biome-ignore lint/suspicious/noExplicitAny: No error types from back
+      setFormMessage((error as any)?.message)
       setModal(true)
     }
   }

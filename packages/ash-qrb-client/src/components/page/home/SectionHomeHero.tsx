@@ -1,10 +1,10 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { useTranslate } from '@tolgee/react';
+import { useTranslation } from 'next-i18next'
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function SectionHomeHero() {
-  const { t } = useTranslate();
-  const content = { __html: t('page.home.hero').replaceAll('\n', '<br>') };
+  const { t } = useTranslation()
+  const content = { __html: t('page.home.hero').replaceAll('\n', '<br>') }
 
   return (
     <main className="py-10 bg-yellow-50 dark:bg-gray-700 text-dark dark:text-gray-300">
@@ -31,33 +31,24 @@ export default function SectionHomeHero() {
               />
 
               <div className="flex flex-col gap-5">
-                <p
-                  role="banner"
-                  className="content lh-normal inline"
-                  dangerouslySetInnerHTML={content}
-                />
+                <p role="banner" className="content lh-normal inline">
+                  {t('page.home.hero')}
+                </p>
 
                 <div className="flex gap-2">
-                  <Link
-                    href="/s/sign-in"
-                    className="button-primary"
-                  >
-                    { t('login') }
+                  <Link href="/@security/s/sign-in" className="button-primary">
+                    {t('login')}
                   </Link>
 
-                  <Link
-                    href="/s/sign-up"
-                    className="button-primary"
-                  >
-                    { t('register') }
+                  <Link href="/@security/s/sign-up" className="button-primary">
+                    {t('register')}
                   </Link>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
       </div>
     </main>
-  );
+  )
 }

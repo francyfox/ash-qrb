@@ -1,4 +1,4 @@
-import { useTranslate } from '@tolgee/react';
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { usersRoles } from 'ash-qrb-server/src/module/users/users.enum';
 
@@ -8,7 +8,7 @@ interface QrbRoleChooseProps {
 }
 
 export default function QrbRoleChoose({ role, changeRole }: QrbRoleChooseProps) {
-  const { t: T } = useTranslate();
+  const { t: T } = useTranslation()
 
   const roles = [
     { key: usersRoles.client, title: T('role.client'), img: 'https://res.cloudinary.com/dr5gcup5n/image/upload/v1720438279/ash-qrb/dbjpt13yte6tmmey6dgh.svg' },

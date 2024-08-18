@@ -2,7 +2,7 @@ import React, { SelectHTMLAttributes, OptionHTMLAttributes, useEffect, useRef, u
 import styles from '@root/assets/postcss/helpers.module.css';
 import { localeError } from '@root/module/form/form.locale-error';
 import type { FieldError } from 'react-hook-form';
-import { useTranslate } from '@tolgee/react';
+import { useTranslation } from 'next-i18next';
 import Select from 'react-select';
 import type { OptionsOrGroups } from 'react-select';
 import { Controller } from 'react-hook-form';
@@ -10,8 +10,10 @@ import type { Control, FieldValues } from 'react-hook-form';
 
 export type QrbMultiSelectOption = { label: string; value: string; glyph?: string; attrs?: OptionHTMLAttributes<object> };
 interface QrbMultiSelectProps {
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   control: any | Control<FieldValues> | undefined;
   label: string;
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   options: OptionsOrGroups<any, any>;
   attributes?: SelectHTMLAttributes<object>;
   error?: FieldError;
@@ -20,15 +22,17 @@ interface QrbMultiSelectProps {
 
 export default function QrbMultiSelect({ control, label, options, attributes = {}, error, isMulti }: QrbMultiSelectProps) {
   const selectRef = useRef<HTMLSelectElement>(null);
-  const { t } = useTranslate();
+  const { t } = useTranslation()
   const id = useId();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const options = selectRef.current?.querySelectorAll('option');
 
     if (options) {
       for (const option of options) {
         option.addEventListener('mousedown',
+          // biome-ignore lint/complexity/useArrowFunction: <explanation>
           function (e: MouseEvent) {
             e.preventDefault();
             option.parentElement?.focus();

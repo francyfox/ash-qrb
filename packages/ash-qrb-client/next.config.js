@@ -1,9 +1,15 @@
 module.exports = async (phase, { defaultConfig }) => {
   const UnoCSS = await import('@unocss/webpack');
+  
   /** @type {import('next').NextConfig} */
   const nextConfig = {
+    trailingSlash: true,
     poweredByHeader: false,
     reactStrictMode: true,
+    i18n: {
+      locales: ['en', 'ru'],
+      defaultLocale: 'en',
+    },
     webpack: (config) => {
       config.plugins.push(
         UnoCSS.default(),
@@ -15,15 +21,7 @@ module.exports = async (phase, { defaultConfig }) => {
 
       return config;
     },
-    experimental: {},
-    i18n: {
-      locales: ['en', 'ru'],
-      defaultLocale: 'en',
-      localeDetection: false,
-    },
     publicRuntimeConfig: {
-      NEXT_PUBLIC_TOLGEE_API_KEY: process.env.NEXT_PUBLIC_TOLGEE_API_KEY,
-      NEXT_PUBLIC_TOLGEE_API_URL: process.env.NEXT_PUBLIC_TOLGEE_API_URL,
       NEXT_API_URL: process.env.NEXT_API_URL,
     },
     images: {

@@ -1,11 +1,11 @@
 import SectionHomeTitle from '@root/components/page/home/SectionHomeTitle'
 import QrbFormSignUp from '@root/components/page/sign-up/QrbFormSignUp'
 import QrbRoleChoose from '@root/components/ui/qrb-role-choose/QrbRoleChoose'
-import { useTranslate } from '@tolgee/react'
+import { useTranslation } from 'next-i18next';
 import { useState } from 'react'
 
 export default function SignUp() {
-  const { t } = useTranslate()
+  const { t } = useTranslation()
   const [role, setRole] = useState<undefined | number>(undefined)
 
   function roleChangeHandler(i: number) {

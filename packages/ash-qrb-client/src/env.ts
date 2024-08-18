@@ -1,9 +1,8 @@
-import { Static, Type as t } from '@sinclair/typebox';
+import { Type as t } from '@sinclair/typebox';
+import type { Static } from '@sinclair/typebox';
 import { parseENV } from '@root/module/env/env.services';
 
 const envSchema = t.Object({
-  NEXT_PUBLIC_TOLGEE_API_KEY: t.Readonly(t.String()),
-  NEXT_PUBLIC_TOLGEE_API_URL: t.Readonly(t.String()),
   NEXT_API_URL: t.Readonly(t.String()),
 });
 

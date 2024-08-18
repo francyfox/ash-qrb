@@ -1,9 +1,10 @@
 'use client';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useTranslate } from '@tolgee/react';
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export default function Error404(error: any) {
-  const { t } = useTranslate();
+  const t = useTranslations();
   return (
     <section className="py-5">
       <div className="container">

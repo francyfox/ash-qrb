@@ -2,7 +2,7 @@ import { defineConfig } from 'tsup'
 
 export default defineConfig({
   entry: {
-    // index: './src/index.ts',
+    // index: './src/index.tsx',
     cliOpenApi: './src/core/module/openapi/openapi.cli.ts',
   },
   outDir: './dist',

@@ -1,0 +1,46 @@
+{
+  "burger": {
+    "button": "menu"
+  },
+  "error": {
+    "home": "Return to home"
+  },
+  "form": {
+    "back": "Come back",
+    "error": "Error! Try later...",
+    "errorPattern": "Incorrect format!",
+    "errorRequired": "This field is required!",
+    "forgot": "Forgot password",
+    "fullName": "Full Name",
+    "hasMessager": "Has messenger (required)",
+    "password": "Password",
+    "phone": "Phone",
+    "send": "Send",
+    "success": "Success! Form is sended"
+  },
+  "login": "Sign In",
+  "messenger": {
+    "telegram": "Telegram",
+    "whatsapp": "WhatsApp"
+  },
+  "page": {
+    "404": "Page not found!",
+    "home": "Home",
+    "homeH1": "Scan. Select. Pay",
+    "homeHero": "Ash-Qrb middleware app for generation QR Badges\nYou can print your badge or preview on our website. Scan qr from badge or share online badge url\nUse badges for universal payment manager or for visit card",
+    "signin": {
+      "h1": "Sign In"
+    },
+    "signup": {
+      "h1": "Registration"
+    }
+  },
+  "qrb-multi-select-placeholder": "Select...",
+  "register": "Registration",
+  "role": {
+    "client": "Client",
+    "costumer": "Costumer",
+    "manager": "Manager",
+    "title": "I wanna be a"
+  }
+}

@@ -2,7 +2,7 @@ import { typeboxResolver } from '@hookform/resolvers/typebox'
 import QrbInput from '@root/components/ui/qrb-input/QrbInput'
 import ApiClient from '@root/module/repository/repository.client'
 import { type Static, Type as t } from '@sinclair/typebox'
-import { useTranslate } from '@tolgee/react'
+import { useTranslation } from 'next-i18next';
 import { useForm } from 'react-hook-form'
 import { useHookFormMask } from 'use-mask-input'
 
@@ -16,7 +16,7 @@ const schemaSignIn = t.Object({
 export type TSchemaSignIn = Static<typeof schemaSignIn>
 
 export default function QrbFormSignIn() {
-  const { t: T } = useTranslate()
+  const { t: T } = useTranslation()
 
   const defaultValues = {
     phone: '',
