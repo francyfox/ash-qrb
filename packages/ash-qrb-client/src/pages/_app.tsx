@@ -1,14 +1,15 @@
 import Layout from '@root/components/layouts/Layout'
 import type { AppProps } from 'next/app'
+import NextApp from 'next/app';
 import '@root/assets/postcss/globals.css'
 import '@root/assets/font/fontello/css/fontello.css'
 import '@fontsource-variable/exo-2'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { NextIntlClientProvider } from 'next-intl';
+import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useState } from 'react'
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, messages }: AppProps & { messages: AbstractIntlMessages | undefined } ) {
   const router = useRouter()
   
   const [reactQueryClient] = useState(
@@ -26,8 +27,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <NextIntlClientProvider
       locale={router.locale}
-      messages={pageProps.messages}
+      messages={messages}
       timeZone={'Asia/Almaty'}
+      onError={(error) => console.log(error)}
     >
       <QueryClientProvider client={reactQueryClient}>
         <Layout>
@@ -37,5 +39,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     </NextIntlClientProvider>
   )
 }
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+MyApp.getInitialProps = async function getInitialProps(context: any) {
+  return {
+    ...(await NextApp.getInitialProps(context)),
+    messages: (await import(`@root/module/i18n/locales/${context.router.locale}.json`)).default
+  };
+};
+
+
+
 
 export default MyApp

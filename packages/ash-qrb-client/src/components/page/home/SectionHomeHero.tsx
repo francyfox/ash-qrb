@@ -1,10 +1,9 @@
-import { useTranslation } from 'next-i18next'
+import { useTranslations } from 'next-intl';
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function SectionHomeHero() {
-  const { t } = useTranslation()
-  const content = { __html: t('page.home.hero').replaceAll('\n', '<br>') }
+  const t = useTranslations()
 
   return (
     <main className="py-10 bg-yellow-50 dark:bg-gray-700 text-dark dark:text-gray-300">
@@ -31,16 +30,18 @@ export default function SectionHomeHero() {
               />
 
               <div className="flex flex-col gap-5">
-                <p role="banner" className="content lh-normal inline">
-                  {t('page.home.hero')}
-                </p>
+                <p role="banner"
+                   className="content lh-normal inline"
+                   // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+                   dangerouslySetInnerHTML={{__html: t.raw('page.homeHero')}}
+                />
 
                 <div className="flex gap-2">
-                  <Link href="/@security/s/sign-in" className="button-primary">
+                  <Link href="/s/sign-in" className="button-primary">
                     {t('login')}
                   </Link>
 
-                  <Link href="/@security/s/sign-up" className="button-primary">
+                  <Link href="/s/sign-up" className="button-primary">
                     {t('register')}
                   </Link>
                 </div>

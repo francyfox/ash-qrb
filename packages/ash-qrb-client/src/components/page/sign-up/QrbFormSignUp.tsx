@@ -1,14 +1,14 @@
 import { typeboxResolver } from '@hookform/resolvers/typebox'
 import QrbInput from '@root/components/ui/qrb-input/QrbInput'
 import QrbModal from '@root/components/ui/qrb-modal/QrbModal'
-import QrbMultiSelect from '@root/components/ui/qrb-multi-select/QrbMultiSelect'
 import type { QrbMultiSelectOption } from '@root/components/ui/qrb-multi-select/QrbMultiSelect'
+import QrbMultiSelect from '@root/components/ui/qrb-multi-select/QrbMultiSelect'
 import ApiClient from '@root/module/repository/repository.client'
 import ArrowBack from '@sicons/ionicons5/ArrowBack.svg'
-import { Type as t } from '@sinclair/typebox'
 import type { Static } from '@sinclair/typebox'
-import { useTranslation } from 'next-i18next'
+import { Type as t } from '@sinclair/typebox'
 import { usersRoles } from 'ash-qrb-server/src/module/users/users.enum'
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -40,7 +40,7 @@ export default function QrbFormSignUp({
   back,
 }: { role: number | undefined; back: () => void }) {
   const router = useRouter()
-  const { t: T } = useTranslation()
+  const T = useTranslations()
 
   const [showModal, setModal] = useState<boolean>(false)
   const [formTitle, setFormTitle] = useState<string>('')

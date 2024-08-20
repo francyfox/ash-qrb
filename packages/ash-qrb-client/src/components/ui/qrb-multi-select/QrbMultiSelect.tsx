@@ -1,12 +1,11 @@
-import React, { SelectHTMLAttributes, OptionHTMLAttributes, useEffect, useRef, useId } from 'react';
 import styles from '@root/assets/postcss/helpers.module.css';
 import { localeError } from '@root/module/form/form.locale-error';
-import type { FieldError } from 'react-hook-form';
-import { useTranslation } from 'next-i18next';
-import Select from 'react-select';
-import type { OptionsOrGroups } from 'react-select';
+import { useTranslations } from 'next-intl';
+import React, { type OptionHTMLAttributes, type SelectHTMLAttributes, useEffect, useId, useRef } from 'react';
+import type { Control, FieldError, FieldValues } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
-import type { Control, FieldValues } from 'react-hook-form';
+import type { OptionsOrGroups } from 'react-select';
+import Select from 'react-select';
 
 export type QrbMultiSelectOption = { label: string; value: string; glyph?: string; attrs?: OptionHTMLAttributes<object> };
 interface QrbMultiSelectProps {
@@ -22,7 +21,7 @@ interface QrbMultiSelectProps {
 
 export default function QrbMultiSelect({ control, label, options, attributes = {}, error, isMulti }: QrbMultiSelectProps) {
   const selectRef = useRef<HTMLSelectElement>(null);
-  const { t } = useTranslation()
+  const t = useTranslations();
   const id = useId();
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>

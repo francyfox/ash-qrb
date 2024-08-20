@@ -27,7 +27,7 @@
     "404": "Page not found!",
     "home": "Home",
     "homeH1": "Scan. Select. Pay",
-    "homeHero": "Ash-Qrb middleware app for generation QR Badges\nYou can print your badge or preview on our website. Scan qr from badge or share online badge url\nUse badges for universal payment manager or for visit card",
+    "homeHero": "Ash-Qrb middleware app for generation QR Badges<br/>You can print your badge or preview on our website. Scan qr from badge or share online badge url\nUse badges for universal payment manager or for visit card",
     "signin": {
       "h1": "Sign In"
     },

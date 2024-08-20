@@ -1,8 +1,9 @@
-import { useTranslation } from 'next-i18next';
 import ListCircle from '@sicons/ionicons5/ListCircle.svg';
+import { useTranslations } from 'next-intl';
 import React from 'react';
+
 const QrbBurgerButton = ({ onClick }: { onClick: () => void }) => {
-  const { t } = useTranslation()
+  const t = useTranslations()
   return (
     <div className="flex gap-2">
       <button type="button" onClick={onClick}>

@@ -1,8 +1,8 @@
-import { type HTMLAttributes, useEffect, useRef } from 'react';
-import type { FieldError } from 'react-hook-form';
 import styles from '@root/assets/postcss/helpers.module.css';
 import { localeError } from '@root/module/form/form.locale-error';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
+import type { HTMLAttributes } from 'react';
+import type { FieldError } from 'react-hook-form';
 
 interface QrbInputProps {
   inputProps: HTMLAttributes<object>;
@@ -10,7 +10,7 @@ interface QrbInputProps {
   error?: FieldError;
 }
 export default function QrbInput({ inputProps, label, error }: QrbInputProps) {
-  const { t } = useTranslation()
+  const t = useTranslations()
   const withDefaultProps = { ...inputProps, ...{ className: 'w-full px-2 py-1 outline-none bg-yellow-100 dark:bg-gray-700' } };
   return (
     <div

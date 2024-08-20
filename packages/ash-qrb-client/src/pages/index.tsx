@@ -6,18 +6,8 @@ export default function Page() {
   const t = useTranslations();
   return (
     <>
-      <SectionHomeTitle title={t('page.homeH1')} />
+      <SectionHomeTitle title={'page.homeH1'} />
       <SectionHomeHero />
     </>
   )
-}
-
-
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export async function getStaticProps(context: any) {
-  return {
-    props: {
-      messages: (await import(`@root/module/i18n/locales/${context.locale}.json`)).default
-    }
-  };
 }

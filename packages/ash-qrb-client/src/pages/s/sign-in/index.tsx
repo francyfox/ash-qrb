@@ -1,9 +1,9 @@
 import SectionHomeTitle from '@root/components/page/home/SectionHomeTitle'
 import QrbFormSignIn from '@root/components/page/sign-in/QrbFormSignIn'
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 
 export default function SignIn() {
-  const { t } = useTranslation()
+  const t = useTranslations()
 
   return (
     <>
