@@ -18,7 +18,7 @@ export default function Error404(error: any) {
             </h2>
           </div>
           <div className="flex">
-            <Link href="/" className="button-primary">
+            <Link href="/packages/ash-qrb-client/src/public" className="button-primary">
               { t('error.home') }
             </Link>
           </div>

@@ -12,8 +12,8 @@ export default function Document(params: any) {
     <Html lang={currentLocale}>
       <Head />
       <body>
-      <Main />
-      <NextScript />
+        <Main />
+        <NextScript />
       </body>
     </Html>
   )

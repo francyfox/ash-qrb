@@ -37,11 +37,11 @@ export default function SectionHomeHero() {
                 />
 
                 <div className="flex gap-2">
-                  <Link href="/s/sign-in" className="button-primary">
+                  <Link href="/s/sign-in" className="button-primary" scroll={false}>
                     {t('login')}
                   </Link>
 
-                  <Link href="/s/sign-up" className="button-primary">
+                  <Link href="/s/sign-up" className="button-primary" scroll={false}>
                     {t('register')}
                   </Link>
                 </div>

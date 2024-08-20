@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+// TODO: window.location.reload
 const QrbLanguage = () => {
   const t = useTranslations()
   const {locale, locales, route} = useRouter();
@@ -18,6 +19,7 @@ const QrbLanguage = () => {
         href={route}
         className={btnClass('en')}
         locale={'en'}
+        onClick={() => window.location.reload()}
       >
         ENG
       </Link>
@@ -25,6 +27,7 @@ const QrbLanguage = () => {
         href={route}
         className={btnClass('ru')}
         locale={'ru'}
+        onClick={() => window.location.reload()}
       >
         РУС
       </Link>
