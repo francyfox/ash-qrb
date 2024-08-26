@@ -1,8 +1,6 @@
-import {
-  createUser,
-  getUserByPhone,
-} from '@root/module/security/security.repository'
+import { createUser, getUserByPhone } from '@root/module/security/security.repository'
 import type { ElysiaHandler } from '@root/module/security/security.types'
+
 export const handlerSignIn: ElysiaHandler = async ({
   jwt,
   cookie: { auth },

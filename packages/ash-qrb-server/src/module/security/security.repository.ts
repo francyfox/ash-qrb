@@ -1,6 +1,7 @@
 import { env } from '@root/env'
 import { db } from '@root/module/db/db'
-import { TUser, usersSchema } from '@root/module/users/users.schema'
+import { trimPhoneNumber } from '@root/module/users/user.utils';
+import { type TUser, usersSchema } from '@root/module/users/users.schema'
 import { eq } from 'drizzle-orm'
 import QRCode from 'qrcode'
 
@@ -34,6 +35,7 @@ export const createUser = async ({ body, error }: PostParameters) => {
   const bodyFields = body as any
   // @ts-ignore
   bodyFields.password = await Bun.password.hash(bodyFields.password.toString())
+  bodyFields.phone = trimPhoneNumber(bodyFields.phone)
 
   try {
     // @ts-ignore

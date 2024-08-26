@@ -7,6 +7,7 @@ import '@fontsource-variable/exo-2'
 import QrbLoader from '@root/components/ui/qrb-loader/QrbLoader';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AnimatePresence } from 'framer-motion'
+import { Provider } from 'jotai';
 import { type AbstractIntlMessages, NextIntlClientProvider } from 'next-intl';
 import { Router, useRouter } from 'next/router';
 import { useEffect, useState } from 'react'
@@ -51,17 +52,19 @@ function MyApp({ Component, pageProps, messages }: AppProps & { messages: Abstra
       timeZone={'Asia/Almaty'}
       onError={(error) => console.log(error)}
     >
-      <QueryClientProvider client={reactQueryClient}>
-        <Layout>
-          <AnimatePresence
-            initial={false}
-            mode="wait"
-            onExitComplete={() => window.scrollTo(0, 0)}
-          >
-            <Component {...pageProps} key={router.asPath}/>
-          </AnimatePresence>
-        </Layout>
-      </QueryClientProvider>
+      <Provider>
+        <QueryClientProvider client={reactQueryClient}>
+          <Layout>
+            <AnimatePresence
+              initial={false}
+              mode="wait"
+              onExitComplete={() => window.scrollTo(0, 0)}
+            >
+              <Component {...pageProps} key={router.asPath}/>
+            </AnimatePresence>
+          </Layout>
+        </QueryClientProvider>
+      </Provider>
     </NextIntlClientProvider>
   )
 }

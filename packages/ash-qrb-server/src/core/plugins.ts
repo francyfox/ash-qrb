@@ -9,7 +9,7 @@ import { env } from '@root/env'
 import { Elysia } from 'elysia'
 // @ts-ignore
 import { ip } from 'elysia-ip'
-import { rateLimit } from 'elysia-rate-limit'
+// import { rateLimit } from 'elysia-rate-limit'
 
 const logPath = join(process.cwd(), 'log')
 
@@ -34,5 +34,5 @@ export const AppPlugins = new Elysia()
   .use(logger({ stream }))
   .use(fileLogger({ file: `${logPath}/app.log` }))
   .use(ip({ checkHeaders: ['X-Forwarded-For', 'X-Real-IP'] }))
-  .use(rateLimit())
+  // .use(rateLimit())
   .use(pluginTrace(log))

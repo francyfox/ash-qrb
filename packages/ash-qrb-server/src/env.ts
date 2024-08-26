@@ -11,6 +11,7 @@ const envVariables = t.Object({
   RUNTIME: t.Union([t.Literal('bun'), t.Literal('edge')], { default: 'bun' }),
   NODE_DEBUG: t.String({ default: '' }),
   XATA_DB_PG_HOST: t.String(),
+  XATA_API_KEY: t.String(),
   JWT_SECRET_KEY: t.String(),
   CLIENT_URL: t.String({ format: 'uri' }),
 })

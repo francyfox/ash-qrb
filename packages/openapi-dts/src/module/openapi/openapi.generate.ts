@@ -1,11 +1,9 @@
 import { existsSync, mkdir } from 'node:fs'
 import { join } from 'node:path'
 import openapiValidate from '@root/module/openapi/openapi-validate'
-import openapiTS, { astToString } from 'openapi-typescript'
+import openapiTS, { astToString } from 'openapi-typescript';
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-
-;(BigInt.prototype as any).toJSON = function () {
+(BigInt.prototype as any).toJSON = function () {
   return this.toString()
 }
 //

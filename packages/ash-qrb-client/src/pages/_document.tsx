@@ -12,8 +12,14 @@ export default function Document(params: any) {
     <Html lang={currentLocale}>
       <Head />
       <body>
-        <Main />
-        <NextScript />
+      <style>
+        {'body {\n' +
+          '        background - color: black;\n' +
+          '      }'}
+      </style>
+
+      <Main/>
+      <NextScript/>
       </body>
     </Html>
   )
