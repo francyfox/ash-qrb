@@ -7,6 +7,7 @@ Backend: Elysia.js
 - [DB diagram](https://dbdiagram.io/d/ash-qrb-66cda5f5cf8e2d1d1cfa2958)
 - [JIRA](https://hellizart.atlassian.net/jira/software/projects/QRB/boards/1)
 
+
 Приложение для создания бэйджей с QR-кодом. Выполняется в рамках освоение react + next. В рамках
 выдуманного кейса, приложение делается для продавцов на крупных рынков, которым часто приходится
 расплачиваться через kaspi pay или halyq. Это middleware приложение для перенаправления на
