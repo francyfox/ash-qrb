@@ -1,8 +1,5 @@
 # Elysia with Bun runtime
 
-- [DB diagram](https://dbdiagram.io/d/ash-qrb-66cda5f5cf8e2d1d1cfa2958)
-- 
-
 ## Getting Started
 To get started with this template, simply paste this command into your terminal:
 ```bash
