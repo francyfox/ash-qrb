@@ -1,18 +1,20 @@
+import type { TObject } from '@sinclair/typebox';
 import { Value } from '@sinclair/typebox/value';
 import getConfig from 'next/config';
-import { TObject } from '@sinclair/typebox';
 
+// biome-ignore lint/suspicious/noExplicitAny: its may be any
 export const showEnvErrors = (envSchema: TObject<any>, parsed: unknown) => {
   // @ts-ignore
   const errors = [...Value.Errors(envSchema, parsed)];
   const computedErrorMessages: Record<string, string[]> = {};
-  errors.forEach(({ path, message }) => {
+
+  for (const { path, message } of errors) {
     const envVarName = path.replace(/^\//, '');
     if (!computedErrorMessages[envVarName]) {
       computedErrorMessages[envVarName] = [];
     }
     computedErrorMessages[envVarName].push(message);
-  });
+  }
 
   const errorTextParts: string[] = [
     'Invalid environment variables',
@@ -23,6 +25,7 @@ export const showEnvErrors = (envSchema: TObject<any>, parsed: unknown) => {
 
   throw new Error(errorTextParts.join('\n'));
 };
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const parseENV = (envSchema: TObject<any>) => {
   const { publicRuntimeConfig } = getConfig();
   const config = publicRuntimeConfig ?? process.env;
