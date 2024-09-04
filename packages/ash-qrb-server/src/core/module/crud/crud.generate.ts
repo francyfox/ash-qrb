@@ -1,14 +1,11 @@
-import {
-  capitalized,
-  defaultItemResponse,
-  defaultItemsResponse,
-  singular,
-} from '@root/utils'
+import { defaultError } from '@root/core/module/error/error';
+import { ERROR_DB_TRANSACTION, ERROR_NOT_FOUND } from '@root/core/module/error/error.const';
+import { usersSelectSchema } from '@root/module/users/users.schema';
+import { defaultItemResponse, defaultItemsResponse } from '@root/utils'
 import { eq } from 'drizzle-orm'
 import type { AnyPgTable } from 'drizzle-orm/pg-core'
 import type { PgliteDatabase } from 'drizzle-orm/pglite'
-import type { XataHttpDatabase } from 'drizzle-orm/xata-http/driver'
-import { createInsertSchema, createSelectSchema } from 'drizzle-typebox'
+import { createInsertSchema } from 'drizzle-typebox'
 import { Elysia, t } from 'elysia'
 
 type CrudParametersIncludeAndExclude =
@@ -74,6 +71,7 @@ export class CrudApi {
   getAll(name: string, plugin: Elysia, schema: AnyPgTable) {
     plugin.get(
       `/${name}`,
+      // @ts-ignore
       async ({ error }) => {
         try {
           const items = await this.db.select().from(schema)
@@ -81,27 +79,26 @@ export class CrudApi {
           return defaultItemsResponse(items)
         } catch (e) {
           return error(
-            400,
-            `Cant select collection from db. Error: ${(e as Error).message}`,
+            '404',
+            {
+              ...ERROR_DB_TRANSACTION,
+             message: `Cant select collection from db. Error: ${(e as Error).message}`
+            }
           )
         }
       },
+
       {
+        response: {
+          '200': t.Object({
+            items: t.Array(usersSelectSchema),
+            count: t.Number()
+          }),
+          '404': t.Object(defaultError),
+        },
         detail: {
           tags: [name],
           description: `Get ${name} collection`,
-          responses: {
-            '200': {
-              description: 'Successful response',
-              $ref: `#/components/schemas/${name}Many`,
-            },
-            '400': {
-              description: 'Error response',
-            },
-            '401': {
-              $ref: '#/components/responses/Unauthorized',
-            },
-          },
         },
       },
     )
@@ -109,6 +106,7 @@ export class CrudApi {
   getById(name: string, plugin: Elysia, schema: AnyPgTable) {
     plugin.get(
       `/${name}/:id`,
+      // @ts-ignore
       async ({ params, error }) => {
         const { id } = params
 
@@ -119,11 +117,16 @@ export class CrudApi {
             // biome-ignore lint/suspicious/noExplicitAny: any item have id
             .where(eq((schema as any).id, id))
 
-          return defaultItemResponse(item)
+          if (!item[0]) return error('404', ERROR_NOT_FOUND)
+
+          return defaultItemResponse(item[0])
         } catch (e) {
           return error(
-            400,
-            `Cant select item id ${id} from ${name}. Error: ${(e as Error).message}`,
+            '400',
+            {
+              ...ERROR_DB_TRANSACTION,
+              message: `Cant select item id ${id} from ${name}. Error: ${(e as Error).message}`
+            },
           )
         }
       },
@@ -131,24 +134,16 @@ export class CrudApi {
         params: t.Object({
           id: t.Numeric(),
         }),
+        response: {
+          '200': t.Object({
+            item: usersSelectSchema
+          }),
+          '400': t.Object(defaultError),
+          '404': t.Object(defaultError),
+        },
         detail: {
           tags: [name],
           description: `Get single item from ${name} by id`,
-          responses: {
-            '200': {
-              description: 'Successful response',
-              $ref: `#/components/schemas/${name}One`,
-            },
-            '400': {
-              description: 'Error response',
-            },
-            '401': {
-              $ref: '#/components/responses/Unauthorized',
-            },
-            '404': {
-              $ref: '#/components/responses/NotFound',
-            },
-          },
         },
       },
     )
