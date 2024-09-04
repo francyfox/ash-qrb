@@ -1,18 +1,6 @@
-import { jwt } from '@elysiajs/jwt'
-import { env } from '@root/env'
-import {
-  handlerProfile,
-  handlerSignIn,
-  handlerSignOut,
-  handlerSignUp,
-} from '@root/module/security/security.handler'
-import { createRandomUser } from '@root/module/users/users.fake'
-import {
-  usersInsertSchema,
-  usersSchema,
-  usersSelectSchema,
-} from '@root/module/users/users.schema'
-import { createInsertSchema } from 'drizzle-typebox'
+import { defaultError } from '@root/core/module/error/error';
+import { handlerProfile, handlerSignIn, handlerSignOut, handlerSignUp } from '@root/module/security/security.handler'
+import { usersInsertSchema, usersSelectSchema } from '@root/module/users/users.schema'
 import { Elysia, t } from 'elysia'
 
 export const securityGroup = (config?: { prefix: string }) => {
@@ -36,7 +24,10 @@ export const securityGroup = (config?: { prefix: string }) => {
                 phone: t.String(),
                 password: t.String(),
               }),
-              response: t.Object({}),
+              response: {
+                '201': t.Unknown(),
+                '403': t.Object(defaultError)
+              },
               detail: {
                 tags: ['auth'],
                 description: 'Auth as user',
@@ -45,9 +36,11 @@ export const securityGroup = (config?: { prefix: string }) => {
             // @ts-ignore
             .post('/sign-up', handlerSignUp, {
               body: usersInsertSchema,
-              response: t.Object({
-                item: usersSelectSchema,
-              }),
+              response: {
+                '201': t.Object({
+                  item: usersSelectSchema
+                }),
+              },
               detail: {
                 tags: ['auth'],
                 description: 'Create a new user',

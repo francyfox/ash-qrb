@@ -81,8 +81,8 @@ export class CrudApi {
           return error(
             '404',
             {
-              ...ERROR_DB_TRANSACTION,
-             message: `Cant select collection from db. Error: ${(e as Error).message}`
+              name: ERROR_DB_TRANSACTION.name,
+              message: `Cant select collection from db. Error: ${(e as Error).message}`
             }
           )
         }
@@ -124,7 +124,7 @@ export class CrudApi {
           return error(
             '400',
             {
-              ...ERROR_DB_TRANSACTION,
+              name: ERROR_DB_TRANSACTION.name,
               message: `Cant select item id ${id} from ${name}. Error: ${(e as Error).message}`
             },
           )
@@ -152,32 +152,36 @@ export class CrudApi {
   add(name: string, plugin: Elysia, schema: AnyPgTable) {
     plugin.post(
       `/${name}`,
+      // @ts-ignore
       async ({ body, error }) => {
         try {
+          // TODO: check if exist? CONFLICT ERROR?
+          // const exist = await this.db.select().from(schema).where(eq((schema as any).id, id))
           const item = await this.db.insert(schema).values(body)
 
           return defaultItemResponse(item)
         } catch (e) {
           return error(
-            400,
-            `Cant insert item to ${name}. Error: ${(e as Error).message}`,
+            '400',
+            {
+              name: ERROR_DB_TRANSACTION.name,
+              message: `Cant insert item to ${name}. Error: ${(e as Error).message}`
+            },
           )
         }
       },
       {
+        response: {
+          '201': t.Object({
+            item: usersSelectSchema
+          }),
+          '400': t.Object(defaultError)
+        },
         // @ts-ignore
         body: createInsertSchema(schema),
         detail: {
           tags: [name],
           description: `Insert item to ${name}`,
-          responses: {
-            '201': {
-              description: 'Successful response. Item created',
-            },
-            '400': {
-              description: 'Error response',
-            },
-          },
         },
       },
     )
@@ -186,6 +190,7 @@ export class CrudApi {
   deleteById(name: string, plugin: Elysia, schema: AnyPgTable) {
     plugin.delete(
       `/${name}/:id`,
+      // @ts-ignore
       async ({ params, error }) => {
         const { id } = params
 
@@ -196,11 +201,16 @@ export class CrudApi {
             .where(eq((schema as any).id, id))
             .returning()
 
-          return defaultItemResponse(item)
+          if (!item[0]) return error('404', ERROR_NOT_FOUND)
+
+          return defaultItemResponse(item[0])
         } catch (e) {
           return error(
-            400,
-            `Cant delete item id ${id} from ${name}. Error: ${(e as Error).message}`,
+            '400',
+            {
+              name: ERROR_DB_TRANSACTION.name,
+              message: `Cant delete item id ${id} from ${name}. Error: ${(e as Error).message}`
+            }
           )
         }
       },
@@ -208,17 +218,16 @@ export class CrudApi {
         params: t.Object({
           id: t.Numeric(),
         }),
+        response: {
+          '200': t.Object({
+            item: usersSelectSchema
+          }),
+          '404': t.Object(defaultError),
+          '400': t.Object(defaultError),
+        },
         detail: {
           tags: [name],
           description: `Delete item from ${name}`,
-          responses: {
-            '200': {
-              description: 'Successful response',
-            },
-            '400': {
-              description: 'Error response',
-            },
-          },
         },
       },
     )
@@ -227,7 +236,9 @@ export class CrudApi {
   patchById(name: string, plugin: Elysia, schema: AnyPgTable) {
     plugin.patch(
       `/${name}/:id`,
+      // @ts-ignore
       async ({ params, body, error }) => {
+        const { id } = params
         try {
           const item = await this.db
             .update(schema)
@@ -236,11 +247,16 @@ export class CrudApi {
             // @ts-ignore
             .returning({ updatedId: schema.id })
 
-          return defaultItemResponse(item)
+          if (!item[0]) return error('404', ERROR_NOT_FOUND)
+
+          return defaultItemResponse(item[0])
         } catch (e) {
           return error(
-            400,
-            `Cant insert item to ${name}. Error: ${(e as Error).message}`,
+            '400',
+            {
+              name: ERROR_DB_TRANSACTION.name,
+              message: `Cant patch item id ${id} from ${name}. Error: ${(e as Error).message}`
+            },
           )
         }
       },
@@ -248,17 +264,16 @@ export class CrudApi {
         params: t.Object({
           id: t.Numeric(),
         }),
+        response: {
+          '200': t.Object({
+            item: usersSelectSchema
+          }),
+          '404': t.Object(defaultError),
+          '400': t.Object(defaultError),
+        },
         detail: {
           tags: [name],
           description: `Patch item from ${name}`,
-          responses: {
-            '200': {
-              description: 'Successful response',
-            },
-            '400': {
-              description: 'Error response',
-            },
-          },
         },
       },
     )
