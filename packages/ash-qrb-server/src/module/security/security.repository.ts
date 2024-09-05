@@ -1,9 +1,7 @@
-import { env } from '@root/env'
 import { db } from '@root/module/db/db'
 import { trimPhoneNumber } from '@root/module/users/user.utils';
 import { type TUser, usersSchema } from '@root/module/users/users.schema'
 import { eq } from 'drizzle-orm'
-import QRCode from 'qrcode'
 
 interface PostParameters {
   body: { phone: string }
@@ -38,18 +36,12 @@ export const createUser = async ({ body, error }: PostParameters) => {
   bodyFields.phone = trimPhoneNumber(bodyFields.phone)
 
   try {
-    // @ts-ignore
-    const user = await db.insert(usersSchema).values(bodyFields).returning()
-    const qr = await QRCode.toDataURL(
-      `${env.CLIENT_URL}/users/${user[0].id}/badge`,
-    )
-    const updatedUser = await db
-      .update(usersSchema)
-      .set({ qr })
-      .where(eq(usersSchema.id, user[0].id))
+    const user = await db
+      .insert(usersSchema)
+      .values(bodyFields)
       .returning()
 
-    return updatedUser[0]
+    return user
   } catch (e) {
     return error(400, `Cant create user. Error: ${(e as Error).message}`)
   }

@@ -25,7 +25,7 @@ const crud = new CrudApi(db, [
   { schema: usersSchema, exclude: ['add'] },
 ])
 
-const crudRoutes = await crud.generate({ prefix: API_PREFIX })
+const crudRoutes = crud.generate({prefix: API_PREFIX})
 const securityRoutes = securityGroup({ prefix: API_PREFIX })
 
 const app = new Elysia({ prefix: '/api' })

@@ -1,3 +1,4 @@
+import { BAD_REQUEST, ERROR_UNAUTHORIZED, INTERNAL } from '@root/core/module/error/error.const';
 import { createUser, getUserByPhone } from '@root/module/security/security.repository'
 import type { ElysiaHandler } from '@root/module/security/security.types'
 
@@ -13,7 +14,10 @@ export const handlerSignIn: ElysiaHandler = async ({
   const valid = await Bun.password.verify(password, (user as any).password)
 
   if (!valid) {
-    return error(400, 'Bad auth. Wrong password')
+    return error('400', {
+      name: BAD_REQUEST,
+      message: 'Bad auth. Wrong password'
+    })
   }
 
   auth.set({
@@ -43,28 +47,30 @@ export const handlerSignUp: ElysiaHandler = async ({
 
   return { item: user }
 }
-export const handlerSignOut: ElysiaHandler = async ({ cookie, set }) => {
+export const handlerSignOut: ElysiaHandler = async ({ error, cookie }) => {
   try {
     // @ts-ignore
     cookie?.auth?.remove()
-  } catch (error) {
-    set.status = 500
-    return error
+  } catch (e) {
+    return error('500', {
+      name: INTERNAL,
+      message: 'Cant remove cookie'
+    })
   }
 
-  return 'Cookie auth removed'
+  return {
+    message: 'Cookie auth removed'
+  }
 }
 export const handlerProfile: ElysiaHandler = async ({
   jwt,
   set,
+  error,
   cookie: { auth },
 }) => {
   const profile = await jwt.verify(auth.value)
 
-  if (!profile) {
-    set.status = 401
-    return 'Unauthorized'
-  }
+  if (!profile) return error('401', ERROR_UNAUTHORIZED)
 
   return profile
 }

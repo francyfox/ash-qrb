@@ -1,7 +1,7 @@
 export const usersRoles = {
   admin: 400,
-  manager: 300,
-  costumer: 200,
+  lead: 300,
+  manager: 200,
   client: 100,
 }
 

@@ -1,12 +1,16 @@
 import { usersSchema } from '@root/module/users/users.schema'
 import { generateId } from '@root/utils'
 import { relations, sql } from 'drizzle-orm'
-import { pgTable, serial, text, varchar } from 'drizzle-orm/pg-core'
+import { bigint, integer, pgTable, serial, text, varchar } from 'drizzle-orm/pg-core'
+
+// @ts-ignore
 export const companiesDefaultColumns = {
   id: serial('id').primaryKey(),
-  publicId: text('publicId').default(generateId()).notNull(),
+  publicId: text('publicId').unique().default(generateId()).notNull(),
+  leadId: integer('lead_id').notNull(), // TODO: cant use one-to-one
   name: varchar('name', { length: 50 }).notNull(),
-  payments: text('payments').array().notNull().default(sql`ARRAY[]::text[]`),
+  bin: bigint('bin', { mode: 'bigint'}),
+  registerAt: text('register_at'),
   createdAt: text('created_at').default(sql`now()`),
   updatedAt: text('updated_at').default(sql`now()`),
 }

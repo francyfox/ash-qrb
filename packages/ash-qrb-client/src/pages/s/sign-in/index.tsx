@@ -2,9 +2,13 @@ import SectionHomeTitle from '@root/components/page/home/SectionHomeTitle'
 import QrbFormSignIn from '@root/components/page/sign-in/QrbFormSignIn'
 import { useTranslations } from 'next-intl';
 
+export const trimPhoneNumber = (value: string) => value.replace(/[(/)+-/\s]/g, '')
+
 export default function SignIn() {
   const t = useTranslations()
 
+  const s = trimPhoneNumber('+ 7 (776) 453-88-86')
+  console.log(s.length, s)
   return (
     <>
       <SectionHomeTitle title={t('page.signin.h1')} />
