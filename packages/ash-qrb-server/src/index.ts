@@ -7,6 +7,7 @@ import { companiesSchema } from '@root/module/companies/companies.schema'
 import { db } from '@root/module/db/db'
 import { paymentsSchema } from '@root/module/payments/payments.schema'
 import { securityGroup } from '@root/module/security/security.group'
+import { securityMiddleware } from '@root/module/security/security.middleware';
 import SwaggerConfig from '@root/module/swagger/swagger.config'
 import { usersSchema } from '@root/module/users/users.schema'
 import { Elysia } from 'elysia'
@@ -33,6 +34,7 @@ const app = new Elysia({ prefix: '/api' })
   // @ts-ignore
   .use(swagger(SwaggerConfig))
   .use(crudRoutes)
+  .use(securityMiddleware)
   .use(securityRoutes)
   .get('/health', () => 'ok', {
     detail: {

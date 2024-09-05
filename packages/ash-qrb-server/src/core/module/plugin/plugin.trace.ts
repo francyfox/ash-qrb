@@ -4,6 +4,7 @@ import type pretty from 'pino-pretty'
 
 // @ts-ignore
 export const pluginTrace = (log: Logger<pretty.PrettyStream>) => {
+  // @ts-ignore
   return new Elysia().trace(async ({ handle }) => {
     const { time, end, children } = await handle
 
@@ -16,3 +17,4 @@ export const pluginTrace = (log: Logger<pretty.PrettyStream>) => {
     log.trace('beforeHandle took', (await end) - time)
   })
 }
+// TODO: salty creates special plugin for trace

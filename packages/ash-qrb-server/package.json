@@ -25,6 +25,7 @@
     "@elysiajs/lucia-auth": "^1.1.0",
     "@elysiajs/swagger": "^1.1.0",
     "@elysiajs/websocket": "^0.2.8",
+    "@lucia-auth/adapter-drizzle": "^1.1.0",
     "@netlify/functions": "^2.8.1",
     "@types/qrcode": "^1.5.5",
     "defu": "^6.1.4",
