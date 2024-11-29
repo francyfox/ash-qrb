@@ -19,5 +19,9 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@nuxt/ui": "^2.19.2",
+    "nuxt": "^3.14.1592"
+  }
 }
