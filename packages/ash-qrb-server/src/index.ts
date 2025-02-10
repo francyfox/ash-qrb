@@ -1,16 +1,15 @@
-import { swagger } from '@elysiajs/swagger'
-import { CrudApi } from '@root/core/module/crud/crud.generate'
-import { log } from '@root/core/module/plugin/plugin.logger'
-import { AppPlugins } from '@root/core/plugins'
-import { env } from '@root/env'
-import { companiesSchema } from '@root/module/companies/companies.schema'
-import { db } from '@root/module/db/db'
-import { paymentsSchema } from '@root/module/payments/payments.schema'
-import { securityGroup } from '@root/module/security/security.group'
-import { securityMiddleware } from '@root/module/security/security.middleware';
-import SwaggerConfig from '@root/module/swagger/swagger.config'
-import { usersSchema } from '@root/module/users/users.schema'
-import { Elysia } from 'elysia'
+import { swagger } from "@elysiajs/swagger";
+import { CrudApi } from "@root/core/module/crud/crud.generate";
+import { log } from "@root/core/module/plugin/plugin.logger";
+import { AppPlugins } from "@root/core/plugins";
+import { env } from "@root/env";
+import { companiesSchema } from "@root/module/companies/companies.schema";
+import { db } from "@root/module/db/db";
+import { paymentsSchema } from "@root/module/payments/payments.schema";
+import { securityGroup } from "@root/module/security/security.group";
+import SwaggerConfig from "@root/module/swagger/swagger.config";
+import { usersSchema } from "@root/module/users/users.schema";
+import { Elysia } from "elysia";
 
 declare global {
   var count: number
@@ -34,7 +33,6 @@ const app = new Elysia({ prefix: '/api' })
   // @ts-ignore
   .use(swagger(SwaggerConfig))
   .use(crudRoutes)
-  .use(securityMiddleware)
   .use(securityRoutes)
   .get('/health', () => 'ok', {
     detail: {

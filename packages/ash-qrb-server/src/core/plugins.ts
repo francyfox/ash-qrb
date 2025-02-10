@@ -1,14 +1,15 @@
-import { exists, mkdir } from 'node:fs/promises'
-import { join } from 'node:path'
-import { fileLogger, logger } from '@bogeychan/elysia-logger'
-import { cors } from '@elysiajs/cors'
-import { jwt } from '@elysiajs/jwt'
-import { stream, log } from '@root/core/module/plugin/plugin.logger'
-import { pluginTrace } from '@root/core/module/plugin/plugin.trace'
-import { env } from '@root/env'
-import { Elysia } from 'elysia'
+import { exists, mkdir } from "node:fs/promises";
+import { join } from "node:path";
+import { fileLogger, logger } from "@bogeychan/elysia-logger";
+import { cors } from "@elysiajs/cors";
+import { jwt } from "@elysiajs/jwt";
+import { stream, log } from "@root/core/module/plugin/plugin.logger";
+import { pluginTrace } from "@root/core/module/plugin/plugin.trace";
+import { env } from "@root/env";
+import { Elysia } from "elysia";
 // @ts-ignore
-import { ip } from 'elysia-ip'
+import { ip } from "elysia-ip";
+import { pluginGracefulServer } from "graceful-server-elysia";
 // import { rateLimit } from 'elysia-rate-limit'
 
 const logPath = join(process.cwd(), 'log')
@@ -25,6 +26,7 @@ export const AppPlugins = new Elysia()
       allowedHeaders: ['Content-Type', 'Authorization'],
     }),
   )
+  .use(pluginGracefulServer())
   .use(
     jwt({
       name: 'jwt',

@@ -1,3 +1,5 @@
+import type { Auth } from 'lucia'
+
 interface ElysiaHandlerParameters {
   jwt: {
     sign: (payload: unknown) => Promise<string>
@@ -20,5 +22,6 @@ interface ElysiaHandlerParameters {
   body: { phone: string; password: string }
   error: (status: string | number, message: string | object) => void
   response: unknown | undefined
+  user: Auth
 }
 export type ElysiaHandler = (params: ElysiaHandlerParameters) => void
