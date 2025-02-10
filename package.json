@@ -5,12 +5,15 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint:fix": "bun lint --apply",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky"
   },
   "devDependencies": {
     "prettier": "^3.4.2",
     "turbo": "^2.4.0",
-    "typescript": "5.7.3"
+    "typescript": "5.7.3",
+    "husky": "^9.1.7"
   },
   "engines": {
     "node": ">=22"
