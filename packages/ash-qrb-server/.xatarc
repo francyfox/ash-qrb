@@ -1,6 +1,0 @@
-{
-  "databaseURL": "https://Danil-Golota-s-workspace-oddvjb.eu-west-1.xata.sh/db/ashqrb",
-  "codegen": {
-    "output": "src/xata.ts"
-  }
-}
