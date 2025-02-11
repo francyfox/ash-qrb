@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
-    "lib": [
-      "ESNext"
-    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@services/*": ["./src/services/*"],
+      "@db/*": ["./src/db/*"]
+    },
+    "lib": ["ESNext"],
     "module": "ESNext",
     "target": "ESNext",
     "moduleResolution": "Bundler",
@@ -15,7 +18,5 @@
     "allowImportingTsExtensions": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }

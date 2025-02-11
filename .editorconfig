@@ -1,6 +1,7 @@
 [{*.yml,.yaml}]
 indent_style = space
 indent_size = 2
+ij_javascript_use_double_quotes = false
 
 [{*.ts,*.json}]
 indent_style = space
