@@ -1,7 +1,7 @@
 import { config } from '@/config.ts'
-import { client } from '@/db'
+import { client } from '@/core/db/index.ts'
+import { posthog } from '@/core/services/posthog.ts'
 import { app } from '@/server.ts'
-import { posthog } from '@services/posthog.ts'
 
 const signals = ['SIGINT', 'SIGTERM']
 
@@ -23,8 +23,11 @@ process.on('unhandledRejection', (error) => {
 })
 
 await client.connect()
-console.log('🗄 Database was connected!')
+console.log('🗄  Database was connected!')
 
-app.listen(config.PORT, () =>
-  console.log(`🦊 Server started at ${app.server?.url.origin}`),
-)
+app.listen(config.PORT, () => {
+  console.log(
+    `🕮  Swagger is active at: http://${app.server?.hostname}:${app.server?.port}/swagger`,
+  )
+  console.log(`🦊 Server started at ${app.server?.url.origin}`)
+})

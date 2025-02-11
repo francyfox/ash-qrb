@@ -2,8 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
-      "@services/*": ["./src/services/*"],
-      "@db/*": ["./src/db/*"]
+      "@module/*": ["./src/module/*"]
     },
     "lib": ["ESNext"],
     "module": "ESNext",
