@@ -71,8 +71,9 @@ coverage
 # Turbo
 .turbo
 
-# Vercel
+# Deploy
 .vercel
+.netlify
 
 # Build Outputs
 .next/

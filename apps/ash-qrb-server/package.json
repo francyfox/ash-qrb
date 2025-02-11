@@ -1,0 +1,36 @@
+{
+  "name": "ash-qrb-server",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/index.ts",
+    "start": "NODE_ENV=production bun run ./src/index.ts",
+    "lint": "bun x @biomejs/biome check src",
+    "generate": "bun x drizzle-kit generate",
+    "push": "bun x drizzle-kit push",
+    "migrate": "bun x drizzle-kit migrate",
+    "studio": "bun x drizzle-kit studio"
+  },
+  "dependencies": {
+    "elysia": "^1.2.10",
+    "env-var": "^7.5.0",
+    "drizzle-orm": "^0.38.3",
+    "pg": "^8.13.1",
+    "@elysiajs/cors": "^1.2.0",
+    "@elysiajs/jwt": "^1.2.0",
+    "@elysiajs/server-timing": "^1.2.0",
+    "@elysiajs/swagger": "^1.2.0",
+    "elysia-autoload": "^1.5.0",
+    "@bogeychan/elysia-logger": "^0.1.7",
+    "arctic": "^3.0.0",
+    "elysia-oauth2": "^2.0.0",
+    "posthog-node": "^4.3.2",
+    "@verrou/core": "^0.5.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "@types/bun": "^1.1.14",
+    "@biomejs/biome": "^1.9.4",
+    "drizzle-kit": "^0.30.1",
+    "@types/pg": "^8.11.10"
+  }
+}
