@@ -1,7 +1,7 @@
 import { db } from '@/core/db'
 import { asc, desc } from 'drizzle-orm'
 import type { PgTableWithColumns } from 'drizzle-orm/pg-core/table'
-import type { BuildSchema } from 'drizzle-typebox/schema.types.internal'
+import type { BuildSchema } from 'drizzle-typebox'
 import { t } from 'elysia'
 
 export interface IResponseOptions {
