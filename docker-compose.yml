@@ -14,7 +14,7 @@ services:
     networks:
       - local
     logging:
-        driver: "none"
+      driver: "none"
 
   postgres:
     container_name: ash-qrb-server-postgres

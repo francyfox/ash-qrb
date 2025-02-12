@@ -3,25 +3,27 @@ import { asc, desc } from 'drizzle-orm'
 import type { PgTableWithColumns } from 'drizzle-orm/pg-core/table'
 import { eq } from 'drizzle-orm/sql/expressions/conditions'
 import type { BuildSchema } from 'drizzle-typebox'
-import { t } from 'elysia'
+import { type InputSchema, t } from 'elysia'
+
+export interface IResponseOptionOrder {
+  by: 'ask' | 'desk'
+  value: string
+}
 
 export interface IResponseOptions {
   page: number
   pageSize: number
-  order: {
-    by: string
-    value: string
-  }
+  order: IResponseOptionOrder
 }
 
 export const getCollectionItems = async (
-  collection: PgTableWithColumns<any>,
+  collection: any,
   options: IResponseOptions,
 ) => {
-  const order =
-    options.order.by === 'desc'
-      ? desc(collection[options.order.value])
-      : asc(collection[options.order.value])
+  const isAsc = options.order.by === 'ask'
+  const order = isAsc
+    ? asc(collection[options.order.value])
+    : desc(collection[options.order.value])
   const items = await db
     .select()
     .from(collection)
@@ -38,7 +40,7 @@ export const getCollectionItems = async (
 export const getCollectionItemEqual = async (
   collection: PgTableWithColumns<any>,
   key: string,
-  value: string,
+  value: string | number,
 ) => {
   const item = await db
     .select()
@@ -50,13 +52,43 @@ export const getCollectionItemEqual = async (
   }
 }
 
-export const TGetCollectionItems = (selectSchema: BuildSchema<any, any, any>) =>
-  t.Object({
-    items: t.Array(selectSchema),
-    count: t.Number(),
-  })
+export const errorSchema = t.Object({
+  title: t.String(),
+  detail: t.String(),
+})
 
-export const TGetCollectionItem = (selectSchema: BuildSchema<any, any, any>) =>
-  t.Object({
-    item: t.Object(selectSchema),
-  })
+export const validationCollectionItems = (
+  selectSchema: any | BuildSchema<'select', any, any>,
+): InputSchema<never> => {
+  return {
+    query: t.Partial(
+      t.Object({
+        page: t.Number(),
+        pageSize: t.Number(),
+        order: t.Object({
+          by: t.Union([t.Literal('ask'), t.Literal('desc')]),
+        }),
+      }),
+    ),
+    response: {
+      200: t.Object({
+        items: t.Array(selectSchema),
+        count: t.Number(),
+      }),
+      500: errorSchema,
+    },
+  }
+}
+
+export const validationCollectionItem = (
+  selectSchema: any | BuildSchema<'select', any, any>,
+): InputSchema<never> => {
+  return {
+    response: {
+      200: t.Object({
+        item: selectSchema,
+      }),
+      500: errorSchema,
+    },
+  }
+}

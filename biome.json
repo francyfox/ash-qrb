@@ -44,7 +44,10 @@
   },
   "overrides": [
     {
-      "include": ["packages/**", "apps/**"]
+      "include": [
+        "packages/**",
+        "apps/**"
+      ]
     }
   ]
 }
