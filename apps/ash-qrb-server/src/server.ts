@@ -27,7 +27,15 @@ export const app = new Elysia()
       },
     }),
   )
-  .use(oauth2({}))
+  .use(
+    oauth2({
+      WorkOS: [
+        config.WORKOS_CLIENT_ID,
+        config.WORKOS_API_KEY,
+        'https://example.com/auth/google/callback',
+      ],
+    }),
+  )
   .use(cors())
   .use(jwt({ secret: config.JWT_SECRET }))
   .use(serverTiming())

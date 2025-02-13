@@ -7,7 +7,7 @@ import { usersSchema, usersSelectSchema } from '@/schema/user.ts'
 import type { ElysiaApp } from '@/server.ts'
 
 export default (app: ElysiaApp) =>
-  app.post(
+  app.get(
     '',
     async ({ query }) => {
       const options: IResponseOptions = {

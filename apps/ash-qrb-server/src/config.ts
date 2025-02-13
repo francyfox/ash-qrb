@@ -19,4 +19,11 @@ export const config = {
   POSTHOG_HOST: env.get('POSTHOG_HOST').default('localhost').asString(),
   LOCK_STORE: env.get('LOCK_STORE').default('memory').asEnum(['memory']),
   JWT_SECRET: env.get('JWT_SECRET').required().asString(),
+
+  WORKOS_ORGANISATION_ID: env
+    .get('WORKOS_ORGANISATION_ID')
+    .required()
+    .asString(),
+  WORKOS_CLIENT_ID: env.get('WORKOS_CLIENT_ID').required().asString(),
+  WORKOS_API_KEY: env.get('WORKOS_API_KEY').required().asString(),
 }
