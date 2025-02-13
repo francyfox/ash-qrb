@@ -10,6 +10,9 @@
     "migrate": "bun x drizzle-kit migrate",
     "studio": "bun x drizzle-kit studio"
   },
+  "exports": {
+    ".": "./src/server.ts"
+  },
   "dependencies": {
     "@gtramontina.com/elysia-error-handler": "1.0.1",
     "@tqman/nice-logger": "^1.1.1",
