@@ -20,10 +20,8 @@ export const config = {
   LOCK_STORE: env.get('LOCK_STORE').default('memory').asEnum(['memory']),
   JWT_SECRET: env.get('JWT_SECRET').required().asString(),
 
-  WORKOS_ORGANISATION_ID: env
-    .get('WORKOS_ORGANISATION_ID')
-    .required()
-    .asString(),
   WORKOS_CLIENT_ID: env.get('WORKOS_CLIENT_ID').required().asString(),
   WORKOS_API_KEY: env.get('WORKOS_API_KEY').required().asString(),
+
+  CLIENT_APP_URL: env.get('CLIENT_APP_URL').required().asString(),
 }

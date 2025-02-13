@@ -32,7 +32,7 @@ export const app = new Elysia()
       WorkOS: [
         config.WORKOS_CLIENT_ID,
         config.WORKOS_API_KEY,
-        'https://example.com/auth/google/callback',
+        'http://localhost:3000/s/auth/callback',
       ],
     }),
   )
