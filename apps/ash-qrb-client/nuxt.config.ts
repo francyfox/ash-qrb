@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: config,
   },
-  modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt'],
+  modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n'],
   postcss: {
     plugins: {
       tailwindcss: {},
