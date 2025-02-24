@@ -1,3 +1,12 @@
+<script setup lang="ts">
+import '@fontsource-variable/sofia-sans'
+import '@/assets/styles/styles.pcss'
+</script>
+
 <template>
-  <NuxtPage />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
+
+<style lang="css"></style>
