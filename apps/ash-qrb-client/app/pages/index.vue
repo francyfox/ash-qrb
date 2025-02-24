@@ -7,6 +7,10 @@ import DefaultCard from '~/components/cards/DefaultCard.vue'
     <div class="container">
       <DefaultCard title="test">
         test
+
+        <template #footer>
+          test
+        </template>
       </DefaultCard>
       <h1 class="text-4xl text-white">test</h1>
       <h2 class="font-sofia text-2xl text-pFawn">sssss</h2>
