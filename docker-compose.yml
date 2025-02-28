@@ -1,31 +1,42 @@
-version: "3.8"
-
 services:
-  elysia-app:
-    build:
-      context: .
-      dockerfile: ./docker/elysia/Dockerfile
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.elysia-demo-app.rule=Host(`api.ash-qrb.site`)"
-      - "traefik.http.services.elysia-demo-app.loadbalancer.server.port=3000"
-    networks:
-      - web
-    expose:
-      - "3000"
-
-  traefik:
-    image: "traefik:3.0"
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
     ports:
-      - "80:80"
-      - "8080:8080"
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - pgadmin-data:/var/lib/pgadmin
     networks:
-      - web
+      - local
+    logging:
+      driver: "none"
+
+  postgres:
+    container_name: ash-qrb-server-postgres
+    image: postgres:latest
+    shm_size: 128mb
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres}
+      PGDATA: /data/postgres
+      POSTGRES_HOST_AUTH_METHOD: 'trust'  #      only for develop
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - local
+
+volumes:
+  postgres_data:
+  pgadmin-data:
 
 networks:
-  web:
+  local: { }

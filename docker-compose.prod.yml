@@ -1,0 +1,25 @@
+services:
+  bot:
+    container_name: ash-qrb-server-bot
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+  postgres:
+    container_name: ash-qrb-server-postgres
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=ash-qrb-server
+      - POSTGRES_PASSWORD=Please-change-password
+      - POSTGRES_DB=ash-qrb-server
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+networks:
+  default: { }

@@ -1,21 +1,26 @@
 {
   "name": "ash-qrb",
-  "version": "1.0.0",
-  "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "bun --filter './packages/**/ash-qrb-*' dev",
-    "dev:server": "bun --filter './packages/ash-qrb-server' dev",
-    "dev:client": "bun --filter './packages/ash-qrb-client' dev",
-    "dev:generator": "bun --filter './packages/openapi-dts' dev"
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "lint:fix": "bun lint --apply",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22"
   },
-  "dependencies": {},
-  "devDependencies": { "@apidevtools/swagger-parser": "^10.1.0", "@faker-js/faker": "^8.4.1", "turbo": "^2.0.6", "typeconv": "^2.3.1" },
-  "packageManager": "bun@1.1.18"
+  "packageManager": "bun@1.2.3",
+  "workspaces": ["apps/*", "packages/*"],
+  "dependencies": {
+    "nanoid": "^5.0.9"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.0",
+    "turbo": "^2.4.1",
+    "typescript": "5.7.3",
+    "husky": "^9.1.7"
+  }
 }
