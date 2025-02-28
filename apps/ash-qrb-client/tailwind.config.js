@@ -1,9 +1,8 @@
 import { themeColorsTailwind } from './config'
 
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   theme: {
-    content: ['index.html', './src/**/*.{js,vue,ts,jsx,tsx}'],
     container: {
       center: true,
     },

@@ -1,23 +1,23 @@
 <script setup lang="ts">
 import DefaultCard from '~/components/cards/DefaultCard.vue'
+import LightCard from '~/components/cards/LightCard.vue'
 </script>
 
 <template>
-  <section class="section-auth">
+  <section class="section-auth flex flex-col">
     <div class="container">
-      <DefaultCard title="test">
-        test
+      <DefaultCard title="ash-qrb.org">
+        <LightCard>
+          
+        </LightCard>
 
         <template #footer>
           test
         </template>
       </DefaultCard>
-      <h1 class="text-4xl text-white">test</h1>
-      <h2 class="font-sofia text-2xl text-pFawn">sssss</h2>
     </div>
   </section>
 </template>
 
 <style scoped>
-
 </style>
