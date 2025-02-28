@@ -8,6 +8,7 @@ export const config = {
 
   PORT: env.get('PORT').default(4000).asPortNumber(),
   API_URL: env.get('API_URL').required().asUrlString(),
+  APP_VERSION: env.get('APP_VERSION').required().asString(),
   CLOUDINARY_CLOUD_NAME: env.get('CLOUDINARY_CLOUD_NAME').required().asString(),
 }
 
