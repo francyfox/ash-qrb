@@ -1,9 +1,8 @@
-import tailwindcss from 'tailwindcss'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { config } from './config'
 
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
+  compatibilityDate: '2025-03-03',
   devtools: { enabled: false },
   future: {
     compatibilityVersion: 4,
@@ -26,4 +25,7 @@ export default defineNuxtConfig({
       baseURL: `https://res.cloudinary.com/${config.CLOUDINARY_CLOUD_NAME}/image/upload/`,
     },
   },
+  i18n: {
+    vueI18n: './i18n.config.ts'
+  }
 })

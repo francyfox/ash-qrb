@@ -1,7 +1,10 @@
-import { themeColorsTailwind } from './config'
+import { themeColorsTailwind } from './theme'
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+/** @typedef { import('tailwindcss/defaultConfig') } DefaultConfig */
+/** @typedef { import('tailwindcss/defaultTheme') } DefaultTheme */
+
+/** @type { DefaultConfig & { theme: { extend: DefaultTheme } } } */
+export default {
   theme: {
     container: {
       center: true,

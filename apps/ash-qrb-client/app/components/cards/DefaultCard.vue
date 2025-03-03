@@ -6,7 +6,6 @@
   const slots = useSlots()
 
   const hasCardFooterSlot = !!slots['footer']
-  const hasCardContentSlot = !!slots['content']
 </script>
 
 <template>
@@ -16,10 +15,7 @@
         {{ title }}
       </div>
 
-      <div
-          v-if="hasCardContentSlot"
-          class="default-card-content"
-      >
+      <div class="default-card-content w-full flex flex-col items-center gap-5 pb-5">
         <slot />
       </div>
 

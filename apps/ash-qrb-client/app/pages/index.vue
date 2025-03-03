@@ -5,7 +5,7 @@ const config = useRuntimeConfig()
 <template>
   <section class="section-home h-full">
     <div class="container flex justify-center items-center h-full">
-      <main class="flex relative min-h-[500px] w-full justify-end max-w-lg text-s-old-lace bg-s-black-olive/70 overflow-hidden rounded-none sm:rounded-xl p-5">
+      <main class="flex relative min-h-[500px] w-full justify-end max-w-lg text-s-old-lace bg-s-black-olive overflow-hidden rounded-none sm:rounded-xl p-5">
         <div class="flex max-w-sm flex-col text-right gap-2">
           <div class="flex relative flex-col gap-2 z-5">
             <div class="text-4xl">Ash-qrb</div>

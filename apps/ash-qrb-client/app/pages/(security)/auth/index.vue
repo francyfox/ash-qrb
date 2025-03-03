@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import DefaultCard from '~/components/cards/DefaultCard.vue'
 import LightCard from '~/components/cards/LightCard.vue'
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -8,7 +10,9 @@ import LightCard from '~/components/cards/LightCard.vue'
     <div class="container">
       <DefaultCard title="ash-qrb.org">
         <LightCard>
-          
+          <span class="text-base text-s-black-olive font-sofia">
+            {{ t('test') }}
+          </span>
         </LightCard>
 
         <template #footer>
