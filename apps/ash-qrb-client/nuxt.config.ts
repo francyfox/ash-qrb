@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { config } from './config'
+import locales from './locales'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-03-03',
@@ -13,7 +14,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: config,
   },
-  modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n'],
+  modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/icon'],
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -26,6 +27,19 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    vueI18n: './i18n.config.ts'
-  }
+    lazy: true,
+    langDir: 'locales',
+    locales,
+    defaultLocale: 'en',
+    detectBrowserLanguage: false,
+    strategy: 'no_prefix',
+  },
+  icon: {
+    customCollections: [
+      {
+        prefix: 'ash',
+        dir: './app/assets/images/icons'
+      },
+    ],
+  },
 })
