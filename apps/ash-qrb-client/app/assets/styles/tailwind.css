@@ -1,0 +1,25 @@
+@import "tailwindcss" theme(static);
+@import "@nuxt/ui";
+
+@theme static {
+    --sofia-sans: 'Sofia Sans Variable', sans-serif;
+
+    --breakpoint-2xl: 1536px;
+    --breakpoint-xl: 1440px;
+    --breakpoint-lg: 1280px;
+    --breakpoint-md: 768px;
+    --breakpoint-sm: 560px;
+
+    --color-p-fawn: hsl(24, 70%, 67%);
+    --color-p-middle-red: hsl(16, 64%, 67%);
+    --color-s-purple-taupe: hsl(288, 3%, 28%);
+    --color-s-black-olive: hsl(12, 8%, 24%);
+    --color-s-misty-moss: hsl(50, 30%, 57%);
+    --color-s-dark-vanilla: hsl(38, 36%, 77%);
+    --color-s-champagne: hsl(48, 56%, 88%);
+    --color-s-old-lace: hsl(54, 59%, 93%);
+}
+
+.container {
+    @apply mx-auto;
+}

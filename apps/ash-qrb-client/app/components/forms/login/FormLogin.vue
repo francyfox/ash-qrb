@@ -26,12 +26,9 @@ async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
       class="form-login"
       @submit="onSubmit"
   >
-    <US
     <FormLoginProviders />
 
-    <UFormGroup name="email">
-      <UInput v-model="state.email" />
-    </UFormGroup>
+    <UInput v-model="state.email" />
   </UForm>
 </template>
 
