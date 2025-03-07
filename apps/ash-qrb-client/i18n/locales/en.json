@@ -1,3 +1,8 @@
 {
+  "formActionSignIn": "Sign In",
+  "formLoginEmail": "Email",
+  "formLoginPassword": "Password",
+  "formLoginPhone": "Phone",
+  "formLoginSwitchEmail": "Use email",
   "securityLoggedIn": "Login with"
 }

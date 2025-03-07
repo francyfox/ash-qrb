@@ -27,5 +27,8 @@
     "vue": "latest",
     "vue-router": "latest",
     "yup": "^1.6.1"
+  },
+  "devDependencies": {
+    "@iconify-json/lucide": "^1.2.28"
   }
 }

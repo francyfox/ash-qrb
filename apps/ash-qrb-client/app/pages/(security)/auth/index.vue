@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import DefaultCard from '~/components/cards/DefaultCard.vue'
-
-const { t } = useI18n()
+import FormLogin from '~/components/forms/login/FormLogin.vue'
+import FormLoginActions from '~/components/forms/login/FormLoginActions.vue'
 </script>
 
 <template>
@@ -9,12 +9,10 @@ const { t } = useI18n()
     <div class="container h-full">
       <div class="w-full min-h-[65vh] flex justify-center items-center">
         <DefaultCard title="ash-qrb.org">
-
-
-
+          <FormLogin />
 
           <template #footer>
-            test
+            <FormLoginActions />
           </template>
         </DefaultCard>
       </div>
