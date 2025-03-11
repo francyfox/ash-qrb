@@ -16,7 +16,7 @@ const { mediaQueries } = mediaStore
           name="i-lucide-rocket"
       />
       
-      <span v-if="mediaQueries.md">{{ t('formActionSignIn') }}</span>
+      <span v-show="mediaQueries.md.value">{{ t('formActionSignIn') }}</span>
     </UButton>
     
     <div class="flex items-center gap-2.5 self-stretch">
