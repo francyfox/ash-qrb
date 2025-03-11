@@ -16,29 +16,24 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+- `apps`: apps for front and back
+- `packages`: additional packages shared between apps
 
 ### Utilities
 
 This Turborepo has some additional tools already setup for you:
 
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+- Bun
+- Elysia
+- Nuxt 3 (comp. with 4 version)
 
 ### Build
 
 To build all apps and packages, run the following command:
 
 ```
-cd my-turborepo
-pnpm build
+bun run build
 ```
 
 ### Develop
@@ -46,8 +41,7 @@ pnpm build
 To develop all apps and packages, run the following command:
 
 ```
-cd my-turborepo
-pnpm dev
+bun run dev
 ```
 
 ### Remote Caching
@@ -64,8 +58,7 @@ have an account you can [create one](https://vercel.com/signup?utm_source=turbor
 commands:
 
 ```
-cd my-turborepo
-npx turbo login
+bunx turbo login
 ```
 
 This will authenticate the Turborepo CLI with
@@ -74,7 +67,7 @@ your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overvie
 Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
 
 ```
-npx turbo link
+bunx turbo link
 ```
 
 ## Useful Links
