@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { useMediaStore } from "~/stores/media";
+
 const { t } = useI18n()
+const mediaStore = useMediaStore()
+const { mediaQueries } = mediaStore
 </script>
 
 <template>
@@ -12,7 +16,7 @@ const { t } = useI18n()
           name="i-lucide-rocket"
       />
       
-      <span>{{ t('formActionSignIn') }}</span>
+      <span v-if="mediaQueries.md">{{ t('formActionSignIn') }}</span>
     </UButton>
     
     <div class="flex items-center gap-2.5 self-stretch">

@@ -7,20 +7,23 @@
     "lint": "turbo lint",
     "lint:fix": "bun lint --apply",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky"
+    "prepare": "node .husky/install.mjs"
   },
   "engines": {
     "node": ">=22"
   },
   "packageManager": "bun@1.2.3",
-  "workspaces": ["apps/*", "packages/*"],
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "dependencies": {
     "nanoid": "^5.0.9"
   },
   "devDependencies": {
+    "husky": "^9.1.7",
     "prettier": "^3.5.0",
     "turbo": "^2.4.1",
-    "typescript": "5.7.3",
-    "husky": "^9.1.7"
+    "typescript": "5.7.3"
   }
 }
