@@ -1,5 +1,7 @@
 {
+  "formActionForgot": "Забыли пароль?",
   "formActionSignIn": "Войти",
+  "formActionSignUp": "Регистрация",
   "formLoginEmail": "Почта",
   "formLoginPassword": "Пароль",
   "formLoginPhone": "Телефон",

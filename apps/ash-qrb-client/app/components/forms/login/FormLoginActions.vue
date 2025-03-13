@@ -7,28 +7,39 @@ const { mediaQueries } = mediaStore
 </script>
 
 <template>
-  <div class="form-login-actions flex justify-between items-center gap-2.5">
+  <div class="form-login-actions w-full flex justify-between items-center gap-2.5">
     <UButton
-        variant="solid"
-        size="lg"
+        color="primary"
     >
       <UIcon
           name="i-lucide-rocket"
+          :size="20"
       />
       
-      <span v-show="mediaQueries.md.value">{{ t('formActionSignIn') }}</span>
+      <span>{{ t('formActionSignIn') }}</span>
     </UButton>
     
     <div class="flex items-center gap-2.5 self-stretch">
       <UButton
           variant="solid"
-          size="lg"
       >
         <Icon
-            name="i-lucide-rocket"
+            name="i-lucide-user-plus"
+            :size="20"
         />
 
-        <span>{{ t('formActionSignIn') }}</span>
+        <span v-show="mediaQueries.sm.value">{{ t('formActionSignUp') }}</span>
+      </UButton>
+
+      <UButton
+          color="secondary"
+      >
+        <Icon
+            name="i-lucide-book-lock"
+            :size="20"
+        />
+
+        <span v-show="mediaQueries.sm.value">{{ t('formActionForgot') }}</span>
       </UButton>
     </div>
   </div>

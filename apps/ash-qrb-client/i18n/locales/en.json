@@ -1,5 +1,7 @@
 {
+  "formActionForgot": "Forgot password",
   "formActionSignIn": "Sign In",
+  "formActionSignUp": "Sing Up",
   "formLoginEmail": "Email",
   "formLoginPassword": "Password",
   "formLoginPhone": "Phone",

@@ -11,6 +11,7 @@ const state = ref({
   email: undefined,
   phone: undefined,
   password: undefined,
+  readonly: true,
 })
 
 async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
@@ -18,6 +19,11 @@ async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
   // Do something with event.data
   console.log(event.data)
 }
+
+onMounted(() => {
+  state.value.readonly = false;
+})
+
 </script>
 
 <template>
@@ -25,12 +31,13 @@ async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
       ref="form"
       :schema="LoginSchema"
       :state="state"
-      class="form-login flex flex-col gap-2.5"
+      class="form-login w-full flex flex-col gap-2.5"
       @submit="onSubmit"
   >
     <USwitch
         v-model="state.switch"
         :label="t('formLoginSwitchEmail')"
+        :ui="{ container: 'pt-1', thumb: 'bg-(--ui-text)', label: 'text-lg' }"
     />
 
     <FormLoginProviders />
@@ -39,7 +46,9 @@ async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
         v-if="state.switch"
         v-model="state.email"
         :placeholder="t('formLoginEmail')"
-        autocomplete="email"
+        :readonly="state.readonly"
+        :ui="{ base: 'text-lg' }"
+        icon="i-lucide-mail"
         type="email"
         class="form-login-email"
     />
@@ -48,7 +57,9 @@ async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
         v-else
         v-model="state.phone"
         :placeholder="t('formLoginPhone')"
-        autocomplete="tel"
+        :readonly="state.readonly"
+        :ui="{ base: 'text-lg' }"
+        icon="i-lucide-phone"
         type="tel"
         class="form-login-phone"
     />
@@ -56,6 +67,9 @@ async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
     <UInput
         v-model="state.password"
         :placeholder="t('formLoginPassword')"
+        :readonly="state.readonly"
+        :ui="{ base: 'text-lg' }"
+        icon="i-lucide-lock"
         type="password"
         class="form-login-password"
     />

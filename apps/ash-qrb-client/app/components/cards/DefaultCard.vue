@@ -15,13 +15,13 @@
         {{ title }}
       </div>
 
-      <div class="default-card-content w-full flex flex-col items-center gap-5 pb-5">
+      <div class="default-card-content w-full flex flex-col items-center gap-5 px-5 sm:px-10 pb-5">
         <slot />
       </div>
 
       <div
           v-if="hasCardFooterSlot"
-          class="default-card-footer flex flex-col justify-center items-center self-stretch [background:linear-gradient(180deg,#49454A_0%,#AEA4B0_349.4%)] px-10 py-2.5"
+          class="default-card-footer flex flex-col justify-center items-center self-stretch [background:linear-gradient(180deg,#49454A_0%,#AEA4B0_349.4%)] px-5 sm:px-10 py-2.5"
       >
         <slot name="footer" />
       </div>

@@ -15,7 +15,10 @@ export default defineNuxtConfig({
     public: config,
   },
   modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/icon'],
-  css: ['~/assets/styles/tailwind.css'],
+  css: ['~/assets/styles/tailwind.pcss'],
+  ui: {
+    colorMode: false
+  },
   postcss: {
     plugins: {
       '@tailwindcss/postcss': {},
