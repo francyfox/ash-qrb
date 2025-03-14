@@ -5,3 +5,16 @@ html, body, #__nuxt {
 .z-5 {
     z-index: 5;
 }
+
+.container {
+    @apply mx-auto;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px var(--color-p-middle-red) inset !important;
+    font-weight: bold;
+    -webkit-text-fill-color: var(--ui-text) !important;
+}

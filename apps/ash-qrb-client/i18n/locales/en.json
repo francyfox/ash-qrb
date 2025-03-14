@@ -6,5 +6,6 @@
   "formLoginPassword": "Password",
   "formLoginPhone": "Phone",
   "formLoginSwitchEmail": "Use email",
+  "formRegisterErrorPasswordRepeat": "Passwords must match",
   "securityLoggedIn": "Login with"
 }

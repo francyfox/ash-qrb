@@ -15,7 +15,11 @@ export default defineNuxtConfig({
     public: config,
   },
   modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/icon'],
-  css: ['~/assets/styles/tailwind.pcss'],
+  css: [
+    '@fontsource-variable/sofia-sans',
+    '~/assets/styles/tailwind.pcss',
+    '~/assets/styles/styles.pcss'
+  ],
   ui: {
     colorMode: false
   },

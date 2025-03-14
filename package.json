@@ -6,7 +6,7 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "lint:fix": "bun lint --apply",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "turbo format",
     "prepare": "node .husky/install.mjs"
   },
   "engines": {

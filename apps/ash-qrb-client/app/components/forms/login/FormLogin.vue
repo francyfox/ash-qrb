@@ -37,7 +37,7 @@ onMounted(() => {
     <USwitch
         v-model="state.switch"
         :label="t('formLoginSwitchEmail')"
-        :ui="{ container: 'pt-1', thumb: 'bg-(--ui-text)', label: 'text-lg' }"
+        :ui="{ container: 'pt-1.5', thumb: 'bg-(--ui-text)', label: 'text-lg' }"
     />
 
     <FormLoginProviders />

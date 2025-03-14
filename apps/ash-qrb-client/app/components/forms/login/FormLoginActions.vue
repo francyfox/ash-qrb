@@ -22,6 +22,7 @@ const { mediaQueries } = mediaStore
     <div class="flex items-center gap-2.5 self-stretch">
       <UButton
           variant="solid"
+          to="/sign-up"
       >
         <Icon
             name="i-lucide-user-plus"

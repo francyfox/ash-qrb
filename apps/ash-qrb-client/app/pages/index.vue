@@ -27,6 +27,7 @@ const config = useRuntimeConfig()
               :height="400"
               alt="Ash-qrb logo"
               class="absolute w-[300px] md:w-auto bottom-[-30px] left-[-60px] z-0"
+              loading="eager"
           />
         </div>
       </main>

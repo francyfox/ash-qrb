@@ -6,5 +6,6 @@
   "formLoginPassword": "Пароль",
   "formLoginPhone": "Телефон",
   "formLoginSwitchEmail": "Использовать почту",
+  "formRegisterErrorPasswordRepeat": "Пароли не совпадают",
   "securityLoggedIn": "Войти с"
 }
