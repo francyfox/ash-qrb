@@ -7,5 +7,6 @@
   "formLoginPhone": "Телефон",
   "formLoginSwitchEmail": "Использовать почту",
   "formRegisterErrorPasswordRepeat": "Пароли не совпадают",
+  "formUploadAvatar": "Загрузить аватар",
   "securityLoggedIn": "Войти с"
 }

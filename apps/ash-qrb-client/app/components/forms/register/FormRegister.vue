@@ -2,6 +2,7 @@
 import type { Form, FormSubmitEvent } from "#ui/types";
 import { registerSchema, type TRegisterSchema } from "~/components/forms/register/register.schema";
 import type { TLoginSchema } from "~/components/forms/login/login.schema";
+import DefaultUploader from "~/components/ui/uploader/DefaultUploader.vue";
 
 const { t } = useI18n()
 const form = ref<Form<TRegisterSchema>>()
@@ -33,7 +34,7 @@ async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
       class="form-register w-full flex flex-col gap-2.5"
       @submit="onSubmit"
   >
-
+    <DefaultUploader />
   </UForm>
 </template>
 

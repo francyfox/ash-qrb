@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DefaultCard from '~/components/cards/DefaultCard.vue'
+import DefaultCard from '~/components/ui/cards/DefaultCard.vue'
 import FormLogin from '~/components/forms/login/FormLogin.vue'
 import FormLoginActions from '~/components/forms/login/FormLoginActions.vue'
 </script>

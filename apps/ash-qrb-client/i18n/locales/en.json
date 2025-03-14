@@ -7,5 +7,6 @@
   "formLoginPhone": "Phone",
   "formLoginSwitchEmail": "Use email",
   "formRegisterErrorPasswordRepeat": "Passwords must match",
+  "formUploadAvatar": "Upload avatar",
   "securityLoggedIn": "Login with"
 }
