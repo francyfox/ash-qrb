@@ -1,4 +1,5 @@
 {
+  "back": "Back",
   "formActionForgot": "Forgot password",
   "formActionSignIn": "Sign In",
   "formActionSignUp": "Sing Up",
@@ -6,6 +7,7 @@
   "formLoginPassword": "Password",
   "formLoginPhone": "Phone",
   "formLoginSwitchEmail": "Use email",
+  "formPasswordRepeat": "Repeat password",
   "formRegisterErrorPasswordRepeat": "Passwords must match",
   "formUploadAvatar": "Upload avatar",
   "securityLoggedIn": "Login with"

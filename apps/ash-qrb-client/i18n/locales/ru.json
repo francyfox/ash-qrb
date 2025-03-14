@@ -1,4 +1,5 @@
 {
+  "back": "Назад",
   "formActionForgot": "Забыли пароль?",
   "formActionSignIn": "Войти",
   "formActionSignUp": "Регистрация",
@@ -6,6 +7,7 @@
   "formLoginPassword": "Пароль",
   "formLoginPhone": "Телефон",
   "formLoginSwitchEmail": "Использовать почту",
+  "formPasswordRepeat": "Повторите пароль",
   "formRegisterErrorPasswordRepeat": "Пароли не совпадают",
   "formUploadAvatar": "Загрузить аватар",
   "securityLoggedIn": "Войти с"

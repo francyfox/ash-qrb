@@ -20,9 +20,9 @@ const providers = [
 <template>
   <div class="flex flex-wrap gap-2.5">
     <LightCard>
-              <span class="text-xl text-s-black-olive font-sofia">
-                {{ t('securityLoggedIn') }}
-              </span>
+      <span class="text-xl text-s-black-olive font-sofia">
+        {{ t('securityLoggedIn') }}
+      </span>
     </LightCard>
 
     <LightCard>

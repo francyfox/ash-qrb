@@ -54,7 +54,6 @@ onMounted(() => {
     />
 
     <UInput
-        v-else
         v-model="state.phone"
         :placeholder="t('formLoginPhone')"
         :readonly="state.readonly"

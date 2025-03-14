@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DefaultCard from "~/components/ui/cards/DefaultCard.vue";
 import FormRegister from "~/components/forms/register/FormRegister.vue";
+import FormRegisterActions from "~/components/forms/register/FormRegisterActions.vue";
 
 const { t } = useI18n()
 </script>
@@ -12,6 +13,10 @@ const { t } = useI18n()
         <div class="w-full min-h-[65vh] flex justify-center items-center">
           <DefaultCard :title="t('formActionSignUp')">
             <FormRegister />
+
+            <template #footer>
+              <FormRegisterActions />
+            </template>
           </DefaultCard>
         </div>
       </div>

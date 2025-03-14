@@ -24,6 +24,10 @@ async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
   // Do something with event.data
   console.log(event.data)
 }
+
+onMounted(() => {
+  readonly.value = false
+})
 </script>
 
 <template>
@@ -34,7 +38,52 @@ async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
       class="form-register w-full flex flex-col gap-2.5"
       @submit="onSubmit"
   >
-    <DefaultUploader />
+    <DefaultUploader
+        v-model="state.avatar"
+    />
+
+
+    <UInput
+        v-model="state.phone"
+        :placeholder="t('formLoginPhone')"
+        :readonly="readonly"
+        :ui="{ base: 'text-lg' }"
+        icon="i-lucide-phone"
+        type="tel"
+        class="form-register-phone"
+    />
+
+    <UInput
+        v-model="state.email"
+        :placeholder="t('formLoginEmail')"
+        :readonly="readonly"
+        :ui="{ base: 'text-lg' }"
+        icon="i-lucide-mail"
+        type="email"
+        autocomplete="email"
+        class="form-register-email"
+    />
+
+    <UInput
+        v-model="state.password"
+        :placeholder="t('formLoginPassword')"
+        :readonly="readonly"
+        :ui="{ base: 'text-lg' }"
+        icon="i-lucide-lock"
+        type="password"
+        class="form-register-password"
+    />
+
+    <UInput
+        v-model="state.repeatPassword"
+        :placeholder="t('formPasswordRepeat')"
+        :readonly="readonly"
+        :ui="{ base: 'text-lg' }"
+        icon="i-lucide-lock"
+        type="password"
+        class="form-register-password-repeat"
+    />
+
   </UForm>
 </template>
 
