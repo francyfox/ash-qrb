@@ -1,3 +1,6 @@
 {
-  "extends": ["../../packages/linter/biome.json"]
+  "extends": ["../../packages/linter/biome.json"],
+  "files": {
+    "ignore": ["./src/routes.ts"]
+  }
 }
