@@ -1,30 +1,44 @@
 <script setup lang="ts">
-import vueFilePond from 'vue-filepond';
+import vueFilePond from 'vue-filepond'
+
 
 // Import plugins
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js';
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.esm.js';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
+import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
 
 // Import styles
-import 'filepond/dist/filepond.min.css';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
+import { useUserStore } from "@/stores/user"
 
 // Create FilePond component
 const FilePond = vueFilePond(
     FilePondPluginFileValidateType,
-    FilePondPluginImagePreview
+    FilePondPluginImagePreview,
+    FilePondPluginFileValidateSize,
+    FilePondPluginImageCrop
 );
 
 const { t } = useI18n()
+const model = defineModel()
+const userStore = useUserStore()
+
+const pond = useTemplateRef('pond')
+
+const handleAddFile = async (error: any, file: any) => {
+  await userStore.postFile(file.file)
+}
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex" ref="test">
     <UModal
         :dismissible="false"
         :title="t('formUploadAvatar')"
     >
-      <UButton color="primary">
+      <UButton color="primary" class="cursor-pointer">
         <UIcon
             name="i-lucide-file"
             :size="20"
@@ -34,12 +48,19 @@ const { t } = useI18n()
       </UButton>
 
       <template #body>
-        <div id="app" class="uploader p-5">
+        <div
+            ref="pond"
+            id="app"
+            class="uploader p-5"
+        >
           <ClientOnly>
             <FilePond
                 v-bind="$attrs"
-                ref="pond"
                 accepted-file-types="image/jpg, image/jpeg, image/png"
+                max-file-size="2MB"
+                allow-image-crop="true"
+                image-crop-aspect-ratio="1:1"
+                @addfile="handleAddFile"
             />
           </ClientOnly>
         </div>

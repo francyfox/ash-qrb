@@ -11,26 +11,28 @@
     "studio": "bun x drizzle-kit studio"
   },
   "exports": {
-    ".": "./src/server.ts"
+    ".": "./src/routes.ts"
   },
   "dependencies": {
-    "@gtramontina.com/elysia-error-handler": "1.0.1",
-    "@tqman/nice-logger": "^1.1.1",
-    "drizzle-typebox": "^0.3.0",
-    "elysia": "^1.2.25",
-    "env-var": "^7.5.0",
-    "drizzle-orm": "^0.38.4",
-    "pg": "^8.14.0",
+    "@bogeychan/elysia-logger": "^0.1.8",
     "@elysiajs/cors": "^1.2.0",
     "@elysiajs/jwt": "^1.2.0",
     "@elysiajs/server-timing": "^1.2.1",
     "@elysiajs/swagger": "^1.2.2",
-    "elysia-autoload": "^1.5.1",
-    "@bogeychan/elysia-logger": "^0.1.8",
+    "@gtramontina.com/elysia-error-handler": "1.0.1",
+    "@tqman/nice-logger": "^1.1.1",
+    "@verrou/core": "^0.5.1",
     "arctic": "^3.5.0",
+    "cloudinary": "^2.6.0",
+    "drizzle-orm": "^0.38.4",
+    "drizzle-typebox": "^0.3.0",
+    "elysia": "^1.2.25",
+    "elysia-autoload": "^1.5.1",
     "elysia-oauth2": "^2.0.0",
-    "posthog-node": "^4.10.1",
-    "@verrou/core": "^0.5.1"
+    "env-var": "^7.5.0",
+    "mime": "^4.0.6",
+    "pg": "^8.14.0",
+    "posthog-node": "^4.10.1"
   },
   "devDependencies": {
     "typescript": "^5.8.2",

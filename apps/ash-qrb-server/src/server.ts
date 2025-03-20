@@ -39,7 +39,14 @@ export const app = new Elysia()
   .use(cors())
   .use(jwt({ secret: config.JWT_SECRET }))
   .use(serverTiming())
-  .use(autoload())
+  .use(
+    await autoload({
+      types: {
+        output: './routes.ts',
+        typeName: 'Routes',
+      },
+    }),
+  )
 
 export type ElysiaApp = typeof app
 export const GET = app.handle

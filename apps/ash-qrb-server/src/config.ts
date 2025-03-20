@@ -24,4 +24,8 @@ export const config = {
   WORKOS_API_KEY: env.get('WORKOS_API_KEY').required().asString(),
 
   CLIENT_APP_URL: env.get('CLIENT_APP_URL').required().asString(),
+
+  CLOUD_NAME: env.get('CLOUD_NAME').required().asString(),
+  CLOUDINARY_KEY: env.get('CLOUDINARY_KEY').required().asString(),
+  CLOUDINARY_SECRET: env.get('CLOUDINARY_SECRET').required().asString(),
 }

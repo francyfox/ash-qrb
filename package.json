@@ -18,6 +18,7 @@
     "packages/*"
   ],
   "dependencies": {
+    "filepond-plugin-image-crop": "^2.0.6",
     "nanoid": "^5.0.9"
   },
   "devDependencies": {
