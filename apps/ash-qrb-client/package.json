@@ -8,24 +8,24 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "bunx biome lint",
+    "lint": "bunx biome lint --diagnostic-level=error",
     "format": "bunx biome check"
   },
   "dependencies": {
     "@elysiajs/eden": "^1.2.0",
-    "@fontsource-variable/sofia-sans": "^5.1.1",
-    "@nuxt/icon": "^1.10.3",
-    "@nuxt/image": "^1.9.0",
-    "@nuxt/ui": "^3.0.0-beta.2",
-    "@nuxtjs/i18n": "^9.2.1",
+    "@fontsource-variable/sofia-sans": "^5.2.5",
+    "@nuxt/icon": "^1.11.0",
+    "@nuxt/image": "^1.10.0",
+    "@nuxt/ui": "^3.0.0",
+    "@nuxtjs/i18n": "^9.3.2",
     "@pinia/nuxt": "^0.10.1",
-    "@tailwindcss/postcss": "^4.0.11",
+    "@tailwindcss/postcss": "^4.0.14",
     "@vueuse/core": "^13.0.0",
     "filepond": "^4.32.7",
     "filepond-plugin-file-validate-size": "^2.2.8",
     "filepond-plugin-file-validate-type": "^1.2.9",
     "filepond-plugin-image-preview": "^4.6.12",
-    "nanoid": "^5.1.2",
+    "nanoid": "^5.1.5",
     "nuxt": "^3.16.1",
     "pkg-i18n": "workspace:i18n",
     "postcss-import": "^16.1.0",
@@ -35,6 +35,6 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.28"
+    "@iconify-json/lucide": "^1.2.31"
   }
 }

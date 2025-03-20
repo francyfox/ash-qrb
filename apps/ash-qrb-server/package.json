@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "bun --watch src/index.ts",
     "start": "NODE_ENV=production bun run ./src/index.ts",
-    "lint": "bun x @biomejs/biome check src",
+    "lint": "bun x @biomejs/biome check src --diagnostic-level=error",
     "generate": "bun x drizzle-kit generate",
     "push": "bun x drizzle-kit push",
     "migrate": "bun x drizzle-kit migrate",

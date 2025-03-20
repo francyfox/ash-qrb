@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { LoginSchema, type TLoginSchema } from '~/components/forms/login/login.schema'
-import type { Form, FormSubmitEvent } from '#ui/types'
+import {
+  LoginSchema,
+  type TLoginSchema,
+} from '~/components/forms/login/login.schema'
 import FormLoginProviders from '~/components/forms/login/providers/FormLoginProviders.vue'
+import type { Form, FormSubmitEvent } from '#ui/types'
 
 const { t } = useI18n()
 const form = ref<Form<TLoginSchema>>()
@@ -15,15 +18,14 @@ const state = ref({
 })
 
 async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
-  form.value!.clear()
+  if (form.value) form.value.clear()
   // Do something with event.data
   console.log(event.data)
 }
 
 onMounted(() => {
-  state.value.readonly = false;
+  state.value.readonly = false
 })
-
 </script>
 
 <template>

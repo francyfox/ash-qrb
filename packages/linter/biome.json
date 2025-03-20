@@ -6,9 +6,8 @@
     "useIgnoreFile": false
   },
   "files": {
-    "include": ["src/*.ts"],
     "ignoreUnknown": false,
-    "ignore": []
+    "ignore": [".nuxt", "node_modules"]
   },
   "formatter": {
     "enabled": true,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMediaStore } from "~/stores/media";
+import { useMediaStore } from '~/stores/media'
 
 const { t } = useI18n()
 const mediaStore = useMediaStore()

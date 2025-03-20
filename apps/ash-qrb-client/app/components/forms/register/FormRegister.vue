@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import type { Form, FormSubmitEvent } from "#ui/types";
-import { registerSchema, type TRegisterSchema } from "~/components/forms/register/register.schema";
-import type { TLoginSchema } from "~/components/forms/login/login.schema";
-import DefaultUploader from "~/components/ui/uploader/DefaultUploader.vue";
+import type { TLoginSchema } from '~/components/forms/login/login.schema'
+import {
+  type TRegisterSchema,
+  registerSchema,
+} from '~/components/forms/register/register.schema'
+import DefaultUploader from '~/components/ui/uploader/DefaultUploader.vue'
+import type { Form, FormSubmitEvent } from '#ui/types'
 
 const { t } = useI18n()
-const form = ref<Form<TRegisterSchema>>()
+const form = ref<Form<TRegisterSchema | any>>()
 
 const state = ref({
   avatar: undefined,
@@ -20,7 +23,7 @@ const state = ref({
 const readonly = ref(true)
 
 async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
-  form.value!.clear()
+  if (form.value) form.value.clear()
   // Do something with event.data
   console.log(event.data)
 }

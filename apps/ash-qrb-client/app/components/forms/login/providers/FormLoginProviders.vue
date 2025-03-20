@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import LightCard from '~/components/ui/cards/LightCard.vue'
 import { useId } from 'vue'
+import LightCard from '~/components/ui/cards/LightCard.vue'
 
 const { t } = useI18n()
 const providers = [
   {
     id: useId(),
     icon: 'ash:google',
-    provider: 'google'
+    provider: 'google',
   },
   {
     id: useId(),
     icon: 'ash:apple',
-    provider: 'apple'
+    provider: 'apple',
   },
 ]
 </script>
