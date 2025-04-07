@@ -1,4 +1,7 @@
-import { treaty } from "@elysiajs/eden"
-import "ash-qrb-server"
+import createClient from 'openapi-fetch'
+import { config } from '~~/config'
+import type { paths } from './qrb-schema'
 
-export const api = treaty<Routes>('http://localhost:3000')
+export const api = createClient<paths>({
+  baseUrl: config.API_URL,
+})

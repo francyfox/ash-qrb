@@ -32,7 +32,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - local
+      local:
 
 volumes:
   postgres_data:
@@ -40,3 +40,4 @@ volumes:
 
 networks:
   local: { }
+  external: {}

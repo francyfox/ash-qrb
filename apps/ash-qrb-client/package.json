@@ -12,7 +12,6 @@
     "format": "bunx biome check"
   },
   "dependencies": {
-    "@elysiajs/eden": "^1.2.0",
     "@fontsource-variable/sofia-sans": "^5.2.5",
     "@nuxt/icon": "^1.11.0",
     "@nuxt/image": "^1.10.0",
@@ -27,14 +26,17 @@
     "filepond-plugin-image-preview": "^4.6.12",
     "nanoid": "^5.1.5",
     "nuxt": "^3.16.1",
+    "openapi-fetch": "^0.13.5",
     "pkg-i18n": "workspace:i18n",
     "postcss-import": "^16.1.0",
+    "swagger-typescript-api": "^13.0.23",
     "vue": "latest",
     "vue-filepond": "^7.0.4",
     "vue-router": "latest",
     "yup": "^1.6.1"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.31"
+    "@iconify-json/lucide": "^1.2.31",
+    "openapi-typescript": "^7.6.1"
   }
 }

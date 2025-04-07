@@ -1,4 +1,4 @@
-import { api } from "~/libs/api";
+import { api } from '~/libs/api'
 
 export const useUserStore = defineStore('user', () => {
   const config = useRuntimeConfig()
@@ -6,11 +6,9 @@ export const useUserStore = defineStore('user', () => {
   const errorMessage = ref()
 
   const postFile = async (file: File) => {
-    const { data, error } = await api.upload.post({
-      body: file,
-    })
+    const { data, error } = await api.GET('/p')
 
-    if(error) errorMessage.value = error
+    if (error) errorMessage.value = error
 
     console.log(data)
   }
