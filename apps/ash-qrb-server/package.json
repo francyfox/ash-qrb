@@ -22,23 +22,23 @@
     "@gtramontina.com/elysia-error-handler": "1.0.1",
     "@tqman/nice-logger": "^1.1.1",
     "@verrou/core": "^0.5.1",
-    "arctic": "^3.5.0",
+    "arctic": "^3.6.0",
     "cloudinary": "^2.6.0",
     "drizzle-orm": "^0.38.4",
-    "drizzle-typebox": "^0.3.0",
+    "drizzle-typebox": "^0.3.2",
     "elysia": "^1.2.25",
     "elysia-autoload": "^1.5.1",
     "elysia-oauth2": "^2.0.0",
     "env-var": "^7.5.0",
-    "mime": "^4.0.6",
-    "pg": "^8.14.0",
-    "posthog-node": "^4.10.1"
+    "mime": "^4.0.7",
+    "pg": "^8.15.5",
+    "posthog-node": "^4.13.0"
   },
   "devDependencies": {
-    "typescript": "^5.8.2",
-    "@types/bun": "^1.2.5",
+    "typescript": "^5.8.3",
+    "@types/bun": "^1.2.10",
     "@biomejs/biome": "^1.9.4",
-    "drizzle-kit": "^0.30.5",
-    "@types/pg": "^8.11.11"
+    "drizzle-kit": "^0.30.6",
+    "@types/pg": "^8.11.14"
   }
 }
