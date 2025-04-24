@@ -6,7 +6,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "generate:schema": "bunx openapi-typescript ",
+    "generate:schema": "bunx openapi-typescript http://localhost:3000/swagger/json --output ./app/assets/schema.ts",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "bunx biome lint --diagnostic-level=error",

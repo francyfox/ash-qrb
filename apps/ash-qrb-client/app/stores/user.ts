@@ -6,7 +6,8 @@ export const useUserStore = defineStore('user', () => {
   const errorMessage = ref()
 
   const postFile = async (file: File) => {
-    const { data, error } = await api.GET('/p')
+    const { data, error } = await api.GET('/s/users')
+    // data?.items[0]?.companyName
 
     if (error) errorMessage.value = error
 
