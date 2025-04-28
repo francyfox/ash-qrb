@@ -32,5 +32,6 @@ export const useUserStore = defineStore('user', () => {
 
   return {
     postFile,
+    errorMessage,
   }
 })

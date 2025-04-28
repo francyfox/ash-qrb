@@ -3,6 +3,7 @@
   "formActionForgot": "Забыли пароль?",
   "formActionSignIn": "Войти",
   "formActionSignUp": "Регистрация",
+  "formError": "Ошибка!",
   "formLoginEmail": "Почта",
   "formLoginPassword": "Пароль",
   "formLoginPhone": "Телефон",

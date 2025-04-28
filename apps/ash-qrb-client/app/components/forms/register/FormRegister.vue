@@ -10,7 +10,10 @@ import type { Form, FormSubmitEvent } from '#ui/types'
 const { t } = useI18n()
 const form = ref<Form<TRegisterSchema | any>>()
 
+const toast = useToast()
+
 const userStore = useUserStore()
+const { errorMessage } = storeToRefs(userStore)
 
 const state = ref({
   avatar: undefined,
@@ -28,6 +31,14 @@ async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
   if (form.value) form.value.clear()
   // Do something with event.data
 }
+
+watch(errorMessage, () => {
+  toast.add({
+    title: t('formError'),
+    description: errorMessage.value,
+    color: 'error',
+  })
+})
 
 onMounted(() => {
   readonly.value = false

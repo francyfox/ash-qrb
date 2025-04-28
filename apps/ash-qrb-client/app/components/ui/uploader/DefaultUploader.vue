@@ -23,17 +23,38 @@ const FilePond = vueFilePond(
 const { t } = useI18n()
 const model = defineModel()
 const userStore = useUserStore()
+const toast = useToast()
+const showModal = ref(false)
 
 const pond = useTemplateRef('pond')
 
 const handleAddFile = async (error: any, file: any) => {
-  model.value = await userStore.postFile(file.file)
+  const uploaded = await userStore.postFile(file.file)
+
+  if (uploaded?.secure_url) {
+    model.value = uploaded?.secure_url
+
+    showModal.value = false
+    toast.add({
+      title: 'File Uploaded',
+      color: 'success',
+    })
+  }
+
+  if (error) {
+    toast.add({
+      title: 'Upload file error',
+      description: error,
+      color: 'error',
+    })
+  }
 }
 </script>
 
 <template>
   <div class="flex" ref="test">
     <UModal
+        v-model:open="showModal"
         :dismissible="false"
         :title="t('formUploadAvatar')"
     >

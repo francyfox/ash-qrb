@@ -23,6 +23,7 @@
     "@tqman/nice-logger": "^1.1.1",
     "@verrou/core": "^0.5.1",
     "arctic": "^3.6.0",
+    "better-auth": "^1.2.7",
     "cloudinary": "^2.6.0",
     "drizzle-orm": "^0.38.4",
     "drizzle-typebox": "^0.3.2",

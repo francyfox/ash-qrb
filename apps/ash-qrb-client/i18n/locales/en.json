@@ -3,6 +3,7 @@
   "formActionForgot": "Forgot password",
   "formActionSignIn": "Sign In",
   "formActionSignUp": "Sing Up",
+  "formError": "Error!",
   "formLoginEmail": "Email",
   "formLoginPassword": "Password",
   "formLoginPhone": "Phone",
