@@ -20,12 +20,19 @@ export const config = {
   LOCK_STORE: env.get('LOCK_STORE').default('memory').asEnum(['memory']),
   JWT_SECRET: env.get('JWT_SECRET').required().asString(),
 
-  WORKOS_CLIENT_ID: env.get('WORKOS_CLIENT_ID').required().asString(),
-  WORKOS_API_KEY: env.get('WORKOS_API_KEY').required().asString(),
-
   CLIENT_APP_URL: env.get('CLIENT_APP_URL').required().asString(),
 
   CLOUD_NAME: env.get('CLOUD_NAME').required().asString(),
   CLOUDINARY_KEY: env.get('CLOUDINARY_KEY').required().asString(),
   CLOUDINARY_SECRET: env.get('CLOUDINARY_SECRET').required().asString(),
+
+  // Providers
+  PROVIDER_GOOGLE_CLIENT_ID: env
+    .get('PROVIDER_GOOGLE_CLIENT_ID')
+    .required()
+    .asString(),
+  PROVIDER_GOOGLE_CLIENT_SECRET: env
+    .get('PROVIDER_GOOGLE_CLIENT_SECRET')
+    .required()
+    .asString(),
 }

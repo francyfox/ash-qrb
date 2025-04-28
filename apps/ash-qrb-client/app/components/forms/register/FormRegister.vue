@@ -57,7 +57,6 @@ onMounted(() => {
         v-model="state.avatar"
     />
 
-
     <UInput
         v-model="state.phone"
         :placeholder="t('formLoginPhone')"
