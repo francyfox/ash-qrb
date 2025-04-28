@@ -1,25 +1,24 @@
 <script setup lang="ts">
 import vueFilePond from 'vue-filepond'
 
-
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
 // Import plugins
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
-import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
 import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 
 // Import styles
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import { useUserStore } from "@/stores/user"
+import { useUserStore } from '@/stores/user'
 
 // Create FilePond component
 const FilePond = vueFilePond(
-    FilePondPluginFileValidateType,
-    FilePondPluginImagePreview,
-    FilePondPluginFileValidateSize,
-    FilePondPluginImageCrop
-);
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview,
+  FilePondPluginFileValidateSize,
+  FilePondPluginImageCrop,
+)
 
 const { t } = useI18n()
 const model = defineModel()
@@ -28,7 +27,7 @@ const userStore = useUserStore()
 const pond = useTemplateRef('pond')
 
 const handleAddFile = async (error: any, file: any) => {
-  await userStore.postFile(file.file)
+  model.value = await userStore.postFile(file.file)
 }
 </script>
 

@@ -10,6 +10,8 @@ import type { Form, FormSubmitEvent } from '#ui/types'
 const { t } = useI18n()
 const form = ref<Form<TRegisterSchema | any>>()
 
+const userStore = useUserStore()
+
 const state = ref({
   avatar: undefined,
   position: undefined,
@@ -25,7 +27,6 @@ const readonly = ref(true)
 async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
   if (form.value) form.value.clear()
   // Do something with event.data
-  console.log(event.data)
 }
 
 onMounted(() => {
