@@ -29,7 +29,6 @@ export const app = new Elysia()
       },
     }),
   )
-  .use(cors())
   .use(jwt({ secret: config.JWT_SECRET }))
   .use(serverTiming())
   .use(
@@ -40,6 +39,7 @@ export const app = new Elysia()
       },
     }),
   )
+  .all('/s/*', (ctx) => ctx.use(cors()))
   .all('/s/private/*', betterAuthView)
 
 export type ElysiaApp = typeof app
