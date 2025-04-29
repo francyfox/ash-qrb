@@ -6,6 +6,7 @@ import { usersSchema } from '@/schema/user'
 import { verificationSchema } from '@/schema/verification'
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import type { Context } from 'elysia'
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -31,3 +32,13 @@ export const auth = betterAuth({
     },
   },
 })
+
+export const betterAuthView = (context: Context) => {
+  const BETTER_AUTH_ACCEPT_METHODS = ['POST', 'GET']
+  // validate request method
+  if (BETTER_AUTH_ACCEPT_METHODS.includes(context.request.method)) {
+    return auth.handler(context.request)
+  }
+
+  context.error(405)
+}

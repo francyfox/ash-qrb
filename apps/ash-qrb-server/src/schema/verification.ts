@@ -10,7 +10,10 @@ export const verificationDefaultColumns = {
   updatedAt: timestamp('updated_at'),
 }
 
-export const verificationSchema = pgTable('session', verificationDefaultColumns)
+export const verificationSchema = pgTable(
+  'verification',
+  verificationDefaultColumns,
+)
 export const verificationSelectSchema = createSelectSchema(verificationSchema)
 export const verificationInsertSchema = createInsertSchema(verificationSchema)
 export type TVerification = typeof verificationSchema.$inferSelect

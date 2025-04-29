@@ -1,4 +1,5 @@
 import { config } from '@/config.ts'
+import { betterAuthView } from '@/utils/auth.ts'
 import { cors } from '@elysiajs/cors'
 import { jwt } from '@elysiajs/jwt'
 import { serverTiming } from '@elysiajs/server-timing'
@@ -9,7 +10,9 @@ import { Elysia } from 'elysia'
 import { autoload } from 'elysia-autoload'
 
 export const app = new Elysia()
+  // @ts-ignore
   .use(errorHandler())
+  // @ts-ignore
   .use(
     logger({
       mode: 'live',
@@ -37,6 +40,7 @@ export const app = new Elysia()
       },
     }),
   )
+  .all('/s/private/*', betterAuthView)
 
 export type ElysiaApp = typeof app
 export const GET = app.handle
