@@ -12,7 +12,7 @@ const config = useRuntimeConfig()
             <div class="text-xl">
               pwa web app for creating qr codes gateway
               for another qr codes. <br>
-              <NuxtLink to="/" class="text-p-fawn hover:text-p-middle-red transition-color">Use dashboard</NuxtLink>
+              <NuxtLink to="/dashboard" class="text-p-fawn hover:text-p-middle-red transition-color">Use dashboard</NuxtLink>
 
               <br>
               <br>

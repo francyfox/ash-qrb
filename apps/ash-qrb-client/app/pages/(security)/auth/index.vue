@@ -1,7 +1,26 @@
 <script setup lang="ts">
-import DefaultCard from '~/components/ui/cards/DefaultCard.vue'
 import FormLogin from '~/components/forms/login/FormLogin.vue'
 import FormLoginActions from '~/components/forms/login/FormLoginActions.vue'
+import DefaultCard from '~/components/ui/cards/DefaultCard.vue'
+
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
+
+const formData = ref({
+  switch: false,
+  email: undefined,
+  phone: undefined,
+  password: undefined,
+  readonly: true,
+})
+
+const signInHandler = async () => {
+  try {
+    await userStore.signIn(formData.value)
+  } finally {
+    if (user.value) await navigateTo('/dashboard')
+  }
+}
 </script>
 
 <template>
@@ -9,10 +28,15 @@ import FormLoginActions from '~/components/forms/login/FormLoginActions.vue'
     <div class="container h-full">
       <div class="w-full min-h-[65vh] flex justify-center items-center">
         <DefaultCard title="ash-qrb.org">
-          <FormLogin />
+          <FormLogin
+              v-model="formData"
+              @onSubmit="signInHandler"
+          />
 
           <template #footer>
-            <FormLoginActions />
+            <FormLoginActions
+                @onSubmit="signInHandler"
+            />
           </template>
         </DefaultCard>
       </div>

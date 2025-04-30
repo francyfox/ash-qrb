@@ -34,23 +34,22 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const signIn = async (formData: IUserSingInDTO) => {
-    const { data, error } = await authClient.signIn.email({
+    const response = await authClient.signIn.email({
       email: 'test@example.com',
       password: 'password1234',
     })
+
+    const { data, error } = response
 
     if (error) errorMessage.value = error
     user.value = data?.user
+    console.log(user.value)
+
+    return response
   }
 
   const signUp = async (formData: IUserSingUpDTO) => {
-    const { data, error } = await authClient.signUp.email({
-      email: 'test@example.com',
-      password: 'password1234',
-      name: 'test',
-      image: 'https://example.com/image.png',
-      companyName: 'test',
-    })
+    const { data, error } = await authClient.signUp.email(formData)
 
     if (error) errorMessage.value = error
     user.value = data
@@ -63,6 +62,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   return {
+    user,
     postFile,
     errorMessage,
     signIn,

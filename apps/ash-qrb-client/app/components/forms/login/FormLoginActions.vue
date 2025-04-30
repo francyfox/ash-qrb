@@ -2,6 +2,11 @@
 import { useMediaStore } from '~/stores/media'
 
 const { t } = useI18n()
+
+const emit = defineEmits<{
+  onSubmit: []
+}>()
+
 const mediaStore = useMediaStore()
 const { mediaQueries } = mediaStore
 </script>
@@ -10,6 +15,9 @@ const { mediaQueries } = mediaStore
   <div class="form-login-actions w-full flex justify-between items-center gap-2.5">
     <UButton
         color="primary"
+        type="button"
+        class="cursor-pointer"
+        @click="emit('onSubmit')"
     >
       <UIcon
           name="i-lucide-rocket"

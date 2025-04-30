@@ -14,19 +14,34 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: config,
   },
-  modules: ['@nuxt/ui', '@nuxt/image', '@pinia/nuxt', '@nuxtjs/i18n', '@nuxt/icon'],
+  modules: [
+    '@nuxt/ui',
+    '@nuxt/image',
+    '@pinia/nuxt',
+    '@nuxtjs/i18n',
+    '@nuxt/icon',
+  ],
   css: [
     '@fontsource-variable/sofia-sans',
     '~/assets/styles/tailwind.pcss',
-    '~/assets/styles/styles.pcss'
+    '~/assets/styles/styles.pcss',
   ],
   ui: {
-    colorMode: false
+    colorMode: false,
   },
   postcss: {
     plugins: {
       '@tailwindcss/postcss': {},
       autoprefixer: {},
+    },
+  },
+  nitro: {
+    routeRules: {
+      '/api/**': {
+        proxy: {
+          to: 'http://localhost:3000/api/**', // make sure this is an ENV driven variable if production does not match
+        },
+      },
     },
   },
   image: {
@@ -46,7 +61,7 @@ export default defineNuxtConfig({
     customCollections: [
       {
         prefix: 'ash',
-        dir: './app/assets/images/icons'
+        dir: './app/assets/images/icons',
       },
     ],
   },

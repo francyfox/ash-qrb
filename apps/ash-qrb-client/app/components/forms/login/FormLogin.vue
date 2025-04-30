@@ -7,20 +7,26 @@ import FormLoginProviders from '~/components/forms/login/providers/FormLoginProv
 import type { Form, FormSubmitEvent } from '#ui/types'
 
 const { t } = useI18n()
+
+const emit = defineEmits<{
+  onSubmit: []
+}>()
+
 const form = ref<Form<TLoginSchema>>()
 
-const state = ref({
-  switch: false,
-  email: undefined,
-  phone: undefined,
-  password: undefined,
-  readonly: true,
+const state = defineModel({
+  default: {
+    switch: false,
+    email: undefined,
+    phone: undefined,
+    password: undefined,
+    readonly: true,
+  },
 })
 
 async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
   if (form.value) form.value.clear()
-  // Do something with event.data
-  console.log(event.data)
+  emit('onSubmit', event?.data)
 }
 
 onMounted(() => {
