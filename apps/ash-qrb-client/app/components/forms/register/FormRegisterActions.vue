@@ -1,5 +1,8 @@
 <script setup lang="ts">
 const { t } = useI18n()
+const emit = defineEmits<{
+  onSubmit: []
+}>()
 </script>
 
 <template>
@@ -18,6 +21,9 @@ const { t } = useI18n()
 
     <UButton
         color="primary"
+        type="button"
+        @click="emit('onSubmit')"
+        class="cursor-pointer"
     >
       <span>{{ t('formActionSignUp') }}</span>
 

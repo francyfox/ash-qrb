@@ -1,5 +1,5 @@
 import { config } from '@/config.ts'
-import { betterAuthView } from '@/utils/auth.ts'
+import { betterAuthPlugin } from '@/utils/auth.ts'
 import { cors } from '@elysiajs/cors'
 import { jwt } from '@elysiajs/jwt'
 import { serverTiming } from '@elysiajs/server-timing'
@@ -39,8 +39,15 @@ export const app = new Elysia()
       },
     }),
   )
-  .all('/s/*', (ctx) => ctx.use(cors()))
-  .all('/s/private/*', betterAuthView)
+  .use(
+    cors({
+      origin: ['http://localhost:4000', 'http://localhost:3000'],
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      credentials: true,
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    }),
+  )
+  .use(betterAuthPlugin)
 
 export type ElysiaApp = typeof app
 export const GET = app.handle

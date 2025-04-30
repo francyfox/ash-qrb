@@ -6,9 +6,10 @@ import { usersSchema } from '@/schema/user'
 import { verificationSchema } from '@/schema/verification'
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
-import type { Context } from 'elysia'
+import { Elysia } from 'elysia'
 
 export const auth = betterAuth({
+  trustedOrigins: [config.CLIENT_APP_URL],
   database: drizzleAdapter(db, {
     // We're using Drizzle as our database
     provider: 'pg',
@@ -16,10 +17,10 @@ export const auth = betterAuth({
      * Map your schema into a better-auth schema
      */
     schema: {
-      usersSchema,
-      sessionSchema,
-      verificationSchema,
-      accountSchema,
+      users: usersSchema,
+      session: sessionSchema,
+      verification: verificationSchema,
+      account: accountSchema,
     },
   }),
   emailAndPassword: {
@@ -31,14 +32,51 @@ export const auth = betterAuth({
       clientSecret: config.PROVIDER_GOOGLE_CLIENT_SECRET,
     },
   },
+  user: {
+    modelName: 'users',
+    additionalFields: {
+      companyName: {
+        type: 'string',
+        required: false,
+        defaultValue: '',
+      },
+      status: {
+        type: 'number',
+        required: false,
+        defaultValue: 0,
+        input: false,
+      },
+      phoneVerified: {
+        type: 'boolean',
+        required: false,
+        default: false,
+        input: false,
+      },
+      emailVerified: {
+        type: 'boolean',
+        required: false,
+        default: false,
+        input: false,
+      },
+    },
+  },
 })
 
-export const betterAuthView = (context: Context) => {
-  const BETTER_AUTH_ACCEPT_METHODS = ['POST', 'GET']
-  // validate request method
-  if (BETTER_AUTH_ACCEPT_METHODS.includes(context.request.method)) {
-    return auth.handler(context.request)
-  }
+export const betterAuthPlugin = new Elysia({ name: 'better-auth' })
+  .mount(auth.handler)
+  .macro({
+    auth: {
+      async resolve({ error, request: { headers } }) {
+        const session = await auth.api.getSession({
+          headers,
+        })
 
-  context.error(405)
-}
+        if (!session) return error(401)
+
+        return {
+          user: session.user,
+          session: session.session,
+        }
+      },
+    },
+  })

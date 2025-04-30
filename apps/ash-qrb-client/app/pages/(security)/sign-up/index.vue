@@ -1,9 +1,24 @@
 <script setup lang="ts">
-import DefaultCard from "~/components/ui/cards/DefaultCard.vue";
-import FormRegister from "~/components/forms/register/FormRegister.vue";
-import FormRegisterActions from "~/components/forms/register/FormRegisterActions.vue";
+import FormRegister from '~/components/forms/register/FormRegister.vue'
+import FormRegisterActions from '~/components/forms/register/FormRegisterActions.vue'
+import DefaultCard from '~/components/ui/cards/DefaultCard.vue'
 
 const { t } = useI18n()
+const userStore = useUserStore()
+
+const state = ref({
+  image: undefined,
+  position: undefined,
+  username: undefined,
+  phone: undefined,
+  email: undefined,
+  password: undefined,
+  repeatPassword: undefined,
+})
+
+const signUpHandler = async () => {
+  await userStore.signUp(state.value)
+}
 </script>
 
 <template>
@@ -12,10 +27,15 @@ const { t } = useI18n()
       <div class="container h-full">
         <div class="w-full min-h-[65vh] flex justify-center items-center">
           <DefaultCard :title="t('formActionSignUp')">
-            <FormRegister />
+            <FormRegister
+                v-model="state"
+                @onSubmit="signUpHandler"
+            />
 
             <template #footer>
-              <FormRegisterActions />
+              <FormRegisterActions
+                  @onSubmit="signUpHandler"
+              />
             </template>
           </DefaultCard>
         </div>

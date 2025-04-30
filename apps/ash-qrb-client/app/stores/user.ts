@@ -1,5 +1,8 @@
 import type { operations } from 'assets/schema'
+import type { IUserSingInDTO } from '~/components/forms/login/login.types'
+import type { IUserSingUpDTO } from '~/components/forms/register/register.types'
 import { api } from '~/libs/api'
+import { authClient } from '~/libs/auth-client'
 
 type TCloudinaryFile =
   operations['postSUpload']['responses']['200']['content']['application/json']['item']
@@ -30,8 +33,40 @@ export const useUserStore = defineStore('user', () => {
     return data?.item
   }
 
+  const signIn = async (formData: IUserSingInDTO) => {
+    const { data, error } = await authClient.signIn.email({
+      email: 'test@example.com',
+      password: 'password1234',
+    })
+
+    if (error) errorMessage.value = error
+    user.value = data?.user
+  }
+
+  const signUp = async (formData: IUserSingUpDTO) => {
+    const { data, error } = await authClient.signUp.email({
+      email: 'test@example.com',
+      password: 'password1234',
+      name: 'test',
+      image: 'https://example.com/image.png',
+      companyName: 'test',
+    })
+
+    if (error) errorMessage.value = error
+    user.value = data
+  }
+
+  const signOut = async (formData: IUserSingUpDTO) => {
+    const { error } = await authClient.signOut()
+
+    if (error) errorMessage.value = error
+  }
+
   return {
     postFile,
     errorMessage,
+    signIn,
+    signUp,
+    signOut,
   }
 })
