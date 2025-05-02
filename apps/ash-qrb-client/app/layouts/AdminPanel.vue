@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import PanelCard from '~/components/ui/cards/PanelCard.vue'
+import AsideNavigation from '~/components/ui/nav/aside/AsideNavigation.vue'
 </script>
 
 <template>
@@ -11,7 +12,7 @@ import PanelCard from '~/components/ui/cards/PanelCard.vue'
         </PanelCard>
 
         <PanelCard class="card-menu max-w-[335px] overflow-hidden">
-
+          <AsideNavigation />
         </PanelCard>
       </div>
     </div>
