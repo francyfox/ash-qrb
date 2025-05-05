@@ -33,6 +33,7 @@ export default defineNuxtConfig({
     plugins: {
       '@tailwindcss/postcss': {},
       autoprefixer: {},
+      'postcss-nested': {},
     },
   },
   nitro: {

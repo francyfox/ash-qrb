@@ -8,14 +8,14 @@ const data = computed(() => [
     id: useId(),
     text: t('asideNavProfile'),
     attrs: {
-      to: '/',
+      to: { name: 'dashboard' },
     },
   },
   {
     id: useId(),
     text: t('asideNavList'),
     attrs: {
-      to: '/',
+      to: { name: 'qrb-list' },
     },
   },
 ])

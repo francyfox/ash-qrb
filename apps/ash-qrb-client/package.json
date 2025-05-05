@@ -12,6 +12,9 @@
     "lint": "bunx biome lint --diagnostic-level=error",
     "format": "bunx biome check"
   },
+  "imports": {
+    "#root.pcss": "./app/assets/styles/tailwind.pcss"
+  },
   "dependencies": {
     "@fontsource-variable/sofia-sans": "^5.2.5",
     "@nuxt/icon": "^1.12.0",

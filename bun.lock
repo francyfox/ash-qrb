@@ -6,6 +6,7 @@
       "dependencies": {
         "filepond-plugin-image-crop": "^2.0.6",
         "nanoid": "^5.1.5",
+        "postcss-nested": "^7.0.2",
       },
       "devDependencies": {
         "husky": "^9.1.7",
@@ -1804,6 +1805,8 @@
     "postcss-minify-params": ["postcss-minify-params@7.0.2", "", { "dependencies": { "browserslist": "^4.23.3", "cssnano-utils": "^5.0.0", "postcss-value-parser": "^4.2.0" }, "peerDependencies": { "postcss": "^8.4.31" } }, "sha512-nyqVLu4MFl9df32zTsdcLqCFfE/z2+f8GE1KHPxWOAmegSo6lpV2GNy5XQvrzwbLmiU7d+fYay4cwto1oNdAaQ=="],
 
     "postcss-minify-selectors": ["postcss-minify-selectors@7.0.4", "", { "dependencies": { "cssesc": "^3.0.0", "postcss-selector-parser": "^6.1.2" }, "peerDependencies": { "postcss": "^8.4.31" } }, "sha512-JG55VADcNb4xFCf75hXkzc1rNeURhlo7ugf6JjiiKRfMsKlDzN9CXHZDyiG6x/zGchpjQS+UAgb1d4nqXqOpmA=="],
+
+    "postcss-nested": ["postcss-nested@7.0.2", "", { "dependencies": { "postcss-selector-parser": "^7.0.0" }, "peerDependencies": { "postcss": "^8.2.14" } }, "sha512-5osppouFc0VR9/VYzYxO03VaDa3e8F23Kfd6/9qcZTUI8P58GIYlArOET2Wq0ywSl2o2PjELhYOFI4W7l5QHKw=="],
 
     "postcss-normalize-charset": ["postcss-normalize-charset@7.0.0", "", { "peerDependencies": { "postcss": "^8.4.31" } }, "sha512-ABisNUXMeZeDNzCQxPxBCkXexvBrUHV+p7/BXOY+ulxkcjUZO0cp8ekGBwvIh2LbCwnWbyMPNJVtBSdyhM2zYQ=="],
 
