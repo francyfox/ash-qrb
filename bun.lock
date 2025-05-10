@@ -52,7 +52,7 @@
         "yup": "^1.6.1",
       },
       "devDependencies": {
-        "@iconify-json/lucide": "^1.2.39",
+        "@iconify-json/lucide": "^1.2.41",
         "openapi-typescript": "^7.6.1",
       },
     },
@@ -306,7 +306,7 @@
 
     "@humanwhocodes/retry": ["@humanwhocodes/retry@0.4.2", "", {}, "sha512-xeO57FpIu4p1Ri3Jq/EXq4ClRm86dVF2z/+kvFnyqVYRavTZmaFaUBbWCOuuTh0o/g7DSsk6kc2vrS4Vl5oPOQ=="],
 
-    "@iconify-json/lucide": ["@iconify-json/lucide@1.2.39", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-1BKCamEZRvArR7PErYCP4SZo9pAANJy6iQWpynI3GM8QKSQtWQgvw6usqGIFCQeJwFZHPOn2OcbDR4P56DyEaQ=="],
+    "@iconify-json/lucide": ["@iconify-json/lucide@1.2.41", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-rOOahfHMgWPqLyRLvLSqEwCmS4jEDxB1Pk63QTe0GObLBKgYKlPmuc1zKYzSuPPkLX/ND7rScVOIDb//ggMNzg=="],
 
     "@iconify/collections": ["@iconify/collections@1.0.541", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-sXEzHqE0DSlusWdpGK23o/o3o45cVTAoGoASGy/+lZ2bxG5mJ5/Ne77BSQW+LrD67zDK1HZC/JkmG8OpcVhqsA=="],
 

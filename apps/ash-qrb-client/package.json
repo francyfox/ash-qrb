@@ -41,7 +41,7 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.39",
+    "@iconify-json/lucide": "^1.2.41",
     "openapi-typescript": "^7.6.1"
   }
 }

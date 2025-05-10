@@ -43,7 +43,6 @@ export const useUserStore = defineStore('user', () => {
 
     if (error) errorMessage.value = error
     user.value = data?.user
-    console.log(user.value)
 
     return response
   }

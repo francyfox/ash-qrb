@@ -59,6 +59,13 @@ export default defineNuxtConfig({
     strategy: 'no_prefix',
   },
   icon: {
+    clientBundle: {
+      scan: true,
+      sizeLimitKb: 256,
+    },
+    serverBundle: {
+      collections: ['lucide'],
+    },
     customCollections: [
       {
         prefix: 'ash',
