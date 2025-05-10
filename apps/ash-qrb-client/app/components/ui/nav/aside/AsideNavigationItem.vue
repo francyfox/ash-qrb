@@ -33,28 +33,20 @@ const { disabled = false, active = false } = defineProps<{
 @reference "#root.pcss";
 
 .aside-nav-item {
-
   &.active .aside-nav-item-text:after {
     display: none;
   }
   
   &-text {
     &:after {
-      top: 0;
-      left: 0;
-      position: absolute;
-      display: block;
       content: '';
-      width: 100%;
-      height: 100%;
       transition: width .6s cubic-bezier(0.35, 0, 0.31, 1.2), background-color .3s ease-in-out;
       
-      @apply bg-p-fawn;
+      @apply bg-p-fawn top-0 left-0 absolute block w-full h-full;
     }
   }
 
   &:hover {
-
     .aside-nav-item-text:after {
       width: 500px;
 
