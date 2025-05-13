@@ -18,7 +18,9 @@
   "userActiveCodes": "активные коды",
   "userDisabledCodes": "неактивные коды",
   "userGateways": "переходов в день",
+  "userMenuDelete": "Удалить аккаунт",
   "userMenuEdit": "Редактировать аккаунт",
   "userMenuFaq": "ЧаВо",
+  "userMenuLogout": "Выйти",
   "userMenuSupport": "Запросить помощь"
 }

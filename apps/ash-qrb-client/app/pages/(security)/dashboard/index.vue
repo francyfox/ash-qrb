@@ -35,7 +35,12 @@ const { statistic } = storeToRefs(dashboardStore)
     </div>
 
     <div class="relative w-full flex gap-5 z-10">
-      <WidgetUserInfo />
+      <WidgetUserInfo
+          :name="user.name"
+          :id="user.id"
+          company="Tri Larka"
+          position="Superviser"
+      />
     </div>
   </NuxtLayout>
 </template>

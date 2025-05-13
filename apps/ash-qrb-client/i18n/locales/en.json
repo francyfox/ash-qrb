@@ -18,7 +18,9 @@
   "userActiveCodes": "active codes",
   "userDisabledCodes": "disabled codes",
   "userGateways": "gateways per day",
+  "userMenuDelete": "Delete Account",
   "userMenuEdit": "Edit Account",
   "userMenuFaq": "FAQ",
+  "userMenuLogout": "Logout",
   "userMenuSupport": "Request support"
 }
