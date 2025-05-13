@@ -8,4 +8,5 @@ Design: [link](https://www.figma.com/design/EDAyhSC98EmXEpUjpPQe5L/Design-file?n
 Pwa web app for creating qr codes gateway
 for another qr codes.
 
+
 Stack: Elysia + Nuxt
