@@ -69,7 +69,7 @@ const copyToast = () => {
 </script>
 
 <template>
-  <div class="w-[244px] flex flex-col items-center gap-1.5">
+  <div class="w-[244px] flex flex-col items-center gap-1.5 pl-10">
     <UTooltip text="Click to copy your id">
       <UButton
           v-if="id"

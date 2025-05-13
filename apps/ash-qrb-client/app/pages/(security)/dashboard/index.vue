@@ -19,28 +19,30 @@ const { statistic } = storeToRefs(dashboardStore)
 
 <template>
   <NuxtLayout name="admin-panel">
-    <div class="relative w-full flex gap-5 z-10">
-      <div class="flex justify-center">
-        <AvatarProfile
-            :rating="4"
-            :src="user?.image"
-            :placeholder="user?.name"
-            size="xl"
+    <div class="flex flex-col gap-5">
+      <div class="relative w-full flex gap-5 z-10">
+        <div class="flex justify-center">
+          <AvatarProfile
+              :rating="4"
+              :src="user?.image"
+              :placeholder="user?.name"
+              size="xl"
+          />
+        </div>
+
+        <WidgetStatistic
+            v-bind="statistic"
         />
       </div>
 
-      <WidgetStatistic
-          v-bind="statistic"
-      />
-    </div>
-
-    <div class="relative w-full flex gap-5 z-10">
-      <WidgetUserInfo
-          :name="user.name"
-          :id="user.id"
-          company="Tri Larka"
-          position="Superviser"
-      />
+      <div class="relative w-full flex gap-5 z-10">
+        <WidgetUserInfo
+            :name="user.name"
+            :id="user.id"
+            company="Tri Larka"
+            position="Superviser"
+        />
+      </div>
     </div>
   </NuxtLayout>
 </template>

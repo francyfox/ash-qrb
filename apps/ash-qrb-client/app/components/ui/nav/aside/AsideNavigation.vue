@@ -22,14 +22,16 @@ const data = computed(() => [
 </script>
 
 <template>
-  <nav class="aside-nav flex flex-col gap-4">
-    <AsideNavigationItem
-        v-for="i in data" :key="i.id"
-        v-bind="i.attrs"
-    >
-      {{ i.text }}
-    </AsideNavigationItem>
-  </nav>
+  <aside class="relative flex flex-col gap-5 z-10">
+    <nav class="aside-nav flex flex-col gap-4">
+      <AsideNavigationItem
+          v-for="i in data" :key="i.id"
+          v-bind="i.attrs"
+      >
+        {{ i.text }}
+      </AsideNavigationItem>
+    </nav>
+  </aside>
 </template>
 
 <style scoped>

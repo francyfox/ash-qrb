@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="default-layout w-full h-full flex-col py-5">
+  <div class="default-layout w-full h-full flex-col">
     <slot />
   </div>
 </template>
