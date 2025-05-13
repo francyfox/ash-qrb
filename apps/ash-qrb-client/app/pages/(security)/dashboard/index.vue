@@ -1,26 +1,41 @@
 <script setup lang="ts">
 import AvatarProfile from '~/components/ui/avatar/AvatarProfile.vue'
-import AvatarSquare from '~/components/ui/avatar/AvatarSquare.vue'
-import { authClient } from '~/libs/auth-client'
+import WidgetStatistic from '~/components/ui/widgets/WidgetStatistic.vue'
+import WidgetUserInfo from '~/components/ui/widgets/WidgetUserInfo.vue'
+import { useDashboardStore } from '~/stores/dashboard'
 
 definePageMeta({
   middleware: ['auth'],
 })
 
-const session = authClient.useSession()
+const { t } = useI18n()
+
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
+
+const dashboardStore = useDashboardStore()
+const { statistic } = storeToRefs(dashboardStore)
 </script>
 
 <template>
   <NuxtLayout name="admin-panel">
-    <div class="flex">
-      <AvatarProfile
-          :rating="4"
-          :src="user?.image"
-          :placeholder="user?.name"
-          size="xl"
+    <div class="relative w-full flex gap-5 z-10">
+      <div class="flex justify-center">
+        <AvatarProfile
+            :rating="4"
+            :src="user?.image"
+            :placeholder="user?.name"
+            size="xl"
+        />
+      </div>
+
+      <WidgetStatistic
+          v-bind="statistic"
       />
+    </div>
+
+    <div class="relative w-full flex gap-5 z-10">
+      <WidgetUserInfo />
     </div>
   </NuxtLayout>
 </template>

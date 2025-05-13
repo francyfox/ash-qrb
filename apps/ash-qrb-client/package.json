@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.41",
+    "animejs": "^4.0.2",
     "openapi-typescript": "^7.6.1"
   }
 }

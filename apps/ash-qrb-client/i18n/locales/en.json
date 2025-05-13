@@ -13,5 +13,12 @@
   "formPasswordRepeat": "Repeat password",
   "formRegisterErrorPasswordRepeat": "Passwords must match",
   "formUploadAvatar": "Upload avatar",
-  "securityLoggedIn": "Login with"
+  "securityLoggedIn": "Login with",
+  "sharedSettings": "Settings",
+  "userActiveCodes": "active codes",
+  "userDisabledCodes": "disabled codes",
+  "userGateways": "gateways per day",
+  "userMenuEdit": "Edit Account",
+  "userMenuFaq": "FAQ",
+  "userMenuSupport": "Request support"
 }

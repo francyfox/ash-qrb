@@ -13,7 +13,7 @@ const { rating, ...avatarProps } = props
 </script>
 
 <template>
-  <div class="avatar-profile w-[244px] h-[259px] relative flex justify-center items-center gap-1.5">
+  <div class="avatar-profile w-[244px] h-[259px] relative flex justify-center items-center gap-2">
     <NuxtImg
         src="https://res.cloudinary.com/dr5gcup5n/image/upload/v1746865771/ash-qrb/bjvlnajffv9yberit9wq.png"
         width="244"
@@ -22,8 +22,11 @@ const { rating, ...avatarProps } = props
         class="absolute top-0 left-0 w-full h-full z-10"
     />
 
-    <div class="avatar-profile-rating z-20">
-      <UIcon name="i-lucide-lightbulb" class="size-5" />
+    <div class="avatar-profile-rating h-full flex flex-col items-center z-20 pt-12">
+      <Icon
+          name="i-lucide-panel-top-close"
+          :size="24"
+      />
       <div class="text-6xl underline">
         {{ rating }}
       </div>

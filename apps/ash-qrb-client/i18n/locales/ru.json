@@ -13,5 +13,12 @@
   "formPasswordRepeat": "Повторите пароль",
   "formRegisterErrorPasswordRepeat": "Пароли не совпадают",
   "formUploadAvatar": "Загрузить аватар",
-  "securityLoggedIn": "Войти с"
+  "securityLoggedIn": "Войти с",
+  "sharedSettings": "Настройки",
+  "userActiveCodes": "активные коды",
+  "userDisabledCodes": "неактивные коды",
+  "userGateways": "переходов в день",
+  "userMenuEdit": "Редактировать аккаунт",
+  "userMenuFaq": "ЧаВо",
+  "userMenuSupport": "Запросить помощь"
 }
