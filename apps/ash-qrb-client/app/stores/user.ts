@@ -54,7 +54,7 @@ export const useUserStore = defineStore('user', () => {
     user.value = data
   }
 
-  const signOut = async (formData: IUserSingUpDTO) => {
+  const signOut = async () => {
     const { error } = await authClient.signOut()
 
     if (error) errorMessage.value = error

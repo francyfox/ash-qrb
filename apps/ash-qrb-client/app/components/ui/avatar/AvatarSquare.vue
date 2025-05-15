@@ -27,32 +27,39 @@ const imageSize = computed(() => {
   <div class="avatar-sq flex border-1 rounded-xl border-p-middle-red bg-p-middle-red/20 shadow-xl"
        :style="`width: ${imageSize.width}px; height: ${imageSize.height}px`"
   >
-    <NuxtPicture
-      v-bind="{
-        src,
-        width: imageSize.width,
-        height: imageSize.height
-      }"
-      format="avif,webp"
-      class="avatar-sq-picture flex"
-      v-slot="{ isLoaded }"
+    <NuxtImg
+        v-bind="{
+            src,
+            width: imageSize.width,
+            height: imageSize.height,
+            alt: placeholder
+          }"
+        class="avatar-sq-picture-img"
+        :custom="true"
+        v-slot="{ isLoaded, imgAttrs }"
     >
-      <NuxtImg
-          v-if="!isLoaded"
-          src="https://res.cloudinary.com/dr5gcup5n/image/upload/v1746865825/ash-qrb/zwlt3zaqrzmptmvli7hz.jpg"
-          v-bind="{
-          width: imageSize.width,
-          height: imageSize.height,
-          alt: placeholder,
-        }"
-          class="avatar-sq-picture-img"
+      <img
+          v-if="isLoaded"
+          v-bind="imgAttrs"
+          :src="src"
       />
-    </NuxtPicture>
+
+      <USkeleton
+          v-if="src && !isLoaded"
+          class="w-full h-full"
+      />
+
+      <img
+          v-if="!src"
+          v-bind="imgAttrs"
+          src="https://res.cloudinary.com/dr5gcup5n/image/upload/v1746865825/ash-qrb/zwlt3zaqrzmptmvli7hz.jpg"
+      />
+    </NuxtImg>
   </div>
 </template>
 
 <style scoped lang="postcss">
-.avatar-sq-picture {
+.avatar-sq {
   :deep(img) {
     object-fit: contain;
   }

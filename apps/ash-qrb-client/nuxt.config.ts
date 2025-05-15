@@ -21,6 +21,13 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/icon',
   ],
+  experimental: {
+    viewTransition: true,
+  },
+  app: {
+    pageTransition: false,
+    layoutTransition: { name: 'layout', mode: 'out-in' },
+  },
   css: [
     '@fontsource-variable/sofia-sans',
     '~/assets/styles/tailwind.pcss',
