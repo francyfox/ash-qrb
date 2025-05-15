@@ -21,7 +21,7 @@ const handleChangeLocale = () => {
 </script>
 
 <template>
-  <div class="top-0 left-0 flex bg-s-black-olive gap-2 p-2 rounded-md">
+  <div class="top-0 left-0 flex bg-s-black-olive gap-2 p-2 rounded-b-md">
     <div class="max-w-[200px]">
       <USelectMenu
           v-model="language"

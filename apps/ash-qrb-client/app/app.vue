@@ -3,7 +3,7 @@
 
 <template>
   <UApp>
-    <NuxtLayout>
+    <NuxtLayout >
       <NuxtPage />
     </NuxtLayout>
   </UApp>

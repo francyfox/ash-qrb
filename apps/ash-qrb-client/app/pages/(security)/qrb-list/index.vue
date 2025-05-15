@@ -2,7 +2,8 @@
 </script>
 
 <template>
-  <div class="">qrb-list</div>
+  <NuxtLayout name="admin-panel">
+  </NuxtLayout>
 </template>
 
 <style scoped>

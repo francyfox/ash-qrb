@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
+import { authClient } from '~/libs/auth-client'
 import type { DropdownMenuItem } from '#ui/components/DropdownMenu.vue'
 
 const props = defineProps<{
@@ -11,9 +12,13 @@ const props = defineProps<{
 
 const { t } = useI18n()
 
+const toast = useToast()
+
+const userStore = useUserStore()
+
 const open = ref(false)
 
-const items = [
+const items: Ref<DropdownMenuItem[][]> = computed(() => [
   [
     {
       label: t('userMenuEdit'),
@@ -32,17 +37,29 @@ const items = [
     {
       label: t('userMenuLogout'),
       icon: 'i-lucide-log-out',
+      onSelect: async () => {
+        try {
+          await userStore.signOut()
+        } finally {
+          toast.add({
+            title: 'Logout complete',
+            color: 'success',
+          })
+
+          setTimeout(() => {
+            navigateTo('/auth')
+          }, 500)
+        }
+      },
     },
     {
       label: t('userMenuDelete'),
       icon: 'i-lucide-eraser',
     },
   ],
-] satisfies DropdownMenuItem[]
+])
 
 const { copy, isSupported } = useClipboard()
-
-const toast = useToast()
 
 const copyToast = () => {
   if (!isSupported) {
