@@ -48,7 +48,13 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const signUp = async (formData: IUserSingUpDTO) => {
-    const { data, error } = await authClient.signUp.email(formData)
+    const { data, error } = await authClient.signUp.email({
+      name: 'Francy Fox',
+      companyName: 'test',
+      image: 'https://media.tenor.com/iQAin82SBm8AAAAM/anime-megumin.gif',
+      email: 'test@example.com',
+      password: 'password1234',
+    })
 
     if (error) errorMessage.value = error
     user.value = data
