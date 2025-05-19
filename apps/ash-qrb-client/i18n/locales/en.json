@@ -13,6 +13,7 @@
   "formPasswordRepeat": "Repeat password",
   "formRegisterErrorPasswordRepeat": "Passwords must match",
   "formUploadAvatar": "Upload avatar",
+  "qrbListAdd": "Add new QRB",
   "securityLoggedIn": "Login with",
   "sharedSettings": "Settings",
   "userActiveCodes": "active codes",
