@@ -66,6 +66,7 @@ export default defineNuxtConfig({
     strategy: 'no_prefix',
   },
   icon: {
+    localApiEndpoint: '/_nuxt_icon',
     clientBundle: {
       scan: true,
       sizeLimitKb: 256,

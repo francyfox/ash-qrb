@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { h, resolveComponent } from 'vue'
-import type { TableColumn } from '@nuxt/ui'
+import type { TableColumn, TableRow } from '@nuxt/ui'
 import type { Row } from '@tanstack/vue-table'
 import { getPaginationRowModel } from '@tanstack/vue-table'
 
 const UButton = resolveComponent('UButton')
 const UBadge = resolveComponent('UBadge')
 const UDropdownMenu = resolveComponent('UDropdownMenu')
+const UCheckbox = resolveComponent('UCheckbox')
 
 const table = useTemplateRef('table')
 
@@ -59,6 +60,27 @@ const data = ref<Payment[]>([
 ])
 
 const columns: TableColumn<Payment>[] = [
+  {
+    id: 'select',
+    header: ({ table }) =>
+      h(UCheckbox, {
+        modelValue: table.getIsSomePageRowsSelected()
+          ? 'indeterminate'
+          : table.getIsAllPageRowsSelected(),
+        'onUpdate:modelValue': (value: boolean | 'indeterminate') =>
+          table.toggleAllPageRowsSelected(!!value),
+        'aria-label': 'Select all',
+        ui: { base: 'bg-(--color-s-purple-taupe)' },
+      }),
+    cell: ({ row }) =>
+      h(UCheckbox, {
+        modelValue: row.getIsSelected(),
+        'onUpdate:modelValue': (value: boolean | 'indeterminate') =>
+          row.toggleSelected(!!value),
+        'aria-label': 'Select row',
+        ui: { base: 'bg-(--color-s-purple-taupe)' },
+      }),
+  },
   {
     accessorKey: 'id',
     header: '#',
@@ -139,6 +161,15 @@ const columns: TableColumn<Payment>[] = [
   },
 ]
 
+const rowSelection = ref<Record<string, boolean>>({})
+
+function onSelect(row: TableRow<Payment>, e?: Event) {
+  /* If you decide to also select the column you can do this  */
+  row.toggleSelected(!row.getIsSelected())
+
+  console.log(e)
+}
+
 function getRowItems(row: Row<Payment>) {
   return [
     {
@@ -173,14 +204,34 @@ const pagination = ref({
   pageIndex: 0,
   pageSize: 5,
 })
+
+const columnFilters = ref([
+  {
+    id: 'email',
+    value: '',
+  },
+])
+
+const tableTotal: Ref<number | undefined> = computed(
+  () => table.value?.tableApi?.getFilteredRowModel().rows.length,
+)
 </script>
 
 <template>
   <div class="h-full qrb-table">
     <div class="h-full w-full flex flex-col justify-between space-y-4 pb-4">
+      <div class="flex px-4 py-3.5 border-b border-accented">
+        <UInput
+            :model-value="table?.tableApi?.getColumn('email')?.getFilterValue() as string"
+            class="max-w-sm"
+            placeholder="Filter emails..."
+            @update:model-value="table?.tableApi?.getColumn('email')?.setFilterValue($event)"
+        />
+      </div>
       <UTable
           ref="table"
           v-model:pagination="pagination"
+          v-model:column-filters="columnFilters"
           :data="data"
           :columns="columns"
           :pagination-options="{
@@ -189,11 +240,16 @@ const pagination = ref({
           class="flex-1"
       />
 
+      <div class="px-4 py-3.5 text-sm text-muted">
+        {{ table?.tableApi?.getFilteredSelectedRowModel().rows.length || 0 }} of
+        {{ table?.tableApi?.getFilteredRowModel().rows.length || 0 }} row(s) selected.
+      </div>
+
       <div class="flex justify-center border-t border-default pt-4">
         <UPagination
             :default-page="(table?.tableApi?.getState().pagination.pageIndex || 0) + 1"
             :items-per-page="table?.tableApi?.getState().pagination.pageSize"
-            :total="table?.tableApi?.getFilteredRowModel().rows.length"
+            :total="tableTotal"
             @update:page="(p) => table?.tableApi?.setPageIndex(p - 1)"
         />
       </div>
