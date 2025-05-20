@@ -1,14 +1,9 @@
-# Turborepo starter
+# First run
 
-This Turborepo starter is maintained by the Turborepo core team.
-
-## Using this example
-
-Run the following command:
-
-```sh
-npx create-turbo@latest
-```
+- Run docker compose (start postgres db)
+- Go to server app, run `bun run generate && bun run migrate` for db migration
+- Configure .env files (use .env.example)
+- Run from root `bun dev` or separately 
 
 ## What's inside?
 

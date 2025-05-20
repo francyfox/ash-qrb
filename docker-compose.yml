@@ -1,21 +1,4 @@
 services:
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin4_container
-    restart: always
-    ports:
-      - "8888:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    networks:
-      - local
-    logging:
-      driver: "none"
-
   postgres:
     container_name: ash-qrb-server-postgres
     image: postgres:latest
@@ -36,7 +19,6 @@ services:
 
 volumes:
   postgres_data:
-  pgadmin-data:
 
 networks:
   local: { }
