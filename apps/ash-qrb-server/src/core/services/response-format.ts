@@ -37,6 +37,7 @@ export const getCollectionItems = async (
   }
 }
 
+// TODO: destructure params
 export const filterByFieldCollectionItems = async (
   collection: PgTableWithColumns<any>,
   field: string,
