@@ -22,7 +22,7 @@ export const qrbDefaultColumns = {
   name: varchar('name', { length: 70 }).notNull(),
   description: text('description'),
   qrCode: text('qr_code'),
-  userId: serial('user_id')
+  userId: text('user_id')
     .notNull()
     .references(() => usersSchema.id),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),

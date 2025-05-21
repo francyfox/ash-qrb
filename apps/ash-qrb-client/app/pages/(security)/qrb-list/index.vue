@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import QrbList from '~/components/ui/table/QrbList.vue'
 import ModalReallySure from '~/components/modals/ModalReallySure.vue'
+import ModalCreateQrCode from '~/components/modals/ModalCreateQrCode.vue'
 
 const { t } = useI18n()
 const modalReallySure = ref(false)
+const modalQrCode = ref(false)
 </script>
 
 <template>
@@ -15,6 +17,7 @@ const modalReallySure = ref(false)
             type="button"
             class="cursor-pointer"
             icon="i-lucide-qr-code"
+            @click="modalQrCode = true"
         >
           {{ t('qrbListAdd') }}
         </UButton>
@@ -37,6 +40,10 @@ const modalReallySure = ref(false)
         v-model="modalReallySure"
         @onSubmit=""
         @onClose=""
+    />
+
+    <ModalCreateQrCode
+        v-model="modalQrCode"
     />
   </NuxtLayout>
 </template>
