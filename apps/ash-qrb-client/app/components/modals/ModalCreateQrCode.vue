@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import FormQr from '~/components/forms/qr/FormQr.vue'
+import { useQrbStore } from '~/stores/qrb'
 
+const toast = useToast()
+
+const qrbStore = useQrbStore()
 const model = defineModel<boolean>()
 const emit = defineEmits<{
   onSubmit: []
@@ -8,6 +12,17 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
+
+const handleSubmit = async (v: any) => {
+  try {
+    await qrbStore.postQrb(v)
+  } finally {
+    toast.add({
+      title: t('toastQrCreated'),
+      color: 'success',
+    })
+  }
+}
 </script>
 
 <template>
@@ -17,7 +32,9 @@ const { t } = useI18n()
       :ui="{ body: 'bg-(--color-s-champagne)' }"
   >
     <template #body>
-      <FormQr />
+      <FormQr
+          @onSubmit="handleSubmit"
+      />
     </template>
   </LazyUModal>
 </template>

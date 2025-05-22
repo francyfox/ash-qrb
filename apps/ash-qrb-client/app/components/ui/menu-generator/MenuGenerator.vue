@@ -13,29 +13,68 @@ const model = defineModel<IMGMenuItem[]>({
     },
   ],
 })
+
+const handleAdd = () => {
+  model.value.push({
+    type: 'link',
+    content: {
+      label: undefined,
+      icon: undefined,
+      to: undefined,
+    },
+  })
+}
 </script>
 
 <template>
-  <div class="menu-generator">
-    {{ model }}
+  <div class="menu-generator flex flex-col gap-2">
     <div
         v-for="input in model"
-        class="flex gap-2"
+        class="flex justify-start gap-2"
     >
       <UFormField label="Type">
         <USelect
             v-model="input.type"
+            :items="['link', 'fetch']"
             :search-input="false"
         />
       </UFormField>
 
-      <template v-if="input.type === 'fetch'">
-        <UFormField label="URL">
-          <UInput
-              v-model="input.content.to"
-          />
-        </UFormField>
-      </template>
+      <TransitionGroup tag="div" class="w-full" appear>
+        <template v-if="input.type === 'link'">
+          <UFormField
+              label="URL"
+              class="w-full"
+          >
+            <UInput
+                v-model="input.content.to"
+                class="w-full"
+            />
+          </UFormField>
+        </template>
+
+        <template v-if="input.type === 'fetch'">
+          <UFormField
+              label="Fetch"
+              hint="use JS fetch"
+              class="w-full"
+          >
+            <UInput
+                v-model="input.content.request"
+                class="w-full"
+            />
+          </UFormField>
+        </template>
+      </TransitionGroup>
+    </div>
+
+    <div class="flex justify-center">
+      <UButton
+          type="button"
+          icon="i-lucide-circle-plus"
+          color="primary"
+          @click="handleAdd"
+      />
     </div>
   </div>
 </template>

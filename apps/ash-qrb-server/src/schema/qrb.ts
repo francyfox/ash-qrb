@@ -1,15 +1,7 @@
-import {
-  boolean,
-  integer,
-  pgTable,
-  serial,
-  text,
-  timestamp,
-  varchar,
-} from 'drizzle-orm/pg-core'
-import { createInsertSchema, createSelectSchema } from 'drizzle-typebox'
-import { sql } from 'drizzle-orm'
 import { usersSchema } from '@/schema/user.ts'
+import { sql } from 'drizzle-orm'
+import { integer, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core'
+import { createInsertSchema, createSelectSchema } from 'drizzle-typebox'
 
 export const QRB_STATUS = {
   DISABLED: 0,

@@ -1,4 +1,4 @@
-import { object, string, number, type InferType } from 'yup'
+import { type InferType, object, string } from 'yup'
 
 export const QRB_STATUS = {
   DISABLED: 0,
@@ -9,7 +9,7 @@ export const qrSchema = () => {
   const { t } = useI18n()
 
   return object({
-    status: number().default(QRB_STATUS.ACTIVE),
+    status: object(),
     name: string().min(3).max(70).required(t('formNameRequired')),
     description: string().max(255),
     qrCode: string(),

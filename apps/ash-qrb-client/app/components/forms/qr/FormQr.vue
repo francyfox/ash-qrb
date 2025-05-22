@@ -1,23 +1,27 @@
 <script setup lang="ts">
-import type { Form } from '#ui/types'
+import type { Form, FormSubmitEvent } from '#ui/types'
 import {
   QRB_STATUS,
   qrSchema,
   type TQrbSchema,
 } from '~/components/forms/qr/qr.schema'
 import MenuGenerator from '~/components/ui/menu-generator/MenuGenerator.vue'
+import type { IMGMenuItem } from '~/components/ui/menu-generator/menu-generator.types'
+
+type TStatusOption = (typeof statusOptions.value)[number]
+type TQrbProps = Omit<TQrbSchema, 'status'> &
+  Record<'status', TStatusOption | undefined>
 
 const { t } = useI18n()
 
 const emit = defineEmits<{
-  onSubmit: []
+  onSubmit: [data: any]
 }>()
 
-const QrSchema = qrSchema()
+const QrSchemaValidator = qrSchema()
 
 const form = ref<Form<TQrbSchema>>()
 
-type TStatusOption = (typeof statusOptions.value)[number]
 const statusOptions = ref([
   {
     icon: 'i-lucide-eye',
@@ -31,50 +35,93 @@ const statusOptions = ref([
   },
 ])
 
-const defaultOption = statusOptions.value[0]
+const model = defineModel<TQrbProps>()
 
-const state = defineModel<
-  Omit<TQrbSchema, 'status'> & Record<'status', TStatusOption | undefined>
->({
-  default: {
-    status: undefined,
-    name: undefined,
-    description: undefined,
-  },
+const state = reactive<TQrbProps>({
+  status: undefined,
+  name: undefined,
+  description: undefined,
 })
 
-state.value.status = defaultOption
+if (model.value) {
+  for (const key in model.value) {
+    state[key] = model.value[key]
+  }
+} else {
+  state.status = statusOptions.value[0]
+}
 
-const menu = ref()
+const menu: Ref<IMGMenuItem[]> = ref([
+  {
+    type: 'link',
+    content: {
+      label: 'test',
+      icon: 'i-lucide-edit',
+      to: '',
+    },
+  },
+])
+
+const handleSubmit = (event: FormSubmitEvent<TQrbProps>) => {
+  if (form.value) form.value.clear()
+
+  const formData = {
+    ...event?.data,
+    ...unref(menu),
+  }
+
+  console.log(formData)
+
+  emit('onSubmit', formData)
+}
+
+watch(state, (v) => {
+  model.value = {
+    ...v,
+    ...unref(menu),
+  }
+})
 </script>
 
 <template>
   <UForm
       ref="form"
-      :schema="QrSchema"
+      :schema="QrSchemaValidator"
       :state="state"
       class="form-qrb w-full flex flex-col gap-2.5"
-      @submit="emit('onSubmit')"
+      @submit="handleSubmit"
   >
-    <UFormField :label="t('status')" size="xl">
+    <UFormField
+        :label="t('status')"
+        size="xl"
+        name="status"
+    >
       <USelectMenu
           v-model="state.status"
           :icon="state.status?.icon"
           :search-input="false"
           :items="statusOptions"
-          @change="v => state.status = v"
           class="w-full"
       />
     </UFormField>
 
-    <UFormField :label="t('labelQrbName')" size="xl">
+    <UFormField
+        :label="t('labelQrbName')"
+        size="xl"
+        name="name"
+        required
+    >
       <UInput
           v-model="state.name"
           class="w-full"
       />
     </UFormField>
 
-    <UFormField :label="t('labelDescription')" size="xl">
+    <UFormField
+        :label="t('labelDescription')"
+        size="xl"
+        name="description"
+    >
       <UTextarea
           v-model="state.description"
           class="w-full"
@@ -89,6 +136,7 @@ const menu = ref()
       <UButton
           type="submit"
           icon="i-lucide-rocket"
+          class="cursor-pointer"
       >
         {{ t('formActionSend') }}
       </UButton>
