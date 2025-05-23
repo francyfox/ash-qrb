@@ -5,6 +5,7 @@ import { useQrbStore } from '~/stores/qrb'
 const toast = useToast()
 
 const qrbStore = useQrbStore()
+const { errorMessage } = storeToRefs(qrbStore)
 const model = defineModel<boolean>()
 const emit = defineEmits<{
   onSubmit: []
@@ -14,14 +15,22 @@ const emit = defineEmits<{
 const { t } = useI18n()
 
 const handleSubmit = async (v: any) => {
-  try {
-    await qrbStore.postQrb(v)
-  } finally {
+  const { error } = await qrbStore.postQrb({ qrb: v })
+
+  if (error) {
+    toast.add({
+      title: error.message || 'error',
+      description: error?.summary || error,
+      color: 'error',
+    })
+  } else {
     toast.add({
       title: t('toastQrCreated'),
       color: 'success',
     })
   }
+
+  model.value = false
 }
 </script>
 

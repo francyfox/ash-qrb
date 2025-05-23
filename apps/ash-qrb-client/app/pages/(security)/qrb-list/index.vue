@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import QrbList from '~/components/ui/table/QrbList.vue'
-import ModalReallySure from '~/components/modals/ModalReallySure.vue'
 import ModalCreateQrCode from '~/components/modals/ModalCreateQrCode.vue'
+import ModalReallySure from '~/components/modals/ModalReallySure.vue'
+import QrbList from '~/components/ui/table/QrbList.vue'
+
+definePageMeta({
+  middleware: ['auth'],
+})
 
 const { t } = useI18n()
 const modalReallySure = ref(false)

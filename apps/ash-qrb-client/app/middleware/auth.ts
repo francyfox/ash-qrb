@@ -9,5 +9,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return navigateTo('/auth')
   }
 
+  console.log(session.value)
   user.value = session.value.user
 })

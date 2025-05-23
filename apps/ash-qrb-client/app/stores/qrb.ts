@@ -1,5 +1,5 @@
-import { api } from '~/libs/api'
 import type { operations } from 'assets/schema'
+import { api } from '~/libs/api'
 
 type TQrbBody =
   operations['postSPrivateQrb']['requestBody']['content']['application/json']
@@ -37,6 +37,7 @@ export const useQrbStore = defineStore('qrb', () => {
   }
 
   return {
+    errorMessage,
     qrbList,
     getQrbList,
     postQrb,

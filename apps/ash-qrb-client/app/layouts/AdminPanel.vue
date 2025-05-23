@@ -15,12 +15,12 @@ import AsideNavigation from '~/components/ui/nav/aside/AsideNavigation.vue'
     </header>
     <section class="admin-layout h-full">
       <div class="container flex items-center h-full">
-        <div class="flex w-full min-h-[80vh] gap-5">
-          <PanelCard class="card-content overflow-hidden">
+        <div class="flex w-full max-h-[80%] min-h-[80vh] gap-5">
+          <PanelCard class="card-content overflow-y-auto">
             <slot />
           </PanelCard>
 
-          <PanelCard class="card-menu max-w-[335px] overflow-hidden">
+          <PanelCard class="card-menu max-w-[335px] overflow-y-auto">
             <AsideNavigation />
           </PanelCard>
         </div>
@@ -35,7 +35,7 @@ import AsideNavigation from '~/components/ui/nav/aside/AsideNavigation.vue'
           </div>
 
           <div class="inline-flex text-s-old-lace gap-1.5">
-            Made with <div class="flex items-center gap-1.5"><Icon name="i-lucide-heart" class="text-red-400 size-4"/> <span class="text-red-400">LoVe</span></div> by Ashra Fusion Team
+            Made with <div class="flex items-center gap-1.5"><Icon name="i-lucide-heart" class="text-red-400 size-4"/></div> by Ashra Fusion Team
           </div>
         </div>
       </div>

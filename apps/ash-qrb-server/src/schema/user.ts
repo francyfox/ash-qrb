@@ -19,7 +19,9 @@ export const USER_STATUS = {
 }
 
 export const usersDefaultColumns = {
-  id: text('id').primaryKey(),
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => generateId()),
   publicId: text('public_id').unique().default(generateId()).notNull(),
   status: integer('status').default(USER_STATUS.CREATED),
   image: text('image'),

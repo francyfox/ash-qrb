@@ -1,4 +1,5 @@
 import { usersSchema } from '@/schema/user.ts'
+import { generateId } from '@/utils/generate.ts'
 import { sql } from 'drizzle-orm'
 import { integer, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-typebox'
@@ -9,7 +10,9 @@ export const QRB_STATUS = {
 }
 
 export const qrbDefaultColumns = {
-  id: text('id').primaryKey(),
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => generateId()),
   status: integer('status').default(QRB_STATUS.ACTIVE),
   name: varchar('name', { length: 70 }).notNull(),
   description: text('description'),

@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { Form, FormSubmitEvent } from '#ui/types'
+import { toRaw } from 'vue'
 import {
   QRB_STATUS,
-  qrSchema,
   type TQrbSchema,
+  qrSchema,
 } from '~/components/forms/qr/qr.schema'
 import MenuGenerator from '~/components/ui/menu-generator/MenuGenerator.vue'
 import type { IMGMenuItem } from '~/components/ui/menu-generator/menu-generator.types'
+import type { Form, FormSubmitEvent } from '#ui/types'
 
 type TStatusOption = (typeof statusOptions.value)[number]
 type TQrbProps = Omit<TQrbSchema, 'status'> &
@@ -17,6 +18,9 @@ const { t } = useI18n()
 const emit = defineEmits<{
   onSubmit: [data: any]
 }>()
+
+const userStore = useUserStore()
+const { user } = storeToRefs(userStore)
 
 const QrSchemaValidator = qrSchema()
 
@@ -65,9 +69,16 @@ const menu: Ref<IMGMenuItem[]> = ref([
 const handleSubmit = (event: FormSubmitEvent<TQrbProps>) => {
   if (form.value) form.value.clear()
 
+  const menuList = toRaw(menu.value)
+  const { status, ...data } = toRaw(event.data)
+
+  console.log(user.value)
+
   const formData = {
-    ...event?.data,
-    ...unref(menu),
+    ...data,
+    status: status?.value,
+    userId: user.value?.id,
+    menuList,
   }
 
   console.log(formData)
