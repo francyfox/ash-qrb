@@ -7,9 +7,27 @@ type TQrbBody =
 type TQrbItems =
   operations['getSPrivateQrb']['responses']['200']['content']['application/json']['items']
 
+type TQrbItem =
+  operations['getSPrivateQrbById']['responses']['200']['content']['application/json']['item']
+
 export const useQrbStore = defineStore('qrb', () => {
+  const qrb = ref<TQrbItem>()
   const qrbList = ref<TQrbItems>([])
   const errorMessage = ref()
+
+  const getQrbById = async (id: string) => {
+    const response = await api.GET('/s/private/qrb/{id}', {
+      params: {
+        path: { id },
+      },
+    })
+
+    const { data, error } = response
+    if (error) errorMessage.value = error
+    qrb.value = data?.item
+
+    return response
+  }
 
   const getQrbList = async (params: object) => {
     const response = await api.GET('/s/private/qrb', {
@@ -38,8 +56,10 @@ export const useQrbStore = defineStore('qrb', () => {
 
   return {
     errorMessage,
+    qrb,
     qrbList,
     getQrbList,
     postQrb,
+    getQrbById,
   }
 })

@@ -47,7 +47,7 @@ export const filterByFieldCollectionItems = async (
   const items = await db
     .select()
     .from(collection)
-    .where(like(collection[field], `%${value}%`))
+    .where(like(collection[field], `${value || ''}%`))
     .limit(options.pageSize)
     .offset((options.page - 1) * options.pageSize)
 
@@ -62,7 +62,7 @@ export const getCollectionItemEqual = async (
   key: string,
   value: string | number,
 ) => {
-  const item = await db
+  const [item] = await db
     .select()
     .from(collection)
     .where(eq(collection[key], value))
