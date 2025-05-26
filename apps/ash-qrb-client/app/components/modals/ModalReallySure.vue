@@ -11,13 +11,15 @@ const { t } = useI18n()
 <template>
   <LazyUModal v-model:open="model" :title="t('modalReallySure')">
     <template #footer>
-      <div class="flex justify-end gap-2">
+      <div class="w-full flex justify-center gap-2">
         <UButton
             color="primary"
+            size="xl"
             prepend-icon="i-lucide-chevron-right"
+            class="w-full max-w-1/2"
             @click="emit('onSubmit')"
         >
-          {{ t('ok') }}
+          <span class="w-full text-center">{{ t('ok') }}</span>
         </UButton>
       </div>
     </template>

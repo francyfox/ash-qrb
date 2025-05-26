@@ -1,4 +1,6 @@
 {
+  "actionDisable": "Disable",
+  "actionEnable": "Enable",
   "asideNavList": "QRB List",
   "asideNavProfile": "Profile",
   "back": "Back",

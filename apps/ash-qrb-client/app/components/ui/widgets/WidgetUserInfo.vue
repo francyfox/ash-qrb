@@ -129,6 +129,7 @@ const copyToast = () => {
         :ui="{
           content: 'w-48'
         }"
+        size="xl"
     >
       <UButton icon="i-lucide-settings-2">
         {{ t('sharedSettings')}}
