@@ -1,65 +1,27 @@
 <script setup lang="ts">
-import { h, resolveComponent } from 'vue'
 import type { TableColumn, TableRow } from '@nuxt/ui'
 import type { Row } from '@tanstack/vue-table'
 import { getPaginationRowModel } from '@tanstack/vue-table'
+import { h, resolveComponent } from 'vue'
+import { QRB_STATUS } from '~/components/forms/qr/qr.schema'
+import type { TQrbItem } from '~/types/qrb.types'
+import { useDayjs } from '#dayjs'
+
+const { list = [] } = defineProps<{
+  list: TQrbItem[]
+}>()
 
 const UButton = resolveComponent('UButton')
 const UBadge = resolveComponent('UBadge')
 const UDropdownMenu = resolveComponent('UDropdownMenu')
 const UCheckbox = resolveComponent('UCheckbox')
 
+const { t } = useI18n()
+const dayjs = useDayjs()
 const table = useTemplateRef('table')
-
 const toast = useToast()
 
-type Payment = {
-  id: string
-  date: string
-  status: 'paid' | 'failed' | 'refunded'
-  email: string
-  amount: number
-}
-
-const data = ref<Payment[]>([
-  {
-    id: '4600',
-    date: '2024-03-11T15:30:00',
-    status: 'paid',
-    email: 'james.anderson@example.com',
-    amount: 594,
-  },
-  {
-    id: '4599',
-    date: '2024-03-11T10:10:00',
-    status: 'failed',
-    email: 'mia.white@example.com',
-    amount: 276,
-  },
-  {
-    id: '4598',
-    date: '2024-03-11T08:50:00',
-    status: 'refunded',
-    email: 'william.brown@example.com',
-    amount: 315,
-  },
-  {
-    id: '4597',
-    date: '2024-03-10T19:45:00',
-    status: 'paid',
-    email: 'emma.davis@example.com',
-    amount: 529,
-  },
-  {
-    id: '4596',
-    date: '2024-03-10T15:55:00',
-    status: 'paid',
-    email: 'ethan.harris@example.com',
-    amount: 639,
-  },
-])
-
-const columns: TableColumn<Payment>[] = [
+const columns: TableColumn<TQrbItem>[] = [
   {
     id: 'select',
     header: ({ table }) =>
@@ -83,22 +45,14 @@ const columns: TableColumn<Payment>[] = [
   },
   {
     accessorKey: 'id',
-    header: '#',
-    cell: ({ row }) => `#${row.getValue('id')}`,
+    header: '# ID',
+    cell: ({ row }) => `${row.getValue('id')}`,
   },
   {
-    accessorKey: 'date',
-    header: 'Date',
-    cell: ({ row }) => {
-      return new Date(row.getValue('date')).toLocaleString('en-US', {
-        day: 'numeric',
-        month: 'short',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      })
-    },
+    accessorKey: 'name',
+    header: 'Name',
   },
+
   {
     accessorKey: 'status',
     header: 'Status',
@@ -109,27 +63,24 @@ const columns: TableColumn<Payment>[] = [
         refunded: 'neutral' as const,
       }[row.getValue('status') as string]
 
-      return h(UBadge, { class: 'capitalize', variant: 'subtle', color }, () =>
-        row.getValue('status'),
+      return h(
+        UBadge,
+        { size: 'xl', class: 'capitalize', variant: 'subtle', color },
+        () => {
+          const v = Object.entries(QRB_STATUS).find(
+            ([key, value]) => row.getValue('status') === value,
+          )
+
+          return v ? v[0] : 'DISABLED'
+        },
       )
     },
   },
   {
-    accessorKey: 'email',
-    header: 'Email',
-  },
-  {
-    accessorKey: 'amount',
-    header: () => h('div', { class: 'text-right' }, 'Amount'),
+    accessorKey: 'createdAt',
+    header: 'Created',
     cell: ({ row }) => {
-      const amount = Number.parseFloat(row.getValue('amount'))
-
-      const formatted = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'EUR',
-      }).format(amount)
-
-      return h('div', { class: 'text-right font-medium' }, formatted)
+      return dayjs(row.getValue('createdAt')).format('DD-MM-YYYY HH:mm')
     },
   },
   {
@@ -141,6 +92,7 @@ const columns: TableColumn<Payment>[] = [
         h(
           UDropdownMenu,
           {
+            size: 'xl',
             content: {
               align: 'end',
             },
@@ -163,39 +115,39 @@ const columns: TableColumn<Payment>[] = [
 
 const rowSelection = ref<Record<string, boolean>>({})
 
-function onSelect(row: TableRow<Payment>, e?: Event) {
+function onSelect(row: TableRow<TQrbItem>, e?: Event) {
   /* If you decide to also select the column you can do this  */
   row.toggleSelected(!row.getIsSelected())
 
   console.log(e)
 }
 
-function getRowItems(row: Row<Payment>) {
+function getRowItems(row: Row<TQrbItem>) {
   return [
     {
       type: 'label',
       label: 'Actions',
     },
     {
-      label: 'Copy payment ID',
+      label: t('qrbActionCopy'),
       onSelect() {
-        navigator.clipboard.writeText(row.original.id)
+        navigator.clipboard.writeText(
+          `${window.location.origin}/qrb/${row.original.id}`,
+        )
 
         toast.add({
-          title: 'Payment ID copied to clipboard!',
+          title: 'QRB URL copied to clipboard!',
           color: 'success',
           icon: 'i-lucide-circle-check',
         })
       },
     },
     {
-      type: 'separator',
+      label: t('qrbActionView'),
+      to: `/qrb/${row.original.id}`,
     },
     {
-      label: 'View customer',
-    },
-    {
-      label: 'View payment details',
+      label: t('qrbActionEdit'),
     },
   ]
 }
@@ -207,7 +159,7 @@ const pagination = ref({
 
 const columnFilters = ref([
   {
-    id: 'email',
+    id: 'name',
     value: '',
   },
 ])
@@ -222,25 +174,27 @@ const tableTotal: Ref<number | undefined> = computed(
     <div class="h-full w-full flex flex-col justify-between space-y-4 pb-4">
       <div class="flex px-4 py-3.5 border-b border-accented">
         <UInput
-            :model-value="table?.tableApi?.getColumn('email')?.getFilterValue() as string"
+            :model-value="table?.tableApi?.getColumn('name')?.getFilterValue() as string"
+            size="xl"
             class="max-w-sm"
-            placeholder="Filter emails..."
-            @update:model-value="table?.tableApi?.getColumn('email')?.setFilterValue($event)"
+            placeholder="Filter names..."
+            @update:model-value="table?.tableApi?.getColumn('name')?.setFilterValue($event)"
         />
       </div>
       <UTable
           ref="table"
           v-model:pagination="pagination"
           v-model:column-filters="columnFilters"
-          :data="data"
+          :data="list"
           :columns="columns"
           :pagination-options="{
             getPaginationRowModel: getPaginationRowModel()
           }"
+          :ui="{ td: 'text-xl', th: 'text-xl' }"
           class="flex-1"
       />
 
-      <div class="px-4 py-3.5 text-sm text-muted">
+      <div class="px-4 py-3.5 text-md text-muted">
         {{ table?.tableApi?.getFilteredSelectedRowModel().rows.length || 0 }} of
         {{ table?.tableApi?.getFilteredRowModel().rows.length || 0 }} row(s) selected.
       </div>

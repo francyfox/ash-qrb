@@ -1,14 +1,5 @@
-import type { operations } from 'assets/schema'
 import { api } from '~/libs/api'
-
-type TQrbBody =
-  operations['postSPrivateQrb']['requestBody']['content']['application/json']
-
-type TQrbItems =
-  operations['getSPrivateQrb']['responses']['200']['content']['application/json']['items']
-
-type TQrbItem =
-  operations['getSPrivateQrbById']['responses']['200']['content']['application/json']['item']
+import type { TQrbBody, TQrbItem, TQrbItems } from '~/types/qrb.types'
 
 export const useQrbStore = defineStore('qrb', () => {
   const qrb = ref<TQrbItem>()

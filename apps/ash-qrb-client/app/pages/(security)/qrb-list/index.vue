@@ -8,8 +8,16 @@ definePageMeta({
 })
 
 const { t } = useI18n()
+
+const qrbStore = useQrbStore()
+const { qrbList } = storeToRefs(qrbStore)
+
 const modalReallySure = ref(false)
 const modalQrCode = ref(false)
+
+const { error } = await qrbStore.getQrbList({
+  page: 1,
+})
 </script>
 
 <template>
@@ -37,7 +45,7 @@ const modalQrCode = ref(false)
         </UButton>
       </div>
 
-      <QrbList />
+      <QrbList :list="qrbList" />
     </div>
 
     <ModalReallySure
