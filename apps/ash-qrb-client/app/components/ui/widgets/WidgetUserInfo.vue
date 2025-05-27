@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useClipboard } from '@vueuse/core'
-import { authClient } from '~/libs/auth-client'
+import type { Ref } from 'vue'
+import UserId from '~/components/ui/user-id.vue'
 import type { DropdownMenuItem } from '#ui/components/DropdownMenu.vue'
 
 const props = defineProps<{
@@ -58,55 +58,11 @@ const items: Ref<DropdownMenuItem[][]> = computed(() => [
     },
   ],
 ])
-
-const { copy, isSupported } = useClipboard()
-
-const copyToast = () => {
-  if (!isSupported) {
-    toast.add({
-      title: 'Your browser does not support Clipboard API',
-      color: 'error',
-    })
-  }
-
-  if (props.id) {
-    copy(props.id)
-
-    toast.add({
-      title: 'Copied to clipboard!',
-      color: 'info',
-    })
-  } else {
-    toast.add({
-      title: 'No information for clipboard',
-      color: 'error',
-    })
-  }
-}
 </script>
 
 <template>
   <div class="w-[244px] flex flex-col items-center gap-1.5 pl-10">
-    <UTooltip text="Click to copy your id">
-      <UButton
-          v-if="id"
-          type="button"
-          size="xs"
-          @click="copyToast"
-      >
-        <Icon
-            name="i-lucide-link"
-            :width="16"
-            :height="16"
-        />
-
-        User ID:
-
-        <span class="overflow-ellipsis overflow-hidden whitespace-nowrap w-[80px]">
-        {{ id }}
-      </span>
-      </UButton>
-    </UTooltip>
+    <UserId :id="id" />
 
     <USkeleton v-if="!name" class="h-9 w-[80%] rounded-md" />
     <div class="text-3xl">

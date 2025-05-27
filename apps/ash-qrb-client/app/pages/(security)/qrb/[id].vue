@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PanelCard from '~/components/ui/cards/PanelCard.vue'
 import QrbImage from '~/components/ui/qrb-image/QrbImage.vue'
+import UserId from '~/components/ui/user-id.vue'
 
 definePageMeta({
   middleware: ['auth'],
@@ -44,6 +45,8 @@ if (id) {
       <h1 class="text-3xl text-center uppercase mb-2">
         {{ qrb?.name }}
       </h1>
+
+      <UserId :id="qrb?.userId" />
 
       <main>
         <p class="text-xl">
