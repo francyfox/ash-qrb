@@ -112,6 +112,7 @@ watch(state, (v) => {
           :icon="state.status?.icon"
           :search-input="false"
           :items="statusOptions"
+          size="xl"
           class="w-full"
       />
     </UFormField>
@@ -124,6 +125,7 @@ watch(state, (v) => {
     >
       <UInput
           v-model="state.name"
+          size="xl"
           class="w-full"
       />
     </UFormField>
@@ -135,6 +137,7 @@ watch(state, (v) => {
     >
       <UTextarea
           v-model="state.description"
+          size="xl"
           class="w-full"
       />
     </UFormField>

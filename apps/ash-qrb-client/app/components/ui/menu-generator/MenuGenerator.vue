@@ -32,11 +32,15 @@ const handleAdd = () => {
         v-for="input in model"
         class="flex justify-start gap-2"
     >
-      <UFormField label="Type">
+      <UFormField
+          label="Type"
+          size="xl"
+      >
         <USelect
             v-model="input.type"
             :items="['link', 'fetch']"
             :search-input="false"
+            size="xl"
         />
       </UFormField>
 
@@ -44,10 +48,12 @@ const handleAdd = () => {
         <template v-if="input.type === 'link'">
           <UFormField
               label="URL"
+              size="xl"
               class="w-full"
           >
             <UInput
                 v-model="input.content.to"
+                size="xl"
                 class="w-full"
             />
           </UFormField>
@@ -58,9 +64,11 @@ const handleAdd = () => {
               label="Fetch"
               hint="use JS fetch"
               class="w-full"
+              size="xl"
           >
             <UInput
                 v-model="input.content.request"
+                size="xl"
                 class="w-full"
             />
           </UFormField>

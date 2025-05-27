@@ -27,6 +27,7 @@ const handleChangeLocale = () => {
           v-model="language"
           :items="languageList"
           icon="i-lucide-languages"
+          size="xl"
           arrow
           @change="handleChangeLocale"
       />
