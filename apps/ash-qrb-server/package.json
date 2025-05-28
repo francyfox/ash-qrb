@@ -36,7 +36,7 @@
     "qrcode": "^1.5.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "catalog:",
     "@types/bun": "^1.2.10",
     "@types/pg": "^8.11.14",
     "@types/qrcode": "^1.5.5",

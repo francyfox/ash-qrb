@@ -1,0 +1,32 @@
+{
+  "name": "ash-client",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "DEBUG='vite-ssg:*' vite",
+    "build": "DEBUG='vite-ssg:*' vite-ssg build",
+    "build:nested": "NESTED_PAGES=true DEBUG='vite-ssg:*' vite-ssg build",
+    "preview": "vite preview",
+    "lint": "bunx biome lint --diagnostic-level=error",
+    "format": "bunx biome check"
+  },
+  "dependencies": {
+    "pinia": "^3.0.2",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@nuxt/devalue": "^2.0.2",
+    "@unhead/vue": "^2.0.10",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vue/tsconfig": "^0.7.0",
+    "typescript": "catalog:",
+    "vite": "^6.3.5",
+    "vite-plugin-pages": "^0.33.0",
+    "vite-plugin-pwa": "^1.0.0",
+    "vite-ssg": "^27.0.1",
+    "vue-router": "^4.5.1",
+    "vue-tsc": "^2.2.8"
+  }
+}
