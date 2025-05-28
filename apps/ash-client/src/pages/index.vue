@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useHead } from '@unhead/vue'
 import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import HelloWorld from '~/components/HelloWorld.vue'
 import { useTestStore } from '~/stores/test.ts'
 
@@ -15,12 +16,14 @@ useHead({
 })
 
 const store = useTestStore()
-const { t } = storeToRefs(store)
+const { tt } = storeToRefs(store)
+const { t } = useI18n()
 </script>
 
 <template>
   <div>
-    <h1>ted {{ t }}</h1>
+    <h1>ted {{ tt }}</h1>
+    {{ t('actionDisable')}}
     <router-link to="/test">TEST</router-link>
     <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />

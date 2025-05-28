@@ -2,10 +2,10 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useTestStore = defineStore('test', () => {
-  const t = ref('ggff')
+  const tt = ref('ggff')
 
   return {
-    t,
+    tt,
   }
 })
 

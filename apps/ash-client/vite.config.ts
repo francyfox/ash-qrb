@@ -14,6 +14,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
+      '~root/': `${path.resolve(__dirname, '')}/`,
     },
   },
   plugins: [
@@ -37,6 +38,7 @@ export default defineConfig({
     }),
     VitePWA({
       minify: true,
+      // @ts-ignore
       mode: process.env.NODE_ENV || 'development',
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'safari-pinned-tab.svg'],

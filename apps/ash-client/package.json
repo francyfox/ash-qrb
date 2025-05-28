@@ -48,6 +48,7 @@
     "vite-ssg": "^27.0.1",
     "vite-ssg-sitemap": "^0.9.0",
     "vue-filepond": "^7.0.4",
+    "vue-i18n": "^11.1.5",
     "vue-router": "^4.5.1",
     "vue-tsc": "^2.2.8",
     "yup": "^1.6.1"

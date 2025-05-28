@@ -17,7 +17,6 @@ export const createApp = ViteSSG(
       }),
     )
 
-    console.log(modules)
     for (const module of modules) {
       module.install?.(ctx)
     }
