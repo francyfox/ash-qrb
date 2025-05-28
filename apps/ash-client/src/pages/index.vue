@@ -1,10 +1,26 @@
 <script setup lang="ts">
-import HelloWorld from '../components/HelloWorld.vue'
+import { useHead } from '@unhead/vue'
+import { storeToRefs } from 'pinia'
+import HelloWorld from '~/components/HelloWorld.vue'
+import { useTestStore } from '~/stores/test.ts'
+
+useHead({
+  title: 'Website Title',
+  meta: [
+    {
+      name: 'description',
+      content: 'Website description',
+    },
+  ],
+})
+
+const store = useTestStore()
+const { t } = storeToRefs(store)
 </script>
 
 <template>
   <div>
-    <h1>ted</h1>
+    <h1>ted {{ t }}</h1>
     <router-link to="/test">TEST</router-link>
     <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />

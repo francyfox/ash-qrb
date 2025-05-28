@@ -1,6 +1,5 @@
 import './style.css'
 import devalue from '@nuxt/devalue'
-import { createPinia } from 'pinia'
 import { ViteSSG } from 'vite-ssg'
 import routes from '~pages'
 import App from './App.vue'
@@ -11,24 +10,17 @@ export const createApp = ViteSSG(
     base: import.meta.env.BASE_URL,
     routes,
   },
-  ({ app, router, initialState }) => {
-    const pinia = createPinia()
-    app.use(pinia)
+  (ctx) => {
+    const modules: { install: (ctx: any) => void }[] = Object.values(
+      import.meta.glob('~/core/modules/*.ts', {
+        eager: true,
+      }),
+    )
 
-    if (import.meta.env.SSR) {
-      // this will be stringified and set to window.__INITIAL_STATE__
-      initialState.pinia = pinia.state.value
-    } else {
-      // on the client side, we restore the state
-      pinia.state.value = initialState?.pinia || {}
+    console.log(modules)
+    for (const module of modules) {
+      module.install?.(ctx)
     }
-
-    // router.beforeEach((to, from, next) => {
-    //   const store = useRootStore(pinia)
-    //
-    //   store.initialize()
-    //   next()
-    // })
   },
   {
     transformState(state) {
