@@ -3,6 +3,7 @@ import { config } from './config'
 import locales from './locales'
 
 export default defineNuxtConfig({
+  ssr: false,
   compatibilityDate: '2025-03-03',
   devtools: { enabled: false },
   future: {
