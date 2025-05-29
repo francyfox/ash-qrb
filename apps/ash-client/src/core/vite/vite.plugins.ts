@@ -3,6 +3,10 @@ import process from 'node:process'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
+import IconsResolver from 'unplugin-icons/resolver'
+import Icons from 'unplugin-icons/vite'
+import Components from 'unplugin-vue-components/vite'
 import type { UserConfig } from 'vite'
 import Pages from 'vite-plugin-pages'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -10,6 +14,23 @@ import { ClientSideLayout } from 'vite-plugin-vue-layouts'
 
 export const plugins: UserConfig['plugins'] = [
   vue(),
+  Icons({
+    autoInstall: true,
+    compiler: 'vue3',
+    customCollections: {
+      ash: FileSystemIconLoader('./src/assets/images/icons', (svg) =>
+        svg.replace(/^<svg /, '<svg fill="currentColor" '),
+      ),
+    },
+  }),
+  Components({
+    dts: true,
+    resolvers: [
+      IconsResolver({
+        customCollections: ['ash'],
+      }),
+    ],
+  }),
   Pages({
     extensions: ['vue'],
     routeStyle: 'nuxt',

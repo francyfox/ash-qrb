@@ -1,7 +1,7 @@
 <template>
   <RouterView v-slot="{ Component, route }">
-    <Transition name="slide">
-      <Component :is="Component" :key="route" />
-    </Transition>
+    <Component :is="Component" :key="route" />
   </RouterView>
 </template>
+<script setup lang="ts">
+</script>

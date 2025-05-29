@@ -22,9 +22,12 @@ const { t } = useI18n()
 
 <template>
   <div>
+    <IAshApple />
+    <ILucideAirplay />
     <h1>ted {{ tt }}</h1>
     {{ t('actionDisable')}}
     <router-link to="/test">TEST</router-link>
+
     <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
     </a>
