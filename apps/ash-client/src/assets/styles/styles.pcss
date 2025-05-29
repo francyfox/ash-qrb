@@ -1,0 +1,44 @@
+html, body, #__nuxt {
+    @apply h-full;
+}
+
+.z-5 {
+    z-index: 5;
+}
+
+.container {
+    @apply mx-auto;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--color-p-middle-red) inset !important;
+    font-weight: bold;
+    -webkit-text-fill-color: var(--ui-text) !important;
+}
+
+.page-enter-active,
+.page-leave-active,
+.layout-enter-active,
+.layout-leave-active {
+    transition: opacity 300ms ease-in-out;
+}
+
+.page-enter-from,
+.page-leave-to,
+.layout-enter-from,
+.layout-leave-to {
+    opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}

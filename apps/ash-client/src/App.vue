@@ -1,7 +1,9 @@
 <template>
-  <RouterView v-slot="{ Component, route }">
-    <Component :is="Component" :key="route" />
-  </RouterView>
+  <UApp>
+    <RouterView v-slot="{ Component, route }">
+      <Component :is="Component" :key="route" />
+    </RouterView>
+  </UApp>
 </template>
 <script setup lang="ts">
 </script>

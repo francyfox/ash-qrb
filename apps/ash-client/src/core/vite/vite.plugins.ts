@@ -1,18 +1,35 @@
 import path from 'node:path'
 import process from 'node:process'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
+import ui from '@nuxt/ui/vite'
 import vue from '@vitejs/plugin-vue'
-import AutoImport from 'unplugin-auto-import/vite'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
-import Components from 'unplugin-vue-components/vite'
 import type { UserConfig } from 'vite'
 import Pages from 'vite-plugin-pages'
 import { VitePWA } from 'vite-plugin-pwa'
 import { ClientSideLayout } from 'vite-plugin-vue-layouts'
 
 export const plugins: UserConfig['plugins'] = [
+  ui({
+    autoImport: {
+      imports: {
+        '@unhead/vue': ['unheadVueComposablesImports'],
+      },
+      exclude: ['@nuxt/ui'],
+      include: [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
+      dirs: ['src/composables', 'src/stores'],
+    },
+    components: {
+      dts: true,
+      resolvers: [
+        IconsResolver({
+          customCollections: ['ash'],
+        }),
+      ],
+    },
+  }),
   vue(),
   Icons({
     autoInstall: true,
@@ -23,24 +40,9 @@ export const plugins: UserConfig['plugins'] = [
       ),
     },
   }),
-  Components({
-    dts: true,
-    resolvers: [
-      IconsResolver({
-        customCollections: ['ash'],
-      }),
-    ],
-  }),
   Pages({
     extensions: ['vue'],
     routeStyle: 'nuxt',
-  }),
-  AutoImport({
-    imports: {
-      '@unhead/vue': ['unheadVueComposablesImports'],
-    },
-    include: [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
-    dirs: ['src/composables', 'src/stores'],
   }),
   VueI18n({
     fullInstall: false,
