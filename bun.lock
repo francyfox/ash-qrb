@@ -33,6 +33,7 @@
         "@vitejs/plugin-vue": "^5.2.3",
         "@vue/tsconfig": "^0.7.0",
         "animejs": "^4.0.2",
+        "autoprefixer": "^10.4.21",
         "beasties": "^0.3.4",
         "better-auth": "catalog:",
         "dayjs-nuxt": "2.1.11",

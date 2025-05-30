@@ -1,0 +1,36 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme default {
+  --font-sans: "Sofia Sans Variable", sans-serif;
+
+  --breakpoint-2xl: 1536px;
+  --breakpoint-xl: 1440px;
+  --breakpoint-lg: 1280px;
+  --breakpoint-md: 768px;
+  --breakpoint-sm: 560px;
+
+  --color-p-fawn: hsl(24, 70%, 67%);
+  --color-p-middle-red: hsl(16, 64%, 67%);
+  --color-s-purple-taupe: hsl(288, 3%, 28%);
+  --color-s-black-olive: hsl(12, 8%, 24%);
+  --color-s-misty-moss: hsl(50, 30%, 57%);
+  --color-s-dark-vanilla: hsl(22, 81%, 71%);
+  --color-s-champagne: hsl(48, 56%, 88%);
+  --color-s-old-lace: hsl(54, 59%, 93%);
+
+  --ui-primary: var(--color-p-fawn);
+  --ui-secondary: var(--color-s-misty-moss);
+  /*--ui-success: var(--ui-color-success-500);*/
+  /*--ui-info: var(--ui-color-info-500);*/
+  /*--ui-warning: var(--ui-color-warning-500);*/
+  --ui-error: var(--color-error-400);
+  --ui-bg: var(--color-s-old-lace);
+  --ui-border: transperent;
+  --ui-border-accented: transperent;
+  --ui-border-muted: transperent;
+
+  --ui-text: var(--color-s-black-olive);
+  --ui-text-muted: var(--color-s-black-olive);
+  --ui-text-dimmed: var(--color-s-black-olive);
+}

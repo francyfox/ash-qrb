@@ -29,8 +29,8 @@ export default defineNuxtConfig({
   },
   css: [
     '@fontsource-variable/sofia-sans',
-    '~/assets/styles/tailwind.pcss',
-    '~/assets/styles/styles.pcss',
+    '~/assets/styles/tailwind.css',
+    '~/assets/styles/styles.css',
   ],
   ui: {
     colorMode: false,
