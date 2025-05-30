@@ -2,8 +2,7 @@
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
     "paths": {
-      "~/*": ["src/*"],
-      "~root/*": ["/*"]
+      "~/*": ["src/*"]
     },
     "types": [
       "vite-plugin-pages/client",
