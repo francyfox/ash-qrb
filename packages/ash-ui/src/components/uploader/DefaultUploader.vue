@@ -10,7 +10,7 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 // Import styles
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-import { useUserStore } from '@/stores/user'
+// import { useUserStore } from '@/stores/user'
 
 // Create FilePond component
 const FilePond = vueFilePond(

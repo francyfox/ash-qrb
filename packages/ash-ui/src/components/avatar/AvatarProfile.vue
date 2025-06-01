@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AvatarSquare, {
   type IAvatarSquareProps,
-} from '~/components/ui/avatar/AvatarSquare.vue'
+} from '~/components/avatar/AvatarSquare.vue'
 
 interface IAvatarProfileProps extends IAvatarSquareProps {
   rating: number

@@ -4,8 +4,8 @@ import type { Row } from '@tanstack/vue-table'
 import { getPaginationRowModel } from '@tanstack/vue-table'
 import { h, resolveComponent } from 'vue'
 import { QRB_STATUS } from '~/components/forms/qr/qr.schema'
+import { useDayjs } from '~/composable/dayjs.ts'
 import type { TQrbItem } from '~/types/qrb.types'
-import { useDayjs } from '#dayjs'
 
 const { list = [] } = defineProps<{
   list: TQrbItem[]

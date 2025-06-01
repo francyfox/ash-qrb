@@ -17,7 +17,6 @@ export const plugins: UserConfig['plugins'] = [
       imports: {
         '@unhead/vue': ['unheadVueComposablesImports'],
       },
-      exclude: ['@nuxt/ui'],
       include: [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
       dirs: ['src/composables', 'src/stores'],
     },

@@ -2,8 +2,8 @@ import devalue from '@nuxt/devalue'
 import { ViteSSG } from 'vite-ssg'
 import routes from '~pages'
 import App from './App.vue'
-import '~/assets/styles/styles.css'
-import '~/assets/styles/tailwind.css'
+import 'ash-ui/styles.css'
+import 'ash-ui/tailwind.css'
 
 export const createApp = ViteSSG(
   App,

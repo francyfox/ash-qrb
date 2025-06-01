@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "~/*": ["src/*"]
+    },
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src/components/**/*"]
+}

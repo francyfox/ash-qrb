@@ -4,16 +4,32 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build:exports": "bun index.ts",
+    "build": "vite build",
     "preview": "vite preview"
   },
+  "exports": {
+    "./styles.css": {
+      "import": "./dist/styles/styles.css"
+    },
+    "./tailwind.css": {
+      "import": "./dist/styles/tailwind.css"
+    },
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "vue": "^3.5.13"
   },
   "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "^6.0.8",
+    "@microsoft/api-extractor": "^7.52.8",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/tsconfig": "^0.7.0",
+    "dayjs": "^1.11.13",
+    "glob": "^11.0.2",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4",
