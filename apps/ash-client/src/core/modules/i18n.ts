@@ -1,5 +1,5 @@
-import messages from '@intlify/unplugin-vue-i18n/messages'
 import { useStorage } from '@vueuse/core'
+import messages from 'ash-i18n'
 import type { ViteSSGContext } from 'vite-ssg'
 import { createI18n } from 'vue-i18n'
 

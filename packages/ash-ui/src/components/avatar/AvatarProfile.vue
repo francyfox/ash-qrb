@@ -14,12 +14,13 @@ const { rating, ...avatarProps } = props
 
 <template>
   <div class="avatar-profile w-[244px] h-[259px] relative flex justify-center items-center gap-2">
-    <NuxtImg
+    <img
         src="https://res.cloudinary.com/dr5gcup5n/image/upload/v1746865771/ash-qrb/bjvlnajffv9yberit9wq.png"
         width="244"
         height="259"
         alt="avatar-bg"
         class="absolute top-0 left-0 w-full h-full z-10"
+        loading="lazy"
     />
 
     <div class="avatar-profile-rating h-full flex flex-col items-center z-20 pt-12">

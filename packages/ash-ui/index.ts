@@ -1,5 +1,6 @@
 import { writeFileSync } from 'node:fs'
 import { Glob } from 'bun'
+
 const Dirs = [
   {
     dir: './src/components/',
@@ -8,7 +9,7 @@ const Dirs = [
     name: 'components',
   },
 ]
-const SrcRe = /^src/
+
 const ComponentNameRe = /(\w+)\.(\w+)$/
 for (const { dir, match, exports } of Dirs) {
   const files = new Glob(`${dir}${match}`).scan()

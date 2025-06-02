@@ -21,7 +21,8 @@
   },
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "vue": "^3.5.13"
+    "vue": "catalog:",
+    "ash-i18n": "workspace:*"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^6.0.8",

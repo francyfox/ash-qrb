@@ -46,7 +46,6 @@ export const plugins: UserConfig['plugins'] = [
   VueI18n({
     fullInstall: false,
     compositionOnly: true,
-    include: [path.resolve(process.cwd(), 'locales/**')],
   }),
   VitePWA({
     minify: true,
