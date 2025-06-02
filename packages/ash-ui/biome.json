@@ -1,3 +1,3 @@
 {
-  "extends": ["../linter/biome.json"]
+  "extends": ["../ash-linter/biome.json"]
 }

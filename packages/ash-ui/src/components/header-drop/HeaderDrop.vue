@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const { locale, setLocale } = useI18n()
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { locale } = useI18n()
 
 const languageList = [
   {
@@ -16,7 +18,7 @@ const currentLanguage = languageList.find((i) => locale.value === i.value)
 const language = ref(currentLanguage)
 const handleChangeLocale = () => {
   const v = language.value?.value as 'en' | 'ru'
-  setLocale(v)
+  locale.value = v
 }
 </script>
 

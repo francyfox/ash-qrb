@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import { ref, useTemplateRef } from 'vue'
 import vueFilePond from 'vue-filepond'
+import { useI18n } from 'vue-i18n'
 
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
-// Import plugins
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 
-// Import styles
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
 // import { useUserStore } from '@/stores/user'
@@ -22,24 +22,24 @@ const FilePond = vueFilePond(
 
 const { t } = useI18n()
 const model = defineModel()
-const userStore = useUserStore()
+// const userStore = useUserStore()
 const toast = useToast()
 const showModal = ref(false)
 
 const pond = useTemplateRef('pond')
 
 const handleAddFile = async (error: any, file: any) => {
-  const uploaded = await userStore.postFile(file.file)
+  // const uploaded = await userStore.postFile(file.file)
 
-  if (uploaded?.secure_url) {
-    model.value = uploaded?.secure_url
-
-    showModal.value = false
-    toast.add({
-      title: 'File Uploaded',
-      color: 'success',
-    })
-  }
+  // if (uploaded?.secure_url) {
+  //   model.value = uploaded?.secure_url
+  //
+  //   showModal.value = false
+  //   toast.add({
+  //     title: 'File Uploaded',
+  //     color: 'success',
+  //   })
+  // }
 
   if (error) {
     toast.add({

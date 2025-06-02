@@ -1,6 +1,7 @@
 <script setup lang="ts">
-const props = defineProps<{
-  src: string
+import NuxtImg from '~/components/nuxt-image/NuxtImg.vue'
+defineProps<{
+  src?: string
 }>()
 </script>
 

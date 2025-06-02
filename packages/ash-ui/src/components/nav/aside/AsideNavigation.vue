@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import AsideNavigationItem from '~/components/ui/nav/aside/AsideNavigationItem.vue'
+import { computed, useId } from 'vue'
+import { useI18n } from 'vue-i18n'
+import AsideNavigationItem from '~/components/nav/aside/AsideNavigationItem.vue'
 
 const { t } = useI18n()
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { IMGMenuItem } from '~/components/ui/menu-generator/menu-generator.types'
+import type { IMGMenuItem } from '~/components/menu-generator/menu-generator.types'
 
 const model = defineModel<IMGMenuItem[]>({
   default: [

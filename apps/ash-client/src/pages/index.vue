@@ -23,9 +23,6 @@ const { t } = useI18n()
 <template>
   <div class="">
     <div class="container">
-      <DefaultCard>
-        sss
-      </DefaultCard>
       <IAshApple />
       <ILucideAirplay />
       <h1 class="text-p-fawn text-5xl">ted {{ tt }}</h1>

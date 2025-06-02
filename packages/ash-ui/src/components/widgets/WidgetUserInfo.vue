@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
-import UserId from '~/components/ui/user-id.vue'
+import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import UserId from '~/components/user-id/UserId.vue'
 import type { DropdownMenuItem } from '#ui/components/DropdownMenu.vue'
 
-const props = defineProps<{
+defineProps<{
   id?: string
   name?: string
   position?: string
@@ -14,7 +16,7 @@ const { t } = useI18n()
 
 const toast = useToast()
 
-const userStore = useUserStore()
+// const userStore = useUserStore()
 
 const open = ref(false)
 
@@ -39,7 +41,7 @@ const items: Ref<DropdownMenuItem[][]> = computed(() => [
       icon: 'i-lucide-log-out',
       onSelect: async () => {
         try {
-          await userStore.signOut()
+          // await userStore.signOut()
         } finally {
           toast.add({
             title: 'Logout complete',
@@ -47,7 +49,7 @@ const items: Ref<DropdownMenuItem[][]> = computed(() => [
           })
 
           setTimeout(() => {
-            navigateTo('/auth')
+            // navigateTo('/auth')
           }, 500)
         }
       },
