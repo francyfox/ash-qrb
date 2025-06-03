@@ -8,7 +8,8 @@
       "vite-plugin-pages/client",
       "vite/client",
       "vite-plugin-pwa/client",
-      "unplugin-icons/types/vue"
+      "unplugin-icons/types/vue",
+      "ash-ui"
     ],
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "strict": true,

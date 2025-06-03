@@ -10,34 +10,36 @@ const Dirs = [
 ]
 
 const ComponentNameRe = /(\w+)\.(\w+)$/
-// for (const { dir, match } of Dirs) {
-//   const files = new Glob(`${dir}${match}`).scan()
-//
-//   for await (const file of files) {
-//     let output = ''
-//     const [, componentName] = file.match(ComponentNameRe)
-//     console.log(file)
-//     output = `export { default as ${componentName} } from "${file.replace('./src', '..').replace(/\\/g, '/')}";`
-//     writeFileSync(`${dir}${componentName}.ts`, output)
-//   }
-// }
 
 for (const { dir, match } of Dirs) {
   const files = new Glob(`${dir}${match}`).scan()
-  let output = "import { App } from 'vue'\n"
+  const components = []
+  let output = "import type { App } from 'vue'\nimport { defineAsyncComponent } from 'vue'\n"
   let pluginComponents = ''
 
   for await (const file of files) {
     const [, componentName] = file.match(ComponentNameRe)
-    output += `export { default as ${componentName} } from '${file.replace('./lib/', './').replace(/\\/g, '/')}'\n`
-    pluginComponents += `   app.component('Ash${componentName}', ${componentName})\n`
+    const path = file.replace('./lib/', './').replace(/\\/g, '/')
+    output += `export { default as ${componentName} } from '${path}'\n`
+    pluginComponents += `   app.component('${componentName}', defineAsyncComponent(() => import('${path}')))\n`
+    components.push(componentName)
   }
+  
+
   output += `
+export const components = [${components.map(i => `'${i}'`).join(',')}]
+export const ashUIResolver = {
+  type: 'component',
+  resolve: (name: string) => {
+    if (components.includes(name)) return { name, from: 'ash-ui' }
+  }
+}
 export const AshUI = { 
   install: (app: App<Element>) => {
-  ${pluginComponents}
+    ${pluginComponents}
   }
-}`
+}
+`
 
   writeFileSync('./lib/index.ts', output)
 }

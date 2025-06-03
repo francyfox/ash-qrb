@@ -63,7 +63,7 @@ export default defineConfig({
       //   }
       // },
     }),
-    libInjectCss(),
+    // libInjectCss(),
   ],
   build: {
     cssCodeSplit: true,

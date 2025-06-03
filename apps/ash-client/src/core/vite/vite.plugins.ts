@@ -2,6 +2,7 @@ import process from 'node:process'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
 import ui from '@nuxt/ui/vite'
 import vue from '@vitejs/plugin-vue'
+import { ashUIResolver } from 'ash-ui'
 import type { UserConfig } from 'vite'
 import Pages from 'vite-plugin-pages'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -15,6 +16,9 @@ export const plugins: UserConfig['plugins'] = [
       },
       include: [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
       dirs: ['src/composables', 'src/stores'],
+    },
+    components: {
+      resolvers: [ashUIResolver as any],
     },
   }),
   vue(),

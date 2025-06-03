@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import NuxtImg from '../nuxt-image/NuxtImg.vue'
 import AvatarSquare, { type IAvatarSquareProps } from './AvatarSquare.vue'
 
 interface IAvatarProfileProps extends IAvatarSquareProps {
