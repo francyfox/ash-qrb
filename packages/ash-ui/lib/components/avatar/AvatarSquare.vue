@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import NuxtImg from "~/components/nuxt-image/NuxtImg.vue";
+import NuxtImg from '../nuxt-image/NuxtImg.vue'
 export interface IAvatarSquareProps {
   src?: string
   size?: 'xl' | 'md' | 'sm' | 'smx'

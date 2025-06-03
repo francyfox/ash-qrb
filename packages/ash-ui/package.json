@@ -10,8 +10,8 @@
   },
   "files": ["dist"],
   "exports": {
-    "./*": {
-      "import": "./dist/components/*"
+    ".": {
+      "import": "./dist/lib/index.js"
     },
     "./styles.css": {
       "import": "./dist/styles/styles.css"
@@ -20,7 +20,8 @@
       "import": "./dist/styles/tailwind.css"
     }
   },
-  "types": "./dist/components/*",
+  "types": "dist/lib/index.d.ts",
+  "sideEffects": ["**/*.css"],
   "peerDependencies": {
     "vue": "catalog:",
     "ash-i18n": "workspace:*"
@@ -36,6 +37,7 @@
     "unplugin-icons": "^22.1.0",
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4",
+    "vite-plugin-lib-inject-css": "^2.2.2",
     "vue-tsc": "^2.2.8"
   }
 }

@@ -2,8 +2,8 @@
 import type { Ref } from 'vue'
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import UserId from '~/components/user-id/UserId.vue'
 import type { DropdownMenuItem } from '#ui/components/DropdownMenu.vue'
+import UserId from '../user-id/UserId.vue'
 
 defineProps<{
   id?: string

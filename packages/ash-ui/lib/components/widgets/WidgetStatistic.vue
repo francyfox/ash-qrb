@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { animateNumber } from '~/utils/animateNumber'
-import { formatIntNumber } from '~/utils/format'
+import { animateNumber } from '../../../src/utils/animateNumber'
+import { formatIntNumber } from '../../../src/utils/format'
 
 const { t } = useI18n()
 
