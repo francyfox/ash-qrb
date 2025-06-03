@@ -14,7 +14,9 @@ const ComponentNameRe = /(\w+)\.(\w+)$/
 for (const { dir, match } of Dirs) {
   const files = new Glob(`${dir}${match}`).scan()
   const components = []
-  let output = "import type { App } from 'vue'\nimport { defineAsyncComponent } from 'vue'\n"
+  let output = "import type { App } from 'vue'\n" +
+    "import { defineAsyncComponent } from 'vue'\n" +
+    "import type { ComponentResolverObject } from 'unplugin-vue-components'\n"
   let pluginComponents = ''
 
   for await (const file of files) {
@@ -28,7 +30,7 @@ for (const { dir, match } of Dirs) {
 
   output += `
 export const components = [${components.map(i => `'${i}'`).join(',')}]
-export const ashUIResolver = {
+export const ashUIResolver: ComponentResolverObject = {
   type: 'component',
   resolve: (name: string) => {
     if (components.includes(name)) return { name, from: 'ash-ui' }

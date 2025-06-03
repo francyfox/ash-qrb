@@ -1,5 +1,6 @@
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
+import type { ComponentResolverObject } from 'unplugin-vue-components'
 export { default as NuxtImg } from './components/nuxt-image/NuxtImg.vue'
 export { default as UserId } from './components/user-id/UserId.vue'
 export { default as MenuGenerator } from './components/menu-generator/MenuGenerator.vue'
@@ -19,7 +20,7 @@ export { default as AsideNavigation } from './components/nav/aside/AsideNavigati
 export { default as AsideNavigationItem } from './components/nav/aside/AsideNavigationItem.vue'
 
 export const components = ['NuxtImg','UserId','MenuGenerator','MenuPreview','HeaderDrop','QrbImage','DefaultUploader','WidgetUserInfo','WidgetStatistic','AvatarSquare','AvatarProfile','QrbList','LightCard','PanelCard','DefaultCard','AsideNavigation','AsideNavigationItem']
-export const ashUIResolver = {
+export const ashUIResolver: ComponentResolverObject = {
   type: 'component',
   resolve: (name: string) => {
     if (components.includes(name)) return { name, from: 'ash-ui' }

@@ -18,7 +18,7 @@ export const plugins: UserConfig['plugins'] = [
       dirs: ['src/composables', 'src/stores'],
     },
     components: {
-      resolvers: [ashUIResolver as any],
+      resolvers: [ashUIResolver],
     },
   }),
   vue(),
