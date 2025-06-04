@@ -20,6 +20,23 @@ export const plugins: UserConfig['plugins'] = [
     components: {
       resolvers: [ashUIResolver],
     },
+    ui: {
+      checkbox: {
+        defaultVariants: {
+          size: 'xl',
+          color: 'primary',
+          variant: 'list',
+          indicator: 'start',
+        },
+      },
+      button: {
+        defaultVariants: {
+          color: 'primary',
+          variant: 'solid',
+          size: 'xl',
+        },
+      },
+    },
   }),
   vue(),
   Pages({

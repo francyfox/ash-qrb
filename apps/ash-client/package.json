@@ -12,7 +12,6 @@
     "format": "bunx biome check"
   },
   "dependencies": {
-    "ash-ui": "workspace:*",
     "ash-i18n": "workspace:*",
     "pinia": "^3.0.2",
     "vue": "catalog:",

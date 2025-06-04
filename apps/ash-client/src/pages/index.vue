@@ -23,12 +23,13 @@ const { t } = useI18n()
 <template>
   <div class="">
     <div class="container">
-      <DefaultCard title="">ff</DefaultCard>
-      <IAshApple />
-      <ILucideAirplay />
       <h1 class="text-p-fawn text-5xl">ted {{ tt }}</h1>
       {{ t('actionDisable')}}
       <router-link to="/test">TEST</router-link>
+
+      <DefaultCard title="test">
+        gggg
+      </DefaultCard>
 
       <a href="https://vite.dev" target="_blank">
         <img src="/vite.svg" class="logo" alt="Vite logo" />

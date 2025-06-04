@@ -26,7 +26,6 @@ for (const { dir, match } of Dirs) {
     pluginComponents += `   app.component('${componentName}', defineAsyncComponent(() => import('${path}')))\n`
     components.push(componentName)
   }
-  
 
   output += `
 export const components = [${components.map(i => `'${i}'`).join(',')}]

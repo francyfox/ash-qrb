@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "dev": "vite",
     "build:exports": "bun generate.ts",
     "build": "vite build",
     "preview": "vite preview"
@@ -13,12 +14,8 @@
     ".": {
       "import": "./dist/lib/index.js"
     },
-    "./styles.css": {
-      "import": "./dist/styles/styles.css"
-    },
-    "./tailwind.css": {
-      "import": "./dist/styles/tailwind.css"
-    }
+    "./styles/tailwind.css": "./dist/styles/tailwind.css",
+    "./styles/styles.css": "./dist/styles/styles.css"
   },
   "types": "dist/lib/index.d.ts",
   "sideEffects": ["**/*.css"],

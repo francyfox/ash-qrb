@@ -7,6 +7,7 @@ export const install = ({ app }: ViteSSGContext) => {
   const defaultLocale = useStorage('locale', 'en')
 
   const i18n = createI18n({
+    legacy: false,
     locale: defaultLocale.value,
     messages,
   })

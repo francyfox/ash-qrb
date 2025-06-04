@@ -2,13 +2,13 @@
 </script>
 
 <template>
-  <div class="default-layout">
-    Default
-    
+  <div class="default-layout w-full h-full flex-col">
     <slot />
   </div>
 </template>
 
-<style scoped>
-
+<style scoped lang="postcss">
+.default-layout {
+  background: url("@/assets/images/bg.jpg") center center / cover no-repeat;
+}
 </style>
