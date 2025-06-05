@@ -25,10 +25,10 @@ const { t } = useI18n()
     <div class="container">
       <h1 class="text-p-fawn text-5xl">ted {{ tt }}</h1>
       {{ t('actionDisable')}}
-      <router-link to="/test">TEST</router-link>
+      <router-link to="/test">TESTff</router-link>
 
-      <DefaultCard title="test">
-        gggg
+      <DefaultCard title="testfee">
+        ggggfss
       </DefaultCard>
 
       <a href="https://vite.dev" target="_blank">

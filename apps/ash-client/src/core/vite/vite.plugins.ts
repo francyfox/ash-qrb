@@ -12,6 +12,7 @@ export const plugins: UserConfig['plugins'] = [
   ui({
     autoImport: {
       imports: {
+        pinia: ['defineStore'],
         '@unhead/vue': ['unheadVueComposablesImports'],
       },
       include: [/\.[jt]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
