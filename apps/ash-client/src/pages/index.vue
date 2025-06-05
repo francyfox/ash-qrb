@@ -1,45 +1,53 @@
 <script setup lang="ts">
-import { useHead } from '@unhead/vue'
-import { storeToRefs } from 'pinia'
-import { useI18n } from 'vue-i18n'
-import HelloWorld from '~/components/HelloWorld.vue'
-import { useTestStore } from '~/stores/test.ts'
+import { config } from '~root/config.ts'
 
-useHead({
-  title: 'Website Title',
-  meta: [
-    {
-      name: 'description',
-      content: 'Website description',
-    },
-  ],
-})
-
-const store = useTestStore()
-const { tt } = storeToRefs(store)
-const { t } = useI18n()
+console.log(config)
 </script>
 
 <template>
-  <div class="">
-    <div class="container">
-      <h1 class="text-p-fawn text-5xl">ted {{ tt }}</h1>
-      {{ t('actionDisable')}}
-      <router-link to="/test">TESTff</router-link>
+  <section class="section-home h-full">
+    <div class="container flex justify-center items-center h-full">
+      <main class="flex relative min-h-[500px] w-full justify-end max-w-lg text-s-old-lace bg-s-black-olive overflow-hidden rounded-none sm:rounded-xl p-5">
+        <div class="flex max-w-sm flex-col text-right gap-2">
+          <div class="flex relative flex-col gap-2 z-5">
+            <div class="text-4xl">Ash-qrb</div>
+            <div class="text-xl">
+              pwa web app for creating qr codes gateway
+              for another qr codes. <br>
+              <RouterLink to="/dashboard" class="text-p-fawn hover:text-p-middle-red transition-color">Use dashboard</RouterLink>
 
-      <DefaultCard title="testfee">
-        ggggfss
-      </DefaultCard>
+              <br>
+              <br>
+              VERSION: {{ config.APP_VERSION }}
+            </div>
+          </div>
 
-      <a href="https://vite.dev" target="_blank">
-        <img src="/vite.svg" class="logo" alt="Vite logo" />
-      </a>
-      <a href="https://vuejs.org/" target="_blank">
-        <img src="../assets/vue.svg" class="logo vue" alt="Vue logo" />
-      </a>
+
+          <NuxtImg
+              provider="cloudinary"
+              src="https://res.cloudinary.com/dr5gcup5n/image/upload/v1740737420/ash-qrb/dllmfbqsqhk5ioxaus3v.png"
+              :width="400"
+              :height="400"
+              alt="Ash-qrb logo"
+              class="absolute w-[300px] md:w-auto bottom-[-30px] left-[-60px] z-0"
+              :custom="true"
+              v-slot="{ isLoaded, imgAttrs }"
+          >
+            <img
+              v-if="isLoaded"
+              v-bind="imgAttrs"
+              src="https://res.cloudinary.com/dr5gcup5n/image/upload/v1740737420/ash-qrb/dllmfbqsqhk5ioxaus3v.png"
+            />
+            <USkeleton
+                v-else
+                class="absolute w-[300px] h-[300px] bottom-[-30px] left-[-60px] z-0"
+            />
+          </NuxtImg>
+
+        </div>
+      </main>
     </div>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  </section>
 </template>
 
 <style scoped>
