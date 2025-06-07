@@ -1,3 +1,4 @@
+import { setupLayouts } from 'virtual:generated-layouts'
 import devalue from '@nuxt/devalue'
 import { ViteSSG } from 'vite-ssg'
 import routes from '~pages'
@@ -8,7 +9,7 @@ export const createApp = ViteSSG(
   App,
   {
     base: import.meta.env.BASE_URL,
-    routes,
+    routes: setupLayouts(routes),
   },
   (ctx) => {
     const modules: { install: (ctx: any) => void }[] = Object.values(

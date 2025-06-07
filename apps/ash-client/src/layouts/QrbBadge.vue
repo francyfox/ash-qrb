@@ -10,7 +10,7 @@ import PanelCard from '~/components/ui/cards/PanelCard.vue'
     <section class="layout-qrb h-full py-5">
       <div class="container">
         <div class="flex flex-col items-center gap-5">
-          <slot />
+          <RouterView />
         </div>
       </div>
     </section>

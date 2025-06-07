@@ -12,7 +12,7 @@ import AsideNavigation from '~/components/ui/nav/aside/AsideNavigation.vue'
       <div class="container flex items-center h-full">
         <div class="flex w-full max-h-[80%] min-h-[80vh] gap-5">
           <PanelCard class="card-content overflow-y-auto">
-            <slot />
+            <RouterView />
           </PanelCard>
 
           <PanelCard class="card-menu max-w-[335px] overflow-y-auto">

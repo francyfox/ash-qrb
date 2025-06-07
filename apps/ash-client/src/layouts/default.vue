@@ -3,7 +3,7 @@
 
 <template>
   <div class="default-layout w-full h-full flex-col">
-    <slot />
+    <RouterView />
   </div>
 </template>
 
