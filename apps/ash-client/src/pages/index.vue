@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { config } from '~root/config.ts'
-
-console.log(config)
 </script>
 
 <template>
@@ -22,28 +20,19 @@ console.log(config)
             </div>
           </div>
 
-
           <NuxtImg
-              provider="cloudinary"
               src="https://res.cloudinary.com/dr5gcup5n/image/upload/v1740737420/ash-qrb/dllmfbqsqhk5ioxaus3v.png"
               :width="400"
               :height="400"
               alt="Ash-qrb logo"
               class="absolute w-[300px] md:w-auto bottom-[-30px] left-[-60px] z-0"
-              :custom="true"
-              v-slot="{ isLoaded, imgAttrs }"
           >
-            <img
-              v-if="isLoaded"
-              v-bind="imgAttrs"
-              src="https://res.cloudinary.com/dr5gcup5n/image/upload/v1740737420/ash-qrb/dllmfbqsqhk5ioxaus3v.png"
-            />
-            <USkeleton
-                v-else
-                class="absolute w-[300px] h-[300px] bottom-[-30px] left-[-60px] z-0"
-            />
+            <template #loading>
+              <USkeleton
+                  class="w-[400px] h-[400px] bottom-[-30px] left-[-60px] z-0"
+              />
+            </template>
           </NuxtImg>
-
         </div>
       </main>
     </div>

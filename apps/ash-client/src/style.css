@@ -1,3 +1,7 @@
 @import "../../../node_modules/ash-ui/dist/styles/tailwind.css";
 @import "../../../node_modules/ash-ui/dist/styles/styles.css";
 @source "../../../node_modules/ash-ui";
+
+#app {
+  @apply h-full;
+}

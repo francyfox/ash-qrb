@@ -21,7 +21,8 @@
   "sideEffects": ["**/*.css"],
   "peerDependencies": {
     "vue": "catalog:",
-    "ash-i18n": "workspace:*"
+    "ash-i18n": "workspace:*",
+    "@vueuse/core": "catalog:"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^6.0.8",

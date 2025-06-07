@@ -3,6 +3,7 @@ import { storeToRefs } from 'pinia'
 import { authClient } from '~/libs/auth-client'
 import type { RouteMiddleware } from '~/types/route.types.ts'
 
+// @ts-ignore-next-line
 export const authMiddleware: RouteMiddleware = async (to, from, next) => {
   if (!to.meta?.auth) next()
 

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "ash-i18n": "workspace:*",
+    "@vueuse/core": "catalog:",
     "pinia": "^3.0.2",
     "vue": "catalog:",
     "@nuxt/ui": "catalog:"

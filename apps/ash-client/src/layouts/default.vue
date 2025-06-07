@@ -9,6 +9,6 @@
 
 <style scoped lang="postcss">
 .default-layout {
-  background: url("@/assets/images/bg.jpg") center center / cover no-repeat;
+  background: url("~/assets/images/bg.jpg") center center / cover no-repeat;
 }
 </style>

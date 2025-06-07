@@ -10,6 +10,7 @@
       "vite/client",
       "vite-plugin-pwa/client",
       "unplugin-icons/types/vue",
+      "vite-plugin-vue-layouts/client",
       "ash-ui"
     ],
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
