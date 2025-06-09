@@ -5,7 +5,7 @@ import 'vite-ssg'
 import autoprefixer from 'autoprefixer'
 import nested from 'postcss-nested'
 import generateSitemap from 'vite-ssg-sitemap'
-import { config } from './config'
+import { config as __APP_ENV__ } from './config'
 import { plugins } from './src/core/vite/vite.plugins'
 
 export default defineConfig({
@@ -16,7 +16,7 @@ export default defineConfig({
     },
   },
   define: {
-    'process.env': config,
+    __APP_ENV__,
   },
   plugins,
   css: {

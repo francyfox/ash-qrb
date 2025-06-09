@@ -10,6 +10,7 @@ import { ClientSideLayout } from 'vite-plugin-vue-layouts'
 
 export const plugins: UserConfig['plugins'] = [
   ui({
+    colorMode: false,
     autoImport: {
       imports: {
         pinia: ['defineStore'],

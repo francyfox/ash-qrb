@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { config } from '~root/config.ts'
+import { APP_ENV__ } from '~/constants.ts'
 </script>
 
 <template>
@@ -16,7 +16,7 @@ import { config } from '~root/config.ts'
 
               <br>
               <br>
-              VERSION: {{ config.APP_VERSION }}
+              VERSION: {{ APP_ENV__.APP_VERSION }}
             </div>
           </div>
 

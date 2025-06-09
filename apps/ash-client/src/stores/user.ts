@@ -1,4 +1,5 @@
 import type { operations } from 'assets/schema'
+import { ref } from 'vue'
 import type { IUserSingInDTO } from '~/components/forms/login/login.types'
 import type { IUserSingUpDTO } from '~/components/forms/register/register.types'
 import { api } from '~/libs/api'
@@ -8,7 +9,6 @@ type TCloudinaryFile =
   operations['postSUpload']['responses']['200']['content']['application/json']['item']
 
 export const useUserStore = defineStore('user', () => {
-  const config = useRuntimeConfig()
   const user = ref()
   const errorMessage = ref()
 

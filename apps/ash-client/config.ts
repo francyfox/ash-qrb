@@ -1,15 +1,21 @@
-import { from } from 'env-var'
+import { resolve } from 'node:path'
+import { config as configDotenv } from 'dotenv'
+import { type InferType, mixed, number, object, string } from 'yup'
 
-const env = from(process.env)
+const configSchema = object({
+  NODE_ENV: mixed()
+    .oneOf(['production', 'test', 'development'])
+    .default('development'),
+  PORT: number().default(4000),
+  API_URL: string().required(),
+  APP_VERSION: string().required(),
+  CLOUDINARY_CLOUD_NAME: string().required(),
+})
 
-export const config = {
-  NODE_ENV: env
-    .get('NODE_ENV')
-    .default('development')
-    .asEnum(['production', 'test', 'development']),
+export type TConfig = InferType<typeof configSchema>
 
-  PORT: env.get('PORT').default('4000').asString(),
-  API_URL: env.get('API_URL').required().asUrlString(),
-  APP_VERSION: env.get('APP_VERSION').required().asString(),
-  CLOUDINARY_CLOUD_NAME: env.get('CLOUDINARY_CLOUD_NAME').required().asString(),
-}
+export const config = await configSchema.validate(
+  configDotenv({
+    path: resolve(__dirname, '.env'),
+  }).parsed,
+)

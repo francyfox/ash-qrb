@@ -2,7 +2,7 @@
 import AvatarProfile from '~/components/ui/avatar/AvatarProfile.vue'
 import WidgetStatistic from '~/components/ui/widgets/WidgetStatistic.vue'
 import WidgetUserInfo from '~/components/ui/widgets/WidgetUserInfo.vue'
-import { useDashboardStore } from '~/stores/dashboard'
+import { useDashboardStore } from '~/stores/dashboard.ts'
 
 definePageMeta({
   middleware: ['auth'],

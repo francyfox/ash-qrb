@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { useMediaStore } from '~/stores/media'
 
 const { t } = useI18n()

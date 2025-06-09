@@ -1,12 +1,21 @@
 import { useMediaQuery } from '@vueuse/core'
-import config from '../../tailwind.config'
+import type { Ref } from 'vue'
+import { computed } from 'vue'
+
+const screens = {
+  sm: '560px',
+  md: '768px',
+  lg: '1280px',
+  xl: '1440px',
+  '2xl': '1536px',
+}
 
 type TScreens = '2xl' | 'xl' | 'lg' | 'md' | 'sm'
 type TMediaQueries = Record<TScreens, Ref<boolean>>
 export const useMediaStore = defineStore('media', () => {
   // // biome-ignore lint: may be wrong type or its bad to use useMediaQuery in computed
   const mediaQueries = computed<TMediaQueries>(() =>
-    Object.entries(config.theme.screens).reduce((acc, [key, value]) => {
+    Object.entries(screens).reduce((acc, [key, value]) => {
       const param: any = {}
       param[key] = useMediaQuery(`(min-width: ${value})`)
 

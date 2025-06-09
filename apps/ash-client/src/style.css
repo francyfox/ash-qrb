@@ -1,5 +1,5 @@
-@import "../../../node_modules/ash-ui/dist/styles/tailwind.css";
 @import "../../../node_modules/ash-ui/dist/styles/styles.css";
+@import "../../../node_modules/ash-ui/dist/styles/tailwind.css";
 @source "../../../node_modules/ash-ui";
 
 #app {

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import SectionFooter from '~/components/sections/SectionFooter.vue'
 import SectionHeader from '~/components/sections/SectionHeader.vue'
-import PanelCard from '~/components/ui/cards/PanelCard.vue'
 </script>
 
 <template>

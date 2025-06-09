@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import FormLogin from '~/components/forms/login/FormLogin.vue'
 import FormLoginActions from '~/components/forms/login/FormLoginActions.vue'
-import DefaultCard from '~/components/ui/cards/DefaultCard.vue'
+
+const router = useRouter()
 
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
@@ -18,7 +22,7 @@ const signInHandler = async () => {
   try {
     await userStore.signIn(formData.value)
   } finally {
-    if (user.value) await navigateTo('/dashboard')
+    if (user.value) await router.push('/dashboard')
   }
 }
 </script>

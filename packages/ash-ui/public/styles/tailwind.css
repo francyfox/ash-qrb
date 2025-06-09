@@ -1,7 +1,7 @@
-@import "../../../../node_modules/tailwindcss";
-@import "../../../../node_modules/@nuxt/ui";
+@import "tailwindcss";
+@import "@nuxt/ui";
 
-@theme default {
+@theme static {
   --font-sans: "Sofia Sans Variable", sans-serif;
 
   --breakpoint-2xl: 1536px;
@@ -18,7 +18,9 @@
   --color-s-dark-vanilla: hsl(22, 81%, 71%);
   --color-s-champagne: hsl(48, 56%, 88%);
   --color-s-old-lace: hsl(54, 59%, 93%);
+}
 
+:root {
   --ui-primary: var(--color-p-fawn);
   --ui-secondary: var(--color-s-misty-moss);
   /*--ui-success: var(--ui-color-success-500);*/
