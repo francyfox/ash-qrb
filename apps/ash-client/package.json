@@ -7,7 +7,7 @@
     "dev": "DEBUG='vite-ssg:*' vite",
     "build": "vite-ssg build",
     "build:nested": "NESTED_PAGES=true DEBUG='vite-ssg:*' vite-ssg build",
-    "generate:schema": "bunx openapi-typescript http://localhost:3000/swagger/json --output ./app/assets/schema.ts",
+    "generate:schema": "bunx openapi-typescript http://localhost:3000/swagger/json --output ./src/assets/schema.ts",
     "preview": "vite preview",
     "lint": "bunx biome lint --diagnostic-level=error",
     "format": "bunx biome check"

@@ -3,7 +3,9 @@
   "compilerOptions": {
     "paths": {
       "~/*": ["src/*"],
-      "~root/*": ["/*"]
+      "~root/*": ["/*"],
+      "#ui": ["../../node_modules/@nuxt/ui/dist/runtime"],
+      "#ui/*": ["../../node_modules/@nuxt/ui/dist/runtime/*"]
     },
     "types": [
       "vite-plugin-pages/client",
