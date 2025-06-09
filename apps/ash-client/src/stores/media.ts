@@ -13,7 +13,7 @@ const screens = {
 type TScreens = '2xl' | 'xl' | 'lg' | 'md' | 'sm'
 type TMediaQueries = Record<TScreens, Ref<boolean>>
 export const useMediaStore = defineStore('media', () => {
-  // // biome-ignore lint: may be wrong type or its bad to use useMediaQuery in computed
+  // @ts-ignore
   const mediaQueries = computed<TMediaQueries>(() =>
     Object.entries(screens).reduce((acc, [key, value]) => {
       const param: any = {}

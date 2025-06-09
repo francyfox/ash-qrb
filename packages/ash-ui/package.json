@@ -15,7 +15,8 @@
       "import": "./dist/lib/index.js"
     },
     "./styles/tailwind.css": "./dist/styles/tailwind.css",
-    "./styles/styles.css": "./dist/styles/styles.css"
+    "./styles/styles.css": "./dist/styles/styles.css",
+    "./icons/*": "./dist/icons/*"
   },
   "types": "dist/lib/index.d.ts",
   "sideEffects": ["**/*.css"],

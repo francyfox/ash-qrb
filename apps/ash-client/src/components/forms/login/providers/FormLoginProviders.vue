@@ -1,17 +1,19 @@
 <script setup lang="ts">
 import { useId } from 'vue'
 import { useI18n } from 'vue-i18n'
+import IconApple from '~icons/ash/apple'
+import IconGoogle from '~icons/ash/google'
 
 const { t } = useI18n()
 const providers = [
   {
     id: useId(),
-    icon: 'ash:google',
+    icon: IconGoogle,
     provider: 'google',
   },
   {
     id: useId(),
-    icon: 'ash:apple',
+    icon: IconApple,
     provider: 'apple',
   },
 ]
@@ -33,8 +35,8 @@ const providers = [
           type="button"
           class="flex hover:scale-75 transition-transform"
       >
-        <Icon
-            :name="i.icon"
+        <component
+            :is="i.icon"
             class="w-[24px] h-[24px]"
         />
       </button>

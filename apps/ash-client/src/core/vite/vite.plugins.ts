@@ -3,6 +3,9 @@ import VueI18n from '@intlify/unplugin-vue-i18n/vite'
 import ui from '@nuxt/ui/vite'
 import vue from '@vitejs/plugin-vue'
 import { ashUIResolver } from 'ash-ui'
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
+import IconsResolver from 'unplugin-icons/resolver'
+import Icons from 'unplugin-icons/vite'
 import type { UserConfig } from 'vite'
 import Pages from 'vite-plugin-pages'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -20,7 +23,12 @@ export const plugins: UserConfig['plugins'] = [
       dirs: ['src/composables', 'src/stores'],
     },
     components: {
-      resolvers: [ashUIResolver],
+      resolvers: [
+        ashUIResolver,
+        IconsResolver({
+          customCollections: ['ash'],
+        }),
+      ],
     },
     ui: {
       checkbox: {
@@ -38,6 +46,15 @@ export const plugins: UserConfig['plugins'] = [
           size: 'xl',
         },
       },
+    },
+  }),
+  Icons({
+    autoInstall: true,
+    compiler: 'vue3',
+    customCollections: {
+      ash: FileSystemIconLoader('./src/assets/icons', (svg) =>
+        svg.replace(/^<svg /, '<svg fill="currentColor" '),
+      ),
     },
   }),
   vue(),

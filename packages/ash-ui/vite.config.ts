@@ -7,7 +7,7 @@ import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
-import { libInjectCss } from 'vite-plugin-lib-inject-css'
+// import { libInjectCss } from 'vite-plugin-lib-inject-css'
 
 const entries: Record<string, string> = {}
 const fileNameRegex = /([^/]+)\.vue$/
@@ -15,7 +15,6 @@ const fileNameRegex = /([^/]+)\.vue$/
 for (const file of glob.sync('lib/components/**/*.vue')) {
   const match = file.match(fileNameRegex)
   if (!match) continue
-  const filename = match[1]
   entries[file] = file
 }
 
