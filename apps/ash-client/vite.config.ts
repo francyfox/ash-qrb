@@ -9,6 +9,11 @@ import { config as __APP_ENV__ } from './config'
 import { plugins } from './src/core/vite/vite.plugins'
 
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api': __APP_ENV__.API_URL,
+    },
+  },
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
