@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import FormRegister from '~/components/forms/register/FormRegister.vue'
 import FormRegisterActions from '~/components/forms/register/FormRegisterActions.vue'
-import DefaultCard from '~/components/ui/cards/DefaultCard.vue'
 
 const { t } = useI18n()
 const userStore = useUserStore()

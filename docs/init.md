@@ -21,7 +21,7 @@ This Turborepo has some additional tools already setup for you:
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
 - Bun
 - Elysia
-- Nuxt 3 (comp. with 4 version)
+- Vite (based on ViteSSE (vite-ssg plugin))
 
 ### Build
 

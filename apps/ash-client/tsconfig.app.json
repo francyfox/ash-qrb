@@ -1,9 +1,10 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"],
-      "~root/*": ["/*"],
+      "~/*": ["./src/*"],
+      "~root/*": ["./*"],
       "#ui": ["../../node_modules/@nuxt/ui/dist/runtime"],
       "#ui/*": ["../../node_modules/@nuxt/ui/dist/runtime/*"]
     },

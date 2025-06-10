@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { onMounted, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import type { TLoginSchema } from '~/components/forms/login/login.schema'
 import {
   type TRegisterSchema,
   registerSchema,
 } from '~/components/forms/register/register.schema'
 import type { IUser } from '~/components/forms/register/register.types'
-import DefaultUploader from '~/components/ui/uploader/DefaultUploader.vue'
 import type { Form, FormSubmitEvent } from '#ui/types'
 
 const { t } = useI18n()
