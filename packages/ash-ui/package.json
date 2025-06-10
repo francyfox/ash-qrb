@@ -16,7 +16,8 @@
     },
     "./styles/tailwind.css": "./dist/styles/tailwind.css",
     "./styles/styles.css": "./dist/styles/styles.css",
-    "./icons/*": "./dist/icons/*"
+    "./icons/*": "./dist/icons/*",
+    "./assets/*": "./dist/assets/*"
   },
   "types": "dist/lib/index.d.ts",
   "sideEffects": ["**/*.css"],
