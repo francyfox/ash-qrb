@@ -7,7 +7,7 @@ import { h, resolveComponent } from 'vue'
 import { computed, ref, useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 // import { QRB_STATUS } from '~/components/forms/qr/qr.schema'
-import { useDayjs } from '../../../src/composable/dayjs.ts'
+import { useDayjs } from '~/composable/dayjs.ts'
 
 const QRB_STATUS = {}
 type TQrbItem = any

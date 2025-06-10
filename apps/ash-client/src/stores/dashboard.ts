@@ -1,3 +1,5 @@
+import { ref } from 'vue'
+
 export const useDashboardStore = defineStore('dashboard', () => {
   const statistic = ref({
     gateways: 2000,

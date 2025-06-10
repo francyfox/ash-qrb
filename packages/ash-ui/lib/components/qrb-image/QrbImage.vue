@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NuxtImg from '../nuxt-image/NuxtImg.vue'
+import NuxtImg from '~lib/components/nuxt-image/NuxtImg.vue'
 defineProps<{
   src?: string
 }>()

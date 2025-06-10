@@ -1,15 +1,16 @@
-<route format="yaml">
-
+<route lang="yaml">
+meta:
+  layout: AdminPanel
+  auth: true
 </route>
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useI18n } from 'vue-i18n'
 import { useDashboardStore } from '~/stores/dashboard.ts'
-
-const { t } = useI18n()
 
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
+
+console.log(user.value)
 
 const dashboardStore = useDashboardStore()
 const { statistic } = storeToRefs(dashboardStore)

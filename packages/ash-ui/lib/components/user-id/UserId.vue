@@ -5,23 +5,20 @@ const { id = 'unknown' } = defineProps<{
   id?: string
 }>()
 
-const toast = useToast()
 const { copy, isSupported } = useClipboard()
+const emit = defineEmits<{
+  onUnsupported: []
+  onSuccess: []
+}>()
 
 const copyToast = () => {
   if (!isSupported) {
-    toast.add({
-      title: 'Your browser does not support Clipboard API',
-      color: 'error',
-    })
+    emit('onUnsupported')
   }
 
   copy(id)
 
-  toast.add({
-    title: 'Copied to clipboard!',
-    color: 'success',
-  })
+  emit('onSuccess')
 }
 </script>
 
@@ -33,7 +30,7 @@ const copyToast = () => {
         size="xs"
         @click="copyToast"
     >
-      <Icon
+      <UIcon
           name="i-lucide-link"
           :width="16"
           :height="16"

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
@@ -11,7 +10,7 @@
         </div>
 
         <div class="inline-flex text-s-old-lace gap-1.5">
-          Made with <div class="flex items-center gap-1.5"><Icon name="i-lucide-heart" class="text-red-400 size-4"/></div> by Ashra Fusion Team
+          Made with <div class="flex items-center gap-1.5"><UIcon name="i-lucide-heart" class="text-red-400 size-4"/></div> by Ashra Fusion Team
         </div>
       </div>
     </div>

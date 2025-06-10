@@ -10,7 +10,6 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
-// import { useUserStore } from '@/stores/user'
 
 // Create FilePond component
 const FilePond = vueFilePond(
@@ -20,34 +19,18 @@ const FilePond = vueFilePond(
   FilePondPluginImageCrop,
 )
 
+const emit = defineEmits<{
+  addFile: [{ file: File; error: any }]
+}>()
 const { t } = useI18n()
 const model = defineModel()
 // const userStore = useUserStore()
-const toast = useToast()
 const showModal = ref(false)
 
 const pond = useTemplateRef('pond')
 
-const handleAddFile = async (error: any, file: any) => {
-  // const uploaded = await userStore.postFile(file.file)
-
-  // if (uploaded?.secure_url) {
-  //   model.value = uploaded?.secure_url
-  //
-  //   showModal.value = false
-  //   toast.add({
-  //     title: 'File Uploaded',
-  //     color: 'success',
-  //   })
-  // }
-
-  if (error) {
-    toast.add({
-      title: 'Upload file error',
-      description: error,
-      color: 'error',
-    })
-  }
+const handleAddFile = async (error: string, file: File) => {
+  emit('addFile', { error, file })
 }
 </script>
 

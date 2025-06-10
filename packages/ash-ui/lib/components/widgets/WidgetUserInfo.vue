@@ -12,11 +12,11 @@ defineProps<{
   company?: string
 }>()
 
+const emit = defineEmits<{
+  onLogout: []
+}>()
+
 const { t } = useI18n()
-
-const toast = useToast()
-
-// const userStore = useUserStore()
 
 const open = ref(false)
 
@@ -40,18 +40,7 @@ const items: Ref<DropdownMenuItem[][]> = computed(() => [
       label: t('userMenuLogout'),
       icon: 'i-lucide-log-out',
       onSelect: async () => {
-        try {
-          // await userStore.signOut()
-        } finally {
-          toast.add({
-            title: 'Logout complete',
-            color: 'success',
-          })
-
-          setTimeout(() => {
-            // navigateTo('/auth')
-          }, 500)
-        }
+        emit('onLogout')
       },
     },
     {

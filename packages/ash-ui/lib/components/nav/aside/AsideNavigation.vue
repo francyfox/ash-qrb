@@ -1,26 +1,14 @@
 <script setup lang="ts">
-import { computed, useId } from 'vue'
-import { useI18n } from 'vue-i18n'
+import type { RouterLinkProps } from 'vue-router'
 import AsideNavigationItem from './AsideNavigationItem.vue'
 
-const { t } = useI18n()
-
-const data = computed(() => [
-  {
-    id: useId(),
-    text: t('asideNavProfile'),
-    attrs: {
-      to: { name: 'dashboard' },
-    },
-  },
-  {
-    id: useId(),
-    text: t('asideNavList'),
-    attrs: {
-      to: { name: 'qrb-list' },
-    },
-  },
-])
+defineProps<{
+  data: {
+    id: string
+    text: string
+    attrs: RouterLinkProps
+  }[]
+}>()
 </script>
 
 <template>

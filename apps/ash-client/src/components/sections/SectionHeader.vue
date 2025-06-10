@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import HeaderDrop from '~/components/ui/header-drop/HeaderDrop.vue'
 </script>
 
 <template>
