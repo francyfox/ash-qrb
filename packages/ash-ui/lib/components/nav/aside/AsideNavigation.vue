@@ -12,7 +12,7 @@ defineProps<{
 </script>
 
 <template>
-  <aside class="relative flex flex-col gap-5 z-10">
+  <aside class="relative flex flex-col gap-5">
     <nav class="aside-nav flex flex-col gap-4">
       <AsideNavigationItem
           v-for="i in data" :key="i.id"

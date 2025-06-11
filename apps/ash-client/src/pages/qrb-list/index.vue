@@ -18,7 +18,7 @@ const { error } = await qrbStore.getQrbList({
 
 <template>
   <NuxtLayout name="admin-panel">
-    <div class="relative z-10 h-full flex flex-col justify-between gap-5">
+    <div class="relative h-full flex flex-col justify-between gap-5">
       <QrbListActions
           :list="qrbList"
       />

@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import process from 'node:process'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
 import ui from '@nuxt/ui/vite'
@@ -10,8 +11,10 @@ import type { UserConfig } from 'vite'
 import Pages from 'vite-plugin-pages'
 import { VitePWA } from 'vite-plugin-pwa'
 import { ClientSideLayout } from 'vite-plugin-vue-layouts'
+import tailwindAutoReference from 'vite-plugin-vue-tailwind-auto-reference'
 
 export const plugins: UserConfig['plugins'] = [
+  tailwindAutoReference(resolve(process.cwd(), 'src/tw.css')),
   ui({
     colorMode: false,
     autoImport: {

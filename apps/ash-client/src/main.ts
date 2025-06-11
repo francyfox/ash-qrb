@@ -3,7 +3,7 @@ import devalue from '@nuxt/devalue'
 import { ViteSSG } from 'vite-ssg'
 import routes from '~pages'
 import App from './App.vue'
-import './style.css'
+import './index.css'
 
 export const createApp = ViteSSG(
   App,

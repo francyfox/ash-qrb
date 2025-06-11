@@ -1,20 +1,43 @@
 <script setup lang="ts">
+import { computed, useId } from 'vue'
+import { useI18n } from 'vue-i18n'
 import SectionFooter from '~/components/sections/SectionFooter.vue'
 import SectionHeader from '~/components/sections/SectionHeader.vue'
+
+const { t } = useI18n()
+
+const navData = computed(() => [
+  {
+    id: useId(),
+    text: t('asideNavProfile'),
+    attrs: {
+      to: { name: 'dashboard' },
+    },
+  },
+  {
+    id: useId(),
+    text: t('asideNavList'),
+    attrs: {
+      to: { name: 'qrb-list' },
+    },
+  },
+])
 </script>
 
 <template>
-  <div class="h-full flex flex-col justify-between">
+  <div class="admin-layout h-full flex flex-col justify-between">
     <SectionHeader />
-    <section class="admin-layout h-full">
+    <section class="h-full">
       <div class="container flex items-center h-full">
-        <div class="flex w-full max-h-[80%] min-h-[80vh] gap-5">
-          <PanelCard class="card-content overflow-y-auto">
-            <RouterView />
+        <div class="flex w-full min-h-[80vh] gap-5">
+          <PanelCard class="card-content">
+            <div class="card-content-container">
+              <RouterView />
+            </div>
           </PanelCard>
 
           <PanelCard class="card-menu max-w-[335px] overflow-y-auto">
-            <AsideNavigation />
+            <AsideNavigation :data="navData" />
           </PanelCard>
         </div>
       </div>
@@ -24,35 +47,16 @@ import SectionHeader from '~/components/sections/SectionHeader.vue'
 </template>
 
 <style lang="postcss" scoped>
+.admin-layout {
+  background: url("~/assets/images/bg.jpg") center center / cover no-repeat;
+}
 .card-content {
-  position: relative;
-
-  &:after {
-    top: 0;
-    left: 0;
-    content: '';
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 100%;
-    opacity: .2;
-    background: url("@/assets/images/bg-content.jpg") center / cover no-repeat;
-  }
+  @apply relative overflow-hidden;
+  background: url("~/assets/images/bg-content.webp") center / cover no-repeat, var(--color-s-champagne);
 }
 
 .card-menu {
   position: relative;
-
-  &:after {
-    top: 0;
-    left: 0;
-    content: '';
-    position: absolute;
-    display: block;
-    width: 100%;
-    height: 100%;
-    opacity: .2;
-    background-image: url("@/assets/images/bg-menu.jpg");
-  }
+  background-image: url("~/assets/images/bg-menu.webp");
 }
 </style>

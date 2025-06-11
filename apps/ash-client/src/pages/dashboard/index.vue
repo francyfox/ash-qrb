@@ -18,7 +18,7 @@ const { statistic } = storeToRefs(dashboardStore)
 
 <template>
   <div class="flex flex-col gap-5">
-    <div class="relative w-full flex gap-5 z-10">
+    <div class="relative w-full flex gap-5">
       <div class="flex justify-center">
         <AvatarProfile
             :rating="4"
@@ -33,7 +33,7 @@ const { statistic } = storeToRefs(dashboardStore)
       />
     </div>
 
-    <div class="relative w-full flex gap-5 z-10">
+    <div class="relative w-full flex gap-5">
       <WidgetUserInfo
           :name="user.name"
           :id="user.id"

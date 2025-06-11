@@ -6,7 +6,8 @@
       "~/*": ["./src/*"],
       "~root/*": ["./*"],
       "#ui": ["../../node_modules/@nuxt/ui/dist/runtime"],
-      "#ui/*": ["../../node_modules/@nuxt/ui/dist/runtime/*"]
+      "#ui/*": ["../../node_modules/@nuxt/ui/dist/runtime/*"],
+      "#tw.css": ["./src/tw.css"]
     },
     "types": [
       "vite-plugin-pages/client",

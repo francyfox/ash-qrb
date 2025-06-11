@@ -18,11 +18,11 @@ const { rating, ...avatarProps } = props
         width="244"
         height="259"
         alt="avatar-bg"
-        class="absolute top-0 left-0 w-full h-full z-10"
+        class="absolute top-0 left-0 w-full h-full"
         loading="lazy"
     />
 
-    <div class="avatar-profile-rating h-full flex flex-col items-center z-20 pt-12">
+    <div class="avatar-profile-rating h-full flex flex-col items-center pt-12 z-20">
       <ILucidePanelTopClose class="size-[24px]"/>
 
       <div class="text-6xl underline">
@@ -32,7 +32,7 @@ const { rating, ...avatarProps } = props
 
     <AvatarSquare
         v-bind="avatarProps"
-        class="z-20"
+        class="z-10"
     />
   </div>
 </template>

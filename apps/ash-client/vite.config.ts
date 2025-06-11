@@ -2,6 +2,7 @@ import path from 'node:path'
 import process from 'node:process'
 import { defineConfig } from 'vite'
 import 'vite-ssg'
+import twPostCss from '@tailwindcss/postcss'
 import autoprefixer from 'autoprefixer'
 import nested from 'postcss-nested'
 import generateSitemap from 'vite-ssg-sitemap'
@@ -26,7 +27,7 @@ export default defineConfig({
   plugins,
   css: {
     postcss: {
-      plugins: [autoprefixer(), nested],
+      plugins: [autoprefixer(), nested, twPostCss],
     },
   },
   ssgOptions: {

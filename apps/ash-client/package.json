@@ -3,6 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "imports": {
+    "#tw.css": "./src/tw.css",
+    "~/*": "./src/*"
+  },
   "scripts": {
     "dev": "DEBUG='vite-ssg:*' vite",
     "build": "vite-ssg build",
@@ -51,6 +55,7 @@
     "vite-plugin-pages": "^0.33.0",
     "vite-plugin-pwa": "^1.0.0",
     "vite-plugin-vue-layouts": "^0.11.0",
+    "vite-plugin-vue-tailwind-auto-reference": "^1.0.2",
     "vite-ssg": "^27.0.1",
     "vite-ssg-sitemap": "^0.9.0",
     "vue-filepond": "^7.0.4",

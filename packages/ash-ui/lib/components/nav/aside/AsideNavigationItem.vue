@@ -3,27 +3,25 @@ const { disabled = false, active = false } = defineProps<{
   disabled?: boolean
   active?: boolean
 }>()
-
-// @reference "#root.pcss";
-//       active-class="active pointer-events-none bg-p-middle-red"
 </script>
 
 <template>
-  <router-link
+  <RouterLink
       v-bind="$attrs"
       :class="[
           { disabled: 'pointer-events-none opacity-25 bg-s-black-olive' },
       ]"
-      class="aside-nav-item w-full flex rounded-tl-md rounded-br-md overflow-hidden bg-p-fawn/40 z-20"
+      class="aside-nav-item w-full flex rounded-tl-md rounded-br-md overflow-hidden bg-p-fawn/40"
+      active-class="active pointer-events-none bg-p-middle-red"
   >
-    <span class="aside-nav-item-text relative flex items-center gap-1.5 p-1.5">
+    <span class="aside-nav-item-text text-s-old-lace relative flex items-center gap-1.5 p-1.5">
       <ILucideComponent class="size-[24px] z-10" />
 
       <span class="text-s-old-lace text-xl z-10">
          <slot />
       </span>
     </span>
-  </router-link>
+  </RouterLink>
 </template>
 
 <style scoped lang="postcss">
