@@ -1,10 +1,11 @@
 import { setupLayouts } from 'virtual:generated-layouts'
 import devalue from '@nuxt/devalue'
 import { ViteSSG } from 'vite-ssg'
+import { routes } from 'vue-router/auto-routes'
 import ErrorPage from '~/pages/error.vue'
-import routes from '~pages'
 import App from './App.vue'
 import './index.css'
+import '@fontsource-variable/sofia-sans'
 
 export const createApp = ViteSSG(
   App,

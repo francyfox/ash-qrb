@@ -7,6 +7,12 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
+definePage({
+  meta: {
+    layout: 'QrbBadge',
+  },
+})
+
 const { t } = useI18n()
 const route = useRoute()
 
@@ -18,16 +24,16 @@ if (id) {
   const { error } = await qrbStore.getQrbById(route.params?.id)
 
   if (error) {
-    showError({
-      statusCode: 500,
-      statusMessage: error?.summary || error,
-    })
+    // showError({
+    //   statusCode: 500,
+    //   statusMessage: error?.summary || error,
+    // })
   }
 } else {
-  showError({
-    statusCode: 404,
-    statusMessage: 'Page Not Found',
-  })
+  // showError({
+  //   statusCode: 404,
+  //   statusMessage: 'Page Not Found',
+  // })
 }
 </script>
 

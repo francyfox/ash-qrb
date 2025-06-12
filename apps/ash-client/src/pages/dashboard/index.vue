@@ -1,11 +1,13 @@
-<route lang="yaml">
-meta:
-  layout: AdminPanel
-  auth: true
-</route>
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useDashboardStore } from '~/stores/dashboard.ts'
+
+definePage({
+  meta: {
+    layout: 'AdminPanel',
+    auth: true,
+  },
+})
 
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)

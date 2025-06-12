@@ -1,11 +1,13 @@
-<route lang="yaml">
-meta:
-  layout: AdminPanel
-  auth: true
-</route>
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import QrbListActions from '~/components/forms/qrb-list/QrbListActions.vue'
+
+definePage({
+  meta: {
+    layout: 'AdminPanel',
+    auth: true,
+  },
+})
 
 const qrbStore = useQrbStore()
 const { qrbList } = storeToRefs(qrbStore)

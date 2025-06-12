@@ -10,7 +10,7 @@
       "#tw.css": ["./src/tw.css"]
     },
     "types": [
-      "vite-plugin-pages/client",
+      "unplugin-vue-router/client",
       "vite/client",
       "vite-plugin-pwa/client",
       "unplugin-icons/types/vue",
@@ -26,6 +26,7 @@
     "noUncheckedSideEffectImports": true
   },
   "include": [
+    "./typed-router.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",

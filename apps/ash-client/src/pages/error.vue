@@ -1,7 +1,3 @@
-<route lang="yaml">
-
-</route>
-
 <script setup lang="ts">
 import ImgDoro from '~/assets/images/doro.webp'
 </script>

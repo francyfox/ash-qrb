@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { APP_ENV__ } from '~/constants.ts'
+
+definePage({
+  meta: {},
+})
 </script>
 
 <template>
@@ -12,6 +16,7 @@ import { APP_ENV__ } from '~/constants.ts'
             <div class="text-xl">
               pwa web app for creating qr codes gateway
               for another qr codes. <br>
+              
               <RouterLink to="/dashboard" class="text-p-fawn hover:text-p-middle-red transition-color">Use dashboard</RouterLink>
 
               <br>

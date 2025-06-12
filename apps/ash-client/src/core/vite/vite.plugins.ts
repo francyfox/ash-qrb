@@ -7,8 +7,8 @@ import { ashUIResolver } from 'ash-ui'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
+import VueRouter from 'unplugin-vue-router/vite'
 import type { UserConfig } from 'vite'
-import Pages from 'vite-plugin-pages'
 import { VitePWA } from 'vite-plugin-pwa'
 import { ClientSideLayout } from 'vite-plugin-vue-layouts'
 import tailwindAutoReference from 'vite-plugin-vue-tailwind-auto-reference'
@@ -60,11 +60,12 @@ export const plugins: UserConfig['plugins'] = [
       ),
     },
   }),
-  vue(),
-  Pages({
-    extensions: ['vue'],
-    routeStyle: 'nuxt',
+  VueRouter({
+    extensions: ['.vue'],
+    dts: 'src/typed-router.d.ts',
+    importMode: 'async',
   }),
+  vue(),
   VueI18n({
     fullInstall: false,
     compositionOnly: true,

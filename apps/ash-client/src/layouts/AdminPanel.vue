@@ -11,14 +11,14 @@ const navData = computed(() => [
     id: useId(),
     text: t('asideNavProfile'),
     attrs: {
-      to: { name: 'dashboard' },
+      to: { path: '/dashboard' },
     },
   },
   {
     id: useId(),
     text: t('asideNavList'),
     attrs: {
-      to: { name: 'qrb-list' },
+      to: { path: '/qrb-list' },
     },
   },
 ])
@@ -41,23 +41,25 @@ onErrorCaptured((err) => {
         <div class="flex w-full min-h-[80vh] gap-5">
           <PanelCard class="card-content">
             <div class="card-content-container">
-              <Suspense>
-                <RouterView />
+              <ClientOnly>
+                <Suspense>
+                  <RouterView />
 
-                <template #fallback>
-                  <span v-if="error.name">
-                    <span class="text-xl">Error! {{ error.name }}</span>
-                    <i class="text-md">{{ error.message }}</i>
-                  </span>
-                  <span v-else class="flex items-center gap-2 text-xl">
-                    <UIcon
-                        name="i-lucide-loader-pinwheel"
-                        class="size-6"
-                    />
-                    Loading...
-                  </span>
-                </template>
-              </Suspense>
+                  <template #fallback>
+                    <span v-if="error.name">
+                      <span class="text-xl">Error! {{ error.name }}</span>
+                      <i class="text-md">{{ error.message }}</i>
+                    </span>
+                    <span v-else class="flex items-center gap-2 text-xl">
+                      <UIcon
+                          name="i-lucide-loader-pinwheel"
+                          class="size-6 animate-spin"
+                      />
+                      Loading...
+                    </span>
+                  </template>
+                </Suspense>
+              </ClientOnly>
             </div>
           </PanelCard>
 
