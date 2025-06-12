@@ -9,7 +9,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <LazyUModal v-model:open="model" :title="t('modalReallySure')">
+  <UModal v-model:open="model" :title="t('modalReallySure')">
     <template #footer>
       <div class="w-full flex justify-center gap-2">
         <UButton
@@ -23,7 +23,7 @@ const { t } = useI18n()
         </UButton>
       </div>
     </template>
-  </LazyUModal>
+  </UModal>
 </template>
 
 <style scoped>

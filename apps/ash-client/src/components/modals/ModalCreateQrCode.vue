@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
 import FormQr from '~/components/forms/qr/FormQr.vue'
 import { useQrbStore } from '~/stores/qrb'
 
@@ -35,7 +37,7 @@ const handleSubmit = async (v: any) => {
 </script>
 
 <template>
-  <LazyUModal
+  <UModal
       v-model:open="model"
       :title="t('modalCreateQrTitle')"
       :ui="{ body: 'bg-(--color-s-champagne)' }"
@@ -45,7 +47,7 @@ const handleSubmit = async (v: any) => {
           @onSubmit="handleSubmit"
       />
     </template>
-  </LazyUModal>
+  </UModal>
 </template>
 
 <style scoped>

@@ -1,11 +1,11 @@
+<route lang="yaml">
+meta:
+  layout: QrbBadge
+</route>
 <script setup lang="ts">
-import PanelCard from '~/components/ui/cards/PanelCard.vue'
-import QrbImage from '~/components/ui/qrb-image/QrbImage.vue'
-import UserId from '~/components/ui/user-id.vue'
-
-definePageMeta({
-  middleware: ['auth'],
-})
+import { storeToRefs } from 'pinia'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 
 const { t } = useI18n()
 const route = useRoute()

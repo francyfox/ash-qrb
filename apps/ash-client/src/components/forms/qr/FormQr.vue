@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { toRaw } from 'vue'
+import { storeToRefs } from 'pinia'
+import { type Ref, reactive, ref, toRaw, unref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import {
   QRB_STATUS,
   type TQrbSchema,
   qrSchema,
 } from '~/components/forms/qr/qr.schema'
-import MenuGenerator from '~/components/ui/menu-generator/MenuGenerator.vue'
-import type { IMGMenuItem } from '~/components/ui/menu-generator/menu-generator.types'
 import type { Form, FormSubmitEvent } from '#ui/types'
 
 type TStatusOption = (typeof statusOptions.value)[number]
@@ -55,7 +55,7 @@ if (model.value) {
   state.status = statusOptions.value[0]
 }
 
-const menu: Ref<IMGMenuItem[]> = ref([
+const menu: Ref<any[]> = ref([
   {
     type: 'link',
     content: {

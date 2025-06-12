@@ -1,6 +1,7 @@
 import { setupLayouts } from 'virtual:generated-layouts'
 import devalue from '@nuxt/devalue'
 import { ViteSSG } from 'vite-ssg'
+import ErrorPage from '~/pages/error.vue'
 import routes from '~pages'
 import App from './App.vue'
 import './index.css'
@@ -9,7 +10,13 @@ export const createApp = ViteSSG(
   App,
   {
     base: import.meta.env.BASE_URL,
-    routes: setupLayouts(routes),
+    routes: setupLayouts([
+      ...routes,
+      {
+        path: '/:pathMatch(.*)*',
+        component: ErrorPage,
+      },
+    ]),
   },
   (ctx) => {
     const modules: { install: (ctx: any) => void }[] = Object.values(
