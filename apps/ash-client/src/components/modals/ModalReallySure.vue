@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
 const model = defineModel<boolean>()
 const emit = defineEmits<{
   onSubmit: []

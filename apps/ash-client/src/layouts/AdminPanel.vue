@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useId } from 'vue'
+import { computed, onErrorCaptured, ref, useId } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SectionFooter from '~/components/sections/SectionFooter.vue'
 import SectionHeader from '~/components/sections/SectionHeader.vue'
@@ -22,6 +22,15 @@ const navData = computed(() => [
     },
   },
 ])
+
+const error = ref({
+  name: '',
+  message: '',
+})
+
+onErrorCaptured((err) => {
+  error.value = err
+})
 </script>
 
 <template>
@@ -32,7 +41,23 @@ const navData = computed(() => [
         <div class="flex w-full min-h-[80vh] gap-5">
           <PanelCard class="card-content">
             <div class="card-content-container">
-              <RouterView />
+              <Suspense>
+                <RouterView />
+
+                <template #fallback>
+                  <span v-if="error.name">
+                    <span class="text-xl">Error! {{ error.name }}</span>
+                    <i class="text-md">{{ error.message }}</i>
+                  </span>
+                  <span v-else class="flex items-center gap-2 text-xl">
+                    <UIcon
+                        name="i-lucide-loader-pinwheel"
+                        class="size-6"
+                    />
+                    Loading...
+                  </span>
+                </template>
+              </Suspense>
             </div>
           </PanelCard>
 
