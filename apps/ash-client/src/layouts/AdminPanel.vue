@@ -40,10 +40,14 @@ onErrorCaptured((err) => {
       <div class="container flex items-center h-full">
         <div class="flex w-full min-h-[80vh] gap-5">
           <PanelCard class="card-content">
-            <div class="card-content-container">
+            <div class="card-content-container flex">
               <ClientOnly>
                 <Suspense>
-                  <RouterView />
+                  <router-view v-slot="{ Component, route }">
+                    <transition name="slide" appear-from-class="hide-old">
+                      <component :is="Component" :key="route" />
+                    </transition>
+                  </router-view>
 
                   <template #fallback>
                     <span v-if="error.name">
@@ -73,6 +77,28 @@ onErrorCaptured((err) => {
   </div>
 </template>
 
+<style lang="postcss">
+.hide-old {
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+.slide-leave-active,
+.slide-enter-active {
+  transition: 1s;
+}
+.slide-enter {
+  transform: translate(0, 100%);
+  height: auto;
+}
+.slide-leave-to {
+  position: absolute;
+  transform: translate(0, -100%);
+  opacity: 0;
+  height: 0;
+}
+</style>
 <style lang="postcss" scoped>
 .admin-layout {
   background: url("~/assets/images/bg.jpg") center center / cover no-repeat;

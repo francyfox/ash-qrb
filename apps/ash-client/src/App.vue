@@ -2,8 +2,6 @@
 </script>
 <template>
   <UApp>
-    <RouterView v-slot="{ Component, route }">
-      <Component :is="Component" :key="route" />
-    </RouterView>
+    <RouterView />
   </UApp>
 </template>
