@@ -18,7 +18,8 @@ const { error } = await qrbStore.getQrbList({
 </script>
 
 <template>
-  <div class="relative h-full flex flex-col justify-between gap-5">
+  <div class="w-full h-full relative h-full flex flex-col justify-between gap-5">
+    fff
     <QrbListActions
         :list="qrbList"
     />

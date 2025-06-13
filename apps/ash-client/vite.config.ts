@@ -14,6 +14,7 @@ export default defineConfig({
     proxy: {
       '/api': __APP_ENV__.API_URL,
     },
+    port: 4000,
   },
   resolve: {
     alias: {

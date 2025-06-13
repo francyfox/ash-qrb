@@ -51,7 +51,7 @@ onErrorCaptured((err) => {
 
                   <template #fallback>
                     <span v-if="error.name">
-                      <span class="text-xl">Error! {{ error.name }}</span>
+                      <span class="text-xl">Error! {{ error.name }}</span><br>
                       <i class="text-md">{{ error.message }}</i>
                     </span>
                     <span v-else class="flex items-center gap-2 text-xl">

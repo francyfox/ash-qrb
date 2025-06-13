@@ -5,7 +5,9 @@ import { routes } from 'vue-router/auto-routes'
 import ErrorPage from '~/pages/error.vue'
 import App from './App.vue'
 import './index.css'
+// @ts-ignore
 import '@fontsource-variable/sofia-sans'
+import '~/assets/styles/nprogress.css'
 
 export const createApp = ViteSSG(
   App,
