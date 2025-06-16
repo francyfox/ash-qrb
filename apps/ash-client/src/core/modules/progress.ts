@@ -1,12 +1,8 @@
 import NProgress from 'nprogress'
 import type { ViteSSGContext } from 'vite-ssg'
-import { handleHotUpdate } from 'vue-router/auto-routes'
 
-export const install = ({ router }: ViteSSGContext) => {
-  if (import.meta.hot) {
-    handleHotUpdate(router)
-  }
-
+export const install = ({ router, routes, head }: ViteSSGContext) => {
+  console.log(router)
   if (!import.meta.env.SSR) {
     NProgress.configure({ easing: 'ease', speed: 500 })
 
