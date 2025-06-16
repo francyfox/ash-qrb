@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 import { useDashboardStore } from '~/stores/dashboard.ts'
 
 definePage({
@@ -9,13 +10,17 @@ definePage({
   },
 })
 
+const router = useRouter()
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
 
-console.log(user.value)
-
 const dashboardStore = useDashboardStore()
 const { statistic } = storeToRefs(dashboardStore)
+
+const logoutHandler = async () => {
+  await userStore.signOut()
+  await router.push('/auth')
+}
 </script>
 
 <template>
@@ -41,6 +46,7 @@ const { statistic } = storeToRefs(dashboardStore)
           :id="user.id"
           company="Tri Larka"
           position="Superviser"
+          @onLogout="logoutHandler"
       />
     </div>
   </div>

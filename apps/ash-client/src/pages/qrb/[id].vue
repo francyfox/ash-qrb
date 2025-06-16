@@ -38,7 +38,7 @@ if (id) {
 </script>
 
 <template>
-  <NuxtLayout name="qrb-badge">
+  <div class="w-full flex flex-col gap-2">
     <PanelCard class="max-w-[174px]">
       <QrbImage
           :src="qrb?.qrCode"
@@ -60,7 +60,7 @@ if (id) {
         </p>
       </main>
     </PanelCard>
-  </NuxtLayout>
+  </div>
 </template>
 
 <style scoped>
