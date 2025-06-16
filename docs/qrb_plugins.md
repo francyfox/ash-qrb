@@ -29,4 +29,22 @@ vite create ash-plugin
 ```
 
 Плагин должен позволять расширять функционал всех приложений из `/app`
-Плагин собирается и отправляется
+
+### client app
+
+#### Расширение функционала клиента через папку
+`packages/plugin-client/src/slots`
+
+- modalCreate - реплейс формы создания QRB
+- modalSuccess - реплейс формы после отправки QRB
+- modalSettings - реплейс меню настроек
+- QRBList - реплейс таблицы списка
+
+#### Расширение функционала сервера `packages/plugin-server/`
+
+- `sсhema` - drizzle схема
+- `routes/plugin/<plugin-name>/*` - роуты
+
+#### Расширение функционала `packages/plugin-cli`
+
+- 

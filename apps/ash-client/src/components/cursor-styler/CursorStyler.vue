@@ -20,8 +20,6 @@ onMounted(() => {
       transform: `translate(${x}px, ${y}px) scale(${interaction ? 0.8 : 1})`,
     }
 
-    console.log(keyframes)
-
     cursorRef.value.animate(keyframes, {
       duration: 100,
       fill: 'forwards',

@@ -1,7 +1,14 @@
 import { usersSchema } from '@/schema/user.ts'
 import { generateId } from '@/utils/generate.ts'
 import { sql } from 'drizzle-orm'
-import { integer, pgTable, text, timestamp, varchar } from 'drizzle-orm/pg-core'
+import {
+  integer,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+  varchar,
+} from 'drizzle-orm/pg-core'
 import { createInsertSchema, createSelectSchema } from 'drizzle-typebox'
 
 export const QRB_STATUS = {
@@ -15,7 +22,7 @@ export const qrbDefaultColumns = {
     .$defaultFn(() => generateId()),
   status: integer('status').default(QRB_STATUS.ACTIVE),
   name: varchar('name', { length: 70 }).notNull(),
-  description: text('description'),
+  body: jsonb('body').default({ en: null, ru: null }),
   qrCode: text('qr_code'),
   userId: text('user_id')
     .notNull()
