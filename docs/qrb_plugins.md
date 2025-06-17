@@ -29,17 +29,15 @@ vite create ash-plugin
 ### client app
 
 #### Extend client app
-**_high compatibility plugin (can use few plugins together)_**
-`packages/plugin-client/src/slots`
+
+`packages/plugin-client/src/slots` **_high compatibility plugin (can use few plugins together)_**
 
 - footerBodyFormModalCreate - extend form
 - footerBodyModalSuccess - extend success message
 - extendQrbSettings.ts - extend qrb menu (part of h render function)
 - extendQrbTable.ts - add rows and cols in qrb list table
 
-`packages/plugin-client/src/replace`
-
-**_low compatibility plugin_**
+`packages/plugin-client/src/replace` **_low compatibility plugin_**
 
 - modalCreate - replace form create QRB
 - modalSuccess - replace success form QRB
@@ -48,8 +46,8 @@ vite create ash-plugin
 
 #### Extend server app `packages/plugin-server/`
 
-- `sсhema` - drizzle схема
-- `routes/plugin/<plugin-name>/*` - роуты
+- `sсhema` - drizzle schemes
+- `routes` - use general app instance from `src/app.ts`
 
 #### Extend CLI tool `packages/plugin-cli`
 
