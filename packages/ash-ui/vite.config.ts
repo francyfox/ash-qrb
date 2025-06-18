@@ -83,6 +83,7 @@ export default defineConfig({
         'vue',
         'tailwindcss',
         'vite',
+        'quill'
       ],
       output: {
         chunkFileNames: 'chunks/[name].[hash].js',

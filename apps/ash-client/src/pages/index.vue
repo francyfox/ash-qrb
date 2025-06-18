@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import { defineAsyncComponent, h } from 'vue'
 import { APP_ENV__ } from '~/constants.ts'
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
+
+const Editor = !import.meta.env.SSR
+  ? defineAsyncComponent(() => import('~/components/editor/Editor.vue'))
+  : h('div')
+// console.log(modules)
 </script>
 
 <template>
@@ -39,11 +44,9 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css'
       </main>
     </div>
   </section>
-  <section>
+  <section class="fox">
     <div class="container">
-      <ClientOnly>
-        <QrbEditor />
-      </ClientOnly>
+      <Editor class="fox" />
     </div>
   </section>
 </template>

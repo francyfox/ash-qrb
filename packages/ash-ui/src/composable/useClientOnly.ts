@@ -1,6 +1,6 @@
 import { h, defineComponent } from 'vue';
 
-const isBrowser = typeof window !== 'undefined';
+const isBrowser = !import.meta.env.SSR;
 
 export function useClientOnly(asyncComponent: any) {
   return defineComponent({

@@ -1,8 +1,6 @@
 <script setup lang="ts">
 // import type { Delta } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import BlotFormatter from 'quill-blot-formatter'
-import imageUploader from 'quill-image-uploader'
 import { defineAsyncComponent, h, ref, useTemplateRef } from 'vue'
 
 const emit = defineEmits<{
@@ -18,25 +16,11 @@ const QuillEditor = QEditor
 const model = defineModel()
 const { placeholder = 'Text editor' } = defineProps<{
   placeholder?: string
+  modules: []
 }>()
 const editorRef = useTemplateRef('editorRef')
 const contentLength = ref(1)
 const maxLength = ref(150)
-
-const modules = [
-  {
-    name: 'imageUploader',
-    module: imageUploader,
-    options: {
-      upload: (file: File) => emit('onUpload', file),
-    },
-  },
-  {
-    name: 'BlotFormatter',
-    module: BlotFormatter,
-  },
-]
-console.log(modules)
 
 const onUpdate = ({ oldContents }) => {
   contentLength.value = editorRef.value?.getQuill().getLength()
@@ -66,6 +50,8 @@ const onUpdate = ({ oldContents }) => {
 </template>
 
 <style lang="postcss">
+@import "@vueup/vue-quill/dist/vue-quill.snow.css";
+
 .ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
   width: 36px;
   height: 36px;
