@@ -7,6 +7,7 @@ import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import { analyzer } from 'vite-bundle-analyzer'
 // import { libInjectCss } from 'vite-plugin-lib-inject-css'
 
 const entries: Record<string, string> = {}
@@ -27,6 +28,7 @@ export default defineConfig({
     },
   },
   plugins: [
+    analyzer(),
     vue(),
     ui({
       components: {
@@ -50,7 +52,6 @@ export default defineConfig({
     dts({
       include: ['lib', './auto-imports.d.ts'],
       tsconfigPath: 'tsconfig.build.json',
-      cleanVueFileName: true,
       clearPureImport: true,
       // beforeWriteFile: (filePath, content) => {
       //   const match = filePath.match(/([^/]+)\.d.ts$/)
@@ -78,7 +79,11 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['vue', 'tailwindcss'],
+      external: [
+        'vue',
+        'tailwindcss',
+        'vite',
+      ],
       output: {
         chunkFileNames: 'chunks/[name].[hash].js',
         assetFileNames: 'assets/[name][extname]',

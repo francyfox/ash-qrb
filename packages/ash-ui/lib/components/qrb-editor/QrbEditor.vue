@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import { QuillEditor } from '@vueup/vue-quill'
+// import type { Delta } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
-// @ts-ignore
 import BlotFormatter from 'quill-blot-formatter'
-// @ts-ignore
-import ImageUploader from 'quill-image-uploader'
-import { ref, useTemplateRef } from 'vue'
+import imageUploader from 'quill-image-uploader'
+import { defineAsyncComponent, h, ref, useTemplateRef } from 'vue'
 
 const emit = defineEmits<{
   onUpload: [file: File]
 }>()
+
+const QEditor = defineAsyncComponent(
+  async () => (await import('@vueup/vue-quill')).QuillEditor,
+)
+
+const QuillEditor = QEditor
 
 const model = defineModel()
 const { placeholder = 'Text editor' } = defineProps<{
@@ -22,7 +26,7 @@ const maxLength = ref(150)
 const modules = [
   {
     name: 'imageUploader',
-    module: ImageUploader,
+    module: imageUploader,
     options: {
       upload: (file: File) => emit('onUpload', file),
     },
@@ -32,6 +36,7 @@ const modules = [
     module: BlotFormatter,
   },
 ]
+console.log(modules)
 
 const onUpdate = ({ oldContents }) => {
   contentLength.value = editorRef.value?.getQuill().getLength()
@@ -51,9 +56,9 @@ const onUpdate = ({ oldContents }) => {
         theme="snow"
         toolbar="full"
         @editorChange="onUpdate"
-        class="flex flex-col mb-2 min-h-[300px]"
+        class="editor-area flex flex-col mb-2 min-h-[300px]"
     />
-    
+
     <div class="editor-length text-xl">
       {{ contentLength }} / {{ maxLength }}
     </div>

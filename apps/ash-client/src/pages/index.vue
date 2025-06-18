@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { APP_ENV__ } from '~/constants.ts'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
 </script>
 
 <template>
@@ -36,6 +37,13 @@ import { APP_ENV__ } from '~/constants.ts'
           </NuxtImg>
         </div>
       </main>
+    </div>
+  </section>
+  <section>
+    <div class="container">
+      <ClientOnly>
+        <QrbEditor />
+      </ClientOnly>
     </div>
   </section>
 </template>

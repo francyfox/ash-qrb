@@ -130,21 +130,12 @@ watch(state, (v) => {
       />
     </UFormField>
 
-    <UFormField
-        :label="t('labelDescription')"
-        size="xl"
-        name="description"
-    >
-      <UTextarea
-          v-model="state.description"
-          size="xl"
-          class="w-full"
-      />
-    </UFormField>
+<!--    <MenuGenerator-->
+<!--        v-model="menu"-->
+<!--    />-->
 
-    <MenuGenerator
-        v-model="menu"
-    />
+    <QrbEditor />
+
 
     <div class="flex">
       <UButton

@@ -1,6 +1,7 @@
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 import type { ComponentResolverObject } from 'unplugin-vue-components'
+export { default as QrbEditor } from './components/qrb-editor/QrbEditor.vue'
 export { default as NuxtImg } from './components/nuxt-image/NuxtImg.vue'
 export { default as UserId } from './components/user-id/UserId.vue'
 export { default as MenuGenerator } from './components/menu-generator/MenuGenerator.vue'
@@ -19,7 +20,7 @@ export { default as DefaultCard } from './components/cards/DefaultCard.vue'
 export { default as AsideNavigation } from './components/nav/aside/AsideNavigation.vue'
 export { default as AsideNavigationItem } from './components/nav/aside/AsideNavigationItem.vue'
 
-export const components = ['NuxtImg','UserId','MenuGenerator','MenuPreview','HeaderDrop','QrbImage','DefaultUploader','WidgetUserInfo','WidgetStatistic','AvatarSquare','AvatarProfile','QrbList','LightCard','PanelCard','DefaultCard','AsideNavigation','AsideNavigationItem']
+export const components = ['QrbEditor','NuxtImg','UserId','MenuGenerator','MenuPreview','HeaderDrop','QrbImage','DefaultUploader','WidgetUserInfo','WidgetStatistic','AvatarSquare','AvatarProfile','QrbList','LightCard','PanelCard','DefaultCard','AsideNavigation','AsideNavigationItem']
 export const ashUIResolver: ComponentResolverObject = {
   type: 'component',
   resolve: (name: string) => {
@@ -28,7 +29,8 @@ export const ashUIResolver: ComponentResolverObject = {
 }
 export const AshUI = { 
   install: (app: App<Element>) => {
-       app.component('NuxtImg', defineAsyncComponent(() => import('./components/nuxt-image/NuxtImg.vue')))
+       app.component('QrbEditor', defineAsyncComponent(() => import('./components/qrb-editor/QrbEditor.vue')))
+   app.component('NuxtImg', defineAsyncComponent(() => import('./components/nuxt-image/NuxtImg.vue')))
    app.component('UserId', defineAsyncComponent(() => import('./components/user-id/UserId.vue')))
    app.component('MenuGenerator', defineAsyncComponent(() => import('./components/menu-generator/MenuGenerator.vue')))
    app.component('MenuPreview', defineAsyncComponent(() => import('./components/menu-preview/MenuPreview.vue')))

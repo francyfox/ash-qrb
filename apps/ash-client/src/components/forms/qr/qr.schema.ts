@@ -12,7 +12,10 @@ export const qrSchema = () => {
   return object({
     status: object(),
     name: string().min(3).max(70).required(t('formNameRequired')),
-    description: string().max(255),
+    body: object({
+      en: object(),
+      ru: object(),
+    }),
     qrCode: string(),
   })
 }
