@@ -1,11 +1,13 @@
 <script setup lang="ts">
 // import type { Delta } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
-import { defineAsyncComponent, h, ref, useTemplateRef } from 'vue'
+import { defineAsyncComponent, ref, useTemplateRef } from 'vue'
 
 const emit = defineEmits<{
   onUpload: [file: File]
 }>()
+
+const init = ref(false)
 
 const QEditor = defineAsyncComponent(
   async () => (await import('@vueup/vue-quill')).QuillEditor,
@@ -14,20 +16,33 @@ const QEditor = defineAsyncComponent(
 const QuillEditor = QEditor
 
 const model = defineModel()
-const { placeholder = 'Text editor' } = defineProps<{
+const { placeholder = 'Text editor', maxLength = 150 } = defineProps<{
+  maxLength?: number
   placeholder?: string
-  modules: []
+  modules?: []
 }>()
+
 const editorRef = useTemplateRef('editorRef')
 const contentLength = ref(1)
-const maxLength = ref(150)
 
-const onUpdate = ({ oldContents }) => {
+function onUpdate({ oldContents: any }) {
   contentLength.value = editorRef.value?.getQuill().getLength()
 
   if (contentLength.value >= maxLength.value && oldContents) {
     editorRef.value?.getQuill().setContents(oldContents)
   }
+
+  if (init.value) {
+    model.value = editorRef.value?.getQuill().getContents()
+  }
+}
+
+function onReady() {
+  if (model.value) {
+    editorRef.value?.getQuill().setContents(model.value)
+  }
+
+  init.value = true
 }
 </script>
 
@@ -35,11 +50,11 @@ const onUpdate = ({ oldContents }) => {
   <div class="editor">
     <QuillEditor
         ref="editorRef"
-        v-model:content="model"
         v-bind="{ modules, placeholder }"
         theme="snow"
         toolbar="full"
         @editorChange="onUpdate"
+        @ready="onReady"
         class="editor-area flex flex-col mb-2 min-h-[300px]"
     />
 

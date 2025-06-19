@@ -2,7 +2,6 @@
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import BlotFormatter from 'quill-blot-formatter'
 import imageUploader from 'quill-image-uploader'
-import { ref } from 'vue'
 
 const modules = [
   {
@@ -16,16 +15,14 @@ const modules = [
   },
 ]
 
-const test = ref()
+const test = { ops: [{ insert: 'ffff\n' }] }
 </script>
 
 <template>
   <QrbEditor
-      v-bind="{ modules }"
-      v-model="test"
+      v-bind="{ modules, ...$attrs }"
+      :content="test"
   />
-
-  {{ test }}
 </template>
 
 <style scoped>

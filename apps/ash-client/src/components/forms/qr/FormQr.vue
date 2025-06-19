@@ -134,9 +134,6 @@ watch(state, (v) => {
 <!--        v-model="menu"-->
 <!--    />-->
 
-    <QrbEditor />
-
-
     <div class="flex">
       <UButton
           type="submit"

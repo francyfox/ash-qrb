@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { TabsItem } from '@nuxt/ui'
 import { storeToRefs } from 'pinia'
+import { computed, defineAsyncComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import FormQr from '~/components/forms/qr/FormQr.vue'
 import { useQrbStore } from '~/stores/qrb'
 
 const toast = useToast()
@@ -15,6 +16,25 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
+const items = ref<TabsItem[]>([
+  {
+    label: t('formQrGeneral'),
+    icon: 'i-lucide-message-circle-warning',
+    component: defineAsyncComponent(
+      () => import('~/components/forms/qr/FormQr.vue'),
+    ),
+  },
+  {
+    label: 'Description',
+    icon: 'i-lucide-notepad-text',
+    component: defineAsyncComponent(
+      () => import('~/components/forms/qr/FormQrEditor.vue'),
+    ),
+  },
+])
+const orientation = computed(() =>
+  items.value.length > 4 ? 'vertical' : 'horizontal',
+)
 
 const handleSubmit = async (v: any) => {
   const { error } = await qrbStore.postQrb({ qrb: v })
@@ -41,11 +61,23 @@ const handleSubmit = async (v: any) => {
       v-model:open="model"
       :title="t('modalCreateQrTitle')"
       :ui="{ body: 'bg-(--color-s-champagne)' }"
+      class="max-w-3xl"
   >
     <template #body>
-      <FormQr
-          @onSubmit="handleSubmit"
-      />
+      <UTabs
+          v-bind="{ items, orientation }"
+          size="lg"
+          class="w-full"
+      >
+        <template #content="{ item }">
+          <KeepAlive>
+            <component :is="item.component" />
+          </KeepAlive>
+        </template>
+      </UTabs>
+<!--      <FormQr-->
+<!--          @onSubmit="handleSubmit"-->
+<!--      />-->
     </template>
   </UModal>
 </template>

@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import { defineAsyncComponent, h } from 'vue'
 import { APP_ENV__ } from '~/constants.ts'
-
-const Editor = !import.meta.env.SSR
-  ? defineAsyncComponent(() => import('~/components/editor/Editor.vue'))
-  : h('div')
-// console.log(modules)
 </script>
 
 <template>
@@ -42,11 +36,6 @@ const Editor = !import.meta.env.SSR
           </NuxtImg>
         </div>
       </main>
-    </div>
-  </section>
-  <section class="fox">
-    <div class="container">
-      <Editor class="fox" />
     </div>
   </section>
 </template>
