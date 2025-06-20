@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import {
+  computed,
+  reactive,
+  ref,
+  useTemplateRef,
+  watch,
+  watchEffect,
+} from 'vue'
 import { useEditor } from '~/composables/useEditor.ts'
 
-const model = defineModel<Record<'en' | 'ru', unknown>>({
+const model = defineModel({
   default: {
     en: undefined,
     ru: undefined,
@@ -20,12 +27,23 @@ const languageList = [
   },
 ]
 
-const language = ref(languageList[0].id)
-const text = ref({})
+const editorKey = ref('0')
+function rerenderEditor() {
+  editorKey.value = (Number(editorKey.value) + 1).toString()
+}
 
-// function handleChange(v) {
-//   language.value = v
-// }
+const language = ref<'en' | 'ru'>(languageList[0].id as any)
+const text = ref()
+const editorRef = useTemplateRef('editorRef')
+
+watch(language, (v) => {
+  text.value = model.value[v]
+  rerenderEditor() // TODO: fix editor v-model (external changes doesnt work)
+})
+
+watch(text, (v) => {
+  model.value[language.value] = v
+})
 </script>
 
 <template>
@@ -41,10 +59,13 @@ const text = ref({})
       />
     </div>
 
-    <Editor
-        v-model="text"
-    />
-    {{ text }}
+    <transition name="fade" mode="out-in">
+      <Editor
+          :key="editorKey"
+          ref="editorRef"
+          v-model="text"
+      />
+    </transition>
   </div>
 </template>
 
