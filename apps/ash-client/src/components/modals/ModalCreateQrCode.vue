@@ -16,44 +16,68 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
+const text = ref({
+  en: undefined,
+  ru: undefined,
+})
 const items = ref<TabsItem[]>([
   {
-    label: t('formQrGeneral'),
+    name: 'formQrGeneral',
     icon: 'i-lucide-message-circle-warning',
     component: defineAsyncComponent(
       () => import('~/components/forms/qr/FormQr.vue'),
     ),
+    model: {},
+    props: {},
+    listeners: {
+      async onSubmit(v: any) {
+        const { error } = await qrbStore.postQrb({
+          qrb: { ...v, body: text.value },
+        })
+
+        if (error) {
+          toast.add({
+            title: error.message || 'error',
+            description: error?.summary || error,
+            color: 'error',
+          })
+        } else {
+          toast.add({
+            title: t('toastQrCreated'),
+            color: 'success',
+          })
+        }
+
+        model.value = false
+      },
+    },
   },
   {
-    label: 'Description',
+    name: 'formQrDescription',
     icon: 'i-lucide-notepad-text',
     component: defineAsyncComponent(
       () => import('~/components/forms/qr/FormQrEditor.vue'),
     ),
+    model: text,
+    props: {},
+    listeners: {},
   },
 ])
 const orientation = computed(() =>
   items.value.length > 4 ? 'vertical' : 'horizontal',
 )
 
-const handleSubmit = async (v: any) => {
-  const { error } = await qrbStore.postQrb({ qrb: v })
-
-  if (error) {
-    toast.add({
-      title: error.message || 'error',
-      description: error?.summary || error,
-      color: 'error',
-    })
-  } else {
-    toast.add({
-      title: t('toastQrCreated'),
-      color: 'success',
-    })
-  }
-
-  model.value = false
-}
+const plugins = ref([])
+const pluginsList = ref([
+  {
+    id: 0,
+    label: 'Validator',
+  },
+  {
+    id: 1,
+    label: 'Stars',
+  },
+])
 </script>
 
 <template>
@@ -64,20 +88,43 @@ const handleSubmit = async (v: any) => {
       class="max-w-3xl"
   >
     <template #body>
-      <UTabs
-          v-bind="{ items, orientation }"
-          size="lg"
-          class="w-full"
-      >
-        <template #content="{ item }">
-          <KeepAlive>
-            <component :is="item.component" />
-          </KeepAlive>
-        </template>
-      </UTabs>
-<!--      <FormQr-->
-<!--          @onSubmit="handleSubmit"-->
-<!--      />-->
+      <div class="flex flex-col gap-5">
+        <div class="flex">
+          <USelectMenu
+              v-model="plugins"
+              :items="pluginsList"
+              class="min-w-[200px]"
+              size="xl"
+              placeholder="Select Plugins"
+              multiple
+              disabled
+          />
+        </div>
+
+        <UTabs
+            v-bind="{ items, orientation }"
+            size="lg"
+            class="w-full"
+        >
+          <template #leading="{ item }">
+          <span class="flex items-center gap-1 text-lg">
+            <UIcon :name="item.icon" class="size-6" />
+
+            {{ t(item.name) }}
+          </span>
+          </template>
+          <template #content="{ item }">
+            <KeepAlive>
+              <component
+                  v-model="item.model"
+                  v-bind="item.props"
+                  :is="item.component"
+                  v-on="item.listeners"
+              />
+            </KeepAlive>
+          </template>
+        </UTabs>
+      </div>
     </template>
   </UModal>
 </template>

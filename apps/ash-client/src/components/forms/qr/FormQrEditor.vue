@@ -1,12 +1,5 @@
 <script setup lang="ts">
-import {
-  computed,
-  reactive,
-  ref,
-  useTemplateRef,
-  watch,
-  watchEffect,
-} from 'vue'
+import { ref, useTemplateRef, watch } from 'vue'
 import { useEditor } from '~/composables/useEditor.ts'
 
 const model = defineModel({
@@ -16,6 +9,7 @@ const model = defineModel({
   },
 })
 const Editor = useEditor()
+// TODO: decompose language select
 const languageList = [
   {
     label: 'English',
