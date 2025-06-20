@@ -20,7 +20,7 @@ import { APP_ENV__ } from '~/constants.ts'
               VERSION: {{ APP_ENV__.APP_VERSION }}
             </div>
           </div>
-
+          
           <NuxtImg
               src="https://res.cloudinary.com/dr5gcup5n/image/upload/v1740737420/ash-qrb/dllmfbqsqhk5ioxaus3v.png"
               :width="400"

@@ -28,7 +28,7 @@ export default defineConfig({
     },
   },
   plugins: [
-    analyzer(),
+    // analyzer(),
     vue(),
     ui({
       components: {

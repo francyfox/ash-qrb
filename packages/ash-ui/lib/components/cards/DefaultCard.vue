@@ -1,4 +1,5 @@
 <script setup lang="ts">
+/** This is my nice component documentation */
 import { useSlots } from 'vue'
 
 defineProps<{
