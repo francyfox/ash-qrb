@@ -4,6 +4,7 @@
   "asideNavList": "QRB List",
   "asideNavProfile": "Profile",
   "back": "Back",
+  "disableQrCaption": "This QRB only visible for author",
   "formActionForgot": "Forgot password",
   "formActionSend": "Send",
   "formActionSignIn": "Sign In",

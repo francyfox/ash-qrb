@@ -4,6 +4,7 @@
   "asideNavList": "QRB Список",
   "asideNavProfile": "Профиль",
   "back": "Назад",
+  "disableQrCaption": "Этот QRB виден только автору",
   "formActionForgot": "Забыли пароль?",
   "formActionSend": "Отправить",
   "formActionSignIn": "Войти",

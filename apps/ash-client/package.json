@@ -17,11 +17,14 @@
     "format": "bunx biome check"
   },
   "dependencies": {
-    "ash-i18n": "workspace:*",
+    "@braintree/sanitize-url": "^7.1.1",
+    "@nuxt/ui": "catalog:",
+    "@types/quill": "^2.0.14",
     "@vueuse/core": "catalog:",
+    "ash-i18n": "workspace:*",
     "pinia": "^3.0.3",
-    "vue": "catalog:",
-    "@nuxt/ui": "catalog:"
+    "quill-delta-to-html": "^0.12.1",
+    "vue": "catalog:"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
