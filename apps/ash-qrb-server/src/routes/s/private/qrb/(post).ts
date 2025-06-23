@@ -17,8 +17,15 @@ export default (app: ElysiaApp) =>
 
       if (!id) error('Could not set qr code without id')
       const path = `${config.CLIENT_APP_URL}/qrb/${id}`
-      const qr = await QRCode.toDataURL(path)
-      await db.update(qrbSchema).set({ qrCode: qr }).where(eq(qrbSchema.id, id))
+      const qrCode = await QRCode.toDataURL(path)
+      const qrCodeTerminal = await QRCode.toString(path, { type: 'terminal' })
+      await db
+        .update(qrbSchema)
+        .set({
+          qrCode: qrCode,
+          qrCodeTerminal: btoa(qrCodeTerminal),
+        })
+        .where(eq(qrbSchema.id, id))
     },
     {
       body: t.Object({

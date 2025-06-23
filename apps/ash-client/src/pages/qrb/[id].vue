@@ -9,6 +9,7 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { QRB_STATUS } from '~/components/forms/qr/qr.schema'
 import { deltaToHtml } from '~/utils/delta.ts'
+import { ansiToHtml } from '~/utils/ansiToHtml.ts'
 
 definePage({
   meta: {
@@ -32,6 +33,8 @@ const description = computed(() => {
   return deltaToHtml(qrb.value.body[currentLocale]?.ops)
 })
 
+const qrbTerminal = computed(() => ansiToHtml(qrb.value?.qrCodeTerminal || ''))
+
 if (id) {
   const { error } = await qrbStore.getQrbById(route.params?.id)
 
@@ -50,41 +53,54 @@ if (id) {
 </script>
 
 <template>
-  <div class="w-full flex flex-col gap-2">
-    <PanelCard class="max-w-[174px]">
-      <QrbImage
-          :src="qrb?.qrCode"
-          alt="qrb code"
-          class="rounded-xl"
-      />
-    </PanelCard>
+  <div class="w-full flex flex-wrap gap-5">
+    <div class="... col-span-2">
+      <PanelCard class="!w-[280px] h-[320px]">
+        <pre
+            v-html="qrbTerminal"
+            class="text-[2px]/[0.8] font-mono tracking-[-0.85px]" style="zoom: 5"
+        />
+      </PanelCard>
+    </div>
 
-    <PanelCard class="max-w-1/2">
-      <div class="flex flex-col gap-2 mb-5">
-        <div class="flex items-center gap-2">
-          <UButton
-              v-if="isDisabled"
-              color="error"
-              variant="soft"
-              size="xl"
-          >
-            {{ t('statusDisabled') }}
-          </UButton>
-          <h1 class="text-4xl uppercase">
-            {{ qrb?.name }}
-          </h1>
+    <div class="... col-span-2">
+      <PanelCard class="!size-[174px] aspect-square ...">
+        <QrbImage
+            :src="qrb?.qrCode"
+            alt="qrb code"
+            class="rounded-xl"
+        />
+      </PanelCard>
+    </div>
+
+    <div class="... col-span-4">
+      <PanelCard>
+        <div class="flex flex-col gap-2 mb-5">
+          <div class="flex items-center gap-2">
+            <UButton
+                v-if="isDisabled"
+                color="error"
+                variant="soft"
+                size="xl"
+            >
+              {{ t('statusDisabled') }}
+            </UButton>
+            <h1 class="text-4xl uppercase">
+              {{ qrb?.name }}
+            </h1>
+          </div>
+
+
+          <i v-if="isDisabled" class="text-s-purple-taupe">
+            *{{ t('disableQrCaption') }}
+          </i>
         </div>
 
+        <UserId :id="qrb?.userId" />
 
-        <i v-if="isDisabled" class="text-s-purple-taupe">
-          *{{ t('disableQrCaption') }}
-        </i>
-      </div>
-
-      <UserId :id="qrb?.userId" />
-
-      <main v-html="description" />
-    </PanelCard>
+        <main v-html="description" />
+      </PanelCard>
+    </div>
   </div>
 </template>
 

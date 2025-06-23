@@ -12,7 +12,7 @@ export default (app: ElysiaApp) =>
     async ({ query, error }) => {
       const { name } = query
       const options: IResponseOptions = {
-        order: (query as any).order || { by: 'desc', value: 'id' },
+        order: (query as any).order || { by: 'ask', value: 'id' },
         page: Number(query?.page) || 1,
         pageSize: Number(query?.pageSize) || 100,
       }

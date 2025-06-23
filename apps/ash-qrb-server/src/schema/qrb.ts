@@ -24,6 +24,7 @@ export const qrbDefaultColumns = {
   name: varchar('name', { length: 70 }).notNull(),
   body: jsonb('body').default({ en: null, ru: null }),
   qrCode: text('qr_code'),
+  qrCodeTerminal: text('qr_code_terminal'),
   userId: text('user_id')
     .notNull()
     .references(() => usersSchema.id),
