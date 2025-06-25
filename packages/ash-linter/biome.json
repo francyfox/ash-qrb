@@ -13,7 +13,8 @@
       "dist",
       ".turbo",
       "vscode",
-      ".vite-ssg-temp"
+      ".vite-ssg-temp",
+      "drizzle"
     ]
   },
   "formatter": {

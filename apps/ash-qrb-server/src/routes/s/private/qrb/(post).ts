@@ -15,7 +15,7 @@ export default (app: ElysiaApp) =>
       const [item] = await db.insert(qrbSchema).values(qrb).returning()
       const id = item?.id
 
-      if (!id) error('Could not set qr code without id')
+      if (!id) error('Unprocessable Content')
       const path = `${config.CLIENT_APP_URL}/qrb/${id}`
       const qrCode = await QRCode.toDataURL(path)
       const qrCodeTerminal = await QRCode.toString(path, { type: 'terminal' })

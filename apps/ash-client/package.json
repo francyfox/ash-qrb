@@ -13,6 +13,7 @@
     "build:nested": "NESTED_PAGES=true DEBUG='vite-ssg:*' vite-ssg build",
     "generate:schema": "bunx openapi-typescript http://localhost:3000/swagger/json --output ./src/assets/schema.ts",
     "preview": "vite preview",
+    "preview:tunnel": "cloudflared tunnel --url http://localhost:4000",
     "lint": "bunx biome lint --diagnostic-level=error",
     "format": "bunx biome check"
   },

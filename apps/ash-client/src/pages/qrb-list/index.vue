@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import QrbListActions from '~/components/forms/qrb-list/QrbListActions.vue'
+import { defineAsyncComponent, ref, resolveComponent } from 'vue'
 
 definePage({
   meta: {
@@ -9,12 +10,31 @@ definePage({
   },
 })
 
+const ModalQrCode = defineAsyncComponent(
+  () => import('~/components/modals/qrb-code/ModalQrCode.vue'),
+)
+
 const qrbStore = useQrbStore()
 const { qrbList } = storeToRefs(qrbStore)
+const modalQrCode = ref(false)
+const qrbId = ref()
+
+const toast = useToast()
+const UDropdownMenu = resolveComponent('UDropdownMenu')
 
 const { error } = await qrbStore.getQrbList({
   page: 1,
 })
+
+const providers = {
+  toast,
+  UDropdownMenu,
+}
+
+const handleEditQrb = (id: string) => {
+  modalQrCode.value = true
+  qrbId.value = id
+}
 </script>
 
 <template>
@@ -25,7 +45,15 @@ const { error } = await qrbStore.getQrbList({
     />
 
     <QrbList
+        v-bind="{ providers }"
         :list="qrbList"
+        @onEdit="handleEditQrb"
+    />
+
+    <ModalQrCode
+        v-if="modalQrCode"
+        v-model="modalQrCode"
+        :id="qrbId"
     />
   </div>
 </template>

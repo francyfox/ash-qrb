@@ -1,13 +1,29 @@
 <script setup lang="ts">
 import type { TabsItem } from '@nuxt/ui'
 import { storeToRefs } from 'pinia'
-import { computed, defineAsyncComponent, ref } from 'vue'
+import {
+  computed,
+  defineAsyncComponent,
+  toRaw,
+  markRaw,
+  ref,
+  watch,
+  shallowRef,
+} from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useQrbStore } from '~/stores/qrb'
+import { useQrbStore } from '~/stores/qrb.ts'
+import {
+  createQrb,
+  updateQrbCode,
+} from '~/components/modals/qrb-code/modalQrCode.service.ts'
+
+const { id } = defineProps<{ id?: string }>()
 
 const toast = useToast()
 
 const qrbStore = useQrbStore()
+const { qrb } = storeToRefs(qrbStore)
+
 const { errorMessage } = storeToRefs(qrbStore)
 const model = defineModel<boolean>()
 const emit = defineEmits<{
@@ -20,32 +36,36 @@ const text = ref({
   en: undefined,
   ru: undefined,
 })
+const baseFormData = ref()
+
+if (id) {
+  await qrbStore.getQrbById(id)
+  const { body, name, description, status } = toRaw(qrb.value)
+
+  text.value = body as any
+
+  baseFormData.value = {
+    name,
+    description,
+    status,
+  }
+}
+
 const items = ref<TabsItem[]>([
   {
     name: 'formQrGeneral',
     icon: 'i-lucide-message-circle-warning',
-    component: defineAsyncComponent(
-      () => import('~/components/forms/qr/FormQr.vue'),
+    component: markRaw(
+      defineAsyncComponent(() => import('~/components/forms/qr/FormQr.vue')),
     ),
-    model: {},
+    model: baseFormData,
     props: {},
     listeners: {
       async onSubmit(v: any) {
-        const { error } = await qrbStore.postQrb({
-          qrb: { ...v, body: text.value },
-        })
-
-        if (error) {
-          toast.add({
-            title: error.message || 'error',
-            description: error?.summary || error,
-            color: 'error',
-          })
+        if (id) {
+          await updateQrbCode({ id, v, text, t })
         } else {
-          toast.add({
-            title: t('toastQrCreated'),
-            color: 'success',
-          })
+          await createQrb({ v, text, t })
         }
 
         model.value = false
@@ -55,8 +75,10 @@ const items = ref<TabsItem[]>([
   {
     name: 'formQrDescription',
     icon: 'i-lucide-notepad-text',
-    component: defineAsyncComponent(
-      () => import('~/components/forms/qr/FormQrEditor.vue'),
+    component: markRaw(
+      defineAsyncComponent(
+        () => import('~/components/forms/qr/FormQrEditor.vue'),
+      ),
     ),
     model: text,
     props: {},

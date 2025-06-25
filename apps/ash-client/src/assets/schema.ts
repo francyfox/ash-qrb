@@ -113,7 +113,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        patch: operations["patchSPrivateQrbById"];
         trace?: never;
     };
 }
@@ -453,8 +453,9 @@ export interface operations {
                             id: string;
                             status: number | null;
                             name: string;
-                            description: string | null;
+                            body: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                             qrCode: string | null;
+                            qrCodeTerminal: string | null;
                             userId: string;
                             createdAt: Record<string, never> | null;
                             updatedAt: Record<string, never> | null;
@@ -466,8 +467,9 @@ export interface operations {
                             id: string;
                             status: number | null;
                             name: string;
-                            description: string | null;
+                            body: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                             qrCode: string | null;
+                            qrCodeTerminal: string | null;
                             userId: string;
                             createdAt: Record<string, never> | null;
                             updatedAt: Record<string, never> | null;
@@ -479,8 +481,9 @@ export interface operations {
                             id: string;
                             status: number | null;
                             name: string;
-                            description: string | null;
+                            body: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                             qrCode: string | null;
+                            qrCodeTerminal: string | null;
                             userId: string;
                             createdAt: Record<string, never> | null;
                             updatedAt: Record<string, never> | null;
@@ -524,8 +527,9 @@ export interface operations {
                         id?: string;
                         status?: number | null;
                         name: string;
-                        description?: string | null;
+                        body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                         qrCode?: string | null;
+                        qrCodeTerminal?: string | null;
                         userId: string;
                         createdAt?: Record<string, never> | null;
                         updatedAt?: Record<string, never> | null;
@@ -536,8 +540,9 @@ export interface operations {
                         id?: string;
                         status?: number | null;
                         name: string;
-                        description?: string | null;
+                        body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                         qrCode?: string | null;
+                        qrCodeTerminal?: string | null;
                         userId: string;
                         createdAt?: Record<string, never> | null;
                         updatedAt?: Record<string, never> | null;
@@ -548,8 +553,9 @@ export interface operations {
                         id?: string;
                         status?: number | null;
                         name: string;
-                        description?: string | null;
+                        body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                         qrCode?: string | null;
+                        qrCodeTerminal?: string | null;
                         userId: string;
                         createdAt?: Record<string, never> | null;
                         updatedAt?: Record<string, never> | null;
@@ -691,8 +697,9 @@ export interface operations {
                             id: string;
                             status: number | null;
                             name: string;
-                            description: string | null;
+                            body: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                             qrCode: string | null;
+                            qrCodeTerminal: string | null;
                             userId: string;
                             createdAt: Record<string, never> | null;
                             updatedAt: Record<string, never> | null;
@@ -703,8 +710,9 @@ export interface operations {
                             id: string;
                             status: number | null;
                             name: string;
-                            description: string | null;
+                            body: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                             qrCode: string | null;
+                            qrCodeTerminal: string | null;
                             userId: string;
                             createdAt: Record<string, never> | null;
                             updatedAt: Record<string, never> | null;
@@ -715,8 +723,87 @@ export interface operations {
                             id: string;
                             status: number | null;
                             name: string;
-                            description: string | null;
+                            body: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                             qrCode: string | null;
+                            qrCodeTerminal: string | null;
+                            userId: string;
+                            createdAt: Record<string, never> | null;
+                            updatedAt: Record<string, never> | null;
+                        };
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        title: string;
+                        detail: string;
+                    };
+                    "multipart/form-data": {
+                        title: string;
+                        detail: string;
+                    };
+                    "text/plain": {
+                        title: string;
+                        detail: string;
+                    };
+                };
+            };
+        };
+    };
+    patchSPrivateQrbById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        item: {
+                            id: string;
+                            status: number | null;
+                            name: string;
+                            body: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
+                            qrCode: string | null;
+                            qrCodeTerminal: string | null;
+                            userId: string;
+                            createdAt: Record<string, never> | null;
+                            updatedAt: Record<string, never> | null;
+                        };
+                    };
+                    "multipart/form-data": {
+                        item: {
+                            id: string;
+                            status: number | null;
+                            name: string;
+                            body: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
+                            qrCode: string | null;
+                            qrCodeTerminal: string | null;
+                            userId: string;
+                            createdAt: Record<string, never> | null;
+                            updatedAt: Record<string, never> | null;
+                        };
+                    };
+                    "text/plain": {
+                        item: {
+                            id: string;
+                            status: number | null;
+                            name: string;
+                            body: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
+                            qrCode: string | null;
+                            qrCodeTerminal: string | null;
                             userId: string;
                             createdAt: Record<string, never> | null;
                             updatedAt: Record<string, never> | null;

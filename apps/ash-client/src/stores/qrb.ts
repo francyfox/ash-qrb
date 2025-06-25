@@ -46,6 +46,21 @@ export const useQrbStore = defineStore('qrb', () => {
     return response
   }
 
+  const updateQrb = async (id: string, formData: TQrbBody) => {
+    const response = await api.PATCH('/s/private/qrb/{id}', {
+      params: {
+        path: { id },
+      },
+      body: formData,
+    })
+
+    const { data, error } = response
+
+    if (error) errorMessage.value = error
+
+    return response
+  }
+
   return {
     errorMessage,
     qrb,
@@ -53,5 +68,6 @@ export const useQrbStore = defineStore('qrb', () => {
     getQrbList,
     postQrb,
     getQrbById,
+    updateQrb,
   }
 })

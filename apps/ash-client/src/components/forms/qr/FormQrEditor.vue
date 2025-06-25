@@ -8,6 +8,7 @@ const model = defineModel({
     ru: undefined,
   },
 })
+
 const Editor = useEditor()
 // TODO: decompose language select
 const languageList = [
@@ -28,7 +29,8 @@ function rerenderEditor() {
 
 const language = ref<'en' | 'ru'>(languageList[0].id as any)
 const text = ref()
-const editorRef = useTemplateRef('editorRef')
+
+text.value = model.value
 
 watch(language, (v) => {
   text.value = model.value[v]

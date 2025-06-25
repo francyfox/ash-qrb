@@ -2,7 +2,7 @@
 import type { TableColumn, TableRow } from '@nuxt/ui'
 import type { Row } from '@tanstack/vue-table'
 import { getPaginationRowModel } from '@tanstack/vue-table'
-import { h, resolveComponent } from 'vue'
+import { h, resolveComponent, type Ref } from 'vue'
 // import type { TQrbItem } from '~/types/qrb.types'
 import { computed, ref, useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -12,19 +12,24 @@ import { useDayjs } from '~/composable/dayjs.ts'
 const QRB_STATUS = {}
 type TQrbItem = any
 
-const { list = [] } = defineProps<{
-  list: TQrbItem[]
+const emit = defineEmits<{
+  onEdit: [id: string]
 }>()
+
+const { list = [], providers } = defineProps<{
+  list: TQrbItem[]
+  providers: any
+}>()
+
+const { UDropdownMenu, toast } = providers
 
 const UButton = resolveComponent('UButton')
 const UBadge = resolveComponent('UBadge')
-const UDropdownMenu = resolveComponent('UDropdownMenu')
 const UCheckbox = resolveComponent('UCheckbox')
 
 const { t } = useI18n()
 const dayjs = useDayjs()
 const table = useTemplateRef('table')
-const toast = useToast()
 
 const columns: TableColumn<TQrbItem>[] = [
   {
@@ -153,6 +158,9 @@ function getRowItems(row: Row<TQrbItem>) {
     },
     {
       label: t('qrbActionEdit'),
+      onClick() {
+        emit('onEdit', row.original.id)
+      },
     },
   ]
 }

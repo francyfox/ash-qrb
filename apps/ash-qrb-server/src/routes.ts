@@ -8,6 +8,7 @@ import type Route5 from "./routes/s/private/qrb/(post)";
 import type Route6 from "./routes/health/index";
 import type Route7 from "./routes/s/private/users/[id]";
 import type Route8 from "./routes/s/private/qrb/[id]";
+import type Route9 from "./routes/s/private/qrb/[id](patch)";
 
 declare global {
     export type Routes = ElysiaWithBaseUrl<"/", typeof Route0>
@@ -19,4 +20,5 @@ declare global {
               & ElysiaWithBaseUrl<"/health", typeof Route6>
               & ElysiaWithBaseUrl<"/s/private/users/:id", typeof Route7>
               & ElysiaWithBaseUrl<"/s/private/qrb/:id", typeof Route8>
+              & ElysiaWithBaseUrl<"/s/private/qrb/:id", typeof Route9>
 }

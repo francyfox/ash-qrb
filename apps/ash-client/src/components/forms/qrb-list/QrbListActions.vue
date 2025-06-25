@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { defineAsyncComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ModalCreateQrCode from '~/components/modals/ModalCreateQrCode.vue'
 import ModalReallySure from '~/components/modals/ModalReallySure.vue'
 import type { TQrbItem } from '~/types/qrb.types'
+
+const ModalQrCode = defineAsyncComponent(
+  () => import('~/components/modals/qrb-code/ModalQrCode.vue'),
+)
 
 const { list = [] } = defineProps<{
   list: TQrbItem[]
@@ -84,7 +87,8 @@ const modalQrCode = ref(false)
         @onClose=""
     />
 
-    <ModalCreateQrCode
+    <ModalQrCode
+        v-if="modalQrCode"
         v-model="modalQrCode"
     />
   </div>

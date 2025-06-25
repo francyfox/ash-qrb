@@ -35,6 +35,7 @@
   "statusActive": "Active",
   "statusDisabled": "Disabled",
   "toastQrCreated": "QRB code created",
+  "toastQrUpdated": "QRB code with id:{id} was updated",
   "userActiveCodes": "active codes",
   "userDisabledCodes": "disabled codes",
   "userGateways": "gateways per day",

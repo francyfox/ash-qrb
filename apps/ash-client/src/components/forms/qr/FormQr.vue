@@ -49,6 +49,12 @@ const state = reactive<TQrbProps>({
 
 if (model.value) {
   for (const key in model.value) {
+    if (key === 'status') {
+      state.status = statusOptions.value.find(
+        (i) => i.value === model.value[key],
+      )
+      continue
+    }
     state[key] = model.value[key]
   }
 } else {

@@ -15,6 +15,7 @@ export default defineConfig({
       '/api': __APP_ENV__.API_URL,
     },
     port: 4000,
+    allowedHosts: ['detail-indonesia-drinks-minolta.trycloudflare.com'],
   },
   resolve: {
     alias: {
@@ -27,6 +28,7 @@ export default defineConfig({
   },
   plugins,
   css: {
+    devSourcemap: true,
     postcss: {
       plugins: [autoprefixer(), nested, twPostCss],
     },

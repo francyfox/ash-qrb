@@ -1,4 +1,4 @@
-import type { operations } from 'assets/schema'
+import type { operations } from '~/assets/schema.ts'
 
 export type TQrbBody =
   operations['postSPrivateQrb']['requestBody']['content']['application/json']
