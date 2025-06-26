@@ -29,16 +29,21 @@ function rerenderEditor() {
 
 const language = ref<'en' | 'ru'>(languageList[0].id as any)
 const text = ref()
+const isTextInit = ref(false)
 
 text.value = model.value
 
 watch(language, (v) => {
-  text.value = model.value[v]
-  rerenderEditor() // TODO: fix editor v-model (external changes doesnt work)
+  if (isTextInit.value) {
+    text.value = model.value[v]
+    rerenderEditor() // TODO: fix editor v-model (external changes doesnt work)
+  }
 })
 
 watch(text, (v) => {
-  model.value[language.value] = v
+  if (isTextInit.value) {
+    model.value[language.value] = v
+  }
 })
 </script>
 
@@ -55,6 +60,7 @@ watch(text, (v) => {
       />
     </div>
 
+    {{ text }}
     <transition name="fade" mode="out-in">
       <Editor
           :key="editorKey"

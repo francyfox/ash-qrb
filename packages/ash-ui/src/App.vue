@@ -3,7 +3,15 @@
 import QrbEditor from "~lib/components/qrb-editor/QrbEditor.vue";
 import {ref} from "vue";
 
-const test = ref({ "ops": [ { "insert": "ааа\n" } ] })
+const test = ref({
+  "en": {
+    "ops": [
+      {
+        "insert": "test"
+      }
+    ]
+  }
+})
 </script>
 
 <template>

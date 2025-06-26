@@ -3,24 +3,37 @@
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { defineAsyncComponent, ref, useTemplateRef } from 'vue'
 
-const emit = defineEmits<{
-  onUpload: [file: File]
-}>()
-
-const init = ref(false)
+/**
+ * @displayName QrbEditor with language support
+ * @example docs/example/qrb-editor.md
+ */
+defineOptions({
+  name: 'QrbEditor',
+})
 
 const QEditor = defineAsyncComponent(
   async () => (await import('@vueup/vue-quill')).QuillEditor,
 )
 
-const QuillEditor = QEditor
+const emit = defineEmits<{
+  onUpload: [file: File]
+}>()
 
-const model = defineModel()
-const { placeholder = 'Text editor', maxLength = 150 } = defineProps<{
+const model = defineModel<Record<string, any>>()
+
+const {
+  language = 'en',
+  placeholder = 'Text editor',
+  maxLength = 150,
+} = defineProps<{
+  language?: string
   maxLength?: number
   placeholder?: string
   modules?: []
 }>()
+
+const init = ref(false)
+const QuillEditor = QEditor
 
 const editorRef = useTemplateRef('editorRef')
 const contentLength = ref(1)
@@ -33,13 +46,15 @@ function onUpdate({ oldContents: any }) {
   }
 
   if (init.value) {
-    model.value = editorRef.value?.getQuill().getContents()
+    model.value = {
+      [language]: editorRef.value?.getQuill().getContents(),
+    }
   }
 }
 
 function onReady() {
   if (model.value) {
-    editorRef.value?.getQuill().setContents(model.value)
+    editorRef.value?.getQuill().setContents(model.value[language])
   }
 
   init.value = true
