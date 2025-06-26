@@ -1,15 +1,15 @@
+<script lang="ts">
+/**
+ * # QrbEditor
+ * based on [QuillEditor](https://quilljs.com/)
+ * @example docs/example/qrb-editor.md
+ */
+export default {}
+</script>
 <script setup lang="ts">
 // import type { Delta } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { defineAsyncComponent, ref, useTemplateRef } from 'vue'
-
-/**
- * @displayName QrbEditor with language support
- * @example docs/example/qrb-editor.md
- */
-defineOptions({
-  name: 'QrbEditor',
-})
 
 const QEditor = defineAsyncComponent(
   async () => (await import('@vueup/vue-quill')).QuillEditor,
@@ -22,7 +22,6 @@ const emit = defineEmits<{
 const model = defineModel<Record<string, any>>()
 
 const {
-  language = 'en',
   placeholder = 'Text editor',
   maxLength = 150,
 } = defineProps<{
@@ -46,15 +45,13 @@ function onUpdate({ oldContents: any }) {
   }
 
   if (init.value) {
-    model.value = {
-      [language]: editorRef.value?.getQuill().getContents(),
-    }
+    model.value = editorRef.value?.getQuill().getContents()
   }
 }
 
 function onReady() {
   if (model.value) {
-    editorRef.value?.getQuill().setContents(model.value[language])
+    editorRef.value?.getQuill().setContents(model.value)
   }
 
   init.value = true

@@ -42,11 +42,13 @@ const handleEditQrb = (id: string) => {
     
     <QrbListActions
         :list="qrbList"
+        :disabled="qrbStore.isLoading.qrbList"
     />
 
     <QrbList
         v-bind="{ providers }"
         :list="qrbList"
+        :loading="qrbStore.isLoading.qrbList"
         @onEdit="handleEditQrb"
     />
 

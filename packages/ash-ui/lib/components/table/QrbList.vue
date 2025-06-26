@@ -6,10 +6,8 @@ import { h, resolveComponent, type Ref } from 'vue'
 // import type { TQrbItem } from '~/types/qrb.types'
 import { computed, ref, useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
-// import { QRB_STATUS } from '~/components/forms/qr/qr.schema'
 import { useDayjs } from '~/composable/dayjs.ts'
 
-const QRB_STATUS = {}
 type TQrbItem = any
 
 const emit = defineEmits<{
@@ -19,6 +17,7 @@ const emit = defineEmits<{
 const { list = [], providers } = defineProps<{
   list: TQrbItem[]
   providers: any
+  loading: boolean
 }>()
 
 const { UDropdownMenu, toast } = providers
@@ -68,20 +67,15 @@ const columns: TableColumn<TQrbItem>[] = [
     header: 'Status',
     cell: ({ row }) => {
       const color = {
-        paid: 'success' as const,
-        failed: 'error' as const,
-        refunded: 'neutral' as const,
+        1: 'success' as const,
+        0: 'error' as const,
       }[row.getValue('status') as string]
 
       return h(
         UBadge,
         { size: 'xl', class: 'capitalize', variant: 'subtle', color },
         () => {
-          const v = Object.entries(QRB_STATUS).find(
-            ([key, value]) => row.getValue('status') === value,
-          )
-
-          return v ? v[0] : 'DISABLED'
+          return row.getValue('status') === 1 ? 'ENABLED' : 'DISABLED'
         },
       )
     },
@@ -198,6 +192,7 @@ const tableTotal: Ref<number | undefined> = computed(
           ref="table"
           v-model:pagination="pagination"
           v-model:column-filters="columnFilters"
+          :loading="loading"
           :data="list"
           :columns="columns"
           :pagination-options="{

@@ -53,7 +53,7 @@ export async function updateQrbCode({
     })
   } else {
     toast.add({
-      title: t('toastQrUpdated', { id }),
+      title: t('toastQrUpdated', { name: v.name }),
       color: 'success',
     })
   }

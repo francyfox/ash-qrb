@@ -35,7 +35,7 @@
   "statusActive": "Активный",
   "statusDisabled": "Выключен",
   "toastQrCreated": "QRB код создан",
-  "toastQrUpdated": "QRB код c id:{id} был обновлён",
+  "toastQrUpdated": "QRB код .::{name} - был обновлён",
   "userActiveCodes": "активные коды",
   "userDisabledCodes": "неактивные коды",
   "userGateways": "переходов в день",

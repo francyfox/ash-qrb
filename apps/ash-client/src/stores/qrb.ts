@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { api } from '~/libs/api'
 import type { TQrbBody, TQrbItem, TQrbItems } from '~/types/qrb.types'
 
@@ -6,8 +6,14 @@ export const useQrbStore = defineStore('qrb', () => {
   const qrb = ref<TQrbItem>()
   const qrbList = ref<TQrbItems>([])
   const errorMessage = ref()
+  const isLoading = reactive({
+    qrbList: false,
+    qrb: false,
+  })
 
   const getQrbById = async (id: string) => {
+    isLoading.qrb = true
+
     const response = await api.GET('/s/private/qrb/{id}', {
       params: {
         path: { id },
@@ -17,11 +23,13 @@ export const useQrbStore = defineStore('qrb', () => {
     const { data, error } = response
     if (error) errorMessage.value = error
     qrb.value = data?.item
+    isLoading.qrb = false
 
     return response
   }
 
   const getQrbList = async (params: object) => {
+    isLoading.qrbList = true
     const response = await api.GET('/s/private/qrb', {
       params,
     })
@@ -30,6 +38,7 @@ export const useQrbStore = defineStore('qrb', () => {
 
     if (error) errorMessage.value = error
     qrbList.value = data?.items
+    isLoading.qrbList = false
 
     return response
   }
@@ -62,6 +71,7 @@ export const useQrbStore = defineStore('qrb', () => {
   }
 
   return {
+    isLoading,
     errorMessage,
     qrb,
     qrbList,

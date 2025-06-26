@@ -8,8 +8,9 @@ const ModalQrCode = defineAsyncComponent(
   () => import('~/components/modals/qrb-code/ModalQrCode.vue'),
 )
 
-const { list = [] } = defineProps<{
+const { list = [], disabled } = defineProps<{
   list: TQrbItem[]
+  disabled?: boolean
 }>()
 
 const { t } = useI18n()
@@ -19,7 +20,9 @@ const modalQrCode = ref(false)
 </script>
 
 <template>
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2"
+       :class="{ 'pointer-events-none opacity-5': disabled }"
+  >
     <div class="flex gap-2">
       <UButton
           color="primary"
