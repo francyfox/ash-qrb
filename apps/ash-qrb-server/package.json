@@ -8,7 +8,8 @@
     "generate": "bun x drizzle-kit generate",
     "push": "bun x drizzle-kit push",
     "migrate": "bun x drizzle-kit migrate",
-    "studio": "bun x drizzle-kit studio"
+    "studio": "bun x drizzle-kit studio",
+    "preview": "bun src/index.ts"
   },
   "exports": {
     ".": "./src/routes.ts"
@@ -27,7 +28,7 @@
     "cloudinary": "^2.6.0",
     "drizzle-orm": "^0.38.4",
     "drizzle-typebox": "^0.3.2",
-    "elysia": "^1.2.25",
+    "elysia": "catalog:",
     "elysia-autoload": "^1.5.1",
     "env-var": "^7.5.0",
     "mime": "^4.0.7",

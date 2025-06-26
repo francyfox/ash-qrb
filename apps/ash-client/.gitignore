@@ -26,3 +26,6 @@ dist-ssr
 auto-imports.d.ts
 .vite-ssg-temp
 components.d.ts
+
+.env
+.env.prod

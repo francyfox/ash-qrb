@@ -21,11 +21,23 @@ services:
     depends_on:
       - postgres
     env_file:
-      - ./apps/ash-qrb-server/.env
+      - ./apps/ash-qrb-server/.env.prod
     ports:
       - 3000:3000
     networks:
       ash-net:
+
+  frontend:
+    container_name: ash-frontend
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    depends_on:
+      - server
+    env_file:
+      - ./apps/ash-client/.env.prod
+    ports:
+      - 4000:4000
 
 volumes:
   postgres_data:

@@ -7,7 +7,8 @@
     "lint": "turbo lint",
     "lint:fix": "bun lint --apply",
     "format": "turbo format",
-    "prepare": "node .husky/install.mjs"
+    "prepare": "node .husky/install.mjs",
+    "preview": "turbo preview"
   },
   "engines": {
     "node": ">=22"
@@ -19,6 +20,7 @@
       "packages/*"
     ],
     "catalog": {
+      "elysia": "^1.2.25",
       "nanoid": "^5.1.5",
       "typescript": "~5.8.0",
       "@biomejs/biome": "^1.9.4",
