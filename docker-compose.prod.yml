@@ -1,25 +1,34 @@
+version: '3.8'
 services:
-  bot:
-    container_name: ash-qrb-server-bot
-    restart: unless-stopped
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - NODE_ENV=production
   postgres:
-    container_name: ash-qrb-server-postgres
+    container_name: ash-db
     image: postgres:latest
     restart: unless-stopped
-    environment:
-      - POSTGRES_USER=ash-qrb-server
-      - POSTGRES_PASSWORD=Please-change-password
-      - POSTGRES_DB=ash-qrb-server
+    env_file:
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      ash-net:
+
+  server:
+    container_name: ash-backend
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    depends_on:
+      - postgres
+    env_file:
+      - ./apps/ash-qrb-server/.env
+    ports:
+      - 3000:3000
+    networks:
+      ash-net:
 
 volumes:
   postgres_data:
 
 networks:
-  default: { }
+  ash-net: { }
