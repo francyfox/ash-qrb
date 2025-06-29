@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   postgres:
     container_name: ash-db
@@ -17,13 +16,13 @@ services:
     container_name: ash-backend
     build:
       context: .
-      dockerfile: backend.Dockerfile
+      dockerfile: docker/backend.Dockerfile
     depends_on:
       - postgres
     env_file:
       - ./apps/ash-qrb-server/.env.prod
     ports:
-      - 3000:3000
+      - "3000:3000"
     networks:
       ash-net:
 
@@ -31,16 +30,32 @@ services:
     container_name: ash-frontend
     build:
       context: .
-      dockerfile: frontend.Dockerfile
+      dockerfile: docker/frontend.Dockerfile
     depends_on:
       - server
     env_file:
       - ./apps/ash-client/.env.prod
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
     ports:
-      - 4000:4000
+      - "80:80"
+    networks:
+      - ash-net
+
+#  tunnel:
+#    container_name: ash-client-tunnel
+#    image: cloudflare/cloudflared
+#    restart: unless-stopped
+#    command: tunnel run
+#    environment:
+#      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+#    depends_on:
+#      - frontend
+#    networks:
+#      - ash-net
 
 volumes:
   postgres_data:
 
 networks:
-  ash-net: { }
+  ash-net:

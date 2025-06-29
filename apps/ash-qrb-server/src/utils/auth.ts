@@ -9,7 +9,22 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { Elysia } from 'elysia'
 
 export const auth = betterAuth({
-  trustedOrigins: [config.CLIENT_APP_URL],
+  advanced: {
+    cookies: {
+      sessionToken: {
+        attributes: {
+          sameSite: 'none',
+        },
+        secure: true,
+        partitioned: true, // New browser standards will mandate this for foreign cookies
+      },
+    },
+  },
+  trustedOrigins: [
+    config.CLIENT_APP_URL,
+    'http://localhost',
+    'https://localhost',
+  ],
   database: drizzleAdapter(db, {
     // We're using Drizzle as our database
     provider: 'pg',

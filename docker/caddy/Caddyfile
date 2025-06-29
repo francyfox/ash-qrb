@@ -1,0 +1,36 @@
+(cloudflare) {
+    encode gzip
+    tls {
+        dns cloudflare "8ilZwwCJiI0FLK_Xh62y0YCZqCQK3bn3q2NegHUi"
+    }
+}
+
+:80 {
+    import cloudflare
+    root * /var/www/html
+    encode gzip
+    header remote_addr "{header.X-Forwarded-For}"
+
+    file_server {
+        hide .git
+    }
+    handle_errors {
+        rewrite * /index.html
+        file_server
+    }
+}
+
+#
+
+#:81 {
+#    reverse_proxy localhost:3000
+#}
+
+#qrb.shalotts.site {
+#    import cloudflare
+#    reverse_proxy localhost:80
+#
+#    handle /api* {
+#        reverse_proxy localhost:3000
+#    }
+#}
