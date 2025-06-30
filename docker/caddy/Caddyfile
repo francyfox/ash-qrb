@@ -1,36 +1,39 @@
 (cloudflare) {
     encode gzip
     tls {
-        dns cloudflare "8ilZwwCJiI0FLK_Xh62y0YCZqCQK3bn3q2NegHUi"
+        dns cloudflare {env.CLOUDFLARE_DNS}
+        resolvers 1.1.1.1
     }
 }
 
-:80 {
+:443 {
     import cloudflare
+    tls /srv/certs/cert.pem /srv/certs/private.pem
     root * /var/www/html
     encode gzip
     header remote_addr "{header.X-Forwarded-For}"
 
+    handle /api* {
+        reverse_proxy ash-backend:3000 {
+            health_path /health
+            health_interval 10s
+        }
+    }
+
     file_server {
         hide .git
     }
+
     handle_errors {
         rewrite * /index.html
         file_server
     }
 }
 
-#
-
-#:81 {
-#    reverse_proxy localhost:3000
-#}
-
 #qrb.shalotts.site {
 #    import cloudflare
-#    reverse_proxy localhost:80
-#
-#    handle /api* {
-#        reverse_proxy localhost:3000
+#    reverse_proxy localhost:443 {
+#        health_path /health
+#        health_interval 10s
 #    }
 #}

@@ -19,11 +19,11 @@ COPY --from=caddy-builder /usr/bin/caddy /usr/bin/caddy
 
 ARG PORT
 ARG CADDY_BACKEND_HOST
-ARG test
 
 COPY ../docker/caddy/Caddyfile /etc/caddy/Caddyfile
 COPY --from=install /temp/dev/apps/ash-client/dist /srv
 COPY --from=install /temp/dev/apps/ash-client/dist /srv
+COPY ../docker/certs /srv/certs
 COPY --from=install /temp/dev/apps/ash-client/dist /var/www/html
 
 RUN caddy fmt --overwrite /etc/caddy/Caddyfile

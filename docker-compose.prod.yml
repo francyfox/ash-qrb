@@ -37,22 +37,25 @@ services:
       - ./apps/ash-client/.env.prod
     environment:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+      - DNS_TOKEN=${DNS_TOKEN}
     ports:
       - "80:80"
+      - "443:443"
+      - "443:443/udp"
     networks:
       - ash-net
 
-#  tunnel:
-#    container_name: ash-client-tunnel
-#    image: cloudflare/cloudflared
-#    restart: unless-stopped
-#    command: tunnel run
-#    environment:
-#      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
-#    depends_on:
-#      - frontend
-#    networks:
-#      - ash-net
+  tunnel:
+    container_name: ash-client-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    depends_on:
+      - frontend
+    networks:
+      - ash-net
 
 volumes:
   postgres_data:
