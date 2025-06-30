@@ -1,13 +1,13 @@
-(cloudflare) {
-    encode gzip
-    tls {
-        dns cloudflare {env.CLOUDFLARE_DNS}
-        resolvers 1.1.1.1
-    }
-}
+#(cloudflare) {
+#    encode gzip
+#    tls {
+#        dns cloudflare {env.CLOUDFLARE_DNS}
+#        resolvers 1.1.1.1
+#    }
+#}
 
 :443 {
-    import cloudflare
+#    import cloudflare
     tls /srv/certs/cert.pem /srv/certs/private.pem
     root * /var/www/html
     encode gzip
@@ -17,6 +17,10 @@
         reverse_proxy ash-backend:3000 {
             health_path /health
             health_interval 10s
+            transport http {
+                tls
+                tls_insecure_skip_verify
+            }
         }
     }
 

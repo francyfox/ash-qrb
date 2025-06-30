@@ -11,6 +11,8 @@ RUN rm /temp/dev/apps/ash-qrb-server/.env && mv /temp/dev/apps/ash-qrb-server/.e
 RUN cd /temp/dev && bun install
 
 FROM base AS release
+
+COPY ../docker/certs /usr/src/app/docker/certs
 COPY --from=install /temp/dev/entrypoint.backend.sh entrypoint.backend.sh
 COPY --from=install /temp/dev/turbo.json turbo.json
 COPY --from=install /temp/dev/bun.lock bun.lock

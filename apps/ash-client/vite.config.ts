@@ -8,13 +8,29 @@ import nested from 'postcss-nested'
 import generateSitemap from 'vite-ssg-sitemap'
 import { config as __APP_ENV__ } from './config'
 import { plugins } from './src/core/vite/vite.plugins'
+import { readFileSync } from 'node:fs'
 
+const certsFolder = '../../docker/certs'
+console.log(__APP_ENV__.NODE_ENV !== 'production')
 export default defineConfig({
   server: {
-    // proxy: {
-    //   '/api': __APP_ENV__.API_URL,
-    // },
+    proxy: {
+      '/api': {
+        secure: false,
+        changeOrigin: true,
+        target: {
+          protocol: 'https:',
+          host: 'localhost',
+          port: 3000,
+        }
+      }
+    },
     port: 4000,
+    https: __APP_ENV__.NODE_ENV !== 'production' ? {
+      key: readFileSync(path.resolve(`${certsFolder}/private.pem`)),
+      cert: readFileSync(path.resolve(`${certsFolder}/cert.pem`)),
+      rejectUnauthorized: false,
+    } : undefined
   },
   resolve: {
     alias: {
