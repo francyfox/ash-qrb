@@ -8,8 +8,8 @@ ADD .husky /temp/dev/.husky
 ADD apps/ash-client /temp/dev/apps/ash-client
 ADD packages /temp/dev/packages
 RUN rm /temp/dev/apps/ash-client/.env && mv /temp/dev/apps/ash-client/.env.prod /temp/dev/apps/ash-client/.env
-RUN cd /temp/dev && bun install
-# RUN cd /temp/dev && bun install && bun run build
+# RUN cd /temp/dev && bun install
+RUN cd /temp/dev && bun install && bun run build
 
 FROM caddy:2.9.1-builder-alpine AS caddy-builder
 RUN xcaddy build \

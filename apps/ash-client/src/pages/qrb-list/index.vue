@@ -39,7 +39,6 @@ const handleEditQrb = (id: string) => {
 
 <template>
   <div class="w-full h-full relative h-full flex flex-col justify-between gap-5">
-    
     <QrbListActions
         :list="qrbList"
         :disabled="qrbStore.isLoading.qrbList"
