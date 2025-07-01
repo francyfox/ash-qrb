@@ -11,12 +11,12 @@ RUN rm /temp/dev/apps/ash-client/.env && mv /temp/dev/apps/ash-client/.env.prod 
 # RUN cd /temp/dev && bun install
 # RUN cd /temp/dev && bun install && bun run build
 
-FROM caddy:2.9.1-builder-alpine AS caddy-builder
-RUN xcaddy build \
+# FROM caddy:2.9.1-builder-alpine AS caddy-builder
+# RUN xcaddy build \
     --with github.com/caddy-dns/cloudflare
 
 FROM caddy:2.9.1-alpine
-COPY --from=caddy-builder /usr/bin/caddy /usr/bin/caddy
+# COPY --from=caddy-builder /usr/bin/caddy /usr/bin/caddy
 
 ARG PORT
 ARG CADDY_BACKEND_HOST
