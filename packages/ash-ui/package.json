@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build:exports": "bun generate.ts",
-    "build": "vite build"
+    "build": "bun run build:exports && vite build"
   },
   "files": ["dist"],
   "exports": {

@@ -2,7 +2,9 @@
   "name": "ash-qrb",
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build": "bun run build:packages && bun run build:apps",
+    "build:apps": "turbo build --filter='./apps/*'",
+    "build:packages": "turbo build --filter='./packages/*'",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "lint:fix": "bun lint --apply",
@@ -13,7 +15,7 @@
   "engines": {
     "node": ">=22"
   },
-  "packageManager": "bun@1.2.14",
+  "packageManager": "bun@1.2.17",
   "workspaces": {
     "packages": [
       "apps/*",
