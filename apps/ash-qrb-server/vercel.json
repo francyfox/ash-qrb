@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
-      "source": "/apps/ash-qrb-server/src/server.ts",
+      "source": "/src/server.ts",
       "destination": "/"
     }
   ]
