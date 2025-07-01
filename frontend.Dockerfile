@@ -13,7 +13,7 @@ RUN rm /temp/dev/apps/ash-client/.env && mv /temp/dev/apps/ash-client/.env.prod 
 
 # FROM caddy:2.9.1-builder-alpine AS caddy-builder
 # RUN xcaddy build \
-    --with github.com/caddy-dns/cloudflare
+#   --with github.com/caddy-dns/cloudflare
 
 FROM caddy:2.9.1-alpine
 # COPY --from=caddy-builder /usr/bin/caddy /usr/bin/caddy
