@@ -1,8 +1,9 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-    "apps/ash-qrb-server/src/server.ts": {
-      "memory": 1024
+  "rewrites": [
+    {
+      "source": "/apps/ash-qrb-server/src/server.ts",
+      "destination": "/"
     }
-  }
+  ]
 }

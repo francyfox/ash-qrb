@@ -52,5 +52,6 @@ export const app = new Elysia()
 export type ElysiaApp = typeof app
 export const GET = app.handle
 export const POST = app.handle
+export const PATCH = app.handle
 export const PUT = app.handle
 export const DELETE = app.handle
