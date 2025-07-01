@@ -25,6 +25,6 @@ COPY docker/caddy/Caddyfile /etc/caddy/Caddyfile
 # COPY --from=install /temp/dev/apps/ash-client/dist /srv
 # COPY --from=install /temp/dev/apps/ash-client/dist /srv
 COPY docker/certs /srv/certs
-COPY --from=install /temp/dev/apps/ash-client/dist /var/www/html
+# COPY --from=install /temp/dev/apps/ash-client/dist /var/www/html
 
 RUN caddy fmt --overwrite /etc/caddy/Caddyfile
