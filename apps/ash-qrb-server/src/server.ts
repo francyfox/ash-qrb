@@ -5,7 +5,7 @@ import { jwt } from '@elysiajs/jwt'
 import { serverTiming } from '@elysiajs/server-timing'
 import { swagger } from '@elysiajs/swagger'
 import { errorHandler } from '@gtramontina.com/elysia-error-handler'
-import { logger } from '@tqman/nice-logger'
+import { Logestic } from 'logestic'
 import { Elysia } from 'elysia'
 import { autoload } from 'elysia-autoload'
 
@@ -13,12 +13,7 @@ export const app = new Elysia()
   // @ts-ignore
   .use(errorHandler())
   // @ts-ignore
-  .use(
-    logger({
-      mode: 'live',
-      withTimestamp: true,
-    }),
-  )
+  .use(Logestic.preset(config.NODE_ENV === 'development' ? 'fancy' : 'common'))
   .use(
     swagger({
       documentation: {
