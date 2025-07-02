@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev:live": "vite",
     "build:exports": "bun generate.ts",
     "build": "bun run build:exports && vite build"
   },

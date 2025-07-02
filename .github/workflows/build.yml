@@ -1,0 +1,12 @@
+name: build.yml
+on:
+  push:
+    branches:
+      - 'prototype'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      -
+

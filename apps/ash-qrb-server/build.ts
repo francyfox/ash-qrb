@@ -22,4 +22,6 @@ async function getRoutes() {
       syntax: true,
     },
   })
+
+  console.log('Build complete!')
 })()

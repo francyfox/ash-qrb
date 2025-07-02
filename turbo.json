@@ -7,9 +7,6 @@
       "cache": false,
       "persistent": true
     },
-    "ash-ui#build":  {
-      "cache": false
-    },
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
@@ -24,7 +21,8 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "dependsOn": ["ash-ui#build"]
     }
   }
 }
