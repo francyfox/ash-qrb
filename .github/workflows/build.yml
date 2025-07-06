@@ -6,7 +6,54 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    name: Build artifacts and push to server
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
-      -
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build
+        run: bun run build
+
+      - name: Copy frontend artifact
+        run: |
+          mkdir -r build/frontend
+          mv ./apps/ash-client/dist/* ./build/frontend
+
+      - name: Copy backend artifact
+        run: |
+          mkdir -r build/backend
+          mv ./apps/ash-qrb-server/dist/* ./build/backend
+
+      - name: Store to zip
+        run: |
+          zip -r build.zip ./build
+
+      - name: Push artifacts on server
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: /build.zip
+          remote: /etc/home/fox/server
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.PASSWORD }}
+          privateKey: ${{ secrets.PRIVATE_KEY}}
+          rmRemote: true
+
 
