@@ -40,15 +40,15 @@ jobs:
 
       - name: Copy frontend artifact
         run: |
-          mkdir -r build/frontend
+          mkdir -R build/frontend
           mv ./apps/ash-client/dist/* ./build/frontend
-          mv .env ./build/frontend/.env
+          cp .env ./build/frontend/
 
       - name: Copy backend artifact
         run: |
-          mkdir -r build/backend
+          mkdir -R build/backend
           mv ./apps/ash-qrb-server/dist/* ./build/backend
-          mv .env ./build/backend/.env
+          cp .env ./build/backend/.env
 
       - name: Store to zip
         run: |
