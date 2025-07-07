@@ -29,8 +29,8 @@ jobs:
         run: |
           touch .env
           echo "${{secrets.SECRETS}}" >> .env
-          mv ./.env ./apps/ash-client/.env
-          mv ./.env ./apps/ash-qrb-server/.env
+          cp ./.env ./apps/ash-client/
+          cp ./.env ./apps/ash-qrb-server/
 
       - name: Install dependencies
         run: bun install
