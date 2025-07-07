@@ -12,7 +12,7 @@ jobs:
     env:
       CI: true
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -29,6 +29,7 @@ jobs:
         run: |
           touch .env
           echo "${{secrets.SECRETS}}" >> .env
+          mv ./apps/
 
       - name: Install dependencies
         run: bun install
@@ -57,7 +58,7 @@ jobs:
         with:
           local: /build.zip
           remote: /etc/home/fox/server
-          host: ${{ secrets.HOST }}
+          host: ${{ vars.HOST }}
           username: ${{ secrets.SSH_USER }}
           privateKey: ${{ secrets.PRIVATE_KEY}}
           rmRemote: true
