@@ -58,6 +58,8 @@ jobs:
           cp .env ./build
           mv ./docker/certs ./build/certs
           cp docker-compose.prod.yml ./build/docker-compose.yml
+          cp frontend.Dockerfile ./build/frontend.Dockerfile
+          cp backend.Dockerfile ./build/backend.Dockerfile
 
       - name: Copy files to VPS
         uses: appleboy/scp-action@master
