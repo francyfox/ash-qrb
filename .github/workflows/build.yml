@@ -40,13 +40,13 @@ jobs:
 
       - name: Copy frontend artifact
         run: |
-          mkdir -R build/frontend
+          mkdir -p ./build/frontend
           mv ./apps/ash-client/dist/* ./build/frontend
           cp .env ./build/frontend/
 
       - name: Copy backend artifact
         run: |
-          mkdir -R build/backend
+          mkdir -p ./build/backend
           mv ./apps/ash-qrb-server/dist/* ./build/backend
           cp .env ./build/backend/.env
 
@@ -57,7 +57,7 @@ jobs:
       - name: Push artifacts on server
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: /build.zip
+          local: ./build.zip
           remote: /etc/home/fox/server
           host: ${{ vars.HOST }}
           username: ${{ secrets.SSH_USER }}
