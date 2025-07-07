@@ -56,7 +56,7 @@ jobs:
       - name: Copy docker
         run: |
           cp .env ./build
-          mv ./certs ./build/certs
+          mv ./docker/certs ./build/certs
           cp docker-compose.prod.yml ./build/docker-compose.yml
 
       - name: Store to zip
@@ -75,10 +75,6 @@ jobs:
           # The path is based on the directory where the user logged into the server starts
           target: "/home/fox/server"
 
-  deploy:
-    name: Deploy artifacts from scp
-    runs-on: ubuntu-latest
-    steps:
       - name: deployment
         run: |
           echo "${{ secrets.PRIVATE_KEY }}" > private_key.pem
