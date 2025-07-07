@@ -29,6 +29,7 @@ jobs:
         run: |
           touch .env
           echo "${{secrets.SECRETS}}" >> .env
+          ls -l
           mv .env ./apps/ash-client/.env
           mv .env ./apps/ash-qrb-server/.env
 
