@@ -1,8 +1,8 @@
 name: build.yml
 on:
-  pull_request:
+  push:
     branches:
-      - 'main'
+      - 'prototype'
 
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
     env:
       CI: true
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -25,6 +25,11 @@ jobs:
         with:
           node-version: 22
 
+      - name: Create .env file
+        run: |
+          touch .env
+          echo "${{secrets.SECRETS}}" >> .env
+
       - name: Install dependencies
         run: bun install
 
@@ -35,11 +40,13 @@ jobs:
         run: |
           mkdir -r build/frontend
           mv ./apps/ash-client/dist/* ./build/frontend
+          mv .env ./build/frontend/.env
 
       - name: Copy backend artifact
         run: |
           mkdir -r build/backend
           mv ./apps/ash-qrb-server/dist/* ./build/backend
+          mv .env ./build/backend/.env
 
       - name: Store to zip
         run: |
@@ -52,7 +59,6 @@ jobs:
           remote: /etc/home/fox/server
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.PASSWORD }}
           privateKey: ${{ secrets.PRIVATE_KEY}}
           rmRemote: true
 
