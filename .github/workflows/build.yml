@@ -58,8 +58,6 @@ jobs:
           cp .env ./build
           mv ./docker ./build/docker
           cp docker-compose.prod.yml ./build/docker-compose.yml
-          cp frontend.Dockerfile ./build/frontend.Dockerfile
-          cp backend.Dockerfile ./build/backend.Dockerfile
 
       - name: Copy entrypoints
         run: |

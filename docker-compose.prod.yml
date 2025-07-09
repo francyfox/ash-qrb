@@ -32,7 +32,7 @@ services:
     container_name: ash-backend
     build:
       context: .
-      dockerfile: backend.Dockerfile
+      dockerfile: docker/backend.Dockerfile
     depends_on:
       - postgres
     env_file:
@@ -51,7 +51,7 @@ services:
     container_name: ash-frontend
     build:
       context: .
-      dockerfile: frontend.Dockerfile
+      dockerfile: docker/frontend.Dockerfile
     depends_on:
       - server
     env_file:
