@@ -2,25 +2,46 @@
   "name": "ash-qrb",
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build": "bun run build:packages && bun run build:apps",
+    "build:apps": "turbo build --filter='./apps/*'",
+    "build:packages": "turbo build --filter='./packages/*'",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "lint:fix": "bun lint --apply",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky"
+    "format": "turbo format",
+    "prepare": "node .husky/install.mjs",
+    "preview": "turbo preview"
   },
   "engines": {
     "node": ">=22"
   },
-  "packageManager": "bun@1.2.3",
-  "workspaces": ["apps/*", "packages/*"],
+  "packageManager": "bun@1.2.17",
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ],
+    "catalog": {
+      "elysia": "^1.2.25",
+      "nanoid": "^5.1.5",
+      "typescript": "~5.8.0",
+      "@biomejs/biome": "^1.9.4",
+      "better-auth": "^1.2.7",
+      "@nuxt/ui": "^3.1.3",
+      "vue": "^3.5.13",
+      "@vueuse/core": "^13.1.0"
+    }
+  },
   "dependencies": {
-    "nanoid": "^5.0.9"
+    "nanoid": "catalog:"
   },
   "devDependencies": {
-    "prettier": "^3.5.0",
-    "turbo": "^2.4.1",
-    "typescript": "5.7.3",
-    "husky": "^9.1.7"
+    "@biomejs/biome": "^1.9.4",
+    "@types/nprogress": "^0.2.3",
+    "husky": "^9.1.7",
+    "nprogress": "^0.2.0",
+    "turbo": "^2.5.3",
+    "typescript": "catalog:",
+    "vite-plugin-vue-layouts": "^0.11.0"
   }
 }

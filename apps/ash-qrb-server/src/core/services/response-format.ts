@@ -1,5 +1,5 @@
 import { db } from '@/core/db'
-import { asc, desc } from 'drizzle-orm'
+import { asc, desc, like } from 'drizzle-orm'
 import type { PgTableWithColumns } from 'drizzle-orm/pg-core/table'
 import { eq } from 'drizzle-orm/sql/expressions/conditions'
 import type { BuildSchema } from 'drizzle-typebox'
@@ -37,12 +37,32 @@ export const getCollectionItems = async (
   }
 }
 
+// TODO: destructure params
+export const filterByFieldCollectionItems = async (
+  collection: PgTableWithColumns<any>,
+  field: string,
+  value: string,
+  options: IResponseOptions,
+) => {
+  const items = await db
+    .select()
+    .from(collection)
+    .where(like(collection[field], `${value || ''}%`))
+    .limit(options.pageSize)
+    .offset((options.page - 1) * options.pageSize)
+
+  return {
+    items,
+    count: items.length,
+  }
+}
+
 export const getCollectionItemEqual = async (
   collection: PgTableWithColumns<any>,
   key: string,
   value: string | number,
 ) => {
-  const item = await db
+  const [item] = await db
     .select()
     .from(collection)
     .where(eq(collection[key], value))

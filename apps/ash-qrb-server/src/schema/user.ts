@@ -1,6 +1,7 @@
 import { generateId } from '@/utils/generate.ts'
 import { sql } from 'drizzle-orm'
 import {
+  boolean,
   integer,
   pgTable,
   serial,
@@ -18,13 +19,18 @@ export const USER_STATUS = {
 }
 
 export const usersDefaultColumns = {
-  id: serial('id').primaryKey(),
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => generateId()),
   publicId: text('public_id').unique().default(generateId()).notNull(),
   status: integer('status').default(USER_STATUS.CREATED),
-  fullName: varchar('full_name', { length: 70 }).notNull(),
+  image: text('image'),
+  name: varchar('name', { length: 70 }).notNull(),
   companyName: varchar('company_name', { length: 40 }).notNull(),
   email: varchar('email', { length: 38 }).unique(),
+  emailVerified: boolean('email_verified').default(false).notNull(),
   phone: varchar('phone', { length: 12 }).unique(),
+  phoneVerified: boolean('phone_verified').default(false).notNull(),
   createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
 }

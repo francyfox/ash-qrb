@@ -1,25 +1,74 @@
 services:
-  bot:
-    container_name: ash-qrb-server-bot
-    restart: unless-stopped
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - NODE_ENV=production
   postgres:
-    container_name: ash-qrb-server-postgres
+    container_name: ash-db
     image: postgres:latest
     restart: unless-stopped
-    environment:
-      - POSTGRES_USER=ash-qrb-server
-      - POSTGRES_PASSWORD=Please-change-password
-      - POSTGRES_DB=ash-qrb-server
+    env_file:
+      - .env
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./dump:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+    networks:
+      ash-net:
+    healthcheck:
+      test: pg_isready -d postgres -U postgres
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+
+  server:
+    container_name: ash-backend
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    networks:
+      ash-net:
+
+  frontend:
+    container_name: ash-frontend
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    depends_on:
+      - server
+    env_file:
+      - .env
+#    env_file:
+#      - ./apps/ash-client/.env.prod
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    networks:
+      - ash-net
+
+#  tunnel:
+#    container_name: ash-client-tunnel
+#    image: cloudflare/cloudflared
+#    restart: unless-stopped
+#    command: tunnel run
+#    environment:
+#      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+#    depends_on:
+#      - frontend
+#    networks:
+#      - ash-net
 
 volumes:
   postgres_data:
 
 networks:
-  default: { }
+  ash-net:

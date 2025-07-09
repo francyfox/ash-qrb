@@ -1,0 +1,7 @@
+{
+  "extends": ["../ash-linter/biome.json"],
+  "files": {
+    "include": ["lib/*.ts", "lib/*.vue"],
+    "ignore": ["lib/index.ts"]
+  }
+}

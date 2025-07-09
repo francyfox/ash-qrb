@@ -64,6 +64,7 @@ node_modules
 .env.development.local
 .env.test.local
 .env.production.local
+.env.prod
 
 # Testing
 coverage
@@ -90,3 +91,6 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+.aider*
+
+6bde5434-dcbf-470a-94c9-4398f178e7cb.json

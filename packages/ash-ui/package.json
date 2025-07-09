@@ -1,0 +1,48 @@
+{
+  "name": "ash-ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev:live": "vite",
+    "build:exports": "bun generate.ts",
+    "build": "bun run build:exports && vite build"
+  },
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "import": "./dist/lib/index.js"
+    },
+    "./styles/tailwind.css": "./dist/styles/tailwind.css",
+    "./styles/styles.css": "./dist/styles/styles.css",
+    "./icons/*": "./dist/icons/*",
+    "./assets/*": "./dist/assets/*"
+  },
+  "types": "./dist/lib/*",
+  "sideEffects": ["**/*.css"],
+  "peerDependencies": {
+    "vue": "catalog:",
+    "ash-i18n": "workspace:*",
+    "@vueuse/core": "catalog:"
+  },
+  "devDependencies": {
+    "@intlify/unplugin-vue-i18n": "^6.0.8",
+    "@microsoft/api-extractor": "^7.52.8",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vue/tsconfig": "^0.7.0",
+    "dayjs": "^1.11.13",
+    "glob": "^11.0.2",
+    "pathe": "^2.0.3",
+    "typescript": "~5.8.3",
+    "unplugin-icons": "^22.1.0",
+    "vite": "^6.3.5",
+    "vite-plugin-dts": "^4.5.4",
+    "vite-plugin-lib-inject-css": "^2.2.2",
+    "vue-tsc": "^2.2.8"
+  },
+  "dependencies": {
+    "@vueup/vue-quill": "^1.2.0",
+    "quill-blot-formatter": "^1.0.5",
+    "quill-image-uploader": "^1.3.0"
+  }
+}

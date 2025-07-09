@@ -1,21 +1,4 @@
 services:
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin4_container
-    restart: always
-    ports:
-      - "8888:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-    networks:
-      - local
-    logging:
-      driver: "none"
-
   postgres:
     container_name: ash-qrb-server-postgres
     image: postgres:latest
@@ -27,16 +10,22 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-postgres}
       PGDATA: /data/postgres
       POSTGRES_HOST_AUTH_METHOD: 'trust'  #      only for develop
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
     ports:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
+#      - ./docker/entrypoint.db.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./apps/ash-qrb-server/drizzle:/docker-entrypoint-initdb.d
     networks:
-      - local
+      local:
 
 volumes:
   postgres_data:
-  pgadmin-data:
 
 networks:
   local: { }
+  external: {}

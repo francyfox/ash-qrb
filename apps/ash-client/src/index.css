@@ -1,0 +1,44 @@
+@import "../../../node_modules/ash-ui/dist/styles/styles.css";
+@import "./tw.css";
+@source "../../../node_modules/ash-ui";
+
+#app {
+  @apply h-full;
+}
+
+/**
+ problems with tw4 reference
+ */
+.aside-nav-item {
+  &.active .aside-nav-item-text:after {
+    display: none;
+  }
+
+  &-text {
+    &:after {
+      content: "";
+      transition: width .6s cubic-bezier(0.35, 0, 0.31, 1.2), background-color
+        .3s ease-in-out;
+
+      @apply bg-p-fawn top-0 left-0 absolute block w-full h-full;
+    }
+  }
+
+  &:hover {
+    .aside-nav-item-text:after {
+      width: 500px;
+
+      @apply bg-p-middle-red;
+    }
+  }
+}
+
+.avatar-sq {
+  [data-v-986f3247] img {
+    object-fit: contain;
+  }
+}
+
+[data-reka-popper-content-wrapper] {
+  @apply !z-20;
+}

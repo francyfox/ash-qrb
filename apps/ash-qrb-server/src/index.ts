@@ -1,3 +1,4 @@
+import { join } from 'node:path'
 import { config } from '@/config.ts'
 import { client } from '@/core/db/index.ts'
 import { posthog } from '@/core/services/posthog.ts'
@@ -25,9 +26,16 @@ process.on('unhandledRejection', (error) => {
 await client.connect()
 console.log('🗄  Database was connected!')
 
-app.listen(config.PORT, () => {
-  console.log(
-    `🕮  Swagger is active at: http://${app.server?.hostname}:${app.server?.port}/swagger`,
-  )
-  console.log(`🦊 Server started at ${app.server?.url.origin}`)
-})
+app.listen(
+  {
+    port: config.PORT,
+    tls: {
+      key: Bun.file(join(import.meta.dir, '../../../docker/certs/private.pem')),
+      cert: Bun.file(join(import.meta.dir, '../../../docker/certs/cert.pem')),
+    },
+  },
+  () => {
+    console.log(`🕮  Swagger is active at: ${app.server?.url.origin}/swagger`)
+    console.log(`🦊 Server started at: ${app.server?.url.origin}`)
+  },
+)
