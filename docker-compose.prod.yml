@@ -17,7 +17,7 @@ services:
     networks:
       ash-net:
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -d $${PG_DB} -U $${PG_USER}" ]
+      test: pg_isready -d postgres -U postgres
       start_period: 20s
       interval: 30s
       retries: 5
@@ -27,7 +27,7 @@ services:
     container_name: ash-backend
     build:
       context: .
-      dockerfile: docker/backend.Dockerfile
+      dockerfile: backend.Dockerfile
     depends_on:
       - postgres
     env_file:
@@ -41,7 +41,7 @@ services:
     container_name: ash-frontend
     build:
       context: .
-      dockerfile: docker/frontend.Dockerfile
+      dockerfile: frontend.Dockerfile
     depends_on:
       - server
     env_file:
