@@ -5,3 +5,4 @@ node_modules
 drizzle
 .vercel
 logs
+routes.ts

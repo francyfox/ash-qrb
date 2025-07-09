@@ -16,6 +16,13 @@ export const app = new Elysia()
   .use(Logestic.preset(config.NODE_ENV === 'development' ? 'fancy' : 'common'))
   .use(
     swagger({
+      scalarConfig: {
+        servers: [
+          {
+            url: config.API_URL,
+          },
+        ],
+      },
       documentation: {
         info: {
           title: 'ASH-QRB Documentation',
@@ -32,14 +39,6 @@ export const app = new Elysia()
         output: './routes.ts',
         typeName: 'Routes',
       },
-    }),
-  )
-  .use(
-    cors({
-      origin: [config.CLIENT_APP_URL, 'http://localhost', 'https://localhost'],
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-      credentials: true,
-      allowedHeaders: ['Content-Type', 'Authorization'],
     }),
   )
   .use(betterAuthPlugin)

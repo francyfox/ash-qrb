@@ -56,10 +56,14 @@ jobs:
       - name: Copy docker
         run: |
           cp .env ./build
-          mv ./docker/certs ./build/certs
+          mv ./docker ./build/docker
           cp docker-compose.prod.yml ./build/docker-compose.yml
           cp frontend.Dockerfile ./build/frontend.Dockerfile
           cp backend.Dockerfile ./build/backend.Dockerfile
+
+      - name: Copy entrypoints
+        run: |
+          mv ./apps/ash-qrb-server/dump ./build/dump
 
       - name: Copy files to VPS
         uses: appleboy/scp-action@master
