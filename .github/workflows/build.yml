@@ -1,8 +1,8 @@
 name: build.yml
 on:
-  push:
+  pull_request:
     branches:
-      - 'prototype'
+      - 'main'
 
 jobs:
   build:
