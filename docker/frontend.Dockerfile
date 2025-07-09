@@ -4,7 +4,7 @@ ARG PORT
 ARG CADDY_BACKEND_HOST
 
 COPY frontend /var/www/html
-COPY caddy/Caddyfile /etc/caddy/Caddyfile
-COPY certs /srv/certs
+COPY ../docker/caddy/Caddyfile /etc/caddy/Caddyfile
+COPY ../docker/certs /srv/certs
 
 RUN caddy fmt --overwrite /etc/caddy/Caddyfile
