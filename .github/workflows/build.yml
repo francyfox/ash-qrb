@@ -56,7 +56,7 @@ jobs:
       - name: Copy docker
         run: |
           cp .env ./build
-          mv ./docker ./build/docker
+          cp ./docker ./build/docker
           cp docker-compose.prod.yml ./build/docker-compose.yml
           cp ./docker/backend.Dockerfile ./build/backend.Dockerfile
           cp ./docker/frontend.Dockerfile ./build/frontend.Dockerfile
