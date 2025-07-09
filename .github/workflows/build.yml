@@ -56,10 +56,10 @@ jobs:
       - name: Copy docker
         run: |
           cp .env ./build
-          mv ./docker ./build/docker
+          cp -r ./docker ./build/docker
           cp docker-compose.prod.yml ./build/docker-compose.yml
-          cp ./build/docker/frontend.Dockerfile ./build/frontend.Dockerfile
-          cp ./build/docker/backend.Dockerfile ./build/backend.Dockerfile
+          cp ./docker/frontend.Dockerfile ./build/frontend.Dockerfile
+          cp ./docker/backend.Dockerfile ./build/backend.Dockerfile
 
       - name: Copy entrypoints
         run: |
