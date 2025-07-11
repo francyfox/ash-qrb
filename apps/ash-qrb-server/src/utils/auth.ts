@@ -24,6 +24,7 @@ export const auth = betterAuth({
     config.CLIENT_APP_URL,
     'http://localhost',
     'https://localhost',
+    'https://qrb.shalotts.site',
   ],
   database: drizzleAdapter(db, {
     // We're using Drizzle as our database
