@@ -20,6 +20,12 @@ jobs:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
+      - name: Setup DigitalOcean firewall
+        uses: earthpyy/setup-digitalocean-firewall@v1
+        with:
+          access-token: ${{ secrets.DIGITAL_TOKEN }}
+          firewall-id: eb64eefd-f935-4d75-b0a4-97e3d1dbec87
+
       - name: Check out code
         uses: actions/checkout@v4
         with:
