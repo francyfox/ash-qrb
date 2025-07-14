@@ -29,6 +29,8 @@ services:
     build:
       context: .
       dockerfile: backend.Dockerfile
+      cache_from:
+        - server:cache
     depends_on:
       - postgres
     env_file:
@@ -44,12 +46,15 @@ services:
     build:
       context: .
       dockerfile: frontend.Dockerfile
+      cache_from:
+        - client:cache
     depends_on:
       - server
     env_file:
       - .env
 #    env_file:
 #      - ./apps/ash-client/.env.prod
+#   TODO:PUT VOLUME WITH frontend artifacts (no rebuild for update)
     ports:
       - "80:80"
       - "443:443"
