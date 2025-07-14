@@ -81,6 +81,7 @@ export const validationCollectionItems = (
   selectSchema: any | BuildSchema<'select', any, any>,
 ): InputSchema<never> => {
   return {
+    detail: { tags: ['App'] },
     query: t.Partial(
       t.Object({
         page: t.Number(),
@@ -104,6 +105,7 @@ export const validationCollectionItem = (
   selectSchema: any | BuildSchema<'select', any, any>,
 ): InputSchema<never> => {
   return {
+    detail: { tags: ['App'] },
     response: {
       200: t.Object({
         item: selectSchema,

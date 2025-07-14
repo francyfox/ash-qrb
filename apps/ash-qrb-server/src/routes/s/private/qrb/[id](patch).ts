@@ -13,6 +13,7 @@ export default (app: ElysiaApp) =>
       await db.update(qrbSchema).set(body.qrb).where(eq(qrbSchema.id, id))
     },
     {
+      detail: { tags: ['App'] },
       body: t.Object({
         qrb: qrbInsertSchema,
       }),

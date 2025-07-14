@@ -28,6 +28,7 @@ export default (app: ElysiaApp) =>
         .where(eq(qrbSchema.id, id))
     },
     {
+      detail: { tags: ['App'] },
       body: t.Object({
         qrb: qrbInsertSchema,
       }),

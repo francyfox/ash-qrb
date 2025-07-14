@@ -1,5 +1,5 @@
 import { config } from '@/config.ts'
-import { betterAuthPlugin } from '@/utils/auth/auth.ts'
+import { auth, betterAuthPlugin } from '@/utils/auth/auth.ts'
 import { cors } from '@elysiajs/cors'
 import { jwt } from '@elysiajs/jwt'
 import { serverTiming } from '@elysiajs/server-timing'
@@ -8,6 +8,8 @@ import { errorHandler } from '@gtramontina.com/elysia-error-handler'
 import { Logestic } from 'logestic'
 import { Elysia } from 'elysia'
 import { autoload } from 'elysia-autoload'
+
+const { info, openapi, ...authSwagger } = await auth.api.generateOpenAPISchema()
 
 export const app = new Elysia()
   // @ts-ignore
@@ -28,6 +30,13 @@ export const app = new Elysia()
           title: 'ASH-QRB Documentation',
           version: '1.0.0',
         },
+        tags: [
+          {
+            name: 'App',
+            description: 'General endpoits',
+          },
+        ],
+        ...authSwagger,
       },
     }),
   )

@@ -11,6 +11,7 @@ export default (app: ElysiaApp) =>
       await db.insert(usersSchema).values(user)
     },
     {
+      detail: { tags: ['App'] },
       body: t.Object({
         user: usersInsertSchema,
       }),
