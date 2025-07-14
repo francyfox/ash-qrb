@@ -12,6 +12,9 @@ import '~/assets/styles/nprogress.css'
 const routes = [
   ...autoRoutes,
   {
+    path: '/api',
+  },
+  {
     path: '/:pathMatch(.*)*',
     component: ErrorPage,
   },
