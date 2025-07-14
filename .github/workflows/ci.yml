@@ -104,11 +104,6 @@ jobs:
           source: "build/*"
           target: "/home/fox/server"
 
-  preview:
-    needs: build
-    name: Run docker compose on ssh server
-    runs-on: ubuntu-latest
-    steps:
       - name: deployment
         run: |
           echo "${{ secrets.PRIVATE_KEY }}" > private_key.pem
