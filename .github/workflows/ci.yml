@@ -20,11 +20,13 @@ jobs:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
-      - name: Setup DigitalOcean firewall
-        uses: earthpyy/setup-digitalocean-firewall@v1
+      - name: Add DigitalOcean firewall
+        uses: patoroco/doorkeeper@master
         with:
-          access-token: ${{ secrets.DIGITAL_TOKEN }}
-          firewall-id: eb64eefd-f935-4d75-b0a4-97e3d1dbec87
+          digitaloceanToken: ${{ secrets.DIGITAL_TOKEN }}
+          firewallName: "allow_github"
+          actionToDo: "add"
+          dryRun: false
 
       - name: Check out code
         uses: actions/checkout@v4
@@ -115,3 +117,10 @@ jobs:
             cd /home/fox/server/build
             docker-compose up -d
 
+      - name: Remove DigitalOcean firewall
+        uses: patoroco/doorkeeper@master
+        with:
+          digitaloceanToken: ${{ secrets.DIGITAL_TOKEN }}
+          firewallName: "allow_github"
+          actionToDo: "remove"
+          dryRun: false
