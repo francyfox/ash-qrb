@@ -110,7 +110,7 @@ jobs:
           chmod 600 private_key.pem
           ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.SSH_USER }}@${{ vars.HOST }} <<EOF
             cd /home/fox/server/build
-            docker-compose up -d
+            docker-compose up --build --remove-orphans -d
 
       - name: Remove DigitalOcean firewall
         uses: patoroco/doorkeeper@master
