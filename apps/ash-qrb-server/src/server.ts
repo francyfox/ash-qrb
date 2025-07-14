@@ -1,5 +1,5 @@
 import { config } from '@/config.ts'
-import { betterAuthPlugin } from '@/utils/auth.ts'
+import { betterAuthPlugin } from '@/utils/auth/auth.ts'
 import { cors } from '@elysiajs/cors'
 import { jwt } from '@elysiajs/jwt'
 import { serverTiming } from '@elysiajs/server-timing'

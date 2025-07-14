@@ -1,14 +1,23 @@
 import { config } from '@/config.ts'
-import { db } from '@/core/db/index.ts'
-import { accountSchema } from '@/schema/account'
-import { sessionSchema } from '@/schema/session'
-import { usersSchema } from '@/schema/user'
-import { verificationSchema } from '@/schema/verification'
+import { db } from '@/core/db'
+import { accountSchema } from '@/schema/account.ts'
+import { sessionSchema } from '@/schema/session.ts'
+import { usersSchema } from '@/schema/user.ts'
+import { verificationSchema } from '@/schema/verification.ts'
+import { customProviders } from '@/utils/auth/auth.providers.ts'
 import { betterAuth } from 'better-auth'
+import { oAuthProxy } from 'better-auth/plugins'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { Elysia } from 'elysia'
 
 export const auth = betterAuth({
+  plugins: [
+    oAuthProxy({
+      productionURL: 'https://qrb.shalotts.site', // Optional - if the URL isn't inferred correctly
+      currentURL: 'http://localhost:4000', // Optional - if the URL isn't inferred correctly
+    }),
+    customProviders,
+  ],
   advanced: {
     cookies: {
       sessionToken: {
@@ -42,18 +51,13 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true, // If you want to use email and password auth
   },
-  socialProviders: {
-    google: {
-      clientId: config.PROVIDER_GOOGLE_CLIENT_ID,
-      clientSecret: config.PROVIDER_GOOGLE_CLIENT_SECRET,
-    },
-  },
+  socialProviders: {},
   user: {
     modelName: 'users',
     additionalFields: {
       companyName: {
         type: 'string',
-        required: false,
+        required: true,
         defaultValue: '',
       },
       status: {

@@ -26,7 +26,7 @@ export const usersDefaultColumns = {
   status: integer('status').default(USER_STATUS.CREATED),
   image: text('image'),
   name: varchar('name', { length: 70 }).notNull(),
-  companyName: varchar('company_name', { length: 40 }).notNull(),
+  companyName: varchar('company_name', { length: 40 }),
   email: varchar('email', { length: 38 }).unique(),
   emailVerified: boolean('email_verified').default(false).notNull(),
   phone: varchar('phone', { length: 12 }).unique(),
