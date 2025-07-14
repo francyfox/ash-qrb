@@ -7,12 +7,14 @@ import { verificationSchema } from '@/schema/verification.ts'
 import { customProviders } from '@/utils/auth/auth.providers.ts'
 import { betterAuth } from 'better-auth'
 // import { oAuthProxy } from 'better-auth/plugins'
+import { openAPI } from 'better-auth/plugins'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { socialProviders } from '@/utils/auth/auth.providers.ts'
 import { Elysia } from 'elysia'
 
 export const auth = betterAuth({
   plugins: [
+    openAPI(),
     // oAuthProxy({
     //   productionURL: 'https://qrb.shalotts.site', // Optional - if the URL isn't inferred correctly
     //   currentURL: 'http://localhost:4000', // Optional - if the URL isn't inferred correctly
