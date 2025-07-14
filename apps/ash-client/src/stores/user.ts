@@ -1,6 +1,9 @@
 import type { operations } from 'assets/schema'
 import { ref } from 'vue'
-import type { IUserSingInDTO } from '~/components/forms/login/login.types'
+import type {
+  IUserSingInDTO,
+  TLoginProviders,
+} from '~/components/forms/login/login.types'
 import type { IUserSingUpDTO } from '~/components/forms/register/register.types'
 import { api } from '~/libs/api'
 import { authClient } from '~/libs/auth-client'
@@ -47,6 +50,20 @@ export const useUserStore = defineStore('user', () => {
     return response
   }
 
+  const signInProvider = async (provider: TLoginProviders) => {
+    console.log(new URL('/dashboard', window.location.origin).toString())
+    const response = await authClient.signIn.social({
+      provider,
+      callbackURL: new URL('/dashboard', window.location.origin).toString(),
+    })
+
+    const { data, error } = response
+    if (error) errorMessage.value = error
+    user.value = data?.user
+
+    return response
+  }
+
   const signUp = async (formData: IUserSingUpDTO) => {
     const { data, error } = await authClient.signUp.email({
       name: 'Francy Fox',
@@ -71,6 +88,7 @@ export const useUserStore = defineStore('user', () => {
     postFile,
     errorMessage,
     signIn,
+    signInProvider,
     signUp,
     signOut,
   }

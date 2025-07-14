@@ -35,4 +35,13 @@ export const config = {
     .get('PROVIDER_GOOGLE_CLIENT_SECRET')
     .required()
     .asString(),
+
+  PROVIDER_YANDEX_CLIENT_ID: env
+    .get('PROVIDER_YANDEX_CLIENT_ID')
+    .required()
+    .asString(),
+  PROVIDER_YANDEX_CLIENT_SECRET: env
+    .get('PROVIDER_YANDEX_CLIENT_SECRET')
+    .required()
+    .asString(),
 }

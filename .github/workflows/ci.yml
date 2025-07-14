@@ -20,6 +20,14 @@ jobs:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
+      - name: Add DigitalOcean firewall
+        uses: patoroco/doorkeeper@master
+        with:
+          digitaloceanToken: ${{ secrets.DIGITAL_TOKEN }}
+          firewallName: "allowgithub"
+          actionToDo: "add"
+          dryRun: false
+
       - name: Check out code
         uses: actions/checkout@v4
         with:
@@ -96,11 +104,6 @@ jobs:
           source: "build/*"
           target: "/home/fox/server"
 
-  preview:
-    needs: build
-    name: Run docker compose on ssh server
-    runs-on: ubuntu-latest
-    steps:
       - name: deployment
         run: |
           echo "${{ secrets.PRIVATE_KEY }}" > private_key.pem
@@ -109,3 +112,10 @@ jobs:
             cd /home/fox/server/build
             docker-compose up -d
 
+      - name: Remove DigitalOcean firewall
+        uses: patoroco/doorkeeper@master
+        with:
+          digitaloceanToken: ${{ secrets.DIGITAL_TOKEN }}
+          firewallName: "allowgithub"
+          actionToDo: "remove"
+          dryRun: false
