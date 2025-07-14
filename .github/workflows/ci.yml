@@ -24,7 +24,7 @@ jobs:
         uses: patoroco/doorkeeper@master
         with:
           digitaloceanToken: ${{ secrets.DIGITAL_TOKEN }}
-          firewallName: "allow_github"
+          firewallName: "allowgithub"
           actionToDo: "add"
           dryRun: false
 
@@ -121,6 +121,6 @@ jobs:
         uses: patoroco/doorkeeper@master
         with:
           digitaloceanToken: ${{ secrets.DIGITAL_TOKEN }}
-          firewallName: "allow_github"
+          firewallName: "allowgithub"
           actionToDo: "remove"
           dryRun: false
