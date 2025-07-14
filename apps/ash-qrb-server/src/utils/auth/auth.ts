@@ -8,6 +8,7 @@ import { customProviders } from '@/utils/auth/auth.providers.ts'
 import { betterAuth } from 'better-auth'
 // import { oAuthProxy } from 'better-auth/plugins'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { socialProviders } from '@/utils/auth/auth.providers.ts'
 import { Elysia } from 'elysia'
 
 export const auth = betterAuth({
@@ -51,7 +52,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true, // If you want to use email and password auth
   },
-  socialProviders: {},
+  socialProviders,
   user: {
     modelName: 'users',
     additionalFields: {
