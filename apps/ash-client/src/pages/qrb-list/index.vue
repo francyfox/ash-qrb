@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import QrbListActions from '~/components/forms/qrb-list/QrbListActions.vue'
-import { defineAsyncComponent, ref, resolveComponent } from 'vue'
+import {
+  defineAsyncComponent,
+  onMounted,
+  ref,
+  resolveComponent,
+  shallowRef,
+  useTemplateRef,
+} from 'vue'
 
 definePage({
   meta: {
@@ -18,13 +25,23 @@ const qrbStore = useQrbStore()
 const { qrbList } = storeToRefs(qrbStore)
 const modalQrCode = ref(false)
 const qrbId = ref()
+const pagination = shallowRef({
+  page: 1,
+  pageSize: 5,
+  total: 0,
+})
 
 const toast = useToast()
 const UDropdownMenu = resolveComponent('UDropdownMenu')
 
-const { error } = await qrbStore.getQrbList({
-  page: 1,
+const { data, error } = await qrbStore.getQrbList({
+  query: {
+    page: 1,
+    pageSize: 5,
+  },
 })
+
+pagination.value.total = data.total
 
 const providers = {
   toast,
@@ -35,6 +52,15 @@ const handleEditQrb = (id: string) => {
   modalQrCode.value = true
   qrbId.value = id
 }
+
+const table = useTemplateRef('table')
+
+onMounted(() => {
+  if (table.value) {
+    const { tableApi } = table.value.$refs.table
+    const selectedRows = tableApi.getFilteredSelectedRowModel().rows
+  }
+})
 </script>
 
 <template>
@@ -45,7 +71,9 @@ const handleEditQrb = (id: string) => {
     />
 
     <QrbList
+        ref="table"
         v-bind="{ providers }"
+        v-model:pagination="pagination"
         :list="qrbList"
         :loading="qrbStore.isLoading.qrbList"
         @onEdit="handleEditQrb"

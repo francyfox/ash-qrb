@@ -1,5 +1,5 @@
 import { db } from '@/core/db'
-import { asc, desc, like } from 'drizzle-orm'
+import { asc, count, desc, like } from 'drizzle-orm'
 import type { PgTableWithColumns } from 'drizzle-orm/pg-core/table'
 import { eq } from 'drizzle-orm/sql/expressions/conditions'
 import type { BuildSchema } from 'drizzle-typebox'
@@ -31,9 +31,12 @@ export const getCollectionItems = async (
     .limit(options.pageSize)
     .offset((options.page - 1) * options.pageSize)
 
+  const [totalResponse] = await db.select({ count: count() }).from(collection)
+
   return {
     items,
     count: items.length,
+    total: totalResponse?.count,
   }
 }
 
@@ -51,9 +54,12 @@ export const filterByFieldCollectionItems = async (
     .limit(options.pageSize)
     .offset((options.page - 1) * options.pageSize)
 
+  const [totalResponse] = await db.select({ count: count() }).from(collection)
+
   return {
     items,
     count: items.length,
+    total: totalResponse?.count,
   }
 }
 
@@ -95,6 +101,7 @@ export const validationCollectionItems = (
       200: t.Object({
         items: t.Array(selectSchema),
         count: t.Number(),
+        total: t.Number(),
       }),
       500: errorSchema,
     },

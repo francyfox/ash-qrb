@@ -12,6 +12,7 @@ type TQrbItem = any
 
 const emit = defineEmits<{
   onEdit: [id: string]
+  onSelect: []
 }>()
 
 const { list = [], providers } = defineProps<{
@@ -19,6 +20,11 @@ const { list = [], providers } = defineProps<{
   providers: any
   loading: boolean
 }>()
+
+const pagination = defineModel<{
+  page: number
+  pageSize: number
+}>('pagination')
 
 const { UDropdownMenu, toast } = providers
 
@@ -42,6 +48,7 @@ const columns: TableColumn<TQrbItem>[] = [
           table.toggleAllPageRowsSelected(!!value),
         'aria-label': 'Select all',
         ui: { base: 'bg-(--color-s-purple-taupe)' },
+        onClick: () => emit('onSelect'),
       }),
     cell: ({ row }) =>
       h(UCheckbox, {
@@ -50,6 +57,7 @@ const columns: TableColumn<TQrbItem>[] = [
           row.toggleSelected(!!value),
         'aria-label': 'Select row',
         ui: { base: 'bg-(--color-s-purple-taupe)' },
+        onClick: () => emit('onSelect'),
       }),
   },
   {
@@ -159,11 +167,6 @@ function getRowItems(row: Row<TQrbItem>) {
   ]
 }
 
-const pagination = ref({
-  pageIndex: 0,
-  pageSize: 5,
-})
-
 const columnFilters = ref([
   {
     id: 'name',
@@ -195,9 +198,6 @@ const tableTotal: Ref<number | undefined> = computed(
           :loading="loading"
           :data="list"
           :columns="columns"
-          :pagination-options="{
-            getPaginationRowModel: getPaginationRowModel()
-          }"
           :ui="{ td: 'text-xl', th: 'text-xl' }"
           class="flex-1"
       />
