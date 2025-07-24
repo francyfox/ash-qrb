@@ -21,7 +21,7 @@ const modalQrCode = ref(false)
 
 <template>
   <div class="flex flex-col gap-2"
-       :class="{ 'pointer-events-none opacity-5': disabled }"
+       :class="{ 'pointer-events-none opacity-5 transition-opacity': disabled }"
   >
     <div class="flex gap-2">
       <UButton

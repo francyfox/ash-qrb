@@ -6,10 +6,11 @@ import {
   defineAsyncComponent,
   onMounted,
   ref,
-    reactive,
+  reactive,
   resolveComponent,
   useTemplateRef,
 } from 'vue'
+import { watchDebounced } from '@vueuse/core'
 
 definePage({
   meta: {
@@ -26,6 +27,10 @@ const qrbStore = useQrbStore()
 const { qrbList } = storeToRefs(qrbStore)
 const modalQrCode = ref(false)
 const qrbId = ref()
+
+const filter = reactive({
+  search: '',
+})
 
 const pagination = reactive({
   pageIndex: 1,
@@ -64,14 +69,38 @@ onMounted(() => {
   }
 })
 
-watch(pagination, async (v) => {
-  await qrbStore.getQrbList({
-    query: {
-      page: v.pageIndex,
-      pageSize: v.pageSize,
-    },
-  })
-})
+watchDebounced(
+  pagination,
+  async (v) => {
+    await qrbStore.getQrbList({
+      query: {
+        page: v.pageIndex,
+        pageSize: v.pageSize,
+      },
+    })
+  },
+  {
+    debounce: 200,
+    maxWait: 1000,
+  },
+)
+
+watchDebounced(
+  filter,
+  async (v) => {
+    await qrbStore.getQrbList({
+      query: {
+        filter: JSON.stringify(v),
+        page: pagination.pageIndex,
+        pageSize: pagination.pageSize,
+      },
+    })
+  },
+  {
+    debounce: 500,
+    maxWait: 1000,
+  },
+)
 </script>
 
 <template>

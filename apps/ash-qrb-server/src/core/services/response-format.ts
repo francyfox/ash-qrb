@@ -14,6 +14,9 @@ export interface IResponseOptions {
   page: number
   pageSize: number
   order: IResponseOptionOrder
+  filter: {
+    search: string
+  }
 }
 
 export const getCollectionItems = async (
@@ -47,6 +50,7 @@ export const filterByFieldCollectionItems = async (
   value: string,
   options: IResponseOptions,
 ) => {
+  console.log(value)
   const items = await db
     .select()
     .from(collection)
@@ -90,6 +94,11 @@ export const validationCollectionItems = (
     detail: { tags: ['App'] },
     query: t.Partial(
       t.Object({
+        filter: t.Partial(
+          t.Object({
+            search: t.String(),
+          }),
+        ),
         page: t.Number(),
         pageSize: t.Number(),
         order: t.Object({

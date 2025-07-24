@@ -3823,6 +3823,9 @@ export interface operations {
     getSPrivateUsers: {
         parameters: {
             query?: {
+                filter?: {
+                    search?: string;
+                };
                 page?: number;
                 pageSize?: number;
                 order?: {
@@ -3988,8 +3991,11 @@ export interface operations {
     getSPrivateQrb: {
         parameters: {
             query?: {
-                page?: string | number;
-                pageSize?: string | number;
+                filter?: {
+                    search?: string;
+                };
+                page?: number;
+                pageSize?: number;
                 order?: {
                     by: "ask" | "desc";
                 };
