@@ -11,6 +11,16 @@ export const useQrbStore = defineStore('qrb', () => {
     qrb: false,
   })
 
+  const filter = reactive({
+    search: '',
+  })
+
+  const pagination = reactive({
+    pageIndex: 1,
+    pageSize: 5,
+    total: 0,
+  })
+
   const getQrbById = async (id: string) => {
     isLoading.qrb = true
 
@@ -28,16 +38,24 @@ export const useQrbStore = defineStore('qrb', () => {
     return response
   }
 
-  const getQrbList = async (params: object) => {
+  const getQrbList = async () => {
     isLoading.qrbList = true
     const response = await api.GET('/s/private/qrb', {
-      params,
+      params: {
+        query: {
+          filter: JSON.stringify(filter),
+          page: pagination.pageIndex,
+          pageSize: pagination.pageSize,
+        },
+      },
     })
 
     const { data, error } = response
 
+    pagination.total = data?.total ?? 0
+
     if (error) errorMessage.value = error
-    qrbList.value = data?.items
+    qrbList.value = data?.items as any
     isLoading.qrbList = false
 
     return response
@@ -48,7 +66,7 @@ export const useQrbStore = defineStore('qrb', () => {
       body: formData,
     })
 
-    const { data, error } = response
+    const { error } = response
 
     if (error) errorMessage.value = error
 
@@ -63,7 +81,7 @@ export const useQrbStore = defineStore('qrb', () => {
       body: formData,
     })
 
-    const { data, error } = response
+    const { error } = response
 
     if (error) errorMessage.value = error
 
@@ -72,6 +90,8 @@ export const useQrbStore = defineStore('qrb', () => {
 
   return {
     isLoading,
+    pagination,
+    filter,
     errorMessage,
     qrb,
     qrbList,

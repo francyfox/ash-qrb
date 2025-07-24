@@ -11,13 +11,13 @@ export default (app: ElysiaApp) =>
     '',
     async ({ query, error }) => {
       const options: IResponseOptions = {
-        order: (query as any).order || { by: 'ask', value: 'id' },
+        order: query?.order?.by
+          ? query?.order
+          : { by: 'desk', value: 'createdAt' },
         page: Number(query?.page) || 1,
         pageSize: Number(query?.pageSize) || 100,
         filter: query?.filter,
       }
-
-      console.log(query)
 
       const response = await filterByFieldCollectionItems(
         qrbSchema,

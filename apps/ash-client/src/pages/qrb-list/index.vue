@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import QrbListActions from '~/components/forms/qrb-list/QrbListActions.vue'
 import {
   defineAsyncComponent,
   onMounted,
   ref,
-  reactive,
   resolveComponent,
   useTemplateRef,
 } from 'vue'
@@ -24,31 +22,15 @@ const ModalQrCode = defineAsyncComponent(
 )
 
 const qrbStore = useQrbStore()
+const { pagination, filter } = qrbStore
 const { qrbList } = storeToRefs(qrbStore)
 const modalQrCode = ref(false)
 const qrbId = ref()
 
-const filter = reactive({
-  search: '',
-})
-
-const pagination = reactive({
-  pageIndex: 1,
-  pageSize: 5,
-  total: 7,
-})
-
 const toast = useToast()
 const UDropdownMenu = resolveComponent('UDropdownMenu')
 
-const { data, error } = await qrbStore.getQrbList({
-  query: {
-    page: 1,
-    pageSize: 5,
-  },
-})
-
-pagination.total = data.total
+await qrbStore.getQrbList()
 
 const providers = {
   toast,
@@ -71,13 +53,8 @@ onMounted(() => {
 
 watchDebounced(
   pagination,
-  async (v) => {
-    await qrbStore.getQrbList({
-      query: {
-        page: v.pageIndex,
-        pageSize: v.pageSize,
-      },
-    })
+  async () => {
+    await qrbStore.getQrbList()
   },
   {
     debounce: 200,
@@ -87,14 +64,8 @@ watchDebounced(
 
 watchDebounced(
   filter,
-  async (v) => {
-    await qrbStore.getQrbList({
-      query: {
-        filter: JSON.stringify(v),
-        page: pagination.pageIndex,
-        pageSize: pagination.pageSize,
-      },
-    })
+  async () => {
+    await qrbStore.getQrbList()
   },
   {
     debounce: 500,

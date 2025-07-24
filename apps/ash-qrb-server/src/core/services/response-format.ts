@@ -50,11 +50,17 @@ export const filterByFieldCollectionItems = async (
   value: string,
   options: IResponseOptions,
 ) => {
-  console.log(value)
+  const isAsc = options.order.by === 'ask'
+  const order = isAsc
+    ? asc(collection[options.order.value])
+    : desc(collection[options.order.value])
+
+  console.log(order)
   const items = await db
     .select()
     .from(collection)
     .where(like(collection[field], `${value || ''}%`))
+    .orderBy(order)
     .limit(options.pageSize)
     .offset((options.page - 1) * options.pageSize)
 
@@ -101,9 +107,12 @@ export const validationCollectionItems = (
         ),
         page: t.Number(),
         pageSize: t.Number(),
-        order: t.Object({
-          by: t.Union([t.Literal('ask'), t.Literal('desc')]),
-        }),
+        order: t.Partial(
+          t.Object({
+            by: t.Union([t.Literal('ask'), t.Literal('desc')]),
+            value: t.String({ description: 'example: name | created_at ...' }),
+          }),
+        ),
       }),
     ),
     response: {
