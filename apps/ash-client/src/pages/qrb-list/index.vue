@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import QrbListActions from '~/components/forms/qrb-list/QrbListActions.vue'
 import {
   defineAsyncComponent,
   onMounted,
   ref,
+    reactive,
   resolveComponent,
-  shallowRef,
   useTemplateRef,
 } from 'vue'
 
@@ -25,10 +26,11 @@ const qrbStore = useQrbStore()
 const { qrbList } = storeToRefs(qrbStore)
 const modalQrCode = ref(false)
 const qrbId = ref()
-const pagination = shallowRef({
-  page: 1,
+
+const pagination = reactive({
+  pageIndex: 1,
   pageSize: 5,
-  total: 0,
+  total: 7,
 })
 
 const toast = useToast()
@@ -41,7 +43,7 @@ const { data, error } = await qrbStore.getQrbList({
   },
 })
 
-pagination.value.total = data.total
+pagination.total = data.total
 
 const providers = {
   toast,
@@ -61,6 +63,15 @@ onMounted(() => {
     const selectedRows = tableApi.getFilteredSelectedRowModel().rows
   }
 })
+
+watch(pagination, async (v) => {
+  await qrbStore.getQrbList({
+    query: {
+      page: v.pageIndex,
+      pageSize: v.pageSize,
+    },
+  })
+})
 </script>
 
 <template>
@@ -73,6 +84,7 @@ onMounted(() => {
     <QrbList
         ref="table"
         v-bind="{ providers }"
+        v-model:filter="filter"
         v-model:pagination="pagination"
         :list="qrbList"
         :loading="qrbStore.isLoading.qrbList"

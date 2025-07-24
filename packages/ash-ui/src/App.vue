@@ -12,8 +12,9 @@ const providers = {
 }
 
 const pagination = ref({
-  page: 1,
+  pageIndex: 0,
   pageSize: 5,
+  total: 7
 })
 
 const list = ref([
@@ -79,6 +80,7 @@ const list = ref([
 <template>
   <UApp>
     <div class="py-5 mx-auto flex flex-col max-w-2xl">
+      {{ pagination }}
       <QrbList
           :list="list"
           v-model:pagination="pagination"
