@@ -6,6 +6,7 @@ import {
   onMounted,
   ref,
   resolveComponent,
+  shallowRef,
   useTemplateRef,
 } from 'vue'
 import { watchDebounced } from '@vueuse/core'
@@ -26,6 +27,8 @@ const { pagination, filter } = qrbStore
 const { qrbList } = storeToRefs(qrbStore)
 const modalQrCode = ref(false)
 const qrbId = ref()
+const table = useTemplateRef('table')
+const selected = shallowRef()
 
 const toast = useToast()
 const UDropdownMenu = resolveComponent('UDropdownMenu')
@@ -42,14 +45,22 @@ const handleEditQrb = (id: string) => {
   qrbId.value = id
 }
 
-const table = useTemplateRef('table')
+const handleSelectQrb = () => {
+  setTimeout(() => {
+    if (table.value) {
+      const { tableApi } = table.value.$refs.table
+      const selectedRows = tableApi.getFilteredSelectedRowModel().rows
+      selected.value = selectedRows.map((i) => i.getValue('id'))
+    }
+  })
+}
 
-onMounted(() => {
+const handleDeSelectAll = () => {
   if (table.value) {
     const { tableApi } = table.value.$refs.table
-    const selectedRows = tableApi.getFilteredSelectedRowModel().rows
+    tableApi.toggleAllPageRowsSelected(false)
   }
-})
+}
 
 watchDebounced(
   pagination,
@@ -77,8 +88,10 @@ watchDebounced(
 <template>
   <div class="w-full h-full relative h-full flex flex-col justify-between gap-5">
     <QrbListActions
+        v-model="selected"
         :list="qrbList"
         :disabled="qrbStore.isLoading.qrbList"
+        @deSelect="handleDeSelectAll"
     />
 
     <QrbList
@@ -89,6 +102,7 @@ watchDebounced(
         :list="qrbList"
         :loading="qrbStore.isLoading.qrbList"
         @onEdit="handleEditQrb"
+        @onSelect="handleSelectQrb"
     />
 
     <ModalQrCode

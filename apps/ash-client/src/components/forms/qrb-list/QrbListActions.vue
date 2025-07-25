@@ -8,6 +8,13 @@ const ModalQrCode = defineAsyncComponent(
   () => import('~/components/modals/qrb-code/ModalQrCode.vue'),
 )
 
+const qrbStore = useQrbStore()
+const model = defineModel<string[]>({ default: [] })
+
+const emit = defineEmits<{
+  deSelect: []
+}>()
+
 const { list = [], disabled } = defineProps<{
   list: TQrbItem[]
   disabled?: boolean
@@ -17,6 +24,16 @@ const { t } = useI18n()
 
 const modalReallySure = ref(false)
 const modalQrCode = ref(false)
+
+async function handleRemove() {
+  if (model.value?.length > 0) {
+    await qrbStore.removeQrb(model.value || [])
+    await qrbStore.getQrbList()
+  }
+
+  modalReallySure.value = false
+  emit('deSelect')
+}
 </script>
 
 <template>
@@ -40,7 +57,7 @@ const modalQrCode = ref(false)
           class="cursor-pointer"
           icon="i-lucide-import"
       >
-        Import CSV
+        Import JSON
       </UButton>
 
       <UButton
@@ -50,7 +67,7 @@ const modalQrCode = ref(false)
           icon="i-lucide-file-text"
           :disabled="list.length === 0"
       >
-        Export CSV
+        Export JSON
       </UButton>
     </div>
     <div class="flex gap-2">
@@ -86,7 +103,7 @@ const modalQrCode = ref(false)
 
     <ModalReallySure
         v-model="modalReallySure"
-        @onSubmit=""
+        @onSubmit="handleRemove"
         @onClose=""
     />
 

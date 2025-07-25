@@ -52,21 +52,26 @@ export const useQrbStore = defineStore('qrb', () => {
 
     const { data, error } = response
 
+    if (data || error) isLoading.qrbList = false
+
     pagination.total = data?.total ?? 0
 
     if (error) errorMessage.value = error
     qrbList.value = data?.items as any
-    isLoading.qrbList = false
 
     return response
   }
 
   const postQrb = async (formData: TQrbBody) => {
+    isLoading.qrbList = true
+
     const response = await api.POST('/s/private/qrb', {
       body: formData,
     })
 
-    const { error } = response
+    const { data, error } = response
+
+    if (data || error) isLoading.qrbList = false
 
     if (error) errorMessage.value = error
 
@@ -74,6 +79,8 @@ export const useQrbStore = defineStore('qrb', () => {
   }
 
   const updateQrb = async (id: string, formData: TQrbBody) => {
+    isLoading.qrbList = true
+
     const response = await api.PATCH('/s/private/qrb/{id}', {
       params: {
         path: { id },
@@ -81,8 +88,25 @@ export const useQrbStore = defineStore('qrb', () => {
       body: formData,
     })
 
-    const { error } = response
+    const { data, error } = response
+    if (data || error) isLoading.qrbList = false
 
+    if (error) errorMessage.value = error
+
+    return response
+  }
+
+  const removeQrb = async (ids: string[]) => {
+    isLoading.qrbList = true
+
+    const response = await api.DELETE('/s/private/qrb/bulk', {
+      body: {
+        ids,
+      },
+    })
+
+    const { data, error } = response
+    if (data || error) isLoading.qrbList = false
     if (error) errorMessage.value = error
 
     return response
@@ -99,5 +123,6 @@ export const useQrbStore = defineStore('qrb', () => {
     postQrb,
     getQrbById,
     updateQrb,
+    removeQrb,
   }
 })

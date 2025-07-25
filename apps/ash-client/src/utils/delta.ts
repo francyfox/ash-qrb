@@ -9,7 +9,6 @@ export const DeltaConverterConfig = {
 
 export function deltaToHtml(delta: any[]) {
   const converter = new QuillDeltaToHtmlConverter(delta, DeltaConverterConfig)
-  console.log(delta)
 
   return converter.convert()
 }

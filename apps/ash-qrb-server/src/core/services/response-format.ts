@@ -55,7 +55,6 @@ export const filterByFieldCollectionItems = async (
     ? asc(collection[options.order.value])
     : desc(collection[options.order.value])
 
-  console.log(order)
   const items = await db
     .select()
     .from(collection)

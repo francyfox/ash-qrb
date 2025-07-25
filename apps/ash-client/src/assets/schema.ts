@@ -68,6 +68,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/s/private/qrb/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["deleteSPrivateQrbBulk"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -3829,7 +3845,9 @@ export interface operations {
                 page?: number;
                 pageSize?: number;
                 order?: {
-                    by: "ask" | "desc";
+                    by?: "ask" | "desc";
+                    /** @description example: name | created_at ... */
+                    value?: string;
                 };
             };
             header?: never;
@@ -3997,7 +4015,9 @@ export interface operations {
                 page?: number;
                 pageSize?: number;
                 order?: {
-                    by: "ask" | "desc";
+                    by?: "ask" | "desc";
+                    /** @description example: name | created_at ... */
+                    value?: string;
                 };
             };
             header?: never;
@@ -4126,6 +4146,35 @@ export interface operations {
                         createdAt?: Record<string, never> | null;
                         updatedAt?: Record<string, never> | null;
                     };
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    deleteSPrivateQrbBulk: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    ids: string[];
+                };
+                "multipart/form-data": {
+                    ids: string[];
+                };
+                "text/plain": {
+                    ids: string[];
                 };
             };
         };
