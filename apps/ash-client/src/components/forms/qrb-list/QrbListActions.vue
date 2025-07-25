@@ -27,11 +27,22 @@ const modalQrCode = ref(false)
 
 async function handleRemove() {
   if (model.value?.length > 0) {
-    await qrbStore.removeQrb(model.value || [])
+    await qrbStore.removeManyQrb(model.value)
     await qrbStore.getQrbList()
   }
 
   modalReallySure.value = false
+  emit('deSelect')
+}
+
+async function handleUpdate(status: boolean) {
+  if (model.value?.length > 0) {
+    await qrbStore.updateManyQrb(model.value, {
+      status: status ? 1 : 0,
+    })
+    await qrbStore.getQrbList()
+  }
+
   emit('deSelect')
 }
 </script>
@@ -56,6 +67,7 @@ async function handleRemove() {
           type="button"
           class="cursor-pointer"
           icon="i-lucide-import"
+          @click=""
       >
         Import JSON
       </UButton>
@@ -87,6 +99,7 @@ async function handleRemove() {
           type="button"
           class="cursor-pointer"
           icon="i-lucide-lightbulb"
+          @click="handleUpdate(true)"
       >
         {{ t('actionEnable') }}
       </UButton>
@@ -96,6 +109,7 @@ async function handleRemove() {
           type="button"
           class="cursor-pointer"
           icon="i-lucide-lightbulb-off"
+          @click="handleUpdate(false)"
       >
         {{ t('actionDisable') }}
       </UButton>

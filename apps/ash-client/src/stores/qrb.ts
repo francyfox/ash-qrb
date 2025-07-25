@@ -96,12 +96,29 @@ export const useQrbStore = defineStore('qrb', () => {
     return response
   }
 
-  const removeQrb = async (ids: string[]) => {
+  const removeManyQrb = async (ids: string[]) => {
     isLoading.qrbList = true
 
     const response = await api.DELETE('/s/private/qrb/bulk', {
       body: {
         ids,
+      },
+    })
+
+    const { data, error } = response
+    if (data || error) isLoading.qrbList = false
+    if (error) errorMessage.value = error
+
+    return response
+  }
+
+  const updateManyQrb = async (ids: string[], fields: any) => {
+    isLoading.qrbList = true
+
+    const response = await api.PATCH('/s/private/qrb/bulk', {
+      body: {
+        ids,
+        fields,
       },
     })
 
@@ -123,6 +140,7 @@ export const useQrbStore = defineStore('qrb', () => {
     postQrb,
     getQrbById,
     updateQrb,
-    removeQrb,
+    updateManyQrb,
+    removeManyQrb,
   }
 })

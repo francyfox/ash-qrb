@@ -81,7 +81,7 @@ export interface paths {
         delete: operations["deleteSPrivateQrbBulk"];
         options?: never;
         head?: never;
-        patch?: never;
+        patch: operations["patchSPrivateQrbBulk"];
         trace?: never;
     };
     "/health": {
@@ -4012,8 +4012,8 @@ export interface operations {
                 filter?: {
                     search?: string;
                 };
-                page?: number;
-                pageSize?: number;
+                page?: string | number;
+                pageSize?: string | number;
                 order?: {
                     by?: "ask" | "desc";
                     /** @description example: name | created_at ... */
@@ -4175,6 +4175,68 @@ export interface operations {
                 };
                 "text/plain": {
                     ids: string[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    patchSPrivateQrbBulk: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    ids: string[];
+                    fields: {
+                        id?: string;
+                        status?: number | null;
+                        name: string;
+                        body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
+                        qrCode?: string | null;
+                        qrCodeTerminal?: string | null;
+                        userId: string;
+                        createdAt?: Record<string, never> | null;
+                        updatedAt?: Record<string, never> | null;
+                    };
+                };
+                "multipart/form-data": {
+                    ids: string[];
+                    fields: {
+                        id?: string;
+                        status?: number | null;
+                        name: string;
+                        body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
+                        qrCode?: string | null;
+                        qrCodeTerminal?: string | null;
+                        userId: string;
+                        createdAt?: Record<string, never> | null;
+                        updatedAt?: Record<string, never> | null;
+                    };
+                };
+                "text/plain": {
+                    ids: string[];
+                    fields: {
+                        id?: string;
+                        status?: number | null;
+                        name: string;
+                        body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
+                        qrCode?: string | null;
+                        qrCodeTerminal?: string | null;
+                        userId: string;
+                        createdAt?: Record<string, never> | null;
+                        updatedAt?: Record<string, never> | null;
+                    };
                 };
             };
         };
