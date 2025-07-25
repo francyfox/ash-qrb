@@ -12,6 +12,7 @@ type TQrbItem = any
 
 const emit = defineEmits<{
   onEdit: [id: string]
+  onSelect: []
 }>()
 
 const { list = [], providers } = defineProps<{
@@ -19,6 +20,15 @@ const { list = [], providers } = defineProps<{
   providers: any
   loading: boolean
 }>()
+
+const pagination = defineModel<{
+  pageIndex: number
+  pageSize: number
+}>('pagination')
+
+const filter = defineModel<{
+  search: string
+}>('filter')
 
 const { UDropdownMenu, toast } = providers
 
@@ -42,6 +52,7 @@ const columns: TableColumn<TQrbItem>[] = [
           table.toggleAllPageRowsSelected(!!value),
         'aria-label': 'Select all',
         ui: { base: 'bg-(--color-s-purple-taupe)' },
+        onClick: () => emit('onSelect'),
       }),
     cell: ({ row }) =>
       h(UCheckbox, {
@@ -50,6 +61,7 @@ const columns: TableColumn<TQrbItem>[] = [
           row.toggleSelected(!!value),
         'aria-label': 'Select row',
         ui: { base: 'bg-(--color-s-purple-taupe)' },
+        onClick: () => emit('onSelect'),
       }),
   },
   {
@@ -159,11 +171,6 @@ function getRowItems(row: Row<TQrbItem>) {
   ]
 }
 
-const pagination = ref({
-  pageIndex: 0,
-  pageSize: 5,
-})
-
 const columnFilters = ref([
   {
     id: 'name',
@@ -181,23 +188,18 @@ const tableTotal: Ref<number | undefined> = computed(
     <div class="h-full w-full flex flex-col justify-between space-y-4 pb-4">
       <div class="flex px-4 py-3.5 border-b border-accented">
         <UInput
-            :model-value="table?.tableApi?.getColumn('name')?.getFilterValue() as string"
+            v-model="filter.search"
             size="xl"
             class="max-w-sm"
             placeholder="Filter names..."
-            @update:model-value="table?.tableApi?.getColumn('name')?.setFilterValue($event)"
         />
       </div>
       <UTable
           ref="table"
-          v-model:pagination="pagination"
           v-model:column-filters="columnFilters"
           :loading="loading"
           :data="list"
           :columns="columns"
-          :pagination-options="{
-            getPaginationRowModel: getPaginationRowModel()
-          }"
           :ui="{ td: 'text-xl', th: 'text-xl' }"
           class="flex-1"
       />
@@ -209,10 +211,11 @@ const tableTotal: Ref<number | undefined> = computed(
 
       <div class="flex justify-center border-t border-default pt-4">
         <UPagination
-            :default-page="(table?.tableApi?.getState().pagination.pageIndex || 0) + 1"
-            :items-per-page="table?.tableApi?.getState().pagination.pageSize"
-            :total="tableTotal"
-            @update:page="(p) => table?.tableApi?.setPageIndex(p - 1)"
+            v-model:page="pagination.pageIndex"
+            :items-per-page="pagination.pageSize"
+            :total="pagination.total"
+            show-last
+            show-first
         />
       </div>
     </div>

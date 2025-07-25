@@ -68,9 +68,7 @@ const items = ref<TabsItem[]>([
           await createQrb({ v, text, t })
         }
 
-        await qrbStore.getQrbList({
-          page: 1,
-        })
+        await qrbStore.getQrbList()
 
         model.value = false
       },

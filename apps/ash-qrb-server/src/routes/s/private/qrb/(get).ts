@@ -10,17 +10,19 @@ export default (app: ElysiaApp) =>
   app.get(
     '',
     async ({ query, error }) => {
-      const { name } = query
       const options: IResponseOptions = {
-        order: (query as any).order || { by: 'ask', value: 'id' },
+        order: query?.order?.by
+          ? query?.order
+          : { by: 'desk', value: 'createdAt' },
         page: Number(query?.page) || 1,
         pageSize: Number(query?.pageSize) || 100,
+        filter: query?.filter,
       }
 
       const response = await filterByFieldCollectionItems(
         qrbSchema,
         'name',
-        name,
+        query?.filter.search,
         options,
       )
 

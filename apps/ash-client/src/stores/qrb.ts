@@ -11,6 +11,16 @@ export const useQrbStore = defineStore('qrb', () => {
     qrb: false,
   })
 
+  const filter = reactive({
+    search: '',
+  })
+
+  const pagination = reactive({
+    pageIndex: 1,
+    pageSize: 5,
+    total: 0,
+  })
+
   const getQrbById = async (id: string) => {
     isLoading.qrb = true
 
@@ -28,27 +38,40 @@ export const useQrbStore = defineStore('qrb', () => {
     return response
   }
 
-  const getQrbList = async (params: object) => {
+  const getQrbList = async () => {
     isLoading.qrbList = true
     const response = await api.GET('/s/private/qrb', {
-      params,
+      params: {
+        query: {
+          filter: JSON.stringify(filter),
+          page: pagination.pageIndex,
+          pageSize: pagination.pageSize,
+        },
+      },
     })
 
     const { data, error } = response
 
+    if (data || error) isLoading.qrbList = false
+
+    pagination.total = data?.total ?? 0
+
     if (error) errorMessage.value = error
-    qrbList.value = data?.items
-    isLoading.qrbList = false
+    qrbList.value = data?.items as any
 
     return response
   }
 
   const postQrb = async (formData: TQrbBody) => {
+    isLoading.qrbList = true
+
     const response = await api.POST('/s/private/qrb', {
       body: formData,
     })
 
     const { data, error } = response
+
+    if (data || error) isLoading.qrbList = false
 
     if (error) errorMessage.value = error
 
@@ -56,6 +79,8 @@ export const useQrbStore = defineStore('qrb', () => {
   }
 
   const updateQrb = async (id: string, formData: TQrbBody) => {
+    isLoading.qrbList = true
+
     const response = await api.PATCH('/s/private/qrb/{id}', {
       params: {
         path: { id },
@@ -64,7 +89,41 @@ export const useQrbStore = defineStore('qrb', () => {
     })
 
     const { data, error } = response
+    if (data || error) isLoading.qrbList = false
 
+    if (error) errorMessage.value = error
+
+    return response
+  }
+
+  const removeManyQrb = async (ids: string[]) => {
+    isLoading.qrbList = true
+
+    const response = await api.DELETE('/s/private/qrb/bulk', {
+      body: {
+        ids,
+      },
+    })
+
+    const { data, error } = response
+    if (data || error) isLoading.qrbList = false
+    if (error) errorMessage.value = error
+
+    return response
+  }
+
+  const updateManyQrb = async (ids: string[], fields: any) => {
+    isLoading.qrbList = true
+
+    const response = await api.PATCH('/s/private/qrb/bulk', {
+      body: {
+        ids,
+        fields,
+      },
+    })
+
+    const { data, error } = response
+    if (data || error) isLoading.qrbList = false
     if (error) errorMessage.value = error
 
     return response
@@ -72,6 +131,8 @@ export const useQrbStore = defineStore('qrb', () => {
 
   return {
     isLoading,
+    pagination,
+    filter,
     errorMessage,
     qrb,
     qrbList,
@@ -79,5 +140,7 @@ export const useQrbStore = defineStore('qrb', () => {
     postQrb,
     getQrbById,
     updateQrb,
+    updateManyQrb,
+    removeManyQrb,
   }
 })

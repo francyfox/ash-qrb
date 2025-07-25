@@ -13,14 +13,7 @@ import { socialProviders } from '@/utils/auth/auth.providers.ts'
 import { Elysia } from 'elysia'
 
 export const auth = betterAuth({
-  plugins: [
-    openAPI(),
-    // oAuthProxy({
-    //   productionURL: 'https://qrb.shalotts.site', // Optional - if the URL isn't inferred correctly
-    //   currentURL: 'http://localhost:4000', // Optional - if the URL isn't inferred correctly
-    // }),
-    customProviders,
-  ],
+  plugins: [openAPI(), customProviders],
   advanced: {
     cookies: {
       sessionToken: {
