@@ -3,10 +3,13 @@ import { defineAsyncComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ModalReallySure from '~/components/modals/ModalReallySure.vue'
 import type { TQrbItem } from '~/types/qrb.types'
+import 'ash-ui/assets/DefaultUploader.css'
 
 const ModalQrCode = defineAsyncComponent(
   () => import('~/components/modals/qrb-code/ModalQrCode.vue'),
 )
+
+const toast = useToast()
 
 const qrbStore = useQrbStore()
 const model = defineModel<string[]>({ default: [] })
@@ -24,6 +27,8 @@ const { t } = useI18n()
 
 const modalReallySure = ref(false)
 const modalQrCode = ref(false)
+const showImportModal = ref(false)
+const importFile = ref()
 
 async function handleRemove() {
   if (model.value?.length > 0) {
@@ -45,6 +50,42 @@ async function handleUpdate(status: boolean) {
 
   emit('deSelect')
 }
+
+async function handleImportModal() {
+  const { error } = (await qrbStore.importQrb(importFile.value)) as any // TODO: Error?
+
+  importFile.value = undefined
+  showImportModal.value = false
+
+  if (error) {
+    toast.add({
+      title: error.message || 'error',
+      description: error?.summary || error,
+      color: 'error',
+    })
+  } else {
+    toast.add({
+      title: t('toastQrbsExported'),
+      color: 'success',
+    })
+  }
+}
+async function handleExportQrb() {
+  const { error } = (await qrbStore.exportQrb()) as any // TODO: error?
+
+  if (error) {
+    toast.add({
+      title: error.message || 'error',
+      description: error?.summary || error,
+      color: 'error',
+    })
+  } else {
+    toast.add({
+      title: t('toastQrbsExported'),
+      color: 'success',
+    })
+  }
+}
 </script>
 
 <template>
@@ -62,15 +103,32 @@ async function handleUpdate(status: boolean) {
         {{ t('qrbListAdd') }}
       </UButton>
 
-      <UButton
-          color="secondary"
-          type="button"
-          class="cursor-pointer"
-          icon="i-lucide-import"
-          @click=""
+      <DefaultUploader
+          v-model="importFile"
+          v-model:showModal="showImportModal"
+          title="Import JSON"
+          :button-props="{
+            color: 'secondary',
+            type: 'button',
+            class: 'cursor-pointer',
+            icon: 'i-lucide-import',
+            size: 'xl'
+          }"
+          accepted-file-types="application/json"
+          max-file-size="2MB"
       >
-        Import JSON
-      </UButton>
+        <template #footer>
+          <UButton
+              color="primary"
+              type="button"
+              class="cursor-pointer"
+              icon="i-lucide-import"
+              @click="handleImportModal"
+          >
+            Import
+          </UButton>
+        </template>
+      </DefaultUploader>
 
       <UButton
           color="secondary"
@@ -78,6 +136,7 @@ async function handleUpdate(status: boolean) {
           class="cursor-pointer"
           icon="i-lucide-file-text"
           :disabled="list.length === 0"
+          @click="handleExportQrb"
       >
         Export JSON
       </UButton>

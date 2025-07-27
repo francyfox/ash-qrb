@@ -36,6 +36,8 @@
   "statusDisabled": "Disabled",
   "toastQrCreated": "QRB code created",
   "toastQrUpdated": "QRB code .::{name} was updated",
+  "toastQrbsExported": "Your QRB list downloaded as JSON file",
+  "toastQrbsImported": "Your JSON was imported by server",
   "userActiveCodes": "active codes",
   "userDisabledCodes": "disabled codes",
   "userGateways": "gateways per day",

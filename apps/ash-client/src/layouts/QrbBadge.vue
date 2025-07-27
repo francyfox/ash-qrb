@@ -5,7 +5,6 @@ import SectionHeader from '~/components/sections/SectionHeader.vue'
 
 <template>
   <div class="h-full flex flex-col justify-between">
-    <SectionHeader />
     <section class="layout-qrb h-full py-5">
       <div class="container">
         <div class="flex flex-col items-center gap-5">

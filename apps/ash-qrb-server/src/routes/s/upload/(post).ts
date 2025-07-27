@@ -30,7 +30,7 @@ export default (app: ElysiaApp) =>
     {
       body: t.Partial(
         t.Object({
-          file: t.File({ format: 'image/*' }),
+          file: t.File({ format: 'image/*,application/json"' }),
         }),
       ),
       ...validationCollectionItem(

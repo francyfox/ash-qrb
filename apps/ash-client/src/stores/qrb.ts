@@ -43,7 +43,7 @@ export const useQrbStore = defineStore('qrb', () => {
     const response = await api.GET('/s/private/qrb', {
       params: {
         query: {
-          filter: JSON.stringify(filter),
+          filter: JSON.stringify(filter) as any,
           page: pagination.pageIndex,
           pageSize: pagination.pageSize,
         },
@@ -129,6 +129,33 @@ export const useQrbStore = defineStore('qrb', () => {
     return response
   }
 
+  const importQrb = async (file: File) => {
+    const response = await api.POST('/s/private/qrb/json', {
+      body: {
+        file,
+      },
+    })
+
+    return response
+  }
+
+  const exportQrb = async () => {
+    const response = await api.GET('/s/private/qrb/json', {
+      parseAs: 'blob',
+    })
+
+    const { data } = await response
+
+    if (!data) throw new Error('File is undefined')
+    const file = window.URL.createObjectURL(data)
+    const link: HTMLAnchorElement = document.createElement('a')
+    link.href = file
+    link.download = `qrb_exports_${new Date().getTime()}` // the default filename when the user saves the file
+    link.click()
+
+    return response
+  }
+
   return {
     isLoading,
     pagination,
@@ -142,5 +169,7 @@ export const useQrbStore = defineStore('qrb', () => {
     updateQrb,
     updateManyQrb,
     removeManyQrb,
+    importQrb,
+    exportQrb,
   }
 })

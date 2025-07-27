@@ -36,6 +36,8 @@
   "statusDisabled": "Выключен",
   "toastQrCreated": "QRB код создан",
   "toastQrUpdated": "QRB код .::{name} - был обновлён",
+  "toastQrbsExported": "Ваш QRB список был сохранён в виде JSON",
+  "toastQrbsImported": "Ваш JSON был импортирован",
   "userActiveCodes": "активные коды",
   "userDisabledCodes": "неактивные коды",
   "userGateways": "переходов в день",

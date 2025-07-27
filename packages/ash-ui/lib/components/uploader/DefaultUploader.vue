@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import type { ButtonProps } from '@nuxt/ui/components/Button.vue'
 import { ref, useTemplateRef } from 'vue'
 import vueFilePond from 'vue-filepond'
-import { useI18n } from 'vue-i18n'
 
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
@@ -22,10 +22,17 @@ const FilePond = vueFilePond(
 const emit = defineEmits<{
   addFile: [{ file: File; error: any }]
 }>()
-const { t } = useI18n()
+
+const { title } = defineProps<{
+  title: string
+  buttonProps?: ButtonProps
+}>()
+
 const model = defineModel()
 // const userStore = useUserStore()
-const showModal = ref(false)
+const showModal = defineModel('showModal', {
+  default: false,
+})
 
 const pond = useTemplateRef('pond')
 
@@ -39,15 +46,13 @@ const handleAddFile = async (error: string, file: File) => {
     <UModal
         v-model:open="showModal"
         :dismissible="false"
-        :title="t('formUploadAvatar')"
+        :title="title"
     >
-      <UButton color="primary" class="cursor-pointer">
-        <UIcon
-            name="i-lucide-file"
-            :size="20"
-        />
-
-        {{ t('formUploadAvatar') }}
+      <UButton
+          v-bind="buttonProps"
+          class="cursor-pointer"
+      >
+        {{ title }}
       </UButton>
 
       <template #body>
@@ -59,14 +64,14 @@ const handleAddFile = async (error: string, file: File) => {
           <ClientOnly>
             <FilePond
                 v-bind="$attrs"
-                accepted-file-types="image/jpg, image/jpeg, image/png"
-                max-file-size="2MB"
-                allow-image-crop="true"
-                image-crop-aspect-ratio="1:1"
                 @addfile="handleAddFile"
             />
           </ClientOnly>
         </div>
+      </template>
+
+      <template #footer>
+        <slot name="footer" />
       </template>
     </UModal>
   </div>

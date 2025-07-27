@@ -33,7 +33,7 @@ export default (app: ElysiaApp) =>
         tags: ['App', 'Qrb'],
       },
       body: t.Object({
-        file: t.File({ format: 'application/json' }),
+        file: t.String(),
       }),
       response: {
         200: t.Any(),

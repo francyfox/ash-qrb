@@ -68,6 +68,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/s/private/qrb/json": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSPrivateQrbJson"];
+        put?: never;
+        post: operations["postSPrivateQrbJson"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/s/private/qrb/bulk": {
         parameters: {
             query?: never;
@@ -4012,8 +4028,8 @@ export interface operations {
                 filter?: {
                     search?: string;
                 };
-                page?: string | number;
-                pageSize?: string | number;
+                page?: number;
+                pageSize?: number;
                 order?: {
                     by?: "ask" | "desc";
                     /** @description example: name | created_at ... */
@@ -4158,6 +4174,171 @@ export interface operations {
             };
         };
     };
+    getSPrivateQrbJson: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        $schema: unknown;
+                        version: string;
+                        items: {
+                            id?: string;
+                            status?: number | null;
+                            name?: string;
+                            body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
+                            qrCode?: string | null;
+                            qrCodeTerminal?: string | null;
+                            userId?: string;
+                            createdAt?: Record<string, never> | null;
+                            updatedAt?: Record<string, never> | null;
+                        }[];
+                    };
+                    "multipart/form-data": {
+                        $schema: unknown;
+                        version: string;
+                        items: {
+                            id?: string;
+                            status?: number | null;
+                            name?: string;
+                            body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
+                            qrCode?: string | null;
+                            qrCodeTerminal?: string | null;
+                            userId?: string;
+                            createdAt?: Record<string, never> | null;
+                            updatedAt?: Record<string, never> | null;
+                        }[];
+                    };
+                    "text/plain": {
+                        $schema: unknown;
+                        version: string;
+                        items: {
+                            id?: string;
+                            status?: number | null;
+                            name?: string;
+                            body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
+                            qrCode?: string | null;
+                            qrCodeTerminal?: string | null;
+                            userId?: string;
+                            createdAt?: Record<string, never> | null;
+                            updatedAt?: Record<string, never> | null;
+                        }[];
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        title: string;
+                        detail: string;
+                    };
+                    "multipart/form-data": {
+                        title: string;
+                        detail: string;
+                    };
+                    "text/plain": {
+                        title: string;
+                        detail: string;
+                    };
+                };
+            };
+        };
+    };
+    postSPrivateQrbJson: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    /**
+                     * Format: binary
+                     * @default File
+                     */
+                    file: string;
+                };
+                "multipart/form-data": {
+                    /**
+                     * Format: binary
+                     * @default File
+                     */
+                    file: string;
+                };
+                "text/plain": {
+                    /**
+                     * Format: binary
+                     * @default File
+                     */
+                    file: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                    "multipart/form-data": unknown;
+                    "text/plain": unknown;
+                };
+            };
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        title: string;
+                        detail: string;
+                    };
+                    "multipart/form-data": {
+                        title: string;
+                        detail: string;
+                    };
+                    "text/plain": {
+                        title: string;
+                        detail: string;
+                    };
+                };
+            };
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        title: string;
+                        detail: string;
+                    };
+                    "multipart/form-data": {
+                        title: string;
+                        detail: string;
+                    };
+                    "text/plain": {
+                        title: string;
+                        detail: string;
+                    };
+                };
+            };
+        };
+    };
     deleteSPrivateQrbBulk: {
         parameters: {
             query?: never;
@@ -4201,11 +4382,11 @@ export interface operations {
                     fields: {
                         id?: string;
                         status?: number | null;
-                        name: string;
+                        name?: string;
                         body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                         qrCode?: string | null;
                         qrCodeTerminal?: string | null;
-                        userId: string;
+                        userId?: string;
                         createdAt?: Record<string, never> | null;
                         updatedAt?: Record<string, never> | null;
                     };
@@ -4215,11 +4396,11 @@ export interface operations {
                     fields: {
                         id?: string;
                         status?: number | null;
-                        name: string;
+                        name?: string;
                         body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                         qrCode?: string | null;
                         qrCodeTerminal?: string | null;
-                        userId: string;
+                        userId?: string;
                         createdAt?: Record<string, never> | null;
                         updatedAt?: Record<string, never> | null;
                     };
@@ -4229,11 +4410,11 @@ export interface operations {
                     fields: {
                         id?: string;
                         status?: number | null;
-                        name: string;
+                        name?: string;
                         body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
                         qrCode?: string | null;
                         qrCodeTerminal?: string | null;
-                        userId: string;
+                        userId?: string;
                         createdAt?: Record<string, never> | null;
                         updatedAt?: Record<string, never> | null;
                     };
