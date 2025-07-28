@@ -9,6 +9,13 @@ const { t } = useI18n()
 const navData = computed(() => [
   {
     id: useId(),
+    text: t('asideNavScanner'),
+    attrs: {
+      to: { path: '/qrb/scanner' },
+    },
+  },
+  {
+    id: useId(),
     text: t('asideNavProfile'),
     attrs: {
       to: { path: '/dashboard' },

@@ -1,6 +1,7 @@
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 import type { ComponentResolverObject } from 'unplugin-vue-components'
+export { default as Scanner } from './components/scanner/Scanner.vue'
 export { default as WidgetStatistic } from './components/widgets/WidgetStatistic.vue'
 export { default as WidgetUserInfo } from './components/widgets/WidgetUserInfo.vue'
 export { default as UserId } from './components/user-id/UserId.vue'
@@ -20,7 +21,7 @@ export { default as PanelCard } from './components/cards/PanelCard.vue'
 export { default as AvatarProfile } from './components/avatar/AvatarProfile.vue'
 export { default as AvatarSquare } from './components/avatar/AvatarSquare.vue'
 
-export const components = ['WidgetStatistic','WidgetUserInfo','UserId','DefaultUploader','QrbList','QrbImage','QrbEditor','NuxtImg','AsideNavigation','AsideNavigationItem','MenuPreview','MenuGenerator','HeaderDrop','DefaultCard','LightCard','PanelCard','AvatarProfile','AvatarSquare']
+export const components = ['Scanner','WidgetStatistic','WidgetUserInfo','UserId','DefaultUploader','QrbList','QrbImage','QrbEditor','NuxtImg','AsideNavigation','AsideNavigationItem','MenuPreview','MenuGenerator','HeaderDrop','DefaultCard','LightCard','PanelCard','AvatarProfile','AvatarSquare']
 export const ashUIResolver: ComponentResolverObject = {
   type: 'component',
   resolve: (name: string) => {
@@ -29,7 +30,8 @@ export const ashUIResolver: ComponentResolverObject = {
 }
 export const AshUI = { 
   install: (app: App<Element>) => {
-       app.component('WidgetStatistic', defineAsyncComponent(() => import('./components/widgets/WidgetStatistic.vue')))
+       app.component('Scanner', defineAsyncComponent(() => import('./components/scanner/Scanner.vue')))
+   app.component('WidgetStatistic', defineAsyncComponent(() => import('./components/widgets/WidgetStatistic.vue')))
    app.component('WidgetUserInfo', defineAsyncComponent(() => import('./components/widgets/WidgetUserInfo.vue')))
    app.component('UserId', defineAsyncComponent(() => import('./components/user-id/UserId.vue')))
    app.component('DefaultUploader', defineAsyncComponent(() => import('./components/uploader/DefaultUploader.vue')))
