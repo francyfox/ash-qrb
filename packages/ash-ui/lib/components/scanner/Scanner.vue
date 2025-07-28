@@ -14,7 +14,7 @@ const { providers, linkRegex = '' } = defineProps<{
 const { toast } = providers
 
 const emit = defineEmits<{
-  onDetect: [code: string]
+  onDetect: [code: string, external: boolean]
 }>()
 
 const torchActive = ref(false)
@@ -75,8 +75,7 @@ const errorMessage = (error: any) => {
 function handleDetect([firstDetectedCode]: any) {
   const code = firstDetectedCode.rawValue
   result.value = code
-  console.log(code)
-  emit('onDetect', code)
+  emit('onDetect', code, isExternal.value)
 }
 
 onMounted(() => {
