@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import { QrcodeStream, QrcodeCapture } from 'vue-qrcode-reader'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { isExternalUrl, isValidHttpUrl } from '~/utils/url.ts'
 
 const { t } = useI18n()
 
-const { providers } = defineProps<{
+const { providers, linkRegex = '' } = defineProps<{
   providers: any
+  linkRegex: string
 }>()
 
 const { toast } = providers
@@ -22,6 +24,10 @@ const devices = ref([] as MediaDeviceInfo[])
 const captured = ref()
 const result = ref('')
 
+const isExternal = computed(
+  () => isValidHttpUrl(result.value) || isExternalUrl(result.value, linkRegex),
+)
+
 function paintBoundingBox(detectedCodes: any[], ctx: CanvasRenderingContext2D) {
   for (const detectedCode of detectedCodes) {
     const {
@@ -34,7 +40,7 @@ function paintBoundingBox(detectedCodes: any[], ctx: CanvasRenderingContext2D) {
   }
 }
 
-function onCameraOn(capabilities) {
+function onCameraOn(capabilities: any) {
   torchNotSupported.value = !capabilities.torch
 }
 
@@ -66,14 +72,11 @@ const errorMessage = (error: any) => {
   }
 }
 
-function handleDetect(v: any) {
-  try {
-    const code = JSON.stringify(v.map((code: any) => code.rawValue))
-    result.value = code
-    emit('onDetect', code)
-  } catch (e: any) {
-    throw new Error(`Couldnt stringify detectedCodes ${e.message}`)
-  }
+function handleDetect([firstDetectedCode]: any) {
+  const code = firstDetectedCode.rawValue
+  result.value = code
+  console.log(code)
+  emit('onDetect', code)
 }
 
 onMounted(() => {
@@ -101,41 +104,29 @@ onMounted(() => {
         <USelectMenu
             v-model="selected"
             :items="devices"
+            :searchInput="false"
             variant="soft"
             icon="i-lucide-camera"
-            :searchInput="false"
             size="xl"
             arrow
+            :ui="{ leadingIcon: '!text-white' }"
+            class="text-white"
         />
       </div>
       <div class="scanner-item overflow-hidden rounded-2xl">
         <QrcodeStream
-            :constraints="{ deviceId: selected?.deviceId }"
-            :torch="torchActive"
-            :track="paintBoundingBox"
             @detect="handleDetect"
             @error="handleError"
             @camera-on="onCameraOn"
+            :torch="torchActive"
+            :track="paintBoundingBox"
             v-memo="[torchActive, selected?.deviceId]"
             class="w-full h-full"
         />
+<!--                 :constraints="{ deviceId: selected?.deviceId }" -->
       </div>
     </div>
     <div class="scanner-upload">
-      <Transition>
-        <div v-if="result" class="scanner-upload-result">
-          Scanned qr: <b>{{ result[0] }}</b>
-
-          <UButton
-              as="a"
-              icon="i-lucide-square-arrow-out-up-right"
-              :to="result[0]"
-          >
-            {{ t('scannerGoToPage') }}
-          </UButton>
-        </div>
-      </Transition>
-
       <div class="flex items-center gap-2">
         <UIcon name="i-lucide-qr-code" class="p-1 w-[40px] h-[40px] bg-p-middle-red text-white rounded-lg" />
         <QrcodeCapture
@@ -144,6 +135,33 @@ onMounted(() => {
             class="cursor-pointer bg-p-middle-red hover:bg-p-middle-red/70 text-white p-2 rounded-lg transition-colors"
         />
       </div>
+
+      <Transition>
+        <div v-if="result" class="scanner-upload-result">
+          Scanned qr: <b>{{ result }}</b>
+
+          <div class="flex items-center gap-2">
+            <UIcon
+                name="i-lucide-square-arrow-out-up-right"
+            />
+
+            <a
+                v-if="isExternal"
+                :href="result"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+              {{ t('scannerGoToPage') }}
+            </a>
+            <RouterLink
+                v-else
+                :to="result"
+            >
+              {{ t('scannerGoToPage') }}
+            </RouterLink>
+          </div>
+        </div>
+      </Transition>
     </div>
   </div>
 </template>
