@@ -25,7 +25,7 @@ const captured = ref()
 const result = ref('')
 
 const isExternal = computed(
-  () => isValidHttpUrl(result.value) || isExternalUrl(result.value, linkRegex),
+  () => isValidHttpUrl(result.value) && isExternalUrl(result.value, linkRegex),
 )
 
 function paintBoundingBox(detectedCodes: any[], ctx: CanvasRenderingContext2D) {
@@ -34,9 +34,14 @@ function paintBoundingBox(detectedCodes: any[], ctx: CanvasRenderingContext2D) {
       boundingBox: { x, y, width, height },
     } = detectedCode
 
-    ctx.lineWidth = 2
-    ctx.strokeStyle = '#007bff'
-    ctx.strokeRect(x, y, width, height)
+    ctx.lineWidth = 1
+    ctx.strokeStyle = '#e85c31'
+    ctx.roundRect(x, y, width, height, 10)
+    ctx.fillStyle = 'rgba(232,135,49,0.3)'
+    ctx.font = 'italic 12px sans-serif'
+    ctx.strokeText(detectedCode.rawValue, x - 10, y - 5)
+    ctx.fill()
+    ctx.stroke()
   }
 }
 
@@ -75,6 +80,15 @@ const errorMessage = (error: any) => {
 function handleDetect([firstDetectedCode]: any) {
   const code = firstDetectedCode.rawValue
   result.value = code
+
+  if (!isValidHttpUrl(code)) {
+    toast.add({
+      color: 'error',
+      title: t('snannerUrlNotValid'),
+    })
+
+    return
+  }
   emit('onDetect', code, isExternal.value)
 }
 
@@ -108,8 +122,7 @@ onMounted(() => {
             icon="i-lucide-camera"
             size="xl"
             arrow
-            :ui="{ leadingIcon: '!text-white' }"
-            class="text-white"
+            class="lg:text-lg text-sm max-w-[280px]"
         />
       </div>
       <div class="scanner-item overflow-hidden rounded-2xl">
@@ -125,7 +138,7 @@ onMounted(() => {
 <!--                 :constraints="{ deviceId: selected?.deviceId }" -->
       </div>
     </div>
-    <div class="scanner-upload">
+    <div class="scanner-upload flex flex-col gap-2">
       <div class="flex items-center gap-2">
         <UIcon name="i-lucide-qr-code" class="p-1 w-[40px] h-[40px] bg-p-middle-red text-white rounded-lg" />
         <QrcodeCapture
@@ -136,7 +149,7 @@ onMounted(() => {
       </div>
 
       <Transition>
-        <div v-if="result" class="scanner-upload-result">
+        <div v-if="result" class="scanner-upload-result flex flex-col gap-1">
           Scanned qr: <b>{{ result }}</b>
 
           <div class="flex items-center gap-2">
