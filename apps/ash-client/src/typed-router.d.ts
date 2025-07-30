@@ -24,6 +24,7 @@ declare module 'vue-router/auto-routes' {
     '/error': RouteRecordInfo<'/error', '/error', Record<never, never>, Record<never, never>>,
     '/profile/': RouteRecordInfo<'/profile/', '/profile', Record<never, never>, Record<never, never>>,
     '/qrb/[id]': RouteRecordInfo<'/qrb/[id]', '/qrb/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
+    '/qrb/scanner/': RouteRecordInfo<'/qrb/scanner/', '/qrb/scanner', Record<never, never>, Record<never, never>>,
     '/qrb-list/': RouteRecordInfo<'/qrb-list/', '/qrb-list', Record<never, never>, Record<never, never>>,
     '/sign-up/': RouteRecordInfo<'/sign-up/', '/sign-up', Record<never, never>, Record<never, never>>,
   }

@@ -1,5 +1,5 @@
 import { db } from '@/core/db'
-import { asc, desc, like } from 'drizzle-orm'
+import { asc, count, desc, like } from 'drizzle-orm'
 import type { PgTableWithColumns } from 'drizzle-orm/pg-core/table'
 import { eq } from 'drizzle-orm/sql/expressions/conditions'
 import type { BuildSchema } from 'drizzle-typebox'
@@ -14,6 +14,9 @@ export interface IResponseOptions {
   page: number
   pageSize: number
   order: IResponseOptionOrder
+  filter: {
+    search: string
+  }
 }
 
 export const getCollectionItems = async (
@@ -31,9 +34,12 @@ export const getCollectionItems = async (
     .limit(options.pageSize)
     .offset((options.page - 1) * options.pageSize)
 
+  const [totalResponse] = await db.select({ count: count() }).from(collection)
+
   return {
     items,
     count: items.length,
+    total: totalResponse?.count,
   }
 }
 
@@ -44,16 +50,25 @@ export const filterByFieldCollectionItems = async (
   value: string,
   options: IResponseOptions,
 ) => {
+  const isAsc = options.order.by === 'ask'
+  const order = isAsc
+    ? asc(collection[options.order.value])
+    : desc(collection[options.order.value])
+
   const items = await db
     .select()
     .from(collection)
     .where(like(collection[field], `${value || ''}%`))
+    .orderBy(order)
     .limit(options.pageSize)
     .offset((options.page - 1) * options.pageSize)
+
+  const [totalResponse] = await db.select({ count: count() }).from(collection)
 
   return {
     items,
     count: items.length,
+    total: totalResponse?.count,
   }
 }
 
@@ -84,17 +99,26 @@ export const validationCollectionItems = (
     detail: { tags: ['App'] },
     query: t.Partial(
       t.Object({
+        filter: t.Partial(
+          t.Object({
+            search: t.String(),
+          }),
+        ),
         page: t.Number(),
         pageSize: t.Number(),
-        order: t.Object({
-          by: t.Union([t.Literal('ask'), t.Literal('desc')]),
-        }),
+        order: t.Partial(
+          t.Object({
+            by: t.Union([t.Literal('ask'), t.Literal('desc')]),
+            value: t.String({ description: 'example: name | created_at ...' }),
+          }),
+        ),
       }),
     ),
     response: {
       200: t.Object({
         items: t.Array(selectSchema),
         count: t.Number(),
+        total: t.Number(),
       }),
       500: errorSchema,
     },

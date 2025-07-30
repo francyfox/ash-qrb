@@ -57,7 +57,7 @@ CREATE TABLE "users" (
 	"status" integer DEFAULT 0,
 	"image" text,
 	"name" varchar(70) NOT NULL,
-	"company_name" varchar(40) NOT NULL,
+	"company_name" varchar(40),
 	"email" varchar(38),
 	"email_verified" boolean DEFAULT false NOT NULL,
 	"phone" varchar(12),

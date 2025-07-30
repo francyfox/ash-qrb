@@ -23,7 +23,8 @@
   "peerDependencies": {
     "vue": "catalog:",
     "ash-i18n": "workspace:*",
-    "@vueuse/core": "catalog:"
+    "@vueuse/core": "catalog:",
+    "@nuxt/ui": "catalog:"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^6.0.8",
@@ -38,6 +39,7 @@
     "vite": "^6.3.5",
     "vite-plugin-dts": "^4.5.4",
     "vite-plugin-lib-inject-css": "^2.2.2",
+    "vue-qrcode-reader": "^5.7.3",
     "vue-tsc": "^2.2.8"
   },
   "dependencies": {

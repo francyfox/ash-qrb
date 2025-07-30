@@ -78,8 +78,6 @@ const handleSubmit = (event: FormSubmitEvent<TQrbProps>) => {
   const menuList = toRaw(menu.value)
   const { status, ...data } = toRaw(event.data)
 
-  console.log(user.value)
-
   const formData = {
     ...data,
     status: status?.value,

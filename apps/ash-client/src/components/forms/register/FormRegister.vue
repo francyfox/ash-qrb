@@ -66,6 +66,11 @@ onMounted(() => {
   >
     <DefaultUploader
         v-model="state.image"
+        accepted-file-types="image/jpg, image/jpeg, image/png"
+        max-file-size="2MB"
+        allow-image-crop="true"
+        image-crop-aspect-ratio="1:1"
+        :title="t('formUploadAvatar')"
     />
 
     <UInput

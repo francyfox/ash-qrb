@@ -51,6 +51,20 @@ export const app = new Elysia()
     }),
   )
   .use(betterAuthPlugin)
+  .use(
+    cors({
+      origin: [
+        config.CLIENT_APP_URL,
+        'http://localhost',
+        'https://localhost',
+        'https://qrb.shalotts.site',
+        '*',
+      ],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+      credentials: true,
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    }),
+  )
 
 export type ElysiaApp = typeof app
 export const GET = app.handle
