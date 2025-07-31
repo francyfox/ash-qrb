@@ -72,6 +72,11 @@ const columns: TableColumn<TQrbItem>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
+    meta: {
+      class: {
+        td: 'max-w-[100px] lg:max-w-[200px] truncate',
+      },
+    },
   },
   {
     accessorKey: 'status',
