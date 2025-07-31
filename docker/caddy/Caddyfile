@@ -1,25 +1,15 @@
-#(cloudflare) {
-#    encode gzip
-#    tls {
-#        dns cloudflare {env.CLOUDFLARE_DNS}
-#        resolvers 1.1.1.1
-#    }
-#}
-
 :443 {
-#    import cloudflare
     tls /srv/certs/cert.pem /srv/certs/private.pem
     root * /var/www/html
     encode gzip
     header remote_addr "{header.X-Forwarded-For}"
 
     handle /api* {
-        reverse_proxy ash-backend:3000 {
+        reverse_proxy https://qrb-api.shalotts.site {
             health_path /health
             health_interval 10s
             transport http {
                 tls
-                tls_insecure_skip_verify
             }
         }
     }
@@ -32,9 +22,4 @@
         rewrite * /index.html
         file_server
     }
-}
-
-
-api.qrb.shalotts.site {
-    reverse_proxy ash-backend:3000
 }
