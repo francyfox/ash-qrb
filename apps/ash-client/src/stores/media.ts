@@ -12,6 +12,8 @@ const screens = {
 
 type TScreens = '2xl' | 'xl' | 'lg' | 'md' | 'sm'
 type TMediaQueries = Record<TScreens, Ref<boolean>>
+
+// TODO: rewrite on vueuse useBreakpoints
 export const useMediaStore = defineStore('media', () => {
   // @ts-ignore
   const mediaQueries = computed<TMediaQueries>(() =>

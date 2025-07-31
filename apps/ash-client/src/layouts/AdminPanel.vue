@@ -6,29 +6,11 @@ import SectionHeader from '~/components/sections/SectionHeader.vue'
 
 const { t } = useI18n()
 
-const navData = computed(() => [
-  {
-    id: useId(),
-    text: t('asideNavScanner'),
-    attrs: {
-      to: { path: '/qrb/scanner' },
-    },
-  },
-  {
-    id: useId(),
-    text: t('asideNavProfile'),
-    attrs: {
-      to: { path: '/dashboard' },
-    },
-  },
-  {
-    id: useId(),
-    text: t('asideNavList'),
-    attrs: {
-      to: { path: '/qrb-list' },
-    },
-  },
-])
+const mediaStore = useMediaStore()
+const { mediaQueries } = mediaStore
+
+const dashboardStore = useDashboardStore()
+const { navData } = dashboardStore
 
 const error = ref({
   name: '',
@@ -74,7 +56,10 @@ onErrorCaptured((err) => {
             </div>
           </PanelCard>
 
-          <PanelCard class="card-menu max-w-[335px] overflow-y-auto">
+          <PanelCard
+              v-if="mediaQueries.lg.value"
+              class="card-menu max-w-[335px] overflow-y-auto"
+          >
             <AsideNavigation :data="navData" />
           </PanelCard>
         </div>

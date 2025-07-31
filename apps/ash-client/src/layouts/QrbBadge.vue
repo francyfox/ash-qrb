@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import SectionFooter from '~/components/sections/SectionFooter.vue'
-import SectionHeader from '~/components/sections/SectionHeader.vue'
 </script>
 
 <template>
