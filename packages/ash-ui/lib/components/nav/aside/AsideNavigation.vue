@@ -2,13 +2,15 @@
 import type { RouterLinkProps } from 'vue-router'
 import AsideNavigationItem from './AsideNavigationItem.vue'
 
-defineProps<{
+export interface AsideNavigationProps {
   data: {
     id: string
     text: string
     attrs: RouterLinkProps
   }[]
-}>()
+}
+
+defineProps<AsideNavigationProps>()
 </script>
 
 <template>

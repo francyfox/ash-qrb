@@ -58,6 +58,7 @@ export const useQrbStore = defineStore('qrb', () => {
 
     if (error) errorMessage.value = error
     qrbList.value = data?.items as any
+    console.log(data?.items)
 
     return response
   }

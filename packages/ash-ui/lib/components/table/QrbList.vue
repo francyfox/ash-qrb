@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { TableColumn, TableRow } from '@nuxt/ui'
 import type { Row } from '@tanstack/vue-table'
-import { getPaginationRowModel } from '@tanstack/vue-table'
-import { h, resolveComponent, type Ref } from 'vue'
+import { h, resolveComponent, type Ref, watch, onMounted } from 'vue'
 // import type { TQrbItem } from '~/types/qrb.types'
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import { computed, ref, useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDayjs } from '~/composable/dayjs.ts'
@@ -73,7 +73,6 @@ const columns: TableColumn<TQrbItem>[] = [
     accessorKey: 'name',
     header: 'Name',
   },
-
   {
     accessorKey: 'status',
     header: 'Status',
@@ -134,8 +133,6 @@ const rowSelection = ref<Record<string, boolean>>({})
 function onSelect(row: TableRow<TQrbItem>, e?: Event) {
   /* If you decide to also select the column you can do this  */
   row.toggleSelected(!row.getIsSelected())
-
-  console.log(e)
 }
 
 function getRowItems(row: Row<TQrbItem>) {
@@ -181,6 +178,30 @@ const columnFilters = ref([
 const tableTotal: Ref<number | undefined> = computed(
   () => table.value?.tableApi?.getFilteredRowModel().rows.length,
 )
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const lg = breakpoints.smaller('lg')
+
+const hiddenColsOnLgPattern = new RegExp(['id', 'createdAt'].join('|'), 'gi')
+const hiddenColsOnLg = computed(() =>
+  table.value?.tableApi
+    .getAllColumns()
+    .filter((col) => hiddenColsOnLgPattern.test(col.id)),
+)
+
+function hideCols(v) {
+  for (const col of hiddenColsOnLg.value) {
+    col.toggleVisibility(!v)
+  }
+}
+
+watch(lg, (v) => {
+  hideCols(v)
+})
+
+onMounted(() => {
+  hideCols(lg.value)
+})
 </script>
 
 <template>

@@ -144,7 +144,7 @@ onMounted(() => {
         <QrcodeCapture
             @detect="handleDetect"
             :capture="captured"
-            class="cursor-pointer bg-p-middle-red hover:bg-p-middle-red/70 text-white p-2 rounded-lg transition-colors"
+            class="cursor-pointer w-full bg-p-middle-red hover:bg-p-middle-red/70 text-white p-2 rounded-lg transition-colors"
         />
       </div>
 

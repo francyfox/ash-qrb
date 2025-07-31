@@ -2,6 +2,13 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+definePage({
+  meta: {
+    layout: 'AdminPanel',
+    auth: true,
+  },
+})
+
 const toast = useToast()
 
 const router = useRouter()
@@ -26,15 +33,15 @@ function handleDetect(code: string, external: boolean) {
 </script>
 
 <template>
-  <section class="section-scanner mt-5">
+  <section class="section-scanner">
     <div class="container">
       <div class="flex flex-col items-center gap-5">
-        <PanelCard class="max-w-[600px] py-5">
+        <div class="w-full max-w-[600px]">
           <Scanner
               v-bind="{ providers }"
               @onDetect="handleDetect"
           />
-        </PanelCard>
+        </div>
       </div>
     </div>
 

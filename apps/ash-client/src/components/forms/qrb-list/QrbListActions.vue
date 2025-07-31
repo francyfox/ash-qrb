@@ -92,11 +92,11 @@ async function handleExportQrb() {
   <div class="flex flex-col gap-2"
        :class="{ 'pointer-events-none opacity-5 transition-opacity': disabled }"
   >
-    <div class="flex gap-2">
+    <div class="flex gap-2 flex-wrap">
       <UButton
           color="primary"
           type="button"
-          class="cursor-pointer"
+          class="cursor-pointer w-full sm:w-auto"
           icon="i-lucide-qr-code"
           @click="modalQrCode = true"
       >
@@ -110,12 +110,13 @@ async function handleExportQrb() {
           :button-props="{
             color: 'secondary',
             type: 'button',
-            class: 'cursor-pointer',
+            class: 'cursor-pointer w-full sm:w-auto',
             icon: 'i-lucide-import',
             size: 'xl'
           }"
           accepted-file-types="application/json"
           max-file-size="2MB"
+          class="flex"
       >
         <template #footer>
           <UButton
@@ -133,7 +134,7 @@ async function handleExportQrb() {
       <UButton
           color="secondary"
           type="button"
-          class="cursor-pointer"
+          class="cursor-pointer w-[50%] sm:w-auto"
           icon="i-lucide-file-text"
           :disabled="list.length === 0"
           @click="handleExportQrb"
@@ -141,22 +142,11 @@ async function handleExportQrb() {
         Export JSON
       </UButton>
     </div>
-    <div class="flex gap-2">
-      <UButton
-          color="error"
-          type="button"
-          class="cursor-pointer"
-          icon="i-lucide-trash-2"
-          :disabled="list.length === 0"
-          @click="modalReallySure = true"
-      >
-        {{ t('qrbListRemoveSelected') }}
-      </UButton>
-
+    <div class="flex gap-2 flex-wrap">
       <UButton
           color="success"
           type="button"
-          class="cursor-pointer"
+          class="cursor-pointer flex-grow lg:flex-grow-0"
           icon="i-lucide-lightbulb"
           @click="handleUpdate(true)"
       >
@@ -166,11 +156,24 @@ async function handleExportQrb() {
       <UButton
           color="warning"
           type="button"
-          class="cursor-pointer"
+          class="cursor-pointer flex-grow lg:flex-grow-0"
           icon="i-lucide-lightbulb-off"
           @click="handleUpdate(false)"
       >
         {{ t('actionDisable') }}
+      </UButton>
+
+      <UButton
+          color="error"
+          type="button"
+          class="cursor-pointer"
+          icon="i-lucide-trash-2"
+          :disabled="list.length === 0"
+          @click="modalReallySure = true"
+      >
+        <span class="hidden sm:inline-block">
+           {{ t('qrbListRemoveSelected') }}
+        </span>
       </UButton>
     </div>
 
