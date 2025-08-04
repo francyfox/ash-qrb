@@ -90,7 +90,14 @@ yarn-error.log*
 
 # Misc
 .DS_Store
+
+# TLS
+*.crt
+*.key
+*.csr
 *.pem
+
+# AI
 .aider*
 
 6bde5434-dcbf-470a-94c9-4398f178e7cb.json

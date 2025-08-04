@@ -1,3 +1,4 @@
+import { redisClient } from '@/core/services/redis.ts'
 import { join } from 'node:path'
 import { config } from '@/config.ts'
 import { client } from '@/core/db/index.ts'
@@ -9,8 +10,9 @@ const signals = ['SIGINT', 'SIGTERM']
 for (const signal of signals) {
   process.on(signal, async () => {
     console.log(`Received ${signal}. Initiating graceful shutdown...`)
-    await app.stop()
+    // await app.stop()
     await posthog.shutdown()
+    redisClient.close()
     process.exit(0)
   })
 }
@@ -25,6 +27,8 @@ process.on('unhandledRejection', (error) => {
 
 await client.connect()
 console.log('🗄  Database was connected!')
+
+await redisClient.connect()
 
 app.listen(
   {
