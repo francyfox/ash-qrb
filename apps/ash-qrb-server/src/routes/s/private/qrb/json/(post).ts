@@ -1,18 +1,22 @@
 import { config } from '@/config.ts'
 import { errorSchema } from '@/core/services/response-format.ts'
+import { QueueService } from '@/modules/queue/queue.service.ts'
 import { qrbSchema } from '@/schema/qrb.ts'
 import type { ElysiaApp } from '@/server.ts'
-import { t } from 'elysia'
-import { semver } from 'bun'
+import { type Context, t } from 'elysia'
+import { type RedisClient, semver } from 'bun'
 import { db } from '@/core/db'
 
 const VERSION_RANGE = `1.0.0 - ${config.APP_VERSION}`
 
+interface RedisContext extends Context {
+  redis: RedisClient
+}
 export default (app: ElysiaApp) =>
   app.post(
     '',
-    async ({ body, error, set }) => {
-      const { file } = body
+    async ({ body, set, redis }: RedisContext) => {
+      const { file } = body as any
       const json = await Bun.file(file).json()
       const isVersionCorrect = semver.satisfies(json?.version, VERSION_RANGE)
 
@@ -24,8 +28,10 @@ export default (app: ElysiaApp) =>
       }
 
       if (Array.isArray(json.items)) {
-        // redis
-        await db.insert(qrbSchema).values(json.items)
+        const service = new QueueService(redis)
+        service.worker = new Worker('./queue.worker.ts')
+
+        service.worker.postMessage(json.items)
       }
     },
     {

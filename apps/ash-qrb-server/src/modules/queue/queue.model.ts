@@ -6,16 +6,17 @@ export interface IQueue {
 }
 
 export const QUEUE_STATUS = {
-  IN_QUEUE: 0,
-  IN_PROGRESS: 1,
-  FAILED: 2,
-  SUCCESS: 3,
+  IN_QUEUE: 'IN_QUEUE',
+  IN_PROGRESS: 'IN_PROGRESS',
+  FAILED: 'FAILED',
+  SUCCESS: 'SUCCESS',
 }
 
 export class QueueModel {
   id
   value
-  log = ''
+  logs = ''
+  status = QUEUE_STATUS.IN_QUEUE
   packr
 
   constructor({ value }: IQueue) {

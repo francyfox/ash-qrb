@@ -17,6 +17,7 @@ services:
       - REDIS_TLS_ENABLED=false
       - REDIS_TLS_AUTH_CLIENTS=no
       - REDIS_TLS_PORT=6379
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory 250mb
     volumes:
       - ./docker/certs/redis:/tls
       - predis_data:/bitnami/redis/data
