@@ -1,8 +1,9 @@
+import { config } from '@/config.ts'
 import { RedisClient } from 'bun'
 import { Elysia } from 'elysia'
 
 export const redisClient = new RedisClient(
-  'redis://default:123@localhost:6379',
+  `redis://${config.REDIS_USER}:${config.REDIS_PASSWORD}@${config.REDIS_HOST}:${config.REDIS_PORT}`,
   {
     // connectionTimeout: 1000,
     // autoReconnect: true,
@@ -17,7 +18,7 @@ export const redisClient = new RedisClient(
   },
 )
 
-export const elysiaRedis = new Elysia().decorate('redis', RedisClient)
+export const elysiaRedis = new Elysia().decorate('redis', redisClient)
 
 redisClient.onconnect = () => {
   console.log('🪣  Redis was connected!')

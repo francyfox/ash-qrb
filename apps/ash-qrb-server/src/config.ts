@@ -28,9 +28,10 @@ export const config = {
   CLOUDINARY_SECRET: env.get('CLOUDINARY_SECRET').required().asString(),
 
   // Redis
-  REDIS_USER: env.get('REDIS_USER').required().asString(),
+  REDIS_USER: env.get('REDIS_USER').default('default').asString(),
   REDIS_PASSWORD: env.get('REDIS_PASSWORD').required().asString(),
-  REDIS_HOST: env.get('REDIS_HOST').required().asString(),
+  REDIS_HOST: env.get('REDIS_HOST').default('0.0.0.0').asString(),
+  REDIS_PORT: env.get('REDIS_PORT').default('6379').asString(),
 
   // Providers
   PROVIDER_GOOGLE_CLIENT_ID: env
