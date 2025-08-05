@@ -1,4 +1,5 @@
 import { config } from '@/config.ts'
+import { elysiaRedis } from '@/core/services/redis.ts'
 import { auth, betterAuthPlugin } from '@/utils/auth/auth.ts'
 import { cors } from '@elysiajs/cors'
 import { jwt } from '@elysiajs/jwt'
@@ -40,6 +41,7 @@ export const app = new Elysia()
       },
     }),
   )
+  .use(elysiaRedis)
   .use(jwt({ secret: config.JWT_SECRET }))
   .use(serverTiming())
   .use(

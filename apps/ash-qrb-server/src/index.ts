@@ -1,3 +1,4 @@
+import { CERT_DIR } from '@/consts.ts'
 import { redisClient } from '@/core/services/redis.ts'
 import { join } from 'node:path'
 import { config } from '@/config.ts'
@@ -34,12 +35,12 @@ app.listen(
   {
     port: config.PORT,
     tls: {
-      key: Bun.file(join(import.meta.dir, '../../../docker/certs/private.pem')),
-      cert: Bun.file(join(import.meta.dir, '../../../docker/certs/cert.pem')),
+      key: Bun.file(join(CERT_DIR, './private.pem')),
+      cert: Bun.file(join(CERT_DIR, './cert.pem')),
     },
   },
   () => {
     console.log(`🕮  Swagger is active at: ${app.server?.url.origin}/swagger`)
-    console.log(`🦊 Server started at: ${app.server?.url.origin}`)
+    console.log(`😋  Server started at: ${app.server?.url.origin}`)
   },
 )

@@ -11,8 +11,8 @@ services:
       - REDIS_AOF_ENABLED=no
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
-      - REDIS_TLS_CERT_FILE=/tls/redis.crt
-      - REDIS_TLS_KEY_FILE=/tls/redis.key
+      - REDIS_TLS_CERT_FILE=/tls/server.crt
+      - REDIS_TLS_KEY_FILE=/tls/server.key
       - REDIS_TLS_CA_FILE=/tls/ca.crt
       - REDIS_TLS_ENABLED=false
       - REDIS_TLS_AUTH_CLIENTS=no

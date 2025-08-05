@@ -1,22 +1,28 @@
-import { config } from '@/config.ts'
 import { RedisClient } from 'bun'
-import { join } from 'node:path'
+import { Elysia } from 'elysia'
 
-const CERT_FOLDER = join(process.cwd(), '../../docker/certs/redis')
-console.log(join(CERT_FOLDER, './ca.crt'))
-
-export const redisClient = new RedisClient('redis://default:123@0.0.0.0:6379', {
-  tls: {
-    ca: join(CERT_FOLDER, './ca.crt'),
-    cert: join(CERT_FOLDER, './client.crt'),
-    key: join(CERT_FOLDER, './client.key'),
+export const redisClient = new RedisClient(
+  'redis://default:123@localhost:6379',
+  {
+    // connectionTimeout: 1000,
+    // autoReconnect: true,
+    // maxRetries: 1,
+    // enableAutoPipelining: true,
+    tls: {
+      rejectUnauthorized: true, // TODO: bun:bug default cyphers in next bun release
+      // ca: join(CERT_FOLDER, './ca.crt'),
+      // cert: join(CERT_FOLDER, './client.crt'),
+      // key: join(CERT_FOLDER, './client.key'),
+    },
   },
-})
+)
+
+export const elysiaRedis = new Elysia().decorate('redis', RedisClient)
 
 redisClient.onconnect = () => {
-  console.log('Connected to Redis server')
+  console.log('🪣  Redis was connected!')
 }
 
 redisClient.onclose = (error) => {
-  console.error('Disconnected from Redis server:', error)
+  console.error('🪣 Disconnected from Redis server:', error)
 }
