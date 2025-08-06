@@ -17,13 +17,14 @@
     "format": "bunx biome check"
   },
   "dependencies": {
-    "elysia": "catalog:",
     "@braintree/sanitize-url": "^7.1.1",
     "@elysiajs/static": "^1.3.0",
     "@nuxt/ui": "catalog:",
     "@types/quill": "^2.0.14",
     "@vueuse/core": "catalog:",
     "ash-i18n": "workspace:*",
+    "elysia": "catalog:",
+    "msgpackr": "^1.11.5",
     "pinia": "^3.0.3",
     "quill-delta-to-html": "^0.12.1",
     "vue": "catalog:"

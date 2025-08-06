@@ -27,6 +27,7 @@
         "@vueuse/core": "catalog:",
         "ash-i18n": "workspace:*",
         "elysia": "catalog:",
+        "msgpackr": "^1.11.5",
         "pinia": "^3.0.3",
         "quill-delta-to-html": "^0.12.1",
         "vue": "catalog:",

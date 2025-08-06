@@ -1,11 +1,11 @@
 import { config } from '@/config.ts'
 import { errorSchema } from '@/core/services/response-format.ts'
 import { QueueService } from '@/modules/queue/queue.service.ts'
-import { qrbSchema } from '@/schema/qrb.ts'
 import type { ElysiaApp } from '@/server.ts'
+import { isUrl } from '@/utils/url.ts'
 import { type Context, t } from 'elysia'
 import { type RedisClient, semver } from 'bun'
-import { db } from '@/core/db'
+import { Packr } from 'msgpackr'
 
 const VERSION_RANGE = `1.0.0 - ${config.APP_VERSION}`
 
@@ -16,29 +16,62 @@ export default (app: ElysiaApp) =>
   app.post(
     '',
     async ({ body, set, redis }: RedisContext) => {
-      const { file } = body as any
-      const json = await Bun.file(file).json()
-      const isVersionCorrect = semver.satisfies(json?.version, VERSION_RANGE)
+      const packr = new Packr()
 
-      if (!isVersionCorrect) {
-        set.status = 422
-        throw new Error(
-          `Version should be correct. Expecting range ${VERSION_RANGE}`,
-        )
-      }
+      const { file, type } = body as any
+      let json: any
 
-      if (Array.isArray(json.items)) {
-        const service = new QueueService(redis)
-        service.worker = new Worker('./queue.worker.ts')
+      console.log(file)
+      console.log(packr.unpack(file))
 
-        service.worker.postMessage(json.items)
-      }
+      // switch (type) {
+      //   case 'mp:content':
+      //     json = packr.unpack(Buffer.from(file))
+      //     break
+      //   case 'mp': {
+      //     const buffer = await fetch(file).then(
+      //       (response) => response.arrayBuffer,
+      //     )
+      //     json = packr.unpack(buffer)
+      //     break
+      //   }
+      //   case 'json': {
+      //     json = await fetch(file).then((res) => res.json())
+      //     break
+      //   }
+      // }
+      //
+      // const isVersionCorrect = semver.satisfies(json?.version, VERSION_RANGE)
+      //
+      // if (!isVersionCorrect) {
+      //   set.status = 422
+      //   throw new Error(
+      //     `Version should be correct. Expecting range ${VERSION_RANGE}`,
+      //   )
+      // }
+      //
+      // console.log(json?.version)
+      //
+      // if (Array.isArray(json.items)) {
+      //   const service = new QueueService(redis)
+      //   service.worker = new Worker('./queue.worker.ts')
+      //
+      //   service.worker.postMessage(json.items)
+      // }
     },
     {
       detail: {
-        tags: ['App', 'Qrb'],
+        tags: ['App', 'Qrb', 'Queue'],
       },
       body: t.Object({
+        type: t.Union(
+          [t.Literal('json'), t.Literal('mpk'), t.Literal('mpk:content')],
+          {
+            default: 'mpk:content',
+            description:
+              'JSON/MPK (messagepack) use url from CDN. mp:content use for messagepack (Buffer) converted to string',
+          },
+        ),
         file: t.String(),
       }),
       response: {

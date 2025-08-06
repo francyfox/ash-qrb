@@ -36,6 +36,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/s/private/queue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSPrivateQueue"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/s/private/users": {
         parameters: {
             query?: never;
@@ -3852,14 +3868,31 @@ export interface operations {
             };
         };
     };
+    getSPrivateQueue: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getSPrivateUsers: {
         parameters: {
             query?: {
                 filter?: {
                     search?: string;
                 };
-                page?: number;
-                pageSize?: number;
+                page?: string | number;
+                pageSize?: string | number;
                 order?: {
                     by?: "ask" | "desc";
                     /** @description example: name | created_at ... */
@@ -4028,8 +4061,8 @@ export interface operations {
                 filter?: {
                     search?: string;
                 };
-                page?: number;
-                pageSize?: number;
+                page?: string | number;
+                pageSize?: string | number;
                 order?: {
                     by?: "ask" | "desc";
                     /** @description example: name | created_at ... */
@@ -4267,24 +4300,27 @@ export interface operations {
             content: {
                 "application/json": {
                     /**
-                     * Format: binary
-                     * @default File
+                     * @description JSON/MPK (messagepack) use url from CDN. mp:content use for messagepack (Buffer) converted to string
+                     * @default mpk:content
                      */
-                    file: string;
+                    type: "json" | "mpk" | "mpk:content";
+                    file: unknown;
                 };
                 "multipart/form-data": {
                     /**
-                     * Format: binary
-                     * @default File
+                     * @description JSON/MPK (messagepack) use url from CDN. mp:content use for messagepack (Buffer) converted to string
+                     * @default mpk:content
                      */
-                    file: string;
+                    type: "json" | "mpk" | "mpk:content";
+                    file: unknown;
                 };
                 "text/plain": {
                     /**
-                     * Format: binary
-                     * @default File
+                     * @description JSON/MPK (messagepack) use url from CDN. mp:content use for messagepack (Buffer) converted to string
+                     * @default mpk:content
                      */
-                    file: string;
+                    type: "json" | "mpk" | "mpk:content";
+                    file: unknown;
                 };
             };
         };

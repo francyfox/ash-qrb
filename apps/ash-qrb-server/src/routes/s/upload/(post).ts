@@ -17,7 +17,6 @@ export default (app: ElysiaApp) =>
       await file.write(body.file)
 
       const uploadedFile = await mediaStore.uploader.upload(filename, {
-        format: 'webp',
         folder: 'qrb-uploads',
       })
 
@@ -30,7 +29,9 @@ export default (app: ElysiaApp) =>
     {
       body: t.Partial(
         t.Object({
-          file: t.File({ format: 'image/*,application/json"' }),
+          file: t.File({
+            format: 'image/*,application/json,application/octet-stream',
+          }),
         }),
       ),
       ...validationCollectionItem(
