@@ -1,35 +1,39 @@
-import os from 'node:os'
+import { config } from '@/config.ts'
+import { PUBLIC_DIR } from '@/consts.ts'
 import { validationCollectionItem } from '@/core/services/response-format.ts'
 import type { ElysiaApp } from '@/server.ts'
-import { storage } from '@/utils/cloudinary.ts'
 import { t } from 'elysia'
 
 export default (app: ElysiaApp) =>
   app.post(
     '/',
     async ({ body, error }) => {
-      const mediaStore = storage()
+      const { dir } = body
       const [name, extension] = body.file.name.split('.')
 
-      const filename = `${os.tmpdir()}/${Bun.hash(name)}.${extension}`
-      const file = Bun.file(filename)
+      const filename = Bun.hash(name)
+      const file = Bun.file(`${PUBLIC_DIR}/${dir}${filename}.${extension}`)
+      const writer = file.writer()
 
-      await file.write(body.file)
+      writer.write(body.file)
 
-      const uploadedFile = await mediaStore.uploader.upload(filename, {
-        upload_preset: 'ml_default',
-        folder: 'qrb-uploads',
-      })
-
-      await file.delete()
+      await writer.flush()
 
       return {
-        item: uploadedFile,
+        item: {
+          filename,
+          url: `${config.API_URL}/ipx/${filename}.${extension}`,
+          originalUrl: `${config.API_URL}/assets/${filename}.${extension}`,
+          extension,
+        },
       }
     },
     {
       body: t.Partial(
         t.Object({
+          dir: t.String({
+            default: 'images/',
+          }),
           file: t.File({
             format: 'image/*,application/json,application/octet-stream',
           }),
@@ -37,22 +41,10 @@ export default (app: ElysiaApp) =>
       ),
       ...validationCollectionItem(
         t.Object({
-          asset_id: t.String(),
-          public_id: t.String(),
-          version: t.Number(),
-          signature: t.String(),
-          width: t.Number(),
-          height: t.Number(),
-          format: t.String(),
-          created_at: t.String(),
-          tags: t.Array(t.String()),
-          bytes: t.Number(),
-          type: t.String(),
-          etag: t.String(),
-          placeholder: t.Boolean(),
+          filename: t.String(),
           url: t.String(),
-          secure_url: t.String(),
-          original_filename: t.String(),
+          originalUrl: t.String(),
+          extension: t.String(),
         }),
       ),
     },

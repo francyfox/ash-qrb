@@ -52,11 +52,11 @@ export const app = new Elysia({
       },
     })) as any,
   )
-  // .use(
-  //   staticPlugin({
-  //     prefix: '/_/static',
-  //   }),
-  // )
+  .use(
+    staticPlugin({
+      prefix: '/assets',
+    }),
+  )
   .use(createElysiaIpx(ipx))
   .use(swagger(swaggerOptions as any) as any)
 
