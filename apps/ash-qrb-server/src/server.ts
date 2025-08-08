@@ -1,4 +1,6 @@
 import { config } from '@/config.ts'
+import { PROJECT_DIR } from '@/consts.ts'
+import { createElysiaIpx } from '@/core/services/ipx.ts'
 import { elysiaRedis } from '@/core/services/redis.ts'
 import { swaggerOptions } from '@/core/services/swagger.ts'
 import { betterAuthPlugin } from '@/utils/auth/auth.ts'
@@ -9,6 +11,14 @@ import { errorHandler } from '@gtramontina.com/elysia-error-handler'
 import { Logestic } from 'logestic'
 import { Elysia } from 'elysia'
 import { autoload } from 'elysia-autoload'
+import { createIPX, ipxFSStorage, ipxHttpStorage } from 'ipx'
+import { join } from 'node:path'
+import { staticPlugin } from '@elysiajs/static'
+
+const ipx = createIPX({
+  storage: ipxFSStorage({ dir: join(PROJECT_DIR, './public') }),
+  httpStorage: ipxHttpStorage({ domains: ['picsum.photos'] }),
+})
 
 export const app = new Elysia({
   precompile: true,
@@ -42,6 +52,12 @@ export const app = new Elysia({
       },
     })) as any,
   )
+  // .use(
+  //   staticPlugin({
+  //     prefix: '/_/static',
+  //   }),
+  // )
+  .use(createElysiaIpx(ipx))
   .use(swagger(swaggerOptions as any) as any)
 
 export type ElysiaApp = typeof app

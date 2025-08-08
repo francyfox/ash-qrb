@@ -13,6 +13,8 @@ const ModalQrCode = defineAsyncComponent(
 const toast = useToast()
 
 const qrbStore = useQrbStore()
+const userStore = useUserStore()
+
 const model = defineModel<string[]>({ default: [] })
 
 const emit = defineEmits<{
@@ -105,8 +107,10 @@ async function handleAddFile({ file }) {
 
   worker.postMessage(file.file)
 
-  worker.onmessage = (e) => {
-    importFile.value = e.data
+  worker.onmessage = async (e) => {
+    const file = await userStore.postFile(e.data)
+    console.log(file)
+    importFile.value = file
     isConverting.value = false
   }
 }

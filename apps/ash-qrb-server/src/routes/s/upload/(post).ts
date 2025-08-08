@@ -17,6 +17,7 @@ export default (app: ElysiaApp) =>
       await file.write(body.file)
 
       const uploadedFile = await mediaStore.uploader.upload(filename, {
+        upload_preset: 'ml_default',
         folder: 'qrb-uploads',
       })
 

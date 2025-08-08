@@ -20,8 +20,11 @@
     "@elysiajs/cors": "^1.3.3",
     "@elysiajs/jwt": "^1.3.1",
     "@elysiajs/server-timing": "^1.3.0",
+    "@elysiajs/static": "^1.3.0",
     "@elysiajs/swagger": "^1.3.1",
+    "@fastify/accept-negotiator": "^2.0.1",
     "@gtramontina.com/elysia-error-handler": "1.0.1",
+    "@types/etag": "^1.8.4",
     "@verrou/core": "^0.5.1",
     "arctic": "^3.7.0",
     "better-auth": "catalog:",
@@ -31,12 +34,15 @@
     "elysia": "catalog:",
     "elysia-autoload": "^1.5.2",
     "env-var": "^7.5.0",
+    "etag": "^1.8.1",
+    "ipx": "^3.1.1",
     "logestic": "^1.2.4",
     "mime": "^4.0.7",
     "msgpackr": "^1.11.5",
     "pg": "^8.16.3",
     "posthog-node": "^5.3.1",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "ufo": "^1.6.1"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
