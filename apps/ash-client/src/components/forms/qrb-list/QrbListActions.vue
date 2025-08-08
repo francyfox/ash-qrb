@@ -108,7 +108,7 @@ async function handleAddFile({ file }) {
   worker.postMessage(file.file)
 
   worker.onmessage = async (e) => {
-    const file = await userStore.postFile(e.data)
+    const file = await userStore.postFile(e.data, 'mpk/')
     console.log(file)
     importFile.value = file
     isConverting.value = false

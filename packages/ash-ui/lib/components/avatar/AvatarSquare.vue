@@ -26,7 +26,7 @@ const imageSize = computed(() => {
 </script>
 
 <template>
-  <div class="avatar-sq flex border-1 rounded-xl border-p-middle-red bg-p-middle-red/20 shadow-xl"
+  <div class="avatar-sq flex border-1 rounded-xl border-p-middle-red bg-p-middle-red/20 shadow-xl overflow-hidden"
        :style="`width: ${imageSize.width}px; height: ${imageSize.height}px`"
   >
     <NuxtImg

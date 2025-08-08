@@ -20,9 +20,7 @@ const ipx = createIPX({
   httpStorage: ipxHttpStorage({ domains: ['picsum.photos'] }),
 })
 
-export const app = new Elysia({
-  precompile: true,
-})
+export const app = new Elysia()
   // @ts-ignore
   .use(errorHandler())
   // @ts-ignore

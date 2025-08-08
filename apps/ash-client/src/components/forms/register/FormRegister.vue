@@ -23,6 +23,8 @@ const toast = useToast()
 
 const userStore = useUserStore()
 const { errorMessage } = storeToRefs(userStore)
+const isUploading = ref(false)
+const showUploadModal = ref(false)
 
 const state = defineModel<IUser>({
   default: {
@@ -41,6 +43,25 @@ const readonly = ref(true)
 async function onSubmit(event: FormSubmitEvent<TLoginSchema>) {
   emit('onSubmit', event.data as any)
   if (form.value) form.value.clear()
+}
+
+async function handleUploadAvatar({ file }) {
+  try {
+    const { url } = await userStore.postFile(file.file)
+
+    state.value.image = url
+    toast.add({
+      title: 'Avatar Uploaded',
+      color: 'success',
+    })
+  } catch (e) {
+    toast.add({
+      title: errorMessage.value,
+      color: 'error',
+    })
+  }
+
+  showUploadModal.value = false
 }
 
 watch(errorMessage, () => {
@@ -64,14 +85,26 @@ onMounted(() => {
       class="form-register w-full flex flex-col gap-2.5"
       @submit="onSubmit"
   >
-    <DefaultUploader
-        v-model="state.image"
-        accepted-file-types="image/jpg, image/jpeg, image/png"
-        max-file-size="2MB"
-        allow-image-crop="true"
-        image-crop-aspect-ratio="1:1"
-        :title="t('formUploadAvatar')"
-    />
+    <div class="flex flex-row items-end gap-2">
+      <div class="relative">
+        <AvatarSquare
+            :rating="0"
+            :src="state.image"
+            :loading="true"
+            size="sm"
+        />
+      </div>
+
+      <DefaultUploader
+          v-model:showModal="showUploadModal"
+          accepted-file-types="image/jpg, image/jpeg, image/png"
+          max-file-size="2MB"
+          allow-image-crop="true"
+          image-crop-aspect-ratio="1:1"
+          :title="t('formUploadAvatar')"
+          @add-file="handleUploadAvatar"
+      />
+    </div>
 
     <UInput
         v-model="state.phone"

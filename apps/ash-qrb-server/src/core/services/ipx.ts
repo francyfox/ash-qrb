@@ -9,7 +9,7 @@ const MODIFIER_VAL_SEP = /[:=_]/
 
 export const createElysiaIpx = (ipx: IPX) => {
   return new Elysia({ name: 'elysia-ipx-plugin' }).get(
-    '*',
+    '/ipx*',
     async ({ path, headers, set, error }) => {
       const [modifiersString = '', ...idSegments] = path
         .slice(1 /* leading slash */)

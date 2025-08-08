@@ -3757,6 +3757,8 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
+                    /** @default images/ */
+                    dir?: string;
                     /**
                      * Format: binary
                      * @default File
@@ -3764,6 +3766,8 @@ export interface operations {
                     file?: string;
                 };
                 "multipart/form-data": {
+                    /** @default images/ */
+                    dir?: string;
                     /**
                      * Format: binary
                      * @default File
@@ -3771,6 +3775,8 @@ export interface operations {
                     file?: string;
                 };
                 "text/plain": {
+                    /** @default images/ */
+                    dir?: string;
                     /**
                      * Format: binary
                      * @default File
@@ -3787,62 +3793,26 @@ export interface operations {
                 content: {
                     "application/json": {
                         item: {
-                            asset_id: string;
-                            public_id: string;
-                            version: number;
-                            signature: string;
-                            width: number;
-                            height: number;
-                            format: string;
-                            created_at: string;
-                            tags: string[];
-                            bytes: number;
-                            type: string;
-                            etag: string;
-                            placeholder: boolean;
+                            filename: string;
                             url: string;
-                            secure_url: string;
-                            original_filename: string;
+                            originalUrl: string;
+                            extension: string;
                         };
                     };
                     "multipart/form-data": {
                         item: {
-                            asset_id: string;
-                            public_id: string;
-                            version: number;
-                            signature: string;
-                            width: number;
-                            height: number;
-                            format: string;
-                            created_at: string;
-                            tags: string[];
-                            bytes: number;
-                            type: string;
-                            etag: string;
-                            placeholder: boolean;
+                            filename: string;
                             url: string;
-                            secure_url: string;
-                            original_filename: string;
+                            originalUrl: string;
+                            extension: string;
                         };
                     };
                     "text/plain": {
                         item: {
-                            asset_id: string;
-                            public_id: string;
-                            version: number;
-                            signature: string;
-                            width: number;
-                            height: number;
-                            format: string;
-                            created_at: string;
-                            tags: string[];
-                            bytes: number;
-                            type: string;
-                            etag: string;
-                            placeholder: boolean;
+                            filename: string;
                             url: string;
-                            secure_url: string;
-                            original_filename: string;
+                            originalUrl: string;
+                            extension: string;
                         };
                     };
                 };
@@ -4304,7 +4274,7 @@ export interface operations {
                      * @default mpk:content
                      */
                     type: "json" | "mpk" | "mpk:content";
-                    file: unknown;
+                    file: string;
                 };
                 "multipart/form-data": {
                     /**
@@ -4312,7 +4282,7 @@ export interface operations {
                      * @default mpk:content
                      */
                     type: "json" | "mpk" | "mpk:content";
-                    file: unknown;
+                    file: string;
                 };
                 "text/plain": {
                     /**
@@ -4320,7 +4290,7 @@ export interface operations {
                      * @default mpk:content
                      */
                     type: "json" | "mpk" | "mpk:content";
-                    file: unknown;
+                    file: string;
                 };
             };
         };

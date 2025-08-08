@@ -17,10 +17,12 @@ export const useUserStore = defineStore('user', () => {
 
   const postFile = async (
     file: string & File,
+    dir: 'images/' | 'mpk/' = 'images/',
   ): Promise<TCloudinaryFile | undefined> => {
     const { data, error } = await api.POST('/s/upload/', {
       body: {
         file,
+        dir,
       },
       bodySerializer(body) {
         const fd = new FormData()
