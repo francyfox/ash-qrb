@@ -16,6 +16,7 @@ export default (app: ElysiaApp) =>
 
       const filename = Bun.hash(name).toString()
       const checksum = await calculateFileChecksum(file)
+      // Checking for file duplicates
       const existFile = await redis.get(`upload:${checksum || ''}`)
 
       if (existFile) {

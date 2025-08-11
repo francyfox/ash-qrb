@@ -109,8 +109,8 @@ async function handleAddFile({ file }) {
 
   worker.onmessage = async (e) => {
     const file = await userStore.postFile(e.data, 'json/')
-    // importFile.value = file.originalUrl
-    // isConverting.value = false
+    importFile.value = file.originalUrl
+    isConverting.value = false
   }
 }
 </script>

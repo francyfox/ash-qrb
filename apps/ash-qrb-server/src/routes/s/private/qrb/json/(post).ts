@@ -27,30 +27,42 @@ export default (app: ElysiaApp) =>
         file.replace(`${config.API_URL}/assets`, './'),
       )
 
-      console.log(file)
+      const stream = Bun.file(publicFilePath).stream()
 
-      // const isVersionCorrect = semver.satisfies(json?.version, VERSION_RANGE)
-      //
-      // if (!isVersionCorrect) {
-      //   set.status = 422
-      //   throw new Error(
-      //     `Version should be correct. Expecting range ${VERSION_RANGE}`,
-      //   )
-      // }
+      const decoder = new TextDecoder()
+      let version = ''
 
-      // if (Array.isArray(json.items)) {
-      //   const service = new QueueService(redis)
-      //
-      //   service.worker.postMessage(publicFilePath)
-      //
-      //   service.worker.onmessage = (e) => {
-      //     console.log(e.data)
-      //   }
-      //
-      //   service.worker.onerror = (e) => {
-      //     console.log(e)
-      //   }
-      // }
+      for await (const chunk of stream) {
+        const chunkContent = decoder.decode(chunk)
+        const match = chunkContent.match('"version"\\s*:\\s*"(.*?)"')
+
+        if (match && match.length > 2) {
+          version = match[1] as string
+        } else {
+          break
+        }
+      }
+
+      const isVersionCorrect = semver.satisfies(version, VERSION_RANGE)
+
+      if (!isVersionCorrect) {
+        set.status = 422
+        throw new Error(
+          `Version should be correct. Expecting range ${VERSION_RANGE}`,
+        )
+      }
+
+      const service = new QueueService(redis)
+
+      service.worker.postMessage(publicFilePath)
+
+      service.worker.onmessage = (e) => {
+        console.log(e.data)
+      }
+
+      service.worker.onerror = (e) => {
+        console.log(e)
+      }
     },
     {
       detail: {
