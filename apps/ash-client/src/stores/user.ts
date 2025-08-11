@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', () => {
 
   const postFile = async (
     file: string & File,
-    dir: 'images/' | 'mpk/' = 'images/',
+    dir: 'images/' | 'json/' = 'images/',
   ): Promise<TCloudinaryFile | undefined> => {
     const { data, error } = await api.POST('/s/upload/', {
       body: {

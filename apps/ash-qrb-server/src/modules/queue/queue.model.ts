@@ -3,6 +3,7 @@ import { Packr } from 'msgpackr'
 export interface IQueue {
   id: string
   value: string
+  status: string
 }
 
 export const QUEUE_STATUS = {
@@ -16,14 +17,15 @@ export class QueueModel {
   id
   value
   logs = ''
-  status = QUEUE_STATUS.IN_QUEUE
-  packr
+  status
+  // packr
 
-  constructor({ value }: IQueue) {
-    this.packr = new Packr()
+  constructor({ id, value, status }: IQueue) {
+    // this.packr = new Packr()
 
-    this.id = new Date().getTime()
-    this.value = this.packr.pack(value).toString()
+    this.id = id
+    this.value = value
+    this.status = status || QUEUE_STATUS.IN_QUEUE
   }
 
   // get Value() {

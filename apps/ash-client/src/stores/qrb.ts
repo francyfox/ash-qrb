@@ -133,7 +133,7 @@ export const useQrbStore = defineStore('qrb', () => {
     const response = await api.POST('/s/private/qrb/json', {
       body: {
         file,
-        type: 'mpk:content',
+        type: 'json',
       },
     })
 

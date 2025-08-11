@@ -22,6 +22,7 @@ const { isLoading, error } = useImage(options)
     <img
         v-else
         v-bind="{ width, height, alt, src }"
+        class="object-cover"
         loading="lazy"
     />
   </div>

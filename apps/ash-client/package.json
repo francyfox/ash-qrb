@@ -24,7 +24,7 @@
     "@vueuse/core": "catalog:",
     "ash-i18n": "workspace:*",
     "elysia": "catalog:",
-    "msgpackr": "^1.11.5",
+    "msgpack-lite": "^0.1.26",
     "pinia": "^3.0.3",
     "quill-delta-to-html": "^0.12.1",
     "vue": "catalog:"
@@ -37,6 +37,7 @@
     "@intlify/unplugin-vue-i18n": "^6.0.8",
     "@nuxt/devalue": "^2.0.2",
     "@tailwindcss/postcss": "^4.1.8",
+    "@types/msgpack-lite": "^0.1.11",
     "@unhead/vue": "^2.0.10",
     "@vitejs/plugin-vue": "^5.2.4",
     "@vue/tsconfig": "^0.7.0",

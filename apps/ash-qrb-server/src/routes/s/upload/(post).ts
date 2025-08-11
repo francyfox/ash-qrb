@@ -2,22 +2,45 @@ import { config } from '@/config.ts'
 import { PUBLIC_DIR } from '@/consts.ts'
 import { validationCollectionItem } from '@/core/services/response-format.ts'
 import type { ElysiaApp } from '@/server.ts'
+import { calculateFileChecksum } from '@/utils/generate.ts'
+import type { RedisClient } from 'bun'
 import { mkdir } from 'node:fs/promises'
 import { t } from 'elysia'
 
 export default (app: ElysiaApp) =>
   app.post(
     '/',
-    async ({ body, error }) => {
+    async ({ redis, body }: { redis: RedisClient; body: any }) => {
       const { dir, file } = body
       const [name, extension] = body.file.name.split('.')
 
-      const filename = Bun.hash(name)
+      const filename = Bun.hash(name).toString()
+      const checksum = await calculateFileChecksum(file)
+      const existFile = await redis.get(`upload:${checksum || ''}`)
+
+      if (existFile) {
+        const [dir, filename, extension] = JSON.parse(existFile)
+        return {
+          item: {
+            filename: filename.toString(),
+            url: `${config.API_URL}/ipx/${dir}${filename}.${extension}`,
+            originalUrl: `${config.API_URL}/assets/${dir}${filename}.${extension}`,
+            extension,
+          },
+        }
+      }
+
+      await redis.set(
+        `upload:${checksum || ''}`,
+        JSON.stringify([dir, filename, extension]),
+      )
 
       await mkdir(`${PUBLIC_DIR}/${dir}`, { recursive: true })
-      await Bun.write(`${PUBLIC_DIR}/${dir}${filename}.${extension}`, file)
+      await Bun.write(
+        `${PUBLIC_DIR}/${dir}${filename}.${extension}`,
+        file.slice(3),
+      )
 
-      console.log('test')
       return {
         item: {
           filename: filename.toString(),

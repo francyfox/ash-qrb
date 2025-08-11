@@ -2,17 +2,18 @@ import { redisClient } from '@/core/services/redis.ts'
 import { QUEUE_STATUS, type QueueModel } from '@/modules/queue/queue.model.ts'
 import { Packr } from 'msgpackr'
 import type { RedisClient } from 'bun'
+import { join } from 'node:path'
 
 export class QueueService {
   redisClient
   packr = new Packr()
-  #worker: Worker | null = null
+  #worker: Worker = new Worker(join(import.meta.dir, './queue.worker.ts'))
 
   constructor(redisClient: RedisClient) {
     this.redisClient = redisClient
   }
 
-  get worker(): Worker | null {
+  get worker(): Worker {
     return this.#worker
   }
 
@@ -21,6 +22,7 @@ export class QueueService {
   }
 
   setItem(item: QueueModel) {
+    console.log(item)
     this.redisClient.hmset(`task:${item.id}`, [
       'status',
       QUEUE_STATUS.IN_QUEUE,

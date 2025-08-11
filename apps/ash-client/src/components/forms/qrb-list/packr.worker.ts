@@ -1,9 +1,8 @@
-import { Packr } from 'msgpackr'
+import { encode } from 'msgpack-lite'
 
 declare let self: Worker
 
 self.onmessage = (event) => {
-  const packr = new Packr()
   const file = event.data as File
   const reader = new FileReader()
 
@@ -12,13 +11,13 @@ self.onmessage = (event) => {
   reader.onload = (e) => {
     const fileContent = e.target?.result
 
-    const packed = packr.pack(fileContent) as ArrayBuffer
+    const encoded = encode(fileContent)
+    const timestamp = new Date().getDate().toString()
+    const file = new File([encoded], `qrb_${timestamp}.json`, {
+      type: 'application/json',
+    })
 
-    self.postMessage(
-      new File(packed, `mpk_${new Date().getTime()}.mpk`, {
-        type: 'application/octet-stream',
-      }),
-    )
+    self.postMessage(file)
   }
 
   reader.onerror = (e) => {

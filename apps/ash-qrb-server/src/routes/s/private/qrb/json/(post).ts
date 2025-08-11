@@ -1,4 +1,5 @@
 import { config } from '@/config.ts'
+import { PROJECT_DIR, PUBLIC_DIR } from '@/consts.ts'
 import { errorSchema } from '@/core/services/response-format.ts'
 import { QueueService } from '@/modules/queue/queue.service.ts'
 import type { ElysiaApp } from '@/server.ts'
@@ -6,6 +7,7 @@ import { isUrl } from '@/utils/url.ts'
 import { type Context, t } from 'elysia'
 import { type RedisClient, semver } from 'bun'
 import { Packr } from 'msgpackr'
+import { join } from 'node:path'
 
 const VERSION_RANGE = `1.0.0 - ${config.APP_VERSION}`
 
@@ -18,29 +20,15 @@ export default (app: ElysiaApp) =>
     async ({ body, set, redis }: RedisContext) => {
       const packr = new Packr()
 
-      const { file, type } = body as any
-      let json: any
+      const { file } = body as any
+
+      const publicFilePath = join(
+        PUBLIC_DIR,
+        file.replace(`${config.API_URL}/assets`, './'),
+      )
 
       console.log(file)
-      console.log(packr.unpack(file))
 
-      // switch (type) {
-      //   case 'mp:content':
-      //     json = packr.unpack(Buffer.from(file))
-      //     break
-      //   case 'mp': {
-      //     const buffer = await fetch(file).then(
-      //       (response) => response.arrayBuffer,
-      //     )
-      //     json = packr.unpack(buffer)
-      //     break
-      //   }
-      //   case 'json': {
-      //     json = await fetch(file).then((res) => res.json())
-      //     break
-      //   }
-      // }
-      //
       // const isVersionCorrect = semver.satisfies(json?.version, VERSION_RANGE)
       //
       // if (!isVersionCorrect) {
@@ -49,14 +37,19 @@ export default (app: ElysiaApp) =>
       //     `Version should be correct. Expecting range ${VERSION_RANGE}`,
       //   )
       // }
-      //
-      // console.log(json?.version)
-      //
+
       // if (Array.isArray(json.items)) {
       //   const service = new QueueService(redis)
-      //   service.worker = new Worker('./queue.worker.ts')
       //
-      //   service.worker.postMessage(json.items)
+      //   service.worker.postMessage(publicFilePath)
+      //
+      //   service.worker.onmessage = (e) => {
+      //     console.log(e.data)
+      //   }
+      //
+      //   service.worker.onerror = (e) => {
+      //     console.log(e)
+      //   }
       // }
     },
     {
@@ -64,14 +57,6 @@ export default (app: ElysiaApp) =>
         tags: ['App', 'Qrb', 'Queue'],
       },
       body: t.Object({
-        type: t.Union(
-          [t.Literal('json'), t.Literal('mpk'), t.Literal('mpk:content')],
-          {
-            default: 'mpk:content',
-            description:
-              'JSON/MPK (messagepack) use url from CDN. mp:content use for messagepack (Buffer) converted to string',
-          },
-        ),
         file: t.String(),
       }),
       response: {
