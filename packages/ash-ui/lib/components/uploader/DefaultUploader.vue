@@ -28,7 +28,6 @@ const { title } = defineProps<{
   buttonProps?: ButtonProps
 }>()
 
-const model = defineModel()
 // const userStore = useUserStore()
 const showModal = defineModel('showModal', {
   default: false,

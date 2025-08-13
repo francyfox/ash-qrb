@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import FormLogin from '~/components/forms/login/FormLogin.vue'
 import FormLoginActions from '~/components/forms/login/FormLoginActions.vue'
 
 const router = useRouter()
 
+const toast = useToast()
 const userStore = useUserStore()
-const { user } = storeToRefs(userStore)
+const { user, errorMessage } = storeToRefs(userStore)
 
 const formData = ref({
   switch: false,
@@ -19,12 +20,27 @@ const formData = ref({
 })
 
 const signInHandler = async () => {
-  try {
-    await userStore.signIn(formData.value)
-  } finally {
-    if (user.value) await router.push('/dashboard')
+  await userStore.signIn(formData.value)
+
+  if (user.value) {
+    toast.add({
+      title: 'Login success',
+      color: 'success',
+    })
+
+    setTimeout(async () => {
+      if (user.value) await router.push('/dashboard')
+    }, 300)
   }
 }
+
+watch(errorMessage, (v) => {
+  toast.add({
+    title: v.message || 'error',
+    description: v?.summary || v,
+    color: 'error',
+  })
+})
 </script>
 
 <template>

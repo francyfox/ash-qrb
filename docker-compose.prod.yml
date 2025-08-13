@@ -62,7 +62,7 @@ services:
     networks:
       - ash-net
 
-  tunnel:
+  tunnel-client:
     container_name: ash-client-tunnel
     image: cloudflare/cloudflared
     restart: unless-stopped
@@ -71,6 +71,18 @@ services:
       - TUNNEL_TOKEN=${TUNNEL_TOKEN}
     depends_on:
       - frontend
+    networks:
+      - ash-net
+
+  tunnel-api:
+    container_name: ash-server-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_BACKEND_TOKEN}
+    depends_on:
+      - server
     networks:
       - ash-net
 

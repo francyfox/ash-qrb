@@ -3,6 +3,7 @@ import { defineAsyncComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ModalReallySure from '~/components/modals/ModalReallySure.vue'
 import type { TQrbItem } from '~/types/qrb.types'
+import PackrWorker from '~/components/forms/qrb-list/packr.worker.ts?worker'
 import 'ash-ui/assets/DefaultUploader.css'
 
 const ModalQrCode = defineAsyncComponent(
@@ -12,6 +13,8 @@ const ModalQrCode = defineAsyncComponent(
 const toast = useToast()
 
 const qrbStore = useQrbStore()
+const userStore = useUserStore()
+
 const model = defineModel<string[]>({ default: [] })
 
 const emit = defineEmits<{
@@ -28,7 +31,8 @@ const { t } = useI18n()
 const modalReallySure = ref(false)
 const modalQrCode = ref(false)
 const showImportModal = ref(false)
-const importFile = ref()
+const importFile = ref<string>()
+const isConverting = ref(false)
 
 async function handleRemove() {
   if (model.value?.length > 0) {
@@ -52,6 +56,15 @@ async function handleUpdate(status: boolean) {
 }
 
 async function handleImportModal() {
+  if (!importFile.value) {
+    toast.add({
+      title: t('toastQrbsNoFile'),
+      color: 'warning',
+    })
+
+    return
+  }
+
   const { error } = (await qrbStore.importQrb(importFile.value)) as any // TODO: Error?
 
   importFile.value = undefined
@@ -86,6 +99,20 @@ async function handleExportQrb() {
     })
   }
 }
+
+async function handleAddFile({ file }) {
+  isConverting.value = true
+
+  const worker = new PackrWorker() as Worker
+
+  worker.postMessage(file.file)
+
+  worker.onmessage = async (e) => {
+    const file = await userStore.postFile(e.data, 'json/')
+    importFile.value = file.originalUrl
+    isConverting.value = false
+  }
+}
 </script>
 
 <template>
@@ -114,6 +141,7 @@ async function handleExportQrb() {
             icon: 'i-lucide-import',
             size: 'xl'
           }"
+          @add-file="handleAddFile"
           accepted-file-types="application/json"
           max-file-size="2MB"
           class="flex"
@@ -124,9 +152,12 @@ async function handleExportQrb() {
               type="button"
               class="cursor-pointer"
               icon="i-lucide-import"
+              :loading="isConverting"
+              :disabled="isConverting"
               @click="handleImportModal"
           >
-            Import
+            {{ isConverting ? 'Converting...' : 'Import' }}
+
           </UButton>
         </template>
       </DefaultUploader>

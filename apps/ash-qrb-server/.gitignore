@@ -6,3 +6,4 @@ drizzle
 .vercel
 logs
 routes.ts
+public/*

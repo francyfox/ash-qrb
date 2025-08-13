@@ -1,55 +1,32 @@
 import { config } from '@/config.ts'
-import { auth, betterAuthPlugin } from '@/utils/auth/auth.ts'
+import { PROJECT_DIR } from '@/consts.ts'
+import { createElysiaIpx } from '@/core/services/ipx.ts'
+import { elysiaRedis } from '@/core/services/redis.ts'
+import { swaggerOptions } from '@/core/services/swagger.ts'
+import { betterAuthPlugin } from '@/utils/auth/auth.ts'
 import { cors } from '@elysiajs/cors'
-import { jwt } from '@elysiajs/jwt'
 import { serverTiming } from '@elysiajs/server-timing'
 import { swagger } from '@elysiajs/swagger'
 import { errorHandler } from '@gtramontina.com/elysia-error-handler'
 import { Logestic } from 'logestic'
 import { Elysia } from 'elysia'
 import { autoload } from 'elysia-autoload'
+import { createIPX, ipxFSStorage, ipxHttpStorage } from 'ipx'
+import { join } from 'node:path'
+import { staticPlugin } from '@elysiajs/static'
 
-const { info, openapi, ...authSwagger } = await auth.api.generateOpenAPISchema()
+const ipx = createIPX({
+  storage: ipxFSStorage({ dir: join(PROJECT_DIR, './public') }),
+  httpStorage: ipxHttpStorage({ domains: ['picsum.photos'] }),
+})
 
 export const app = new Elysia()
   // @ts-ignore
   .use(errorHandler())
   // @ts-ignore
   .use(Logestic.preset(config.NODE_ENV === 'development' ? 'fancy' : 'common'))
-  .use(
-    swagger({
-      scalarConfig: {
-        servers: [
-          {
-            url: config.API_URL,
-          },
-        ],
-      },
-      documentation: {
-        info: {
-          title: 'ASH-QRB Documentation',
-          version: '1.0.0',
-        },
-        tags: [
-          {
-            name: 'App',
-            description: 'General endpoits',
-          },
-        ],
-        ...authSwagger,
-      },
-    }),
-  )
-  .use(jwt({ secret: config.JWT_SECRET }))
-  .use(serverTiming())
-  .use(
-    await autoload({
-      types: {
-        output: './routes.ts',
-        typeName: 'Routes',
-      },
-    }),
-  )
+  .use(serverTiming() as any)
+  .use(elysiaRedis)
   .use(betterAuthPlugin)
   .use(
     cors({
@@ -63,8 +40,23 @@ export const app = new Elysia()
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
       credentials: true,
       allowedHeaders: ['Content-Type', 'Authorization'],
+    }) as any,
+  )
+  .use(
+    (await autoload({
+      types: {
+        output: './routes.ts',
+        typeName: 'Routes',
+      },
+    })) as any,
+  )
+  .use(
+    staticPlugin({
+      prefix: '/assets',
     }),
   )
+  .use(createElysiaIpx(ipx))
+  .use(swagger(swaggerOptions as any) as any)
 
 export type ElysiaApp = typeof app
 export const GET = app.handle

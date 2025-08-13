@@ -1,4 +1,29 @@
 services:
+  redis:
+    container_name: redis
+    image: docker.io/bitnami/redis:8.0
+    user: "${UID}:${GID}"
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=false
+      - REDIS_AOF_ENABLED=no
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+      - REDIS_TLS_CERT_FILE=/tls/server.crt
+      - REDIS_TLS_KEY_FILE=/tls/server.key
+      - REDIS_TLS_CA_FILE=/tls/ca.crt
+      - REDIS_TLS_ENABLED=false
+      - REDIS_TLS_AUTH_CLIENTS=no
+      - REDIS_TLS_PORT=6379
+    command: /opt/bitnami/scripts/redis/run.sh --maxmemory 250mb
+    volumes:
+      - ./docker/certs/redis:/tls
+      - predis_data:/bitnami/redis/data
+    networks:
+      local:
+
   postgres:
     container_name: ash-qrb-server-postgres
     image: postgres:latest
@@ -25,6 +50,7 @@ services:
 
 volumes:
   postgres_data:
+  predis_data:
 
 networks:
   local: { }

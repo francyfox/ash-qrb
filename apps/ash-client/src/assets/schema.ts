@@ -36,6 +36,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/s/private/queue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSPrivateQueue"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/s/private/users": {
         parameters: {
             query?: never;
@@ -3741,6 +3757,8 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
+                    /** @default images/ */
+                    dir?: string;
                     /**
                      * Format: binary
                      * @default File
@@ -3748,6 +3766,8 @@ export interface operations {
                     file?: string;
                 };
                 "multipart/form-data": {
+                    /** @default images/ */
+                    dir?: string;
                     /**
                      * Format: binary
                      * @default File
@@ -3755,6 +3775,8 @@ export interface operations {
                     file?: string;
                 };
                 "text/plain": {
+                    /** @default images/ */
+                    dir?: string;
                     /**
                      * Format: binary
                      * @default File
@@ -3771,62 +3793,26 @@ export interface operations {
                 content: {
                     "application/json": {
                         item: {
-                            asset_id: string;
-                            public_id: string;
-                            version: number;
-                            signature: string;
-                            width: number;
-                            height: number;
-                            format: string;
-                            created_at: string;
-                            tags: string[];
-                            bytes: number;
-                            type: string;
-                            etag: string;
-                            placeholder: boolean;
+                            filename: string;
                             url: string;
-                            secure_url: string;
-                            original_filename: string;
+                            originalUrl: string;
+                            extension: string;
                         };
                     };
                     "multipart/form-data": {
                         item: {
-                            asset_id: string;
-                            public_id: string;
-                            version: number;
-                            signature: string;
-                            width: number;
-                            height: number;
-                            format: string;
-                            created_at: string;
-                            tags: string[];
-                            bytes: number;
-                            type: string;
-                            etag: string;
-                            placeholder: boolean;
+                            filename: string;
                             url: string;
-                            secure_url: string;
-                            original_filename: string;
+                            originalUrl: string;
+                            extension: string;
                         };
                     };
                     "text/plain": {
                         item: {
-                            asset_id: string;
-                            public_id: string;
-                            version: number;
-                            signature: string;
-                            width: number;
-                            height: number;
-                            format: string;
-                            created_at: string;
-                            tags: string[];
-                            bytes: number;
-                            type: string;
-                            etag: string;
-                            placeholder: boolean;
+                            filename: string;
                             url: string;
-                            secure_url: string;
-                            original_filename: string;
+                            originalUrl: string;
+                            extension: string;
                         };
                     };
                 };
@@ -3852,14 +3838,31 @@ export interface operations {
             };
         };
     };
+    getSPrivateQueue: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
     getSPrivateUsers: {
         parameters: {
             query?: {
                 filter?: {
                     search?: string;
                 };
-                page?: number;
-                pageSize?: number;
+                page?: string | number;
+                pageSize?: string | number;
                 order?: {
                     by?: "ask" | "desc";
                     /** @description example: name | created_at ... */
@@ -4028,8 +4031,8 @@ export interface operations {
                 filter?: {
                     search?: string;
                 };
-                page?: number;
-                pageSize?: number;
+                page?: string | number;
+                pageSize?: string | number;
                 order?: {
                     by?: "ask" | "desc";
                     /** @description example: name | created_at ... */
@@ -4267,23 +4270,26 @@ export interface operations {
             content: {
                 "application/json": {
                     /**
-                     * Format: binary
-                     * @default File
+                     * @description JSON/MPK (messagepack) use url from CDN. mp:content use for messagepack (Buffer) converted to string
+                     * @default mpk:content
                      */
+                    type: "json" | "mpk" | "mpk:content";
                     file: string;
                 };
                 "multipart/form-data": {
                     /**
-                     * Format: binary
-                     * @default File
+                     * @description JSON/MPK (messagepack) use url from CDN. mp:content use for messagepack (Buffer) converted to string
+                     * @default mpk:content
                      */
+                    type: "json" | "mpk" | "mpk:content";
                     file: string;
                 };
                 "text/plain": {
                     /**
-                     * Format: binary
-                     * @default File
+                     * @description JSON/MPK (messagepack) use url from CDN. mp:content use for messagepack (Buffer) converted to string
+                     * @default mpk:content
                      */
+                    type: "json" | "mpk" | "mpk:content";
                     file: string;
                 };
             };

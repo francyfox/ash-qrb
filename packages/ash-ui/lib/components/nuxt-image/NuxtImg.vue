@@ -22,16 +22,9 @@ const { isLoading, error } = useImage(options)
     <img
         v-else
         v-bind="{ width, height, alt, src }"
+        class="object-cover"
         loading="lazy"
     />
-
-    <span
-        v-if="error"
-        class="absolute flex w-full h-full justify-center items-center top-0 left-0  p-2 text-white text-xs bg-amber-900 rounded-xl"
-    >
-      Error... <br>
-      Cant load image {{ alt }}
-    </span>
   </div>
 </template>
 

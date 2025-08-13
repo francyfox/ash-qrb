@@ -42,3 +42,7 @@
 [data-reka-popper-content-wrapper] {
   @apply !z-20;
 }
+
+.filepond--root {
+  @apply w-full;
+}

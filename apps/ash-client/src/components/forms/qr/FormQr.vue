@@ -85,8 +85,6 @@ const handleSubmit = (event: FormSubmitEvent<TQrbProps>) => {
     menuList,
   }
 
-  console.log(formData)
-
   emit('onSubmit', formData)
 }
 
