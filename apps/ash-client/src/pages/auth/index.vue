@@ -20,9 +20,9 @@ const formData = ref({
 })
 
 const signInHandler = async () => {
-  try {
-    await userStore.signIn(formData.value)
-  } finally {
+  await userStore.signIn(formData.value)
+
+  if (user.value) {
     toast.add({
       title: 'Login success',
       color: 'success',

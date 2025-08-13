@@ -7,18 +7,9 @@ import { join } from 'node:path'
 export class QueueService {
   redisClient
   packr = new Packr()
-  #worker: Worker = new Worker(join(import.meta.dir, './queue.worker.ts'))
 
   constructor(redisClient: RedisClient) {
     this.redisClient = redisClient
-  }
-
-  get worker(): Worker {
-    return this.#worker
-  }
-
-  set worker(worker: Worker) {
-    this.#worker = worker
   }
 
   setItem(item: QueueModel) {

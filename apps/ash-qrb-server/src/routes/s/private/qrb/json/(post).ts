@@ -3,8 +3,7 @@ import { PROJECT_DIR, PUBLIC_DIR } from '@/consts.ts'
 import { errorSchema } from '@/core/services/response-format.ts'
 import { QueueService } from '@/modules/queue/queue.service.ts'
 import type { ElysiaApp } from '@/server.ts'
-import { getFirstChunkOfFile } from '@/utils/stream.ts'
-import { isUrl } from '@/utils/url.ts'
+import { getFilenameFromURL, getFirstChunkOfFile } from '@/utils/file.ts'
 import { type Context, t } from 'elysia'
 import { type RedisClient, semver } from 'bun'
 import { Packr } from 'msgpackr'
@@ -43,17 +42,22 @@ export default (app: ElysiaApp) =>
         )
       }
 
-      // const service = new QueueService(redis)
-      //
-      // service.worker.postMessage({ file: publicFilePath, filename: file.name })
-      //
-      // service.worker.onmessage = (e) => {
-      //   console.log(e.data)
-      // }
-      //
-      // service.worker.onerror = (e) => {
-      //   console.log(e)
-      // }
+      const worker = new Worker(
+        join(PROJECT_DIR, './src/modules/queue/queue.worker.ts'),
+      )
+
+      worker.postMessage({
+        file: publicFilePath,
+        filename: getFilenameFromURL(publicFilePath),
+      })
+
+      worker.onmessage = (e) => {
+        console.log(e.data)
+      }
+
+      worker.onerror = (e) => {
+        console.log(e)
+      }
     },
     {
       detail: {

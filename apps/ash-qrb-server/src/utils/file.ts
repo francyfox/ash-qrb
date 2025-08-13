@@ -1,4 +1,5 @@
 import { createReadStream } from 'node:fs'
+import { basename } from 'node:path'
 
 export async function getFirstChunkOfFile(
   file: string,
@@ -26,4 +27,8 @@ export async function getFirstChunkOfFile(
   await reader.cancel()
 
   return chunkContent
+}
+
+export function getFilenameFromURL(url: string): string {
+  return basename(url)
 }
