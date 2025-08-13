@@ -7,7 +7,7 @@ export default (app: ElysiaApp) =>
     '',
     async ({ redis }: { redis: RedisClient }) => {
       const service = new QueueService(redis)
-      const list = await service.getAll()
+      const list = await service.getAll(false, ['status', 'value'])
 
       return list
     },

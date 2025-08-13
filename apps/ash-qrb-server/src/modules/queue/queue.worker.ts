@@ -19,7 +19,9 @@ self.onmessage = async (event: MessageEvent) => {
   )
 
   const list = await queueService.getAll(true)
-  console.log(list)
+
+  for (const item of list) {
+  }
   // const values = list
   //   .filter((i) => i)
   //   .map((i) => queueService.getUnpackedValue(i as string))

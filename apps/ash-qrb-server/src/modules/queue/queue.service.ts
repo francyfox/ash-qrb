@@ -39,9 +39,17 @@ export class QueueService {
     return this.redisClient.get(`task:${id}`)
   }
 
-  getAll(valuesOnly = false) {
-    if (valuesOnly) return redisClient.hmget('task', ['value'])
-    return redisClient.hmget('task', ['status', 'logs'])
+  getLastInQueue() {
+    return this.redisClient.smembers('status:IN_QUEUE')
+  }
+
+  async getAll(keysOnly: boolean, fields: string[] = []) {
+    const keys = await redisClient.keys('task:*')
+    if (keysOnly) return keys
+
+    return Promise.all(
+      keys.map((key) => redisClient.hmget(`task:${key}`, fields)),
+    )
   }
 
   getUnpackedValue(value: string) {

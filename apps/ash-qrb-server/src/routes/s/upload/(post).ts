@@ -3,6 +3,7 @@ import { PUBLIC_DIR } from '@/consts.ts'
 import { validationCollectionItem } from '@/core/services/response-format.ts'
 import type { ElysiaApp } from '@/server.ts'
 import { calculateFileChecksum } from '@/utils/generate.ts'
+import { generateId } from '@/utils/generate.ts'
 import type { RedisClient } from 'bun'
 import { mkdir } from 'node:fs/promises'
 import { t } from 'elysia'
@@ -14,10 +15,10 @@ export default (app: ElysiaApp) =>
       const { dir, file } = body
       const [name, extension] = body.file.name.split('.')
 
-      const filename = Bun.hash(name).toString()
+      const filename = generateId()
       const checksum = await calculateFileChecksum(file)
       // Checking for file duplicates
-      const existFile = await redis.get(`upload:${checksum || ''}`)
+      const existFile = await redis.get(`upload:${filename}`)
 
       if (existFile) {
         const [dir, filename, extension] = JSON.parse(existFile)
@@ -44,7 +45,7 @@ export default (app: ElysiaApp) =>
 
       return {
         item: {
-          filename: filename.toString(),
+          filename: filename,
           url: `${config.API_URL}/ipx/${dir}${filename}.${extension}`,
           originalUrl: `${config.API_URL}/assets/${dir}${filename}.${extension}`,
           extension,

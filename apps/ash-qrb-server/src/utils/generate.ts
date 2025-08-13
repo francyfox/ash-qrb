@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid'
 
-export const generateId = () => nanoid()
+export const generateId = () => nanoid(16)
 
 export async function calculateFileChecksum(
   file: File,
