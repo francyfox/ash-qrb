@@ -1,0 +1,29 @@
+import { createReadStream } from 'node:fs'
+
+export async function getFirstChunkOfFile(
+  file: string,
+  size: number,
+): Promise<string> {
+  const stream = createReadStream(file)
+  const readableByteStream = new ReadableStream({
+    // @ts-ignore
+    type: 'bytes',
+    async start(controller) {
+      stream.on('data', (chunk) => {
+        controller.enqueue(chunk)
+      })
+      stream.on('error', (err) => {
+        controller.error(err)
+      })
+    },
+  })
+  const reader = readableByteStream.getReader({ mode: 'byob' })
+  const buffer = new Uint8Array(size)
+  const { value } = await reader.read(buffer)
+
+  const decoder = new TextDecoder()
+  const chunkContent = decoder.decode(value, { stream: true })
+  await reader.cancel()
+
+  return chunkContent
+}

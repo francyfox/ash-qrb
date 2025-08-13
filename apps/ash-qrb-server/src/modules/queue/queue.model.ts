@@ -17,15 +17,14 @@ export class QueueModel {
   id
   value
   logs = ''
-  status
+  status = QUEUE_STATUS.IN_QUEUE
   // packr
 
-  constructor({ id, value, status }: IQueue) {
+  constructor({ id, value }: Omit<IQueue, 'status'>) {
     // this.packr = new Packr()
 
     this.id = id
     this.value = value
-    this.status = status || QUEUE_STATUS.IN_QUEUE
   }
 
   // get Value() {

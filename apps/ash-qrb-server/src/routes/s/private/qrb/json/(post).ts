@@ -3,6 +3,7 @@ import { PROJECT_DIR, PUBLIC_DIR } from '@/consts.ts'
 import { errorSchema } from '@/core/services/response-format.ts'
 import { QueueService } from '@/modules/queue/queue.service.ts'
 import type { ElysiaApp } from '@/server.ts'
+import { getFirstChunkOfFile } from '@/utils/stream.ts'
 import { isUrl } from '@/utils/url.ts'
 import { type Context, t } from 'elysia'
 import { type RedisClient, semver } from 'bun'
@@ -27,22 +28,12 @@ export default (app: ElysiaApp) =>
         file.replace(`${config.API_URL}/assets`, './'),
       )
 
-      const stream = Bun.file(publicFilePath).stream()
-
-      const decoder = new TextDecoder()
       let version = ''
+      const chunkContent = await getFirstChunkOfFile(publicFilePath, 20)
 
-      for await (const chunk of stream) {
-        const chunkContent = decoder.decode(chunk)
-        const match = chunkContent.match('"version"\\s*:\\s*"(.*?)"')
+      const match = chunkContent.match('"version"\\s*:\\s*"(.*?)"')
 
-        if (match && match.length > 2) {
-          version = match[1] as string
-        } else {
-          break
-        }
-      }
-
+      if (match && match?.length > 1) version = match[1] || ''
       const isVersionCorrect = semver.satisfies(version, VERSION_RANGE)
 
       if (!isVersionCorrect) {
@@ -52,17 +43,17 @@ export default (app: ElysiaApp) =>
         )
       }
 
-      const service = new QueueService(redis)
-
-      service.worker.postMessage(publicFilePath)
-
-      service.worker.onmessage = (e) => {
-        console.log(e.data)
-      }
-
-      service.worker.onerror = (e) => {
-        console.log(e)
-      }
+      // const service = new QueueService(redis)
+      //
+      // service.worker.postMessage({ file: publicFilePath, filename: file.name })
+      //
+      // service.worker.onmessage = (e) => {
+      //   console.log(e.data)
+      // }
+      //
+      // service.worker.onerror = (e) => {
+      //   console.log(e)
+      // }
     },
     {
       detail: {

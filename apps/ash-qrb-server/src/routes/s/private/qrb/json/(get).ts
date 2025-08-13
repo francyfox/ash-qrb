@@ -12,8 +12,8 @@ export default (app: ElysiaApp) =>
       const items = await db.select().from(qrbSchema)
 
       return {
-        $schema: `${config.API_URL}/swagger/json#paths./s/private/qrb/json.get.responses.content.application/json.schema`,
         version: config.APP_VERSION,
+        $schema: `${config.API_URL}/swagger/json#paths./s/private/qrb/json.get.responses.content.application/json.schema`,
         items,
       }
     },
@@ -23,8 +23,8 @@ export default (app: ElysiaApp) =>
       },
       response: {
         200: t.Object({
-          $schema: t.Any(),
           version: t.String(),
+          $schema: t.Any(),
           items: t.Array(t.Partial(qrbSelectSchema)),
         }),
         500: errorSchema,
