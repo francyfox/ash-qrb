@@ -32,10 +32,12 @@ export default (app: ElysiaApp) =>
         }
       }
 
-      await redis.set(
-        `upload:${checksum || ''}`,
+      await redis.hmset(`upload:${checksum}`, [
+        'checksum',
+        checksum || '',
+        'value',
         JSON.stringify([dir, filename, extension]),
-      )
+      ])
 
       await mkdir(`${PUBLIC_DIR}/${dir}`, { recursive: true })
       await Bun.write(

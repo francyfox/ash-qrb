@@ -1,7 +1,7 @@
 services:
   redis:
     container_name: redis
-    image: docker.io/bitnami/redis:8.0
+    image: redis/redis-stack:7.2.0-v18
     user: "${UID}:${GID}"
     restart: unless-stopped
     ports:
@@ -17,10 +17,13 @@ services:
       - REDIS_TLS_ENABLED=false
       - REDIS_TLS_AUTH_CLIENTS=no
       - REDIS_TLS_PORT=6379
-    command: /opt/bitnami/scripts/redis/run.sh --maxmemory 250mb
+    command: redis-server ./redis-stack.conf --requirepass ${REDIS_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
     volumes:
+      - ./docker/redis/redis.conf:/redis-stack.conf
       - ./docker/certs/redis:/tls
-      - predis_data:/bitnami/redis/data
+      - predis_data:/data
     networks:
       local:
 

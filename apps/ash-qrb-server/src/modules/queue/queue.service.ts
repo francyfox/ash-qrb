@@ -6,14 +6,34 @@ import { join } from 'node:path'
 
 export class QueueService {
   redisClient
-  packr = new Packr()
+  DEFAULT_PARAMS = {
+    limit: 10,
+    offset: 0,
+  }
 
   constructor(redisClient: RedisClient) {
     this.redisClient = redisClient
+    ;(async () => {
+      await this.createIndexes()
+    })()
+  }
+
+  async createIndexes() {
+    const indexes = ['upload_idx']
+    const dbIndexes: string[] = await this.redisClient.send('FT._LIST', [])
+    const hasIndexes = dbIndexes.includes(indexes.join('|'))
+
+    if (hasIndexes) return
+
+    return Promise.all([
+      this.redisClient.send(
+        'FT.CREATE upload_idx on HASH PREFIX 1 upload: SCHEMA checksum TAG value TEXT',
+        [],
+      ),
+    ])
   }
 
   setItem(item: QueueModel) {
-    console.log(item)
     this.redisClient.hmset(`task:${item.id}`, [
       'status',
       QUEUE_STATUS.IN_QUEUE,
@@ -43,17 +63,17 @@ export class QueueService {
     return this.redisClient.smembers('status:IN_QUEUE')
   }
 
-  async getAll(keysOnly: boolean, fields: string[] = []) {
-    const keys = await redisClient.keys('task:*')
+  async getAll(keysOnly: boolean, { limit, offset } = this.DEFAULT_PARAMS) {
+    const keys = await redisClient.send(
+      `SCAN 0 MATCH task:* COUNT ${limit}`,
+      [],
+    )
     if (keysOnly) return keys
 
-    return Promise.all(
-      keys.map((key) => redisClient.hmget(`task:${key}`, fields)),
+    return this.redisClient.send(
+      `FT.SEARCH upload_idx "*" LIMIT ${offset} ${limit}`,
+      [],
     )
-  }
-
-  getUnpackedValue(value: string) {
-    return this.packr.unpack(Buffer.from(value))
   }
 
   register(id: string) {}

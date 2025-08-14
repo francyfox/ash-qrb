@@ -12,6 +12,7 @@ export const config = {
     .get('API_URL')
     .default(`https://${env.get('PUBLIC_DOMAIN').asString()}`)
     .asString(),
+
   DATABASE_URL: env.get('DATABASE_URL').required().asString(),
   POSTHOG_API_KEY: env
     .get('POSTHOG_API_KEY')
