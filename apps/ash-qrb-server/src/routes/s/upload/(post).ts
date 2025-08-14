@@ -18,7 +18,9 @@ export default (app: ElysiaApp) =>
       const filename = generateId()
       const checksum = await calculateFileChecksum(file)
       // Checking for file duplicates
-      const existFile = await redis.get(`upload:${filename}`)
+      const existFile = await redis.get(`upload:${checksum}`)
+
+      console.log(existFile)
 
       if (existFile) {
         const [dir, filename, extension] = JSON.parse(existFile)
@@ -40,10 +42,15 @@ export default (app: ElysiaApp) =>
       ])
 
       await mkdir(`${PUBLIC_DIR}/${dir}`, { recursive: true })
-      await Bun.write(
-        `${PUBLIC_DIR}/${dir}${filename}.${extension}`,
-        file.slice(3),
-      )
+
+      const content =
+        dir === 'json/'
+          ? Bun.gzipSync(await file.slice(3).arrayBuffer(), {
+              level: 3,
+            })
+          : file
+
+      await Bun.write(`${PUBLIC_DIR}/${dir}${filename}.${extension}`, content)
 
       return {
         item: {

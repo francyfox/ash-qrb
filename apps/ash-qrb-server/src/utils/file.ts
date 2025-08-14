@@ -22,8 +22,11 @@ export async function getFirstChunkOfFile(
   const buffer = new Uint8Array(size)
   const { value } = await reader.read(buffer)
 
+  if (!value) throw new Error(`Unable to read ${file}`)
+  const decompressed = Bun.gunzipSync(value)
+
   const decoder = new TextDecoder()
-  const chunkContent = decoder.decode(value, { stream: true })
+  const chunkContent = decoder.decode(decompressed, { stream: true })
   await reader.cancel()
 
   return chunkContent

@@ -7,6 +7,7 @@ import { join } from 'node:path'
 export class QueueService {
   redisClient
   DEFAULT_PARAMS = {
+    search: '*',
     limit: 10,
     offset: 0,
   }
@@ -19,7 +20,7 @@ export class QueueService {
   }
 
   async createIndexes() {
-    const indexes = ['upload_idx']
+    const indexes = ['task_idx']
     const dbIndexes: string[] = await this.redisClient.send('FT._LIST', [])
     const hasIndexes = dbIndexes.includes(indexes.join('|'))
 
@@ -27,7 +28,7 @@ export class QueueService {
 
     return Promise.all([
       this.redisClient.send(
-        'FT.CREATE upload_idx on HASH PREFIX 1 upload: SCHEMA checksum TAG value TEXT',
+        'FT.CREATE task_idx on HASH PREFIX 1 task: SCHEMA id TAG status TEXT logs TEXT value TEXT',
         [],
       ),
     ])
@@ -35,6 +36,8 @@ export class QueueService {
 
   setItem(item: QueueModel) {
     this.redisClient.hmset(`task:${item.id}`, [
+      'id',
+      item.id,
       'status',
       QUEUE_STATUS.IN_QUEUE,
       'logs',
@@ -63,17 +66,16 @@ export class QueueService {
     return this.redisClient.smembers('status:IN_QUEUE')
   }
 
-  async getAll(keysOnly: boolean, { limit, offset } = this.DEFAULT_PARAMS) {
-    const keys = await redisClient.send(
-      `SCAN 0 MATCH task:* COUNT ${limit}`,
-      [],
-    )
-    if (keysOnly) return keys
-
-    return this.redisClient.send(
-      `FT.SEARCH upload_idx "*" LIMIT ${offset} ${limit}`,
-      [],
-    )
+  async getAll({ search, limit, offset } = this.DEFAULT_PARAMS) {
+    const keys = await this.redisClient.keys('task:')
+    const total = keys.length
+    return {
+      total,
+      items: await this.redisClient.send(
+        `FT.SEARCH task_idx "${search}" LIMIT ${offset} ${limit}`,
+        [],
+      ),
+    }
   }
 
   register(id: string) {}
