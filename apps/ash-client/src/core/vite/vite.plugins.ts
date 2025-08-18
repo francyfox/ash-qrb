@@ -49,6 +49,17 @@ export const plugins: UserConfig['plugins'] = [
           size: 'xl',
         },
       },
+      toast: {
+        slots: {
+          title: 'text-xl',
+          description: 'text-md',
+        },
+      },
+      modal: {
+        slots: {
+          title: 'text-2xl',
+        },
+      },
     },
   }),
   Icons({

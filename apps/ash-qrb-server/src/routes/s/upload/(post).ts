@@ -20,10 +20,8 @@ export default (app: ElysiaApp) =>
       const filename = generateId()
       const checksum = await calculateFileChecksum(file)
       // Checking for file duplicates
-      const existFile = await redis.get(`upload:${checksum}`)
 
-      console.log(existFile)
-
+      const [existFile] = await redis.hmget(`upload:${checksum}`, ['value'])
       if (existFile) {
         const [dir, filename, extension] = JSON.parse(existFile)
         return {

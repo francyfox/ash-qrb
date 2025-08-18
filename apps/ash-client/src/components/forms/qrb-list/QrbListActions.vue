@@ -134,7 +134,17 @@ async function handleAddFile({ file }) {
 function handleUploaderInit(pond) {
   pond.setOptions({
     server: {
-      process: (abort, load) => {
+      process: (
+        fieldName,
+        file,
+        metadata,
+        load,
+        error,
+        progress,
+        abort,
+        transfer,
+        options,
+      ) => {
         setTimeout(() => {
           if (!stackFile.value) {
             pond.removeFile()
