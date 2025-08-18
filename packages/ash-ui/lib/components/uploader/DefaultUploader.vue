@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui/components/Button.vue'
-import { ref, useTemplateRef } from 'vue'
+import { onMounted, ref, watch, useTemplateRef } from 'vue'
 import vueFilePond from 'vue-filepond'
+import { find, type FilePond } from 'filepond'
 
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
@@ -21,6 +22,7 @@ const FilePond = vueFilePond(
 
 const emit = defineEmits<{
   addFile: [{ file: File; error: any }]
+  init: [pond: FilePond]
 }>()
 
 const { title } = defineProps<{
@@ -38,10 +40,17 @@ const pond = useTemplateRef('pond')
 const handleAddFile = async (error: string, file: File) => {
   emit('addFile', { error, file })
 }
+
+function handleFilePondInit() {
+  if (pond.value) {
+    const uploader = find(pond.value?.$el.querySelector('.filepond--root'))
+    emit('init', uploader)
+  }
+}
 </script>
 
 <template>
-  <div class="flex" ref="test">
+  <div class="flex">
     <UModal
         v-model:open="showModal"
         :dismissible="false"
@@ -56,13 +65,13 @@ const handleAddFile = async (error: string, file: File) => {
 
       <template #body>
         <div
-            ref="pond"
-            id="app"
             class="uploader p-5"
         >
           <ClientOnly>
             <FilePond
+                ref="pond"
                 v-bind="$attrs"
+                @init="handleFilePondInit"
                 @addfile="handleAddFile"
             />
           </ClientOnly>

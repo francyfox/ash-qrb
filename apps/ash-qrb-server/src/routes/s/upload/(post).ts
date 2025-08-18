@@ -13,7 +13,9 @@ export default (app: ElysiaApp) =>
     '/',
     async ({ redis, body }: { redis: RedisClient; body: any }) => {
       const { dir, file } = body
-      const [name, extension] = body.file.name.split('.')
+      let [name, extension] = body.file.name.split('.')
+
+      if (extension === 'json') extension = 'json.gz'
 
       const filename = generateId()
       const checksum = await calculateFileChecksum(file)

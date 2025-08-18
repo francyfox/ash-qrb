@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { defineAsyncComponent, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { defineAsyncComponent, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ModalReallySure from '~/components/modals/ModalReallySure.vue'
 import type { TQrbItem } from '~/types/qrb.types'
@@ -14,6 +15,7 @@ const toast = useToast()
 
 const qrbStore = useQrbStore()
 const userStore = useUserStore()
+const { errorMessage } = storeToRefs(userStore)
 
 const model = defineModel<string[]>({ default: [] })
 
@@ -31,6 +33,7 @@ const { t } = useI18n()
 const modalReallySure = ref(false)
 const modalQrCode = ref(false)
 const showImportModal = ref(false)
+const stackFile = ref<File>()
 const importFile = ref<string>()
 const isConverting = ref(false)
 
@@ -102,16 +105,54 @@ async function handleExportQrb() {
 
 async function handleAddFile({ file }) {
   isConverting.value = true
+  stackFile.value = file.file
 
   const worker = new PackrWorker() as Worker
 
   worker.postMessage(file.file)
 
   worker.onmessage = async (e) => {
-    const file = await userStore.postFile(e.data, 'json/')
-    importFile.value = file.originalUrl
+    const storedFile = await userStore.postFile(e.data, 'json/')
+    importFile.value = storedFile?.originalUrl
     isConverting.value = false
+
+    if (storedFile) {
+      toast.add({
+        title: t('toastQrbsImported'),
+        color: 'success',
+      })
+    } else {
+      stackFile.value = undefined
+      toast.add({
+        title: errorMessage.value || 'error',
+        color: 'error',
+      })
+    }
   }
+}
+
+function handleUploaderInit(pond) {
+  pond.setOptions({
+    server: {
+      process: (abort, load) => {
+        setTimeout(() => {
+          if (!stackFile.value) {
+            pond.removeFile()
+
+            return
+          }
+
+          load(importFile.value)
+        }, 300)
+
+        return {
+          abort: () => {
+            abort()
+          },
+        }
+      },
+    },
+  })
 }
 </script>
 
@@ -131,7 +172,6 @@ async function handleAddFile({ file }) {
       </UButton>
 
       <DefaultUploader
-          v-model="importFile"
           v-model:showModal="showImportModal"
           title="Import JSON"
           :button-props="{
@@ -142,6 +182,7 @@ async function handleAddFile({ file }) {
             size: 'xl'
           }"
           @add-file="handleAddFile"
+          @init="handleUploaderInit"
           accepted-file-types="application/json"
           max-file-size="2MB"
           class="flex"
