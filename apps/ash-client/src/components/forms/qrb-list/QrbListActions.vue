@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { defineAsyncComponent, ref, watch } from 'vue'
+import { defineAsyncComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ModalReallySure from '~/components/modals/ModalReallySure.vue'
 import type { TQrbItem } from '~/types/qrb.types'
@@ -103,7 +103,7 @@ async function handleExportQrb() {
   }
 }
 
-async function handleAddFile({ file }) {
+async function handleAddFile({ file }: any) {
   isConverting.value = true
   stackFile.value = file.file
 
@@ -131,23 +131,13 @@ async function handleAddFile({ file }) {
   }
 }
 
-function handleUploaderInit(pond) {
+function handleUploaderInit(pond: any) {
   pond.setOptions({
     server: {
-      process: (
-        fieldName,
-        file,
-        metadata,
-        load,
-        error,
-        progress,
-        abort,
-        transfer,
-        options,
-      ) => {
+      process: (load: any, error: any, abort: any) => {
         setTimeout(() => {
           if (!stackFile.value) {
-            pond.removeFile()
+            error('Cant import file')
 
             return
           }
