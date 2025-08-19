@@ -16,9 +16,10 @@
     ".": "./src/routes.ts"
   },
   "dependencies": {
-    "@bogeychan/elysia-logger": "^0.1.8",
+    "@bogeychan/elysia-logger": "^0.1.10",
     "@elysiajs/cors": "^1.3.3",
-    "@elysiajs/jwt": "^1.3.1",
+    "@elysiajs/jwt": "^1.3.2",
+    "@elysiajs/opentelemetry": "^1.3.1",
     "@elysiajs/server-timing": "^1.3.0",
     "@elysiajs/static": "^1.3.0",
     "@elysiajs/swagger": "^1.3.1",
@@ -27,12 +28,11 @@
     "@types/etag": "^1.8.4",
     "@verrou/core": "^0.5.1",
     "arctic": "^3.7.0",
-    "better-auth": "catalog:",
-    "cloudinary": "^2.7.0",
-    "drizzle-orm": "^0.44.2",
+    "better-auth": "^1.3.7",
+    "drizzle-orm": "^0.44.4",
     "drizzle-typebox": "^0.3.3",
-    "elysia": "catalog:",
-    "elysia-autoload": "^1.5.2",
+    "elysia": "^1.3.11",
+    "elysia-autoload": "^1.7.0",
     "env-var": "^7.5.0",
     "etag": "^1.8.1",
     "ipx": "^3.1.1",
@@ -40,16 +40,16 @@
     "mime": "^4.0.7",
     "msgpackr": "^1.11.5",
     "pg": "^8.16.3",
-    "posthog-node": "^5.3.1",
+    "posthog-node": "^5.7.0",
     "qrcode": "^1.5.4",
     "ufo": "^1.6.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "catalog:",
-    "@types/bun": "^1.2.18",
-    "@types/pg": "^8.15.4",
+    "@biomejs/biome": "^2.2.0",
+    "@types/bun": "^1.2.20",
+    "@types/pg": "^8.15.5",
     "@types/qrcode": "^1.5.5",
     "drizzle-kit": "^0.31.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   }
 }
