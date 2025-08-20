@@ -63,10 +63,6 @@ export class QueueService {
     return this.redisClient.hmget(`task:${id}`, keys)
   }
 
-  getLastInQueue() {
-    return this.redisClient.smembers('status:IN_QUEUE')
-  }
-
   async getAll({ search, limit, offset, returns } = this.DEFAULT_PARAMS) {
     const keys = await this.redisClient.keys('task:*')
     const total = keys.length // TODO: need replace on total results??

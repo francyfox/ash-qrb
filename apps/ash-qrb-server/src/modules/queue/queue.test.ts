@@ -12,19 +12,24 @@ describe('Queue', () => {
   const service = new QueueService(redisClient)
   it('create task', async () => {
     await service.setItem(MOCK_TASK)
+    const item = await service.getItem('test')
 
-    expect(await service.getItem('test')).toBe(Object.values(MOCK_TASK))
+    expect(JSON.stringify(item)).toBe(JSON.stringify(Object.values(MOCK_TASK)))
   })
 
   it('update task', async () => {
-    await service.updateItem('test')
+    await service.updateItem('test', {
+      value: 'foo',
+    })
+
+    const item = await service.getItem('test')
+    expect(item.includes('foo')).toBe(true)
   })
 
   it('remove task', async () => {
     await service.removeItem('test')
     const item = await service.getItem('test')
-    console.log(item)
-    expect(item).toBe([null])
+    expect(item.filter((v) => v).length === 0).toBe(true)
   })
 
   it('return all tasks', async () => {
