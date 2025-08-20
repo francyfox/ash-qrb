@@ -134,16 +134,24 @@ async function handleAddFile({ file }: any) {
 function handleUploaderInit(pond: any) {
   pond.setOptions({
     server: {
-      process: (load: any, error: any, abort: any) => {
-        setTimeout(() => {
-          if (!stackFile.value) {
-            error('Cant import file')
+      process: (
+        fieldName,
+        file,
+        metadata,
+        load,
+        error,
+        progress,
+        abort,
+        transfer,
+        options,
+      ) => {
+        if (!stackFile.value) {
+          error('Cant import file')
 
-            return
-          }
+          return
+        }
 
-          load(importFile.value)
-        }, 300)
+        load(importFile.value)
 
         return {
           abort: () => {

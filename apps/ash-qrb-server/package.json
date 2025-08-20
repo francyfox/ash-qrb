@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch --inspect src/index.ts",
+    "test": "bun test",
     "start": "NODE_ENV=production bun run ./src/index.ts",
     "build": "bun run build.ts",
     "lint": "bun x @biomejs/biome check src --diagnostic-level=error",

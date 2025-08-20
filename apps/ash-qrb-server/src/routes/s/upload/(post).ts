@@ -44,11 +44,7 @@ export default (app: ElysiaApp) =>
       await mkdir(`${PUBLIC_DIR}/${dir}`, { recursive: true })
 
       const content =
-        dir === 'json/'
-          ? Bun.gzipSync(await file.slice(3).arrayBuffer(), {
-              level: 3,
-            })
-          : file
+        dir === 'json/' ? Bun.gzipSync(await file.slice(3).arrayBuffer()) : file
 
       await Bun.write(`${PUBLIC_DIR}/${dir}${filename}.${extension}`, content)
 

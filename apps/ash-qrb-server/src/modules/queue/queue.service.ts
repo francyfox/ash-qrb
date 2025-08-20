@@ -1,8 +1,7 @@
 import { redisClient } from '@/core/services/redis.ts'
-import { QUEUE_STATUS, type QueueModel } from '@/modules/queue/queue.model.ts'
-import { Packr } from 'msgpackr'
+import { QUEUE_STATUS, QueueModel } from '@/modules/queue/queue.model.ts'
+import { mergeStrip } from '@/utils/array.ts'
 import type { RedisClient } from 'bun'
-import { join } from 'node:path'
 
 export class QueueService {
   redisClient
@@ -10,6 +9,7 @@ export class QueueService {
     search: '*',
     limit: 10,
     offset: 0,
+    returns: [],
   }
 
   constructor(redisClient: RedisClient) {
@@ -28,53 +28,56 @@ export class QueueService {
 
     return Promise.all([
       this.redisClient.send(
-        'FT.CREATE task_idx on HASH PREFIX 1 task: SCHEMA id TAG status TEXT logs TEXT value TEXT',
-        [],
+        'FT.CREATE',
+        'task_idx on HASH PREFIX 1 task: SCHEMA id TAG status TEXT logs TEXT value TEXT'.split(
+          ' ',
+        ),
       ),
     ])
   }
 
-  setItem(item: QueueModel) {
-    this.redisClient.hmset(`task:${item.id}`, [
-      'id',
-      item.id,
-      'status',
-      QUEUE_STATUS.IN_QUEUE,
-      'logs',
-      item.logs,
-      'value',
-      item.value,
-    ])
+  async setItem(item: QueueModel) {
+    await this.redisClient.hmset(
+      `task:${item.id}`,
+      mergeStrip(Object.keys(item), Object.values(item)),
+    )
   }
 
-  async updateItem(
-    id: string,
-    { status, logs }: Pick<QueueModel, 'status' | 'logs'>,
-  ) {
+  async removeItem(id: string) {
+    await this.redisClient.del(`task:${id}`)
+  }
+
+  async updateItem(id: string, fields: Partial<Omit<QueueModel, 'id'>>) {
     const item = await this.getItem(id)
 
-    console.log(item)
     if (!item) throw new Error('Item not found')
-    await redisClient.hmset(`task:${id}`, ['status', status, 'logs', logs])
+
+    await redisClient.hmset(
+      `task:${id}`,
+      mergeStrip(Object.keys(fields), Object.values(fields)),
+    )
   }
 
   getItem(id: string) {
-    return this.redisClient.get(`task:${id}`)
+    const keys = Object.keys(new QueueModel({ id: '', value: '' }))
+    return this.redisClient.hmget(`task:${id}`, keys)
   }
 
   getLastInQueue() {
     return this.redisClient.smembers('status:IN_QUEUE')
   }
 
-  async getAll({ search, limit, offset } = this.DEFAULT_PARAMS) {
-    const keys = await this.redisClient.keys('task:')
-    const total = keys.length
+  async getAll({ search, limit, offset, returns } = this.DEFAULT_PARAMS) {
+    const keys = await this.redisClient.keys('task:*')
+    const total = keys.length // TODO: need replace on total results??
+    const { results: items } = await this.redisClient.send(
+      'FT.SEARCH',
+      `task_idx ${search} LIMIT ${offset} ${limit} RETURN `.split(' '),
+    )
+
     return {
       total,
-      items: await this.redisClient.send(
-        `FT.SEARCH task_idx "${search}" LIMIT ${offset} ${limit}`,
-        [],
-      ),
+      items,
     }
   }
 
