@@ -26,13 +26,33 @@ describe('Queue', () => {
     expect(item.includes('foo')).toBe(true)
   })
 
+  it('return all tasks', async () => {
+    const { items } = await service.getAll()
+    const match = items.some((i: any) => i.id === 'task:test')
+
+    expect(match).toBe(true)
+  })
+
+  it('status filter', async () => {
+    await service.updateItem('test', {
+      status: 'FAILED',
+    })
+
+    const { items } = await service.getAll({
+      search: '@status:FAILED',
+      offset: 0,
+      limit: 10,
+      returns: ['value', 'status'],
+    })
+
+    expect(items.some((i: any) => i.extra_attributes.status !== 'FAILED')).toBe(
+      false,
+    )
+  })
+
   it('remove task', async () => {
     await service.removeItem('test')
     const item = await service.getItem('test')
     expect(item.filter((v) => v).length === 0).toBe(true)
-  })
-
-  it('return all tasks', async () => {
-    const result = await service.getAll()
   })
 })

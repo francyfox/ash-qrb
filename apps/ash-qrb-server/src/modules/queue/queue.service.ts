@@ -3,13 +3,18 @@ import { QUEUE_STATUS, QueueModel } from '@/modules/queue/queue.model.ts'
 import { mergeStrip } from '@/utils/array.ts'
 import type { RedisClient } from 'bun'
 
-export class QueueService {
+export class QueueService<T> {
   redisClient
   DEFAULT_PARAMS = {
     search: '*',
     limit: 10,
     offset: 0,
     returns: [],
+  } as {
+    search: string
+    limit: number
+    offset: number
+    returns: (keyof Omit<QueueModel, 'validate'>)[]
   }
 
   constructor(redisClient: RedisClient) {
@@ -66,16 +71,17 @@ export class QueueService {
   async getAll({ search, limit, offset, returns } = this.DEFAULT_PARAMS) {
     const keys = await this.redisClient.keys('task:*')
     const total = keys.length // TODO: need replace on total results??
-    const { results: items } = await this.redisClient.send(
-      'FT.SEARCH',
-      `task_idx ${search} LIMIT ${offset} ${limit} RETURN `.split(' '),
-    )
+    const RETURN =
+      returns.length > 0 ? `RETURN ${returns.length} ${returns.join(' ')}` : ''
+    const args = `task_idx ${search} LIMIT ${offset} ${limit} ${RETURN}`
+      .split(' ')
+      .filter((i) => i)
+
+    const { results: items } = await this.redisClient.send('FT.SEARCH', args)
 
     return {
       total,
       items,
     }
   }
-
-  register(id: string) {}
 }
