@@ -13,13 +13,15 @@ export default (app: ElysiaApp) =>
     '/',
     async ({ redis, body }: { redis: RedisClient; body: any }) => {
       const { dir, file } = body
-      const [name, extension] = body.file.name.split('.')
+      let [name, extension] = body.file.name.split('.')
+
+      if (extension === 'json') extension = 'json.gz'
 
       const filename = generateId()
       const checksum = await calculateFileChecksum(file)
       // Checking for file duplicates
-      const existFile = await redis.get(`upload:${filename}`)
 
+      const [existFile] = await redis.hmget(`upload:${checksum}`, ['value'])
       if (existFile) {
         const [dir, filename, extension] = JSON.parse(existFile)
         return {
@@ -32,16 +34,19 @@ export default (app: ElysiaApp) =>
         }
       }
 
-      await redis.set(
-        `upload:${checksum || ''}`,
+      await redis.hmset(`upload:${checksum}`, [
+        'checksum',
+        checksum || '',
+        'value',
         JSON.stringify([dir, filename, extension]),
-      )
+      ])
 
       await mkdir(`${PUBLIC_DIR}/${dir}`, { recursive: true })
-      await Bun.write(
-        `${PUBLIC_DIR}/${dir}${filename}.${extension}`,
-        file.slice(3),
-      )
+
+      const content =
+        dir === 'json/' ? Bun.gzipSync(await file.slice(3).arrayBuffer()) : file
+
+      await Bun.write(`${PUBLIC_DIR}/${dir}${filename}.${extension}`, content)
 
       return {
         item: {

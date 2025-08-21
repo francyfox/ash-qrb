@@ -13,6 +13,7 @@ export default (app: ElysiaApp) =>
     {
       detail: { tags: ['App'] },
       body: t.Object({
+        // @ts-ignore
         user: usersInsertSchema,
       }),
     },

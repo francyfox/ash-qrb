@@ -33,7 +33,10 @@ export const useUserStore = defineStore('user', () => {
       },
     })
 
-    if (error) errorMessage.value = error
+    if (error) {
+      errorMessage.value = error
+      return null
+    }
 
     return data?.item
   }

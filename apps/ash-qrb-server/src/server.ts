@@ -14,6 +14,9 @@ import { autoload } from 'elysia-autoload'
 import { createIPX, ipxFSStorage, ipxHttpStorage } from 'ipx'
 import { join } from 'node:path'
 import { staticPlugin } from '@elysiajs/static'
+import { opentelemetry } from '@elysiajs/opentelemetry'
+import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-node'
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-proto'
 
 const ipx = createIPX({
   storage: ipxFSStorage({ dir: join(PROJECT_DIR, './public') }),
@@ -21,6 +24,23 @@ const ipx = createIPX({
 })
 
 export const app = new Elysia()
+  .use(
+    // @ts-ignore
+    opentelemetry({
+      spanProcessors: [
+        new BatchSpanProcessor(
+          new OTLPTraceExporter({
+            url: 'https://api.axiom.co/v1/traces',
+            headers: {
+              Authorization: `Bearer ${config.AXIOM_TOKEN}`,
+              // @ts-ignore
+              'X-Axiom-Dataset': config.AXIOM_DATASET,
+            },
+          }),
+        ),
+      ],
+    }),
+  )
   // @ts-ignore
   .use(errorHandler())
   // @ts-ignore
@@ -51,6 +71,7 @@ export const app = new Elysia()
     })) as any,
   )
   .use(
+    // @ts-ignore
     staticPlugin({
       prefix: '/assets',
     }),

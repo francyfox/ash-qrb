@@ -18,9 +18,13 @@ self.onmessage = async (event: MessageEvent) => {
     }),
   )
 
-  const list = await queueService.getAll(true)
+  const { items, total } = await queueService.getAll({
+    search: '@status:IN_QUEUE',
+    offset: 0,
+    limit: 1000,
+  })
 
-  for (const item of list) {
+  for (const item of items) {
   }
   // const values = list
   //   .filter((i) => i)

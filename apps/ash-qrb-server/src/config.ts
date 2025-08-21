@@ -12,6 +12,7 @@ export const config = {
     .get('API_URL')
     .default(`https://${env.get('PUBLIC_DOMAIN').asString()}`)
     .asString(),
+
   DATABASE_URL: env.get('DATABASE_URL').required().asString(),
   POSTHOG_API_KEY: env
     .get('POSTHOG_API_KEY')
@@ -23,15 +24,15 @@ export const config = {
 
   CLIENT_APP_URL: env.get('CLIENT_APP_URL').required().asString(),
 
-  CLOUD_NAME: env.get('CLOUD_NAME').required().asString(),
-  CLOUDINARY_KEY: env.get('CLOUDINARY_KEY').required().asString(),
-  CLOUDINARY_SECRET: env.get('CLOUDINARY_SECRET').required().asString(),
-
   // Redis
   REDIS_USER: env.get('REDIS_USER').default('default').asString(),
   REDIS_PASSWORD: env.get('REDIS_PASSWORD').required().asString(),
   REDIS_HOST: env.get('REDIS_HOST').default('0.0.0.0').asString(),
   REDIS_PORT: env.get('REDIS_PORT').default('6379').asString(),
+
+  // AXIOM (opentelemetry)
+  AXIOM_TOKEN: env.get('AXIOM_TOKEN').asString(),
+  AXIOM_DATASET: env.get('AXIOM_DATASET').asString(),
 
   // Providers
   PROVIDER_GOOGLE_CLIENT_ID: env
