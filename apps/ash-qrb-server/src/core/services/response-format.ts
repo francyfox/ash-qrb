@@ -12,9 +12,9 @@ export interface IResponseOptionOrder {
 
 export interface IResponseOptions {
   page: number
-  pageSize: number
-  order: IResponseOptionOrder
-  filter: {
+  pageSize?: number
+  order?: IResponseOptionOrder
+  filter?: {
     search: string
   }
 }
