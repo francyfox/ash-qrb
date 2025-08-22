@@ -35,6 +35,9 @@ export const plugins: UserConfig['plugins'] = [
     },
     ui: {
       checkbox: {
+        slots: {
+          base: 'bg-s-purple-taupe',
+        },
         defaultVariants: {
           size: 'xl',
           color: 'primary',

@@ -50,7 +50,7 @@ export default (app: ElysiaApp) =>
               }),
             ),
             page: t.Number({ default: 1 }),
-            show: t.Array(t.Literal('logs'), t.Literal('value')),
+            show: t.Array(t.String()),
           },
           {
             default: {

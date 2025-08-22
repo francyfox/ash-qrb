@@ -33,6 +33,13 @@ export const useDashboardStore = defineStore('dashboard', () => {
         to: { path: '/qrb-list' },
       },
     },
+    {
+      id: useId(),
+      text: t('asideNavQueue'),
+      attrs: {
+        to: { path: '/queue' },
+      },
+    },
   ])
 
   return {

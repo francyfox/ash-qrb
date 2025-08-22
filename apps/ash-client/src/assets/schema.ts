@@ -43,6 +43,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description Use show for display advanced fields. Logs display errors. Value is serialized JSON with main information [checksum, path, extension] */
         get: operations["getSPrivateQueue"];
         put?: never;
         post?: never;
@@ -50,6 +51,22 @@ export interface paths {
         options?: never;
         head?: never;
         patch?: never;
+        trace?: never;
+    };
+    "/s/private/queue/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["deleteSPrivateQueueBulk"];
+        options?: never;
+        head?: never;
+        patch: operations["patchSPrivateQueueBulk"];
         trace?: never;
     };
     "/s/private/users": {
@@ -420,8 +437,12 @@ export interface paths {
                         email: string;
                         /** @description The password of the user */
                         password: string;
+                        /** @description The profile image URL of the user */
+                        image?: string;
                         /** @description The URL to use for email verification callback */
                         callbackURL?: string;
+                        /** @description If this is false, the session will not be remembered. Default is `true`. */
+                        rememberMe?: boolean;
                     };
                 };
             };
@@ -564,9 +585,7 @@ export interface paths {
                         email: string;
                         /** @description Password of the user */
                         password: string;
-                        /** @description Callback URL to use as a redirect for email verification */
                         callbackURL?: string;
-                        /** @description If this is false, the session will not be remembered. Default is `true`. */
                         rememberMe?: string;
                     };
                 };
@@ -694,7 +713,6 @@ export interface paths {
                     "application/json": {
                         /** @description The email address of the user to send a password reset email to */
                         email: string;
-                        /** @description The URL to redirect the user to reset their password. If the token isn't valid or expired, it'll be redirected with a query parameter `?error=INVALID_TOKEN`. If the token is valid, it'll be redirected with a query parameter `?token=VALID_TOKEN */
                         redirectTo?: string;
                     };
                 };
@@ -808,7 +826,6 @@ export interface paths {
                     "application/json": {
                         /** @description The new password to set */
                         newPassword: string;
-                        /** @description The token to reset the password */
                         token?: string;
                     };
                 };
@@ -1171,9 +1188,8 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        /** @description The new email to set */
+                        /** @description The new email address to set must be a valid email address */
                         newEmail: string;
-                        /** @description The URL to redirect to after email verification */
                         callbackURL?: string;
                     };
                 };
@@ -1292,9 +1308,8 @@ export interface paths {
                     "application/json": {
                         /** @description The new password to set */
                         newPassword: string;
-                        /** @description The current password */
+                        /** @description The current password is required */
                         currentPassword: string;
-                        /** @description Revoke all other sessions */
                         revokeOtherSessions?: string;
                     };
                 };
@@ -1774,7 +1789,6 @@ export interface paths {
                     "application/json": {
                         /** @description The email address of the user to send a password reset email to */
                         email: string;
-                        /** @description The URL to redirect the user to reset their password. If the token isn't valid or expired, it'll be redirected with a query parameter `?error=INVALID_TOKEN`. If the token is valid, it'll be redirected with a query parameter `?token=VALID_TOKEN */
                         redirectTo?: string;
                     };
                 };
@@ -2318,15 +2332,13 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
-                        /** @description The URL to redirect to after the user has signed in */
                         callbackURL?: string;
                         provider: string;
                         idToken?: string;
                         requestSignUp?: string;
-                        /** @description Additional scopes to request from the provider */
                         scopes?: string;
-                        /** @description The URL to redirect to if there is an error during the link process */
                         errorCallbackURL?: string;
+                        disableRedirect?: string;
                     };
                 };
             };
@@ -2775,9 +2787,7 @@ export interface paths {
                     "application/json": {
                         /** @description The provider ID for the OAuth provider */
                         providerId: string;
-                        /** @description The account ID associated with the refresh token */
                         accountId?: string;
-                        /** @description The user ID associated with the account */
                         userId?: string;
                     };
                 };
@@ -2893,9 +2903,7 @@ export interface paths {
                     "application/json": {
                         /** @description The provider ID for the OAuth provider */
                         providerId: string;
-                        /** @description The account ID associated with the refresh token */
                         accountId?: string;
-                        /** @description The user ID associated with the account */
                         userId?: string;
                     };
                 };
@@ -3338,16 +3346,11 @@ export interface paths {
                     "application/json": {
                         /** @description The provider ID for the OAuth provider */
                         providerId: string;
-                        /** @description The URL to redirect to after sign in */
                         callbackURL?: string;
-                        /** @description The URL to redirect to if an error occurs */
                         errorCallbackURL?: string;
-                        /** @description The URL to redirect to after login if the user is new */
                         newUserCallbackURL?: string;
-                        /** @description Disable redirect */
                         disableRedirect?: string;
                         scopes?: string;
-                        /** @description Explicitly request sign-up. Useful when disableImplicitSignUp is true for this provider */
                         requestSignUp?: string;
                     };
                 };
@@ -3570,9 +3573,7 @@ export interface paths {
                     "application/json": {
                         providerId: string;
                         callbackURL: string;
-                        /** @description Additional scopes to request when linking the account */
                         scopes?: string;
-                        /** @description The URL to redirect to if there is an error during the link process */
                         errorCallbackURL?: string;
                     };
                 };
@@ -3678,48 +3679,54 @@ export interface components {
     schemas: {
         User: {
             id?: string;
-            name?: string;
-            email?: string;
-            emailVerified?: boolean;
+            name: string;
+            email: string;
+            readonly emailVerified?: boolean;
             image?: string;
-            createdAt?: Record<string, never>;
-            updatedAt?: Record<string, never>;
-            companyName?: string;
-            status?: number;
-            phoneVerified?: boolean;
+            /** @default Generated at runtime */
+            createdAt: string;
+            /** @default Generated at runtime */
+            updatedAt: string;
+            /** @default  */
+            companyName: string;
+            /** @default 0 */
+            readonly status: number;
+            readonly phoneVerified?: boolean;
         };
         Session: {
             id?: string;
-            expiresAt?: Record<string, never>;
-            token?: string;
-            createdAt?: Record<string, never>;
-            updatedAt?: Record<string, never>;
+            expiresAt: string;
+            token: string;
+            createdAt: string;
+            updatedAt: string;
             ipAddress?: string;
             userAgent?: string;
-            userId?: string;
+            userId: string;
         };
         Account: {
             id?: string;
-            accountId?: string;
-            providerId?: string;
-            userId?: string;
+            accountId: string;
+            providerId: string;
+            userId: string;
             accessToken?: string;
             refreshToken?: string;
             idToken?: string;
-            accessTokenExpiresAt?: Record<string, never>;
-            refreshTokenExpiresAt?: Record<string, never>;
+            accessTokenExpiresAt?: string;
+            refreshTokenExpiresAt?: string;
             scope?: string;
             password?: string;
-            createdAt?: Record<string, never>;
-            updatedAt?: Record<string, never>;
+            createdAt: string;
+            updatedAt: string;
         };
         Verification: {
             id?: string;
-            identifier?: string;
-            value?: string;
-            expiresAt?: Record<string, never>;
-            createdAt?: Record<string, never>;
-            updatedAt?: Record<string, never>;
+            identifier: string;
+            value: string;
+            expiresAt: string;
+            /** @default Generated at runtime */
+            createdAt: string;
+            /** @default Generated at runtime */
+            updatedAt: string;
         };
     };
     responses: never;
@@ -3840,12 +3847,123 @@ export interface operations {
     };
     getSPrivateQueue: {
         parameters: {
-            query?: never;
+            query?: {
+                filter?: {
+                    /** @description Redis FT.SEARCH <search> */
+                    search?: string;
+                };
+                page?: string | number;
+                show?: "value";
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        count: number;
+                        total: number;
+                        items: {
+                            id?: string;
+                            status?: "IN_QUEUE" | "FAILED" | "SUCCESS" | "IN_PROGRESS";
+                            logs?: string;
+                            value?: string;
+                        }[];
+                    };
+                    "multipart/form-data": {
+                        count: number;
+                        total: number;
+                        items: {
+                            id?: string;
+                            status?: "IN_QUEUE" | "FAILED" | "SUCCESS" | "IN_PROGRESS";
+                            logs?: string;
+                            value?: string;
+                        }[];
+                    };
+                    "text/plain": {
+                        count: number;
+                        total: number;
+                        items: {
+                            id?: string;
+                            status?: "IN_QUEUE" | "FAILED" | "SUCCESS" | "IN_PROGRESS";
+                            logs?: string;
+                            value?: string;
+                        }[];
+                    };
+                };
+            };
+        };
+    };
+    deleteSPrivateQueueBulk: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    ids: string[];
+                };
+                "multipart/form-data": {
+                    ids: string[];
+                };
+                "text/plain": {
+                    ids: string[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    patchSPrivateQueueBulk: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    ids: string[];
+                    fields: {
+                        status: "IN_QUEUE" | "FAILED" | "SUCCESS" | "IN_PROGRESS";
+                        logs: string;
+                        value: string;
+                    };
+                };
+                "multipart/form-data": {
+                    ids: string[];
+                    fields: {
+                        status: "IN_QUEUE" | "FAILED" | "SUCCESS" | "IN_PROGRESS";
+                        logs: string;
+                        value: string;
+                    };
+                };
+                "text/plain": {
+                    ids: string[];
+                    fields: {
+                        status: "IN_QUEUE" | "FAILED" | "SUCCESS" | "IN_PROGRESS";
+                        logs: string;
+                        value: string;
+                    };
+                };
+            };
+        };
         responses: {
             200: {
                 headers: {
@@ -4192,8 +4310,8 @@ export interface operations {
                 };
                 content: {
                     "application/json": {
-                        $schema: unknown;
                         version: string;
+                        $schema: unknown;
                         items: {
                             id?: string;
                             status?: number | null;
@@ -4207,8 +4325,8 @@ export interface operations {
                         }[];
                     };
                     "multipart/form-data": {
-                        $schema: unknown;
                         version: string;
+                        $schema: unknown;
                         items: {
                             id?: string;
                             status?: number | null;
@@ -4222,8 +4340,8 @@ export interface operations {
                         }[];
                     };
                     "text/plain": {
-                        $schema: unknown;
                         version: string;
+                        $schema: unknown;
                         items: {
                             id?: string;
                             status?: number | null;
@@ -4269,27 +4387,12 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
-                    /**
-                     * @description JSON/MPK (messagepack) use url from CDN. mp:content use for messagepack (Buffer) converted to string
-                     * @default mpk:content
-                     */
-                    type: "json" | "mpk" | "mpk:content";
                     file: string;
                 };
                 "multipart/form-data": {
-                    /**
-                     * @description JSON/MPK (messagepack) use url from CDN. mp:content use for messagepack (Buffer) converted to string
-                     * @default mpk:content
-                     */
-                    type: "json" | "mpk" | "mpk:content";
                     file: string;
                 };
                 "text/plain": {
-                    /**
-                     * @description JSON/MPK (messagepack) use url from CDN. mp:content use for messagepack (Buffer) converted to string
-                     * @default mpk:content
-                     */
-                    type: "json" | "mpk" | "mpk:content";
                     file: string;
                 };
             };
@@ -4385,45 +4488,15 @@ export interface operations {
             content: {
                 "application/json": {
                     ids: string[];
-                    fields: {
-                        id?: string;
-                        status?: number | null;
-                        name?: string;
-                        body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
-                        qrCode?: string | null;
-                        qrCodeTerminal?: string | null;
-                        userId?: string;
-                        createdAt?: Record<string, never> | null;
-                        updatedAt?: Record<string, never> | null;
-                    };
+                    fields: unknown;
                 };
                 "multipart/form-data": {
                     ids: string[];
-                    fields: {
-                        id?: string;
-                        status?: number | null;
-                        name?: string;
-                        body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
-                        qrCode?: string | null;
-                        qrCodeTerminal?: string | null;
-                        userId?: string;
-                        createdAt?: Record<string, never> | null;
-                        updatedAt?: Record<string, never> | null;
-                    };
+                    fields: unknown;
                 };
                 "text/plain": {
                     ids: string[];
-                    fields: {
-                        id?: string;
-                        status?: number | null;
-                        name?: string;
-                        body?: ((string | number | boolean | null) | unknown[] | Record<string, never>) | null;
-                        qrCode?: string | null;
-                        qrCodeTerminal?: string | null;
-                        userId?: string;
-                        createdAt?: Record<string, never> | null;
-                        updatedAt?: Record<string, never> | null;
-                    };
+                    fields: unknown;
                 };
             };
         };
@@ -4689,21 +4762,14 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": {
-                    /** @description Callback URL to redirect to after the user has signed in */
                     callbackURL?: string;
                     newUserCallbackURL?: string;
-                    /** @description Callback URL to redirect to if an error happens */
                     errorCallbackURL?: string;
                     provider: string;
-                    /** @description Disable automatic redirection to the provider. Useful for handling the redirection yourself */
                     disableRedirect?: string;
-                    /** @description ID token from the provider to sign in the user with id token */
                     idToken?: string;
-                    /** @description Array of scopes to request from the provider. This will override the default scopes passed. */
                     scopes?: string;
-                    /** @description Explicitly request sign-up. Useful when disableImplicitSignUp is true for this provider */
                     requestSignUp?: string;
-                    /** @description The login hint to use for the authorization code request */
                     loginHint?: string;
                 };
             };

@@ -25,6 +25,7 @@ declare module 'vue-router/auto-routes' {
     '/profile/': RouteRecordInfo<'/profile/', '/profile', Record<never, never>, Record<never, never>>,
     '/qrb/[id]': RouteRecordInfo<'/qrb/[id]', '/qrb/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/qrb-list/': RouteRecordInfo<'/qrb-list/', '/qrb-list', Record<never, never>, Record<never, never>>,
+    '/queue/': RouteRecordInfo<'/queue/', '/queue', Record<never, never>, Record<never, never>>,
     '/scanner/': RouteRecordInfo<'/scanner/', '/scanner', Record<never, never>, Record<never, never>>,
     '/sign-up/': RouteRecordInfo<'/sign-up/', '/sign-up', Record<never, never>, Record<never, never>>,
   }
@@ -66,6 +67,10 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/qrb-list/index.vue': {
       routes: '/qrb-list/'
+      views: never
+    }
+    'src/pages/queue/index.vue': {
+      routes: '/queue/'
       views: never
     }
     'src/pages/scanner/index.vue': {
