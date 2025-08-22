@@ -1,7 +1,5 @@
-import { db } from '@/core/db'
-import { qrbSchema } from '@/schema/qrb.ts'
+import { Queue } from '@/modules/queue/queue.ts'
 import type { ElysiaApp } from '@/server.ts'
-import { inArray } from 'drizzle-orm/sql/expressions/conditions'
 import { t } from 'elysia'
 
 export default (app: ElysiaApp) =>
@@ -10,10 +8,11 @@ export default (app: ElysiaApp) =>
     async ({ body }: { body: { ids: string[] } }) => {
       const { ids } = body
 
-      await db.delete(qrbSchema).where(inArray(qrbSchema.id, ids))
+      const requests = ids.map((id) => Queue.service.removeItem(id))
+      await Promise.all(requests)
     },
     {
-      detail: { tags: ['App', 'Qrb'] },
+      detail: { tags: ['App', 'Queue'] },
       body: t.Object({
         ids: t.Array(t.String()),
       }),

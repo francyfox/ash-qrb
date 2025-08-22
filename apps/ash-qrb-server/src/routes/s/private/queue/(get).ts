@@ -1,49 +1,73 @@
-import { QUEUE_STATUS } from '@/modules/queue/queue.model.ts'
-import { QueueService } from '@/modules/queue/queue.service.ts'
+import type { IResponseOptions } from '@/core/services/response-format.ts'
+import { QueueSchema } from '@/modules/queue/queue.model.ts'
+import { Queue } from '@/modules/queue/queue.ts'
 import type { ElysiaApp } from '@/server.ts'
 import { t } from 'elysia'
 
 export default (app: ElysiaApp) =>
   app.get(
     '',
-    async ({ redis, query }) => {
-      const service = new QueueService(redis)
-      const items = await service.getAll(false)
+    async ({
+      query,
+    }: {
+      query: { page: number; show: any[]; filter?: { search: string } }
+    }) => {
+      console.log(query)
+      const options: IResponseOptions = {
+        page: Number(query?.page) || 1,
+        filter: query?.filter,
+      }
+
+      const advancedReturns = [...query.show, ...['id', 'status']]
+
+      const { items, total } = await Queue.service.getAll({
+        search: options.filter?.search || '*',
+        limit: 10,
+        offset: (options.page - 1) * 10,
+        returns: advancedReturns,
+      })
+
+      console.log(items)
 
       return {
         items,
         count: items.length,
-        total: items.length, // TODO
+        total,
       }
     },
     {
       detail: {
         tags: ['App', 'Queue'],
+        description:
+          'Use show for display advanced fields. Logs display errors. Value is serialized JSON with main information [checksum, path, extension]',
       },
       query: t.Partial(
-        t.Object({
-          search: t.String({ default: '*', description: 'Search by id' }),
-          offset: t.Number({ default: 0 }),
-          limit: t.Number({ default: 10 }),
-        }),
+        t.Object(
+          {
+            filter: t.Partial(
+              t.Object({
+                search: t.String({ description: 'Redis FT.SEARCH <search>' }),
+              }),
+            ),
+            page: t.Number({ default: 1 }),
+            show: t.Array(t.Literal('logs'), t.Literal('value')),
+          },
+          {
+            default: {
+              filter: {
+                search: '*',
+              },
+              page: 1,
+              show: [],
+            },
+          },
+        ),
       ),
       response: {
         '200': t.Object({
           count: t.Number(),
           total: t.Number(),
-          items: t.Array(
-            t.Object({
-              id: t.String(),
-              status: t.Union([
-                t.Literal(QUEUE_STATUS.IN_QUEUE),
-                t.Literal(QUEUE_STATUS.FAILED),
-                t.Literal(QUEUE_STATUS.SUCCESS),
-                t.Literal(QUEUE_STATUS.IN_PROGRESS),
-              ]),
-              logs: t.String(),
-              value: t.String(),
-            }),
-          ),
+          items: t.Array(t.Partial(QueueSchema as any)),
         }),
       },
     },

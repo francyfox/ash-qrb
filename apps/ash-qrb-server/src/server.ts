@@ -23,7 +23,7 @@ const ipx = createIPX({
   httpStorage: ipxHttpStorage({ domains: ['picsum.photos'] }),
 })
 
-export const app = new Elysia()
+export const app = new Elysia({ precompile: true })
   .use(
     // @ts-ignore
     opentelemetry({
@@ -46,8 +46,6 @@ export const app = new Elysia()
   // @ts-ignore
   .use(Logestic.preset(config.NODE_ENV === 'development' ? 'fancy' : 'common'))
   .use(serverTiming() as any)
-  .use(elysiaRedis)
-  .use(betterAuthPlugin)
   .use(
     cors({
       origin: [
@@ -76,6 +74,8 @@ export const app = new Elysia()
       prefix: '/assets',
     }),
   )
+  .use(elysiaRedis)
+  .use(betterAuthPlugin)
   .use(createElysiaIpx(ipx))
   .use(swagger(swaggerOptions as any) as any)
 

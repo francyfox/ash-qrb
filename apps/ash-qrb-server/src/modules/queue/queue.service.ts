@@ -1,5 +1,5 @@
 import { redisClient } from '@/core/services/redis.ts'
-import { QUEUE_STATUS, QueueModel } from '@/modules/queue/queue.model.ts'
+import { QueueModel } from '@/modules/queue/queue.model.ts'
 import { mergeStrip } from '@/utils/array.ts'
 import type { RedisClient } from 'bun'
 
@@ -41,7 +41,9 @@ export class QueueService<T> {
     ])
   }
 
-  async setItem(item: QueueModel) {
+  async setItem(fields: Pick<QueueModel, 'id' | 'value'>) {
+    const item = new QueueModel(fields)
+
     await this.redisClient.hmset(
       `task:${item.id}`,
       mergeStrip(Object.keys(item), Object.values(item)),
@@ -70,14 +72,15 @@ export class QueueService<T> {
 
   async getAll({ search, limit, offset, returns } = this.DEFAULT_PARAMS) {
     const keys = await this.redisClient.keys('task:*')
-    const total = keys.length // TODO: need replace on total results??
+    const total = keys.length
     const RETURN =
       returns.length > 0 ? `RETURN ${returns.length} ${returns.join(' ')}` : ''
     const args = `task_idx ${search} LIMIT ${offset} ${limit} ${RETURN}`
       .split(' ')
       .filter((i) => i)
 
-    const { results: items } = await this.redisClient.send('FT.SEARCH', args)
+    const { results } = await this.redisClient.send('FT.SEARCH', args)
+    const items = results.map((i: any) => i.extra_attributes)
 
     return {
       total,
