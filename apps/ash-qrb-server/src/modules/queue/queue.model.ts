@@ -18,31 +18,35 @@ export const QueueSchema = t.Object({
   ]),
   logs: t.String(),
   value: t.String(),
+  createdAt: t.Number(),
+  execStartAt: t.Union([t.Number(), t.Null()]),
+  completedAt: t.Union([t.Number(), t.Null()]),
 })
 
-export interface IQueue {
-  id: string
-  value: string
-  status: string
-}
+export type IQueue = typeof QueueSchema.static
 
 export class QueueModel {
   id
   value
   logs = ''
   status = QUEUE_STATUS.IN_QUEUE
+  createdAt
+  execStartAt = null
+  completedAt = null
 
-  constructor({ id, value }: Omit<IQueue, 'status'>) {
+  constructor({ id, value }: Pick<IQueue, 'id' | 'value'>) {
     this.id = id
     this.value = value
+    this.createdAt = new Date().getTime()
     this.validate()
   }
 
   validate() {
-    if (!Value.Check(QueueSchema, this))
-      throw new Error(
-        JSON.stringify([...Value.Errors(QueueSchema, this)], null, 2),
-      )
+    if (!Value.Check(QueueSchema, this)) {
+      console.error([...Value.Errors(QueueSchema, this)])
+      throw new Error('Error queue model validation')
+    }
+
     return true
   }
 }

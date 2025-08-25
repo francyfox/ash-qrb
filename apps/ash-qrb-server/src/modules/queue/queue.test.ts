@@ -1,6 +1,3 @@
-import { redisClient } from '@/core/services/redis.ts'
-import { QueueModel } from '@/modules/queue/queue.model.ts'
-import { QueueService } from '@/modules/queue/queue.service.ts'
 import { Queue } from '@/modules/queue/queue.ts'
 import { describe, expect, it } from 'bun:test'
 
@@ -12,9 +9,10 @@ const MOCK_TASK = {
 describe('Queue', () => {
   it('create task', async () => {
     await Queue.service.setItem(MOCK_TASK)
-    const item = await Queue.service.getItem('test')
+    const [id, value] = await Queue.service.getItem('test')
+    const isEqual = MOCK_TASK.id === id && MOCK_TASK.value === value
 
-    expect(JSON.stringify(item)).toBe(JSON.stringify(Object.values(MOCK_TASK)))
+    expect(isEqual).toBe(true)
   })
 
   it('update task', async () => {
@@ -28,7 +26,7 @@ describe('Queue', () => {
 
   it('return all tasks', async () => {
     const { items } = await Queue.service.getAll()
-    const match = items.some((i: any) => i.id === 'task:test')
+    const match = items.some((i: any) => i.id === 'test')
 
     expect(match).toBe(true)
   })
@@ -45,9 +43,7 @@ describe('Queue', () => {
       returns: ['value', 'status'],
     })
 
-    expect(items.some((i: any) => i.extra_attributes.status !== 'FAILED')).toBe(
-      false,
-    )
+    expect(items.some((i: any) => i.status !== 'FAILED')).toBe(false)
   })
 
   it('remove task', async () => {

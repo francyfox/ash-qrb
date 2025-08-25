@@ -31,8 +31,8 @@ export const usersDefaultColumns = {
   emailVerified: boolean('email_verified').default(false).notNull(),
   phone: varchar('phone', { length: 12 }).unique(),
   phoneVerified: boolean('phone_verified').default(false).notNull(),
-  createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
-  updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`),
+  createdAt: timestamp('created_at').default(sql`LOCALTIMESTAMP`),
+  updatedAt: timestamp('updated_at').default(sql`LOCALTIMESTAMP`),
 }
 
 export const usersSchema = pgTable('users', usersDefaultColumns)
