@@ -4,6 +4,9 @@ import { useI18n } from 'vue-i18n'
 import type { operations } from '~/assets/schema.ts'
 import type { TableColumn } from '@nuxt/ui'
 import { h, resolveComponent, useTemplateRef } from 'vue'
+import { VueCodeHighlighter } from 'vue-code-highlighter'
+import 'vue-code-highlighter/dist/style.css'
+import { truncateText } from '~/utils/text.ts'
 
 const emit = defineEmits<{
   onEdit: [id: string]
@@ -22,8 +25,10 @@ type TTaskItem =
 
 const { t } = useI18n()
 
+const UButton = resolveComponent('UButton')
 const UBadge = resolveComponent('UBadge')
 const UCheckbox = resolveComponent('UCheckbox')
+const USlideover = resolveComponent('USlideover')
 
 const dayjs = useDayjs()
 const table = useTemplateRef('table')
@@ -58,6 +63,40 @@ const columns: TableColumn<TTaskItem>[] = [
   {
     accessorKey: 'value',
     header: 'value',
+    cell: ({ row }) =>
+      h(
+        USlideover,
+        {
+          side: 'bottom',
+        },
+        {
+          default: () => {
+            if (!row.getValue('value')) {
+              return 'null'
+            }
+
+            return h(
+              UButton,
+              {
+                color: 'neutral',
+                variant: 'outline',
+                class: 'text-muted truncate',
+              },
+              () => truncateText(row.getValue('value'), 25),
+            )
+          },
+          content: () =>
+            h(
+              VueCodeHighlighter,
+              {
+                code: row.getValue('value'),
+                lang: 'json',
+                class: 'p-5 !rounded-none',
+              },
+              row.getValue('value'),
+            ),
+        },
+      ),
   },
   {
     accessorKey: 'logs',

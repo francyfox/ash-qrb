@@ -1,6 +1,7 @@
+import { PROJECT_DIR } from '@/consts.ts'
 import { db } from '@/core/db'
 import { redisClient } from '@/core/services/redis.ts'
-import { QueueModel } from '@/modules/queue/queue.model.ts'
+import { QUEUE_STATUS, QueueModel } from '@/modules/queue/queue.model.ts'
 import { QueueService } from '@/modules/queue/queue.service.ts'
 import { qrbSchema } from '@/schema/qrb.ts'
 
@@ -22,10 +23,26 @@ self.onmessage = async (event: MessageEvent) => {
     search: '@status:IN_QUEUE',
     offset: 0,
     limit: 1000,
-    returns: [],
+    returns: ['value'],
   })
 
   for (const item of items) {
+    try {
+      const buffer = await Bun.file(`${PROJECT_DIR}${item.value}`).arrayBuffer()
+      const decompressed = Bun.gunzipSync(buffer)
+      const decoder = new TextDecoder()
+      const content = decoder.decode(decompressed)
+
+      const json = JSON.parse(content)
+      self.postMessage(json)
+    } catch (e) {
+      const error = e as Error
+
+      await queueService.updateItem(`task:${item.id}`, {
+        status: QUEUE_STATUS.FAILED,
+        logs: JSON.stringify(error),
+      })
+    }
   }
   // const values = list
   //   .filter((i) => i)
