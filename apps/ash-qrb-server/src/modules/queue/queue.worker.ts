@@ -22,6 +22,7 @@ self.onmessage = async (event: MessageEvent) => {
     search: '@status:IN_QUEUE',
     offset: 0,
     limit: 1000,
+    returns: [],
   })
 
   for (const item of items) {
@@ -30,6 +31,6 @@ self.onmessage = async (event: MessageEvent) => {
   //   .filter((i) => i)
   //   .map((i) => queueService.getUnpackedValue(i as string))
 
-  self.postMessage(list)
+  // self.postMessage(list)
   // db.insert(qrbSchema).values(values)
 }

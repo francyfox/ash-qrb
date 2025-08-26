@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { useDayjs } from 'ash-libs'
 import { useI18n } from 'vue-i18n'
 import type { operations } from '~/assets/schema.ts'
 import type { TableColumn } from '@nuxt/ui'
-import { defineComponent, h, resolveComponent, useTemplateRef } from 'vue'
+import { h, resolveComponent, useTemplateRef } from 'vue'
 
 const emit = defineEmits<{
   onEdit: [id: string]
@@ -24,6 +25,7 @@ const { t } = useI18n()
 const UBadge = resolveComponent('UBadge')
 const UCheckbox = resolveComponent('UCheckbox')
 
+const dayjs = useDayjs()
 const table = useTemplateRef('table')
 const columns: TableColumn<TTaskItem>[] = [
   {
@@ -62,8 +64,44 @@ const columns: TableColumn<TTaskItem>[] = [
     header: 'logs',
   },
   {
+    accessorKey: 'createdAt',
+    header: () => t('tableCreatedAt'),
+    cell: ({ row }) => {
+      const timestamp = Number(row.getValue('createdAt'))
+      if (timestamp === 0) return 'null'
+
+      return dayjs(timestamp).format('DD-MM-YYYY HH:mm')
+    },
+  },
+  {
+    accessorKey: 'execStartAt',
+    header: () => t('tableExecStartAt'),
+    cell: ({ row }) => {
+      const timestamp = Number(row.getValue('execStartAt'))
+      if (timestamp === 0) return 'null'
+      const diff = dayjs(timestamp).diff(new Date().getTime(), 'second')
+
+      if (diff >= 60)
+        return `${dayjs(timestamp).diff(new Date().getTime(), 'minute')} ${t('timeMinutes')}`
+      if (diff >= 3600)
+        return `${dayjs(timestamp).diff(new Date().getTime(), 'hour')} ${t('timeHours')}`
+
+      return `${dayjs(timestamp).diff(new Date().getTime(), 'day')} ${t('timeDays')}`
+    },
+  },
+  {
+    accessorKey: 'completedAt',
+    header: () => t('tableCompletedAt'),
+    cell: ({ row }) => {
+      const timestamp = Number(row.getValue('completedAt'))
+      if (timestamp === 0) return 'null'
+
+      return dayjs(timestamp).format('DD-MM-YYYY HH:mm')
+    },
+  },
+  {
     accessorKey: 'status',
-    header: 'status',
+    header: () => t('tableStatus'),
     cell: ({ row }) => {
       const color = {
         SUCCESS: 'success' as const,

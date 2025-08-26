@@ -22,7 +22,7 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "dependsOn": ["ash-ui#build"]
+      "dependsOn": ["ash-ui#build", "ash-libs#build"]
     }
   }
 }

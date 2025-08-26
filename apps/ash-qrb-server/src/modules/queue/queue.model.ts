@@ -18,9 +18,9 @@ export const QueueSchema = t.Object({
   ]),
   logs: t.String(),
   value: t.String(),
-  createdAt: t.Number(),
-  execStartAt: t.Union([t.Number(), t.Null()]),
-  completedAt: t.Union([t.Number(), t.Null()]),
+  createdAt: t.Union([t.String(), t.Number()]),
+  execStartAt: t.Union([t.String(), t.Number()]),
+  completedAt: t.Union([t.String(), t.Number()]),
 })
 
 export type IQueue = typeof QueueSchema.static
@@ -31,8 +31,8 @@ export class QueueModel {
   logs = ''
   status = QUEUE_STATUS.IN_QUEUE
   createdAt
-  execStartAt = null
-  completedAt = null
+  execStartAt = 0
+  completedAt = 0
 
   constructor({ id, value }: Pick<IQueue, 'id' | 'value'>) {
     this.id = id

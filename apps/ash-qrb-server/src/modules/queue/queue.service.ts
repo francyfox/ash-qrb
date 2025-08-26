@@ -28,17 +28,24 @@ export class QueueService<T> {
     const indexes = ['task_idx']
     const dbIndexes: string[] = await this.redisClient.send('FT._LIST', [])
     const hasIndexes = dbIndexes.includes(indexes.join('|'))
+    const fieldTypes = [
+      ['id', 'TAG'],
+      ['status', 'TEXT'],
+      ['logs', 'TEXT'],
+      ['value', 'TEXT'],
+      ['createdAt', 'NUMERIC SORTABLE'],
+      ['execStartAt', 'NUMERIC SORTABLE'],
+      ['completedAt', 'NUMERIC SORTABLE'],
+    ]
+      .flat()
+      .join(' ')
+
+    const args = `task_idx on HASH PREFIX 1 task: SCHEMA ${fieldTypes}`
+    console.log(args)
 
     if (hasIndexes) return
 
-    return Promise.all([
-      this.redisClient.send(
-        'FT.CREATE',
-        'task_idx on HASH PREFIX 1 task: SCHEMA id TAG status TEXT logs TEXT value TEXT'.split(
-          ' ',
-        ),
-      ),
-    ])
+    return Promise.all([this.redisClient.send('FT.CREATE', args.split(' '))])
   }
 
   async setItem(fields: Pick<QueueModel, 'id' | 'value'>) {

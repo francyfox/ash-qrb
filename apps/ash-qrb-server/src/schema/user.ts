@@ -31,6 +31,7 @@ export const usersDefaultColumns = {
   emailVerified: boolean('email_verified').default(false).notNull(),
   phone: varchar('phone', { length: 12 }).unique(),
   phoneVerified: boolean('phone_verified').default(false).notNull(),
+  // countryIso: varchar('country_iso'), // TODO: set after register
   createdAt: timestamp('created_at').default(sql`LOCALTIMESTAMP`),
   updatedAt: timestamp('updated_at').default(sql`LOCALTIMESTAMP`),
 }

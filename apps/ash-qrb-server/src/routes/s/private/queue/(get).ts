@@ -12,13 +12,15 @@ export default (app: ElysiaApp) =>
     }: {
       query: { page: number; show: any[]; filter?: { search: string } }
     }) => {
-      console.log(query)
       const options: IResponseOptions = {
         page: Number(query?.page) || 1,
         filter: query?.filter,
       }
 
-      const advancedReturns = [...query.show, ...['id', 'status']]
+      const advancedReturns = [
+        ...query.show,
+        ...['id', 'status', 'createdAt', 'completedAt', 'execStartAt'],
+      ]
 
       const { items, total } = await Queue.service.getAll({
         search: options.filter?.search || '*',
@@ -26,8 +28,6 @@ export default (app: ElysiaApp) =>
         offset: (options.page - 1) * 10,
         returns: advancedReturns,
       })
-
-      console.log(items)
 
       return {
         items,
