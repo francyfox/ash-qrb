@@ -1,13 +1,17 @@
 <script setup lang="ts">
-const { disabled = false, active = false } = defineProps<{
+interface Props {
   disabled?: boolean
   active?: boolean
-}>()
+  to?: string
+}
+
+defineProps<Props>()
 </script>
 
 <template>
   <RouterLink
       v-bind="$attrs"
+      :to="$attrs.to || '#'"
       :class="[
           { disabled: 'pointer-events-none opacity-25 bg-s-black-olive' },
       ]"

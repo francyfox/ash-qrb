@@ -1,28 +1,31 @@
 <script setup lang="ts">
 import NuxtImg from '~lib/components/nuxt-image/NuxtImg.vue'
-defineProps<{
+
+interface Props {
   src?: string
-}>()
+  width?: number
+  height?: number
+  alt?: string
+}
+
+const { src, width = 200, height = 200, alt = 'QRB Image' } = defineProps<Props>()
 </script>
 
 <template>
   <div class="qrb-image">
     <NuxtImg
-        v-bind="$attrs"
         :src="src"
+        :width="width"
+        :height="height"
+        :alt="alt"
         :custom="true"
-        v-slot="{ isLoaded, imgAttrs }"
     >
-      <USkeleton
-          v-if="!isLoaded"
-          class="w-full h-full"
-      />
-
-      <img
-          v-else
-          v-bind="imgAttrs"
-          :src="src"
-      />
+      <template #loading>
+        <USkeleton
+            class="w-full h-full"
+            :style="{ width: width + 'px', height: height + 'px' }"
+        />
+      </template>
     </NuxtImg>
   </div>
 </template>

@@ -11,12 +11,13 @@
   "files": ["dist"],
   "exports": {
     ".": {
-      "import": "./dist/lib/index.js"
+      "import": "./dist/index.js"
     },
     "./styles/tailwind.css": "./dist/styles/tailwind.css",
     "./styles/styles.css": "./dist/styles/styles.css",
     "./icons/*": "./dist/icons/*",
-    "./assets/*": "./dist/assets/*"
+    "./assets/*": "./dist/assets/*",
+    "./components/*": "./dist/components/*"
   },
   "types": "./dist/lib/*",
   "sideEffects": ["**/*.css"],

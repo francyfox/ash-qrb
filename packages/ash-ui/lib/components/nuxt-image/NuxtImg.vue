@@ -2,7 +2,7 @@
 import { useImage } from '@vueuse/core'
 import { ref } from 'vue'
 
-const { src = '', custom } = defineProps<{
+const { src = '', width, height, alt } = defineProps<{
   src?: string
   custom?: boolean
   width: number
@@ -10,10 +10,9 @@ const { src = '', custom } = defineProps<{
   alt: string
 }>()
 
-const options = ref()
-options.value = { src }
+const options = ref({ src })
 
-const { isLoading, error } = useImage(options)
+const { isLoading } = useImage(options)
 </script>
 
 <template>
