@@ -11,7 +11,7 @@ import { plugins } from './src/core/vite/vite.plugins'
 import { readFileSync } from 'node:fs'
 
 const certsFolder = '../../docker/certs'
-console.log(__APP_ENV__.NODE_ENV !== 'production')
+
 export default defineConfig({
   server: {
     proxy: {
@@ -22,15 +22,18 @@ export default defineConfig({
           protocol: 'https:',
           host: 'localhost',
           port: 3000,
-        }
-      }
+        },
+      },
     },
     port: 4000,
-    https: __APP_ENV__.NODE_ENV !== 'production' ? {
-      key: readFileSync(path.resolve(`${certsFolder}/private.pem`)),
-      cert: readFileSync(path.resolve(`${certsFolder}/cert.pem`)),
-      rejectUnauthorized: false,
-    } : undefined
+    https:
+      __APP_ENV__.NODE_ENV !== 'production'
+        ? {
+            key: readFileSync(path.resolve(`${certsFolder}/private.pem`)),
+            cert: readFileSync(path.resolve(`${certsFolder}/cert.pem`)),
+            rejectUnauthorized: false,
+          }
+        : undefined,
   },
   resolve: {
     alias: {

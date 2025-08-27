@@ -45,11 +45,11 @@ export default (app: ElysiaApp) =>
       })
 
       worker.onmessage = (e) => {
-        console.log(e.data)
+        console.log('data', e.data)
       }
 
       worker.onerror = (e) => {
-        console.log(e)
+        console.log('error', e)
       }
     },
     {

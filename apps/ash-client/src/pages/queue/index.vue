@@ -24,7 +24,6 @@ await queueStore.getTaskList(meta.value)
 watchDebounced(
   meta,
   async () => {
-    console.log('ss')
     await queueStore.getTaskList(meta.value)
   },
   {

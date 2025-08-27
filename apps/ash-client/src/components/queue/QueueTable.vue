@@ -61,6 +61,37 @@ const columns: TableColumn<TTaskItem>[] = [
     header: '# ID',
   },
   {
+    accessorKey: 'status',
+    header: () => t('tableStatus'),
+    cell: ({ row }) => {
+      const color = {
+        SUCCESS: 'success' as const,
+        FAILED: 'error' as const,
+        IN_QUEUE: 'info' as const,
+        IN_PROGRESS: 'warning' as const,
+      }[row.getValue('status') as string]
+
+      return h(
+        UBadge,
+        { size: 'xl', class: 'capitalize', variant: 'subtle', color },
+        () => {
+          const v = row.getValue('status')
+
+          switch (v) {
+            case 'SUCCESS':
+              return t('queueStatusSuccess')
+            case 'FAILED':
+              return t('queueStatusFailed')
+            case 'IN_PROGRESS':
+              return t('queueStatusInProgress')
+            case 'IN_QUEUE':
+              return t('queueStatusInQueue')
+          }
+        },
+      )
+    },
+  },
+  {
     accessorKey: 'value',
     header: 'value',
     cell: ({ row }) =>
@@ -119,10 +150,11 @@ const columns: TableColumn<TTaskItem>[] = [
       const timestamp = Number(row.getValue('execStartAt'))
       if (timestamp === 0) return 'null'
       const diff = dayjs(timestamp).diff(new Date().getTime(), 'second')
+      console.log(diff)
 
-      if (diff >= 60)
+      if (diff <= 60)
         return `${dayjs(timestamp).diff(new Date().getTime(), 'minute')} ${t('timeMinutes')}`
-      if (diff >= 3600)
+      if (diff <= 3600)
         return `${dayjs(timestamp).diff(new Date().getTime(), 'hour')} ${t('timeHours')}`
 
       return `${dayjs(timestamp).diff(new Date().getTime(), 'day')} ${t('timeDays')}`
@@ -136,37 +168,6 @@ const columns: TableColumn<TTaskItem>[] = [
       if (timestamp === 0) return 'null'
 
       return dayjs(timestamp).format('DD-MM-YYYY HH:mm')
-    },
-  },
-  {
-    accessorKey: 'status',
-    header: () => t('tableStatus'),
-    cell: ({ row }) => {
-      const color = {
-        SUCCESS: 'success' as const,
-        FAILED: 'error' as const,
-        IN_QUEUE: 'info' as const,
-        IN_PROGRESS: 'warning' as const,
-      }[row.getValue('status') as string]
-
-      return h(
-        UBadge,
-        { size: 'xl', class: 'capitalize', variant: 'subtle', color },
-        () => {
-          const v = row.getValue('status')
-
-          switch (v) {
-            case 'SUCCESS':
-              return t('queueStatusSuccess')
-            case 'FAILED':
-              return t('queueStatusFailed')
-            case 'IN_PROGRESS':
-              return t('queueStatusInProgress')
-            case 'IN_QUEUE':
-              return t('queueStatusInQueue')
-          }
-        },
-      )
     },
   },
 ]

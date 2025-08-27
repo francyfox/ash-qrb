@@ -23,10 +23,15 @@ self.onmessage = async (event: MessageEvent) => {
     search: '@status:IN_QUEUE',
     offset: 0,
     limit: 1000,
-    returns: ['value'],
+    returns: ['id', 'value'],
   })
 
   for (const item of items) {
+    await queueService.updateItem(item.id, {
+      status: QUEUE_STATUS.IN_PROGRESS,
+      execStartAt: new Date().getTime(),
+    })
+
     try {
       const buffer = await Bun.file(`${PROJECT_DIR}${item.value}`).arrayBuffer()
       const decompressed = Bun.gunzipSync(buffer)
@@ -34,14 +39,26 @@ self.onmessage = async (event: MessageEvent) => {
       const content = decoder.decode(decompressed)
 
       const json = JSON.parse(content)
+      console.log(json)
+      await db.insert(qrbSchema).values(json.items)
+
+      await queueService.updateItem(item.id, {
+        status: QUEUE_STATUS.SUCCESS,
+        completedAt: new Date().getTime(),
+      })
+
       self.postMessage(json)
     } catch (e) {
+      console.log(e)
       const error = e as Error
 
-      await queueService.updateItem(`task:${item.id}`, {
+      await queueService.updateItem(item.id, {
         status: QUEUE_STATUS.FAILED,
+        completedAt: new Date().getTime(),
         logs: JSON.stringify(error),
       })
+
+      throw new Error(error.message)
     }
   }
   // const values = list

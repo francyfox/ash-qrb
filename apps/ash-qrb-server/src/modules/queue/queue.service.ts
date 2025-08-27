@@ -41,7 +41,6 @@ export class QueueService<T> {
       .join(' ')
 
     const args = `task_idx on HASH PREFIX 1 task: SCHEMA ${fieldTypes}`
-    console.log(args)
 
     if (hasIndexes) return
 

@@ -21,7 +21,6 @@ const providers = {
 
 function handleDetect(code: string, external: boolean) {
   url.value = code
-  console.log(external)
 
   if (external) {
     showModal.value = true

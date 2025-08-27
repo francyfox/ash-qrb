@@ -56,7 +56,6 @@ export const useUserStore = defineStore('user', () => {
   }
 
   const signInProvider = async (provider: TLoginProviders) => {
-    console.log(new URL('/dashboard', window.location.origin).toString())
     const response = await authClient.signIn.social({
       provider,
       callbackURL: new URL('/dashboard', window.location.origin).toString(),

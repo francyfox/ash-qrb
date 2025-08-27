@@ -17,7 +17,6 @@ export const createElysiaIpx = (ipx: IPX) => {
 
       const id = safeString(decode(idSegments.join('/')))
 
-      console.log(id, modifiersString)
       if (!modifiersString) {
         set.status = 400
         throw new Error(`Modifiers are missing: ${id}`)
