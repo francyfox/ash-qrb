@@ -1,10 +1,6 @@
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import ui from '@nuxt/ui/vite'
-
-// ES modules equivalent of __dirname
-const __dirname = dirname(fileURLToPath(import.meta.url))
-
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
@@ -14,6 +10,8 @@ import vue from '@vitejs/plugin-vue'
 import { copyVueFilesPlugin } from './plugin.ts'
 // import { analyzer } from 'vite-bundle-analyzer'
 // import { libInjectCss } from 'vite-plugin-lib-inject-css'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -48,13 +46,13 @@ export default defineConfig({
         ),
       },
     }),
-    // TypeScript декларации отключены, поскольку мы экспортируем некомпилированные Vue файлы
     // @ts-ignore
-    // dts({
-    //   include: ['lib', './auto-imports.d.ts'],
-    //   tsconfigPath: 'tsconfig.build.json',
-    //   clearPureImport: true,
-    // }),
+    dts({
+      tsconfigPath: 'tsconfig.build.json',
+      insertTypesEntry: true,
+      rollupTypes: true,
+      copyDtsFiles: true
+    }),
     // libInjectCss(),
   ],
   build: {
@@ -76,6 +74,9 @@ export default defineConfig({
         'ash-i18n'
       ],
       output: {
+        chunkFileNames: 'chunks/[name].[hash].js',
+        assetFileNames: 'assets/[name][extname]',
+        entryFileNames: '[name].js',
         globals: {
           vue: 'Vue',
         },

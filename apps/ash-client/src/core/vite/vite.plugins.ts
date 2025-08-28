@@ -12,6 +12,7 @@ import type { UserConfig } from 'vite'
 // import { VitePWA } from 'vite-plugin-pwa'
 import { ClientSideLayout } from 'vite-plugin-vue-layouts'
 import tailwindAutoReference from 'vite-plugin-vue-tailwind-auto-reference'
+import { ashUITypesPlugin } from './ash-ui-dts-plugin'
 
 export const plugins: UserConfig['plugins'] = [
   tailwindAutoReference(resolve(process.cwd(), 'src/tw.css')),
@@ -115,4 +116,5 @@ export const plugins: UserConfig['plugins'] = [
   //   },
   // }),
   ClientSideLayout(),
+  ashUITypesPlugin(),
 ]

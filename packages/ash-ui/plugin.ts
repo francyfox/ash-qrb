@@ -1,20 +1,11 @@
-import { copyFileSync, mkdirSync, existsSync, writeFileSync } from 'node:fs'
+import {  mkdirSync, existsSync, writeFileSync } from 'node:fs'
 import { glob } from 'glob'
-import { resolve, dirname, relative, join } from 'node:path'
+import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-// ES modules equivalent of __dirname
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-interface AshUIOptions {
-  prefix?: string
-  components?: boolean
-  resolvers?: any[]
-}
-
-export const copyVueFilesPlugin = (options: AshUIOptions = {}) => {
-  const { prefix = '', components: enableComponents = true } = options
-  
+export const copyVueFilesPlugin = () => {
   return {
     name: 'ash-ui:resolver-generator',
     buildStart() {
@@ -30,7 +21,7 @@ export const copyVueFilesPlugin = (options: AshUIOptions = {}) => {
           mainContent += `export { default as ${componentName} } from '${relativePath}'\n`
         }
       }
-      
+
       writeFileSync(resolve(__dirname, 'src/lib.ts'), mainContent)
     },
     writeBundle() {
@@ -45,18 +36,6 @@ export const copyVueFilesPlugin = (options: AshUIOptions = {}) => {
           components.push(componentName)
         }
       }
-
-      let mainContent = ''
-      for (const file of vueFiles) {
-        const match = file.match(componentNameRegex)
-        if (match) {
-          const componentName = match[1]
-          const relativePath = '../lib/' + file.replace('lib/', '')
-          mainContent += `export { default as ${componentName} } from '${relativePath}'\n`
-        }
-      }
-      
-      writeFileSync(resolve(__dirname, 'src/lib.ts'), mainContent)
 
       const distDir = resolve(__dirname, 'dist')
       if (!existsSync(distDir)) {
@@ -74,6 +53,17 @@ export const copyVueFilesPlugin = (options: AshUIOptions = {}) => {
       resolverContent += `      }\n`
       resolverContent += `    }\n`
       resolverContent += `  }\n`
+      resolverContent += `}\n\n`
+      
+      resolverContent += `export function generateComponentsDeclaration() {\n`
+      resolverContent += `  return \`declare module 'vue' {\n`
+      resolverContent += `  export interface GlobalComponents {\n`
+      for (const componentName of components) {
+        resolverContent += `    ${componentName}: typeof import('ash-ui')['${componentName}']\n`
+      }
+      resolverContent += `  }\n`
+      resolverContent += `}\n`
+      resolverContent += `export {}\`\n`
       resolverContent += `}\n`
 
       writeFileSync(resolve(__dirname, 'dist/resolver.js'), resolverContent)

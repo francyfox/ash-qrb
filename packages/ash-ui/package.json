@@ -18,11 +18,7 @@
       "import": "./dist/resolver.js"
     },
     "./styles/tailwind.css": "./dist/styles/tailwind.css",
-    "./styles/styles.css": "./dist/styles/styles.css",
-    "./icons/*": "./dist/icons/*",
-    "./assets/*": "./dist/assets/*",
-    "./components/*": "./dist/components/*",
-    "./components/*/*": "./dist/components/*/*"
+    "./styles/styles.css": "./dist/styles/styles.css"
   },
   "types": "./dist/index.d.ts",
   "sideEffects": ["**/*.css"],
