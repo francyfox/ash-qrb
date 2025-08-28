@@ -48,6 +48,7 @@ export default defineConfig({
   css: {
     devSourcemap: true,
     postcss: {
+      // @ts-ignore
       plugins: [autoprefixer(), nested, twPostCss],
     },
   },
