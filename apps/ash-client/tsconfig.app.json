@@ -15,7 +15,7 @@
       "vite-plugin-pwa/client",
       "unplugin-icons/types/vue",
       "vite-plugin-vue-layouts/client",
-      "ash-ui/lib"
+      "ash-ui"
     ],
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "strict": true,

@@ -1,25 +1,30 @@
 {
   "name": "ash-ui",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev:live": "vite",
-    "build:exports": "bun generate.ts",
-    "build": "bun run build:exports && vite build"
+    "build": "vite build"
   },
   "files": ["dist"],
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./resolver": {
+      "types": "./dist/resolver.d.ts",
+      "import": "./dist/resolver.js"
     },
     "./styles/tailwind.css": "./dist/styles/tailwind.css",
     "./styles/styles.css": "./dist/styles/styles.css",
     "./icons/*": "./dist/icons/*",
     "./assets/*": "./dist/assets/*",
-    "./components/*": "./dist/components/*"
+    "./components/*": "./dist/components/*",
+    "./components/*/*": "./dist/components/*/*"
   },
-  "types": "./dist/lib/*",
+  "types": "./dist/index.d.ts",
   "sideEffects": ["**/*.css"],
   "peerDependencies": {
     "vue": "catalog:",

@@ -3,13 +3,13 @@ import process from 'node:process'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
 import ui from '@nuxt/ui/vite'
 import vue from '@vitejs/plugin-vue'
-import { ashUIResolver } from 'ash-ui'
+import { ashUIResolver } from 'ash-ui/resolver'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import type { UserConfig } from 'vite'
-import { VitePWA } from 'vite-plugin-pwa'
+// import { VitePWA } from 'vite-plugin-pwa'
 import { ClientSideLayout } from 'vite-plugin-vue-layouts'
 import tailwindAutoReference from 'vite-plugin-vue-tailwind-auto-reference'
 
@@ -27,7 +27,7 @@ export const plugins: UserConfig['plugins'] = [
     },
     components: {
       resolvers: [
-        ashUIResolver,
+        ashUIResolver(),
         IconsResolver({
           customCollections: ['ash'],
         }),

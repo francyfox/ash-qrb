@@ -16,6 +16,7 @@ import {
   createQrb,
   updateQrbCode,
 } from '~/components/modals/qrb-code/modalQrCode.service.ts'
+import { NuxtImg } from 'ash-ui'
 
 const { id } = defineProps<{ id?: string }>()
 

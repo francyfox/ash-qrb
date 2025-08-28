@@ -28,6 +28,7 @@ declare module 'vue-router/auto-routes' {
     '/queue/': RouteRecordInfo<'/queue/', '/queue', Record<never, never>, Record<never, never>>,
     '/scanner/': RouteRecordInfo<'/scanner/', '/scanner', Record<never, never>, Record<never, never>>,
     '/sign-up/': RouteRecordInfo<'/sign-up/', '/sign-up', Record<never, never>, Record<never, never>>,
+    '/test-ash-ui': RouteRecordInfo<'/test-ash-ui', '/test-ash-ui', Record<never, never>, Record<never, never>>,
   }
 
   /**
@@ -79,6 +80,10 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/sign-up/index.vue': {
       routes: '/sign-up/'
+      views: never
+    }
+    'src/pages/test-ash-ui.vue': {
+      routes: '/test-ash-ui'
       views: never
     }
   }

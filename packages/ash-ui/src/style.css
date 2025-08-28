@@ -1,3 +1,1 @@
-@import "../../../node_modules/ash-ui/dist/styles/tailwind.css";
-@import "../../../node_modules/ash-ui/dist/styles/styles.css";
-@source "../../../node_modules/ash-ui";
+/* Nuxt UI styles will be handled by the Nuxt UI plugin */
