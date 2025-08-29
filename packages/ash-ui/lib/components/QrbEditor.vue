@@ -77,7 +77,7 @@ function onReady() {
 </template>
 
 <style lang="postcss">
-@import "@vueup/vue-quill/dist/vue-quill.snow.css";
+@import "../../../../node_modules/@vueup/vue-quill/dist/vue-quill.snow.css";
 
 .ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
   width: 36px;

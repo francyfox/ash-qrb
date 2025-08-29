@@ -1,6 +1,6 @@
-import {  mkdirSync, existsSync, writeFileSync } from 'node:fs'
+import {  mkdirSync, writeFileSync, copyFileSync } from 'node:fs'
 import { glob } from 'glob'
-import { resolve, dirname } from 'node:path'
+import { resolve, dirname} from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
@@ -29,27 +29,29 @@ export const copyVueFilesPlugin = () => {
       const components = []
       const componentNameRegex = /([^/]+)\.vue$/
 
+      const distDir = resolve(__dirname, 'dist')
+      const componentsPath = `${distDir}/components`
+
+      mkdirSync(distDir, { recursive: true })
+      mkdirSync(componentsPath)
+
       for (const file of vueFiles) {
         const match = file.match(componentNameRegex)
         if (match) {
           const componentName = match[1]
           components.push(componentName)
+          copyFileSync(file, `${distDir}/components/${componentName}.vue`)
         }
       }
 
-      const distDir = resolve(__dirname, 'dist')
-      if (!existsSync(distDir)) {
-        mkdirSync(distDir, { recursive: true })
-      }
 
       let resolverContent = `export const components = [${components.map(name => `'${name}'`).join(',')}]\n`
       resolverContent += `export function ashUIResolver() {\n`
       resolverContent += `  return {\n`
       resolverContent += `    type: 'component',\n`
       resolverContent += `    resolve: (name) => {\n`
-      resolverContent += `      const componentNames = [${components.map(name => `'${name}'`).join(',')}]\n`
-      resolverContent += `      if (componentNames.includes(name)) {\n`
-      resolverContent += `        return { name, from: 'ash-ui' }\n`
+      resolverContent += `      if (components.includes(name)) {\n`
+      resolverContent += `        return { name, from: 'ash-ui', path: \`${distDir}/components/\${name}.vue\` }\n`
       resolverContent += `      }\n`
       resolverContent += `    }\n`
       resolverContent += `  }\n`

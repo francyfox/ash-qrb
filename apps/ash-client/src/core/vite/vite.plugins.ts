@@ -1,9 +1,10 @@
+import { glob } from 'glob'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import VueI18n from '@intlify/unplugin-vue-i18n/vite'
 import ui from '@nuxt/ui/vite'
 import vue from '@vitejs/plugin-vue'
-import { ashUIResolver } from 'ash-ui/resolver'
+import { ashUIResolver, components } from 'ash-ui/resolver'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
@@ -27,6 +28,7 @@ export const plugins: UserConfig['plugins'] = [
       dirs: ['src/composables', 'src/stores'],
     },
     components: {
+      deep: true,
       resolvers: [
         ashUIResolver(),
         IconsResolver({
@@ -116,5 +118,5 @@ export const plugins: UserConfig['plugins'] = [
   //   },
   // }),
   ClientSideLayout(),
-  ashUITypesPlugin(),
+  // ashUITypesPlugin(),
 ]

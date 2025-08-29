@@ -6,7 +6,7 @@ import { h, resolveComponent, type Ref, watch, onMounted } from 'vue'
 import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import { computed, ref, useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useDayjs } from '~/composable/dayjs.ts'
+import { useDayjs } from '~/composable/dayjs.js'
 
 type TQrbItem = any
 

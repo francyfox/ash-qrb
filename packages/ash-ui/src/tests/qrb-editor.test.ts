@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import { QrbEditor } from 'ash-ui'
+import { QrbEditor } from 'packages/ash-ui/dist'
 import { describe, expect, it } from 'vitest'
 
 describe('QrbEditor.vue', () => {

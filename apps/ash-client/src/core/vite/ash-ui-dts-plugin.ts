@@ -9,9 +9,7 @@ export function ashUITypesPlugin() {
   return {
     name: 'ash-ui:dts-updater',
     configResolved() {
-      setTimeout(() => {
-        updateComponentsDeclaration()
-      }, 2000)
+      updateComponentsDeclaration()
     },
     handleHotUpdate(ctx: any) {
       if (ctx.file.includes('packages/ash-ui') && ctx.file.endsWith('.vue')) {
@@ -27,10 +25,10 @@ function debouncedUpdate() {
   }
   updateTimeout = setTimeout(() => {
     updateComponentsDeclaration()
-  }, 500)
+  }, 1000)
 }
 
-function updateComponentsDeclaration() {
+export function updateComponentsDeclaration() {
   const componentsFilePath = resolve(process.cwd(), 'components.d.ts')
 
   if (!existsSync(componentsFilePath)) {

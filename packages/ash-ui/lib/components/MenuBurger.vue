@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AsideNavigation, {
   type AsideNavigationProps,
-} from '../nav/aside/AsideNavigation.vue'
+} from './AsideNavigation.vue'
 import { watch } from 'vue'
 import { useRoute } from 'vue-router'
 

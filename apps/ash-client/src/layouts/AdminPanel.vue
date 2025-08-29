@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { computed, onErrorCaptured, ref, useId } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { onErrorCaptured, ref } from 'vue'
 import SectionFooter from '~/components/sections/SectionFooter.vue'
 import SectionHeader from '~/components/sections/SectionHeader.vue'
-
-const { t } = useI18n()
 
 const mediaStore = useMediaStore()
 const { mediaQueries } = mediaStore

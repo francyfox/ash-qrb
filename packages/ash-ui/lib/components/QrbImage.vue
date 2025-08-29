@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NuxtImg from '~lib/components/nuxt-image/NuxtImg.vue'
+import NuxtImg from 'packages/ash-ui/lib/components/NuxtImg.vue'
 
 interface Props {
   src?: string

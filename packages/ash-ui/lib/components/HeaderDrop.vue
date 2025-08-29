@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import MenuBurger from '../menu-burger/MenuBurger.vue'
-import type { AsideNavigationProps } from '../nav/aside/AsideNavigation.vue'
+import MenuBurger from './MenuBurger.vue'
+import type { AsideNavigationProps } from './AsideNavigation.vue'
 
 const { locale } = useI18n()
 const { data } = defineProps<AsideNavigationProps>()

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted, useTemplateRef } from 'vue';
-import QrbList from '~lib/components/table/QrbList.vue'
-import DefaultUploader from '~lib/components/uploader/DefaultUploader.vue'
+import QrbList from '~lib/components/QrbList.vue'
+import DefaultUploader from '~lib/components/DefaultUploader.vue'
 
 const providers = {
   toast: {},

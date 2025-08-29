@@ -50,6 +50,7 @@ export default defineConfig({
     dts({
       tsconfigPath: 'tsconfig.build.json',
       insertTypesEntry: true,
+      clearPureImport: true,
       rollupTypes: true,
       copyDtsFiles: true
     }),
@@ -62,7 +63,7 @@ export default defineConfig({
       fileName: 'index',
       formats: ['es']
     },
-    cssCodeSplit: false,
+    cssCodeSplit: true,
     emptyOutDir: true,
     outDir: 'dist',
     target: 'esnext',
@@ -71,12 +72,12 @@ export default defineConfig({
         'vue',
         '@nuxt/ui',
         '@vueuse/core',
-        'ash-i18n'
+        'ash-i18n',
+        'tailwindcss',
+        'vite',
+        'quill'
       ],
       output: {
-        chunkFileNames: 'chunks/[name].[hash].js',
-        assetFileNames: 'assets/[name][extname]',
-        entryFileNames: '[name].js',
         globals: {
           vue: 'Vue',
         },
