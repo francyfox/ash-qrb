@@ -35,6 +35,7 @@ export const copyVueFilesPlugin = () => {
       mkdirSync(distDir, { recursive: true })
       mkdirSync(componentsPath)
 
+
       for (const file of vueFiles) {
         const match = file.match(componentNameRegex)
         if (match) {

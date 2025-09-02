@@ -13,6 +13,8 @@ import { copyVueFilesPlugin } from './plugin.ts'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
+console.log(resolve(__dirname, 'src/lib.ts'))
+
 // https://vite.dev/config/
 export default defineConfig({
   resolve: {
