@@ -1,4 +1,5 @@
 import './style.css'
+import 'ash-ui/lib.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'

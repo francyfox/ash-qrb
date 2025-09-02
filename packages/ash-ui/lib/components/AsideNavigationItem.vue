@@ -1,8 +1,9 @@
 <script setup lang="ts">
-interface Props {
+import type { RouterLinkProps } from 'vue-router'
+
+interface Props extends RouterLinkProps {
   disabled?: boolean
   active?: boolean
-  to?: string
 }
 
 defineProps<Props>()

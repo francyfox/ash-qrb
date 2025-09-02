@@ -7,6 +7,7 @@ export interface IMGLink {
 
 export interface IMGExecuteFetch {
   label?: string
+  to?: string
   icon?: string
   request?: string
   single: boolean
@@ -41,6 +42,8 @@ const handleAdd = () => {
       label: undefined,
       icon: undefined,
       to: undefined,
+      single: false,
+      showResponse: false,
     },
   })
 }

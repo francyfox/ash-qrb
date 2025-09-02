@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { TableColumn, TableRow } from '@nuxt/ui'
 import type { Row } from '@tanstack/vue-table'
-import { h, resolveComponent, type Ref, watch, onMounted } from 'vue'
-// import type { TQrbItem } from '~/types/qrb.types'
+import { h, resolveComponent, watch, onMounted } from 'vue'
+// import type { TQrbItem } from '../../src/types/qrb.types'
 import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import { computed, ref, useTemplateRef } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useDayjs } from '~/composable/dayjs.js'
+import { useDayjs } from '../../src/composable/dayjs.ts'
 
 type TQrbItem = any
 
@@ -24,6 +24,7 @@ const { list = [], providers } = defineProps<{
 const pagination = defineModel<{
   pageIndex: number
   pageSize: number
+  total: number
 }>('pagination')
 
 const filter = defineModel<{
@@ -133,8 +134,8 @@ const columns: TableColumn<TQrbItem>[] = [
   },
 ]
 
-const rowSelection = ref<Record<string, boolean>>({})
-
+// const rowSelection = ref<Record<string, boolean>>({})
+// @ts-ignore
 function onSelect(row: TableRow<TQrbItem>, e?: Event) {
   /* If you decide to also select the column you can do this  */
   row.toggleSelected(!row.getIsSelected())
@@ -180,21 +181,21 @@ const columnFilters = ref([
   },
 ])
 
-const tableTotal: Ref<number | undefined> = computed(
-  () => table.value?.tableApi?.getFilteredRowModel().rows.length,
-)
+// const tableTotal: Ref<number | undefined> = computed(
+//   () => table.value?.tableApi?.getFilteredRowModel().rows.length,
+// )
 
 const breakpoints = useBreakpoints(breakpointsTailwind)
 const lg = breakpoints.smaller('lg')
 
 const hiddenColsOnLgPattern = new RegExp(['id', 'createdAt'].join('|'), 'gi')
 const hiddenColsOnLg = computed(() =>
-  table.value?.tableApi
+    (table.value as any)?.tableApi
     .getAllColumns()
-    .filter((col) => hiddenColsOnLgPattern.test(col.id)),
+    .filter((col: Row<''>) => hiddenColsOnLgPattern.test(col.id)),
 )
 
-function hideCols(v) {
+function hideCols(v: boolean) {
   for (const col of hiddenColsOnLg.value) {
     col.toggleVisibility(!v)
   }
@@ -231,15 +232,15 @@ onMounted(() => {
       />
 
       <div class="px-4 py-3.5 text-md text-muted">
-        {{ table?.tableApi?.getFilteredSelectedRowModel().rows.length || 0 }} of
-        {{ table?.tableApi?.getFilteredRowModel().rows.length || 0 }} row(s) selected.
+        {{ (table as any)?.tableApi?.getFilteredSelectedRowModel().rows.length || 0 }} of
+        {{ (table as any)?.tableApi?.getFilteredRowModel().rows.length || 0 }} row(s) selected.
       </div>
 
       <div class="flex justify-center border-t border-default pt-4">
         <UPagination
-            v-model:page="pagination.pageIndex"
-            :items-per-page="pagination.pageSize"
-            :total="pagination.total"
+            v-model:page="pagination!.pageIndex"
+            :items-per-page="pagination!.pageSize"
+            :total="pagination!.total"
             show-last
             show-first
         />

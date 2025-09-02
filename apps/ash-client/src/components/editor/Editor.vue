@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import 'ash-ui/assets/QrbEditor.css'
 import BlotFormatter from 'quill-blot-formatter'
 import imageUploader from 'quill-image-uploader'
 

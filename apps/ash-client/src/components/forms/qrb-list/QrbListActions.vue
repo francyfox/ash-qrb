@@ -5,7 +5,6 @@ import { useI18n } from 'vue-i18n'
 import ModalReallySure from '~/components/modals/ModalReallySure.vue'
 import type { TQrbItem } from '~/types/qrb.types'
 import PackrWorker from '~/components/forms/qrb-list/packr.worker.ts?worker'
-import 'ash-ui/assets/DefaultUploader.css'
 
 const ModalQrCode = defineAsyncComponent(
   () => import('~/components/modals/qrb-code/ModalQrCode.vue'),

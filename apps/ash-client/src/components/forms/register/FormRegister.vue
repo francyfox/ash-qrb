@@ -9,7 +9,6 @@ import {
 } from '~/components/forms/register/register.schema'
 import type { IUser } from '~/components/forms/register/register.types'
 import type { Form, FormSubmitEvent } from '#ui/types'
-import 'ash-ui/assets/DefaultUploader.css'
 
 const { t } = useI18n()
 

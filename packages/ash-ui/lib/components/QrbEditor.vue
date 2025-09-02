@@ -8,16 +8,16 @@ export default {}
 </script>
 <script setup lang="ts">
 // import type { Delta } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
+
 import { defineAsyncComponent, ref, useTemplateRef } from 'vue'
 
 const QEditor = defineAsyncComponent(
   async () => (await import('@vueup/vue-quill')).QuillEditor,
 )
 
-const emit = defineEmits<{
-  onUpload: [file: File]
-}>()
+// const emit = defineEmits<{
+//   onUpload: [file: File]
+// }>()
 
 const model = defineModel<Record<string, any>>()
 
@@ -37,10 +37,10 @@ const QuillEditor = QEditor
 const editorRef = useTemplateRef('editorRef')
 const contentLength = ref(1)
 
-function onUpdate({ oldContents: any }) {
-  contentLength.value = editorRef.value?.getQuill().getLength()
+function onUpdate({ oldContents }: any) {
+  contentLength.value = editorRef.value?.getQuill().getLength() || 0
 
-  if (contentLength.value >= maxLength.value && oldContents) {
+  if (contentLength.value >= maxLength && oldContents) {
     editorRef.value?.getQuill().setContents(oldContents)
   }
 
@@ -51,7 +51,7 @@ function onUpdate({ oldContents: any }) {
 
 function onReady() {
   if (model.value) {
-    editorRef.value?.getQuill().setContents(model.value)
+    editorRef.value?.getQuill().setContents(model.value as any)
   }
 
   init.value = true

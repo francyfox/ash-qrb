@@ -54,7 +54,7 @@ export default defineConfig({
       insertTypesEntry: true,
       clearPureImport: true,
       rollupTypes: true,
-      copyDtsFiles: true
+      copyDtsFiles: true,
     }),
     // libInjectCss(),
   ],
@@ -77,7 +77,11 @@ export default defineConfig({
         'ash-i18n',
         'tailwindcss',
         'vite',
-        'quill'
+        'quill',
+        'reka-ui',
+        '@tanstack',
+        '@intlify/core-base',
+        '@floating-ui'
       ],
       output: {
         globals: {

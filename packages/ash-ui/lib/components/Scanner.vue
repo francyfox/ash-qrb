@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import { QrcodeStream, QrcodeCapture } from 'vue-qrcode-reader'
 import { ref, onMounted, computed } from 'vue'
-import { isExternalUrl, isValidHttpUrl } from '~/utils/url.js'
+import { isExternalUrl, isValidHttpUrl } from '../../src/utils/url'
 
 const { t } = useI18n()
 

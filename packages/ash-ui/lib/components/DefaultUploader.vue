@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui/components/Button.vue'
-import { onMounted, ref, watch, useTemplateRef } from 'vue'
+import { useTemplateRef } from 'vue'
 import vueFilePond from 'vue-filepond'
-import { find, type FilePond } from 'filepond'
+import { find } from 'filepond'
+import type { FilePond as IFilePond } from 'filepond'
 
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
 import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
 
+// @ts-ignore
 import 'filepond/dist/filepond.min.css'
+// @ts-ignore
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css'
 
 // Create FilePond component
@@ -22,7 +25,7 @@ const FilePond = vueFilePond(
 
 const emit = defineEmits<{
   addFile: [{ file: File; error: any }]
-  init: [pond: FilePond]
+  init: [pond: IFilePond]
 }>()
 
 const { title } = defineProps<{
@@ -43,7 +46,7 @@ const handleAddFile = async (error: string, file: File) => {
 
 function handleFilePondInit() {
   if (pond.value) {
-    const uploader = find(pond.value?.$el.querySelector('.filepond--root'))
+    const uploader = find((pond.value as any).$el.querySelector('.filepond--root'))
     emit('init', uploader)
   }
 }
