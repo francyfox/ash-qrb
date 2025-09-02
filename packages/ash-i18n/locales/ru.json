@@ -59,6 +59,7 @@
   "timeDays": "дн.",
   "timeHours": "ч.",
   "timeMinutes": "мин.",
+  "timeSeconds": "сек.",
   "toastQrCreated": "QRB код создан",
   "toastQrUpdated": "QRB код .::{name} - был обновлён",
   "toastQrbsExported": "Ваш QRB список был сохранён в виде JSON",

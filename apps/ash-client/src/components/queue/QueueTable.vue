@@ -7,6 +7,7 @@ import { h, resolveComponent, useTemplateRef } from 'vue'
 import { VueCodeHighlighter } from 'vue-code-highlighter'
 import 'vue-code-highlighter/dist/style.css'
 import { truncateText } from '~/utils/text.ts'
+import TimePast from '~/components/TimePast.vue'
 
 const emit = defineEmits<{
   onEdit: [id: string]
@@ -146,29 +147,18 @@ const columns: TableColumn<TTaskItem>[] = [
   {
     accessorKey: 'execStartAt',
     header: () => t('tableExecStartAt'),
-    cell: ({ row }) => {
-      const timestamp = Number(row.getValue('execStartAt'))
-      if (timestamp === 0) return 'null'
-      const diff = dayjs(timestamp).diff(new Date().getTime(), 'second')
-      console.log(diff)
-
-      if (diff <= 60)
-        return `${dayjs(timestamp).diff(new Date().getTime(), 'minute')} ${t('timeMinutes')}`
-      if (diff <= 3600)
-        return `${dayjs(timestamp).diff(new Date().getTime(), 'hour')} ${t('timeHours')}`
-
-      return `${dayjs(timestamp).diff(new Date().getTime(), 'day')} ${t('timeDays')}`
-    },
+    cell: ({ row }) =>
+      h(TimePast, {
+        timestamp: Number(row.getValue('execStartAt')),
+      }),
   },
   {
     accessorKey: 'completedAt',
     header: () => t('tableCompletedAt'),
-    cell: ({ row }) => {
-      const timestamp = Number(row.getValue('completedAt'))
-      if (timestamp === 0) return 'null'
-
-      return dayjs(timestamp).format('DD-MM-YYYY HH:mm')
-    },
+    cell: ({ row }) =>
+      h(TimePast, {
+        timestamp: Number(row.getValue('completedAt')),
+      }),
   },
 ]
 </script>

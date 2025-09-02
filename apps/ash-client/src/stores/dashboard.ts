@@ -15,6 +15,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
     {
       id: useId(),
       text: t('asideNavScanner'),
+
       attrs: {
         to: { path: '/scanner' },
       },

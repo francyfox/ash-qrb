@@ -59,6 +59,7 @@
   "timeDays": "d.",
   "timeHours": "h.",
   "timeMinutes": "min.",
+  "timeSeconds": "sec.",
   "toastQrCreated": "QRB code created",
   "toastQrUpdated": "QRB code .::{name} was updated",
   "toastQrbsExported": "Your QRB list downloaded as JSON file",

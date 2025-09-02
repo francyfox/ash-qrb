@@ -6,13 +6,13 @@ interface Props extends RouterLinkProps {
   active?: boolean
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 </script>
 
 <template>
   <RouterLink
       v-bind="$attrs"
-      :to="$attrs.to || '#'"
+      :to="props.to || '#'"
       :class="[
           { disabled: 'pointer-events-none opacity-25 bg-s-black-olive' },
       ]"
